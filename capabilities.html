@@ -1,40 +1,52 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
+
   <meta
     name="description"
-    content="Explore Alphex AI capabilities including AI chatbots, knowledge systems, AI agents, automation, AI evaluation, multimodal AI, and custom AI systems."
+    content="Explore Alphex AI capabilities including AI strategy, chatbots, knowledge systems, AI agents, automation, integrations, custom AI solutions, and AI optimization."
   >
+
   <meta
     name="theme-color"
     content="#f7f7f5"
   >
+
   <title>Capabilities — Alphex AI</title>
+
   <link
     rel="stylesheet"
     href="site.css"
   >
+
   <style>
+
     /* =========================================================
-       CAPABILITIES PAGE
+       ALPHEX AI — CAPABILITIES PAGE
        Page-specific styles only.
-       Global styles come from site.css.
+       Global design system comes from site.css.
        ========================================================= */
+
     .capabilities-hero{
       padding:108px 0 96px;
       border-bottom:1px solid var(--border);
     }
+
     .capabilities-hero-grid{
       display:grid;
       grid-template-columns:1.15fr .85fr;
       gap:90px;
       align-items:end;
     }
+
     .capabilities-hero h1{
       max-width:820px;
       font-size:clamp(54px,7vw,96px);
@@ -42,6 +54,7 @@
       letter-spacing:-.09em;
       margin:16px 0 28px;
     }
+
     .capabilities-hero-copy{
       max-width:620px;
       color:#595955;
@@ -49,14 +62,17 @@
       line-height:1.6;
       margin:0;
     }
+
     .hero-side{
       padding-bottom:8px;
     }
+
     .hero-side-box{
       border:1px solid var(--border);
       background:var(--white);
       padding:25px;
     }
+
     .hero-side-label{
       font:10px var(--mono);
       text-transform:uppercase;
@@ -64,6 +80,7 @@
       color:var(--muted);
       margin-bottom:20px;
     }
+
     .hero-side-title{
       font-size:25px;
       line-height:1.1;
@@ -71,15 +88,22 @@
       font-weight:300;
       margin:0 0 17px;
     }
+
     .hero-side-copy{
       color:var(--muted);
       font-size:13px;
       line-height:1.6;
       margin:0;
     }
+
+    /* =========================================================
+       PRIMARY CAPABILITIES
+       ========================================================= */
+
     .capabilities-list{
       padding:0 0 30px;
     }
+
     .capability-row{
       display:grid;
       grid-template-columns:90px 1fr 1fr;
@@ -87,17 +111,20 @@
       padding:58px 0;
       border-bottom:1px solid var(--border);
     }
+
     .capability-number{
       font:11px var(--mono);
       color:var(--accent);
       padding-top:7px;
     }
+
     .capability-main h2{
       font-size:clamp(34px,4vw,54px);
       line-height:1;
       letter-spacing:-.07em;
       margin:0;
     }
+
     .capability-main p{
       max-width:450px;
       color:var(--muted);
@@ -105,11 +132,13 @@
       line-height:1.65;
       margin:17px 0 0;
     }
+
     .capability-details{
       display:flex;
       flex-direction:column;
       gap:12px;
     }
+
     .capability-detail{
       display:flex;
       align-items:flex-start;
@@ -118,6 +147,7 @@
       line-height:1.5;
       color:#494945;
     }
+
     .capability-detail-mark{
       flex:0 0 auto;
       width:20px;
@@ -131,25 +161,34 @@
       font:10px var(--mono);
       margin-top:1px;
     }
+
     .capability-detail span:last-child{
       padding-top:1px;
     }
+
+    /* =========================================================
+       EXTENDED CAPABILITIES
+       ========================================================= */
+
     .capability-section{
       padding:118px 0;
       border-bottom:1px solid var(--border);
     }
+
     .capability-section-head{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:80px;
       margin-bottom:65px;
     }
+
     .capability-section-head h2{
       font-size:clamp(42px,5vw,68px);
       line-height:.96;
       letter-spacing:-.085em;
       margin:15px 0 0;
     }
+
     .capability-section-head p{
       max-width:450px;
       color:var(--muted);
@@ -157,12 +196,14 @@
       line-height:1.6;
       margin:42px 0 0;
     }
+
     .capability-cards{
       display:grid;
       grid-template-columns:repeat(3,1fr);
       border-top:1px solid var(--border);
       border-left:1px solid var(--border);
     }
+
     .capability-card{
       min-height:270px;
       padding:28px;
@@ -173,36 +214,47 @@
         background .25s ease,
         transform .25s ease;
     }
+
     .capability-card:hover{
       background:var(--white);
       transform:translateY(-3px);
     }
+
     .capability-card-number{
       font:10px var(--mono);
       color:var(--accent);
       margin-bottom:70px;
     }
+
     .capability-card h3{
       font-size:25px;
       line-height:1.05;
       letter-spacing:-.05em;
       margin:0 0 13px;
     }
+
     .capability-card p{
       color:var(--muted);
       font-size:13px;
       line-height:1.6;
       margin:0;
     }
+
+    /* =========================================================
+       HOW WE APPROACH AI
+       ========================================================= */
+
     .quality-section{
       padding:118px 0;
       border-bottom:1px solid var(--border);
     }
+
     .quality-layout{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:90px;
     }
+
     .quality-layout h2{
       max-width:600px;
       font-size:clamp(42px,5vw,68px);
@@ -210,9 +262,11 @@
       letter-spacing:-.085em;
       margin:15px 0 0;
     }
+
     .quality-content{
       padding-top:43px;
     }
+
     .quality-content > p{
       max-width:470px;
       color:var(--muted);
@@ -220,9 +274,11 @@
       line-height:1.6;
       margin:0 0 30px;
     }
+
     .quality-list{
       border-top:1px solid var(--border);
     }
+
     .quality-item{
       display:flex;
       align-items:flex-start;
@@ -231,27 +287,36 @@
       border-bottom:1px solid var(--border);
       font-size:13px;
     }
+
     .quality-item-mark{
       color:var(--accent);
       font-family:var(--mono);
       font-size:11px;
     }
+
+    /* =========================================================
+       USE CASES
+       ========================================================= */
+
     .use-cases{
       padding:118px 0;
       border-bottom:1px solid var(--border);
     }
+
     .use-case-grid{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:18px;
       margin-top:65px;
     }
+
     .use-case{
       min-height:210px;
       border:1px solid var(--border);
       padding:30px;
       background:var(--white);
     }
+
     .use-case-label{
       font:10px var(--mono);
       color:var(--accent);
@@ -259,12 +324,14 @@
       letter-spacing:.08em;
       margin-bottom:55px;
     }
+
     .use-case h3{
       font-size:27px;
       line-height:1.05;
       letter-spacing:-.055em;
       margin:0 0 12px;
     }
+
     .use-case p{
       max-width:470px;
       color:var(--muted);
@@ -272,9 +339,15 @@
       line-height:1.6;
       margin:0;
     }
+
+    /* =========================================================
+       CTA
+       ========================================================= */
+
     .capabilities-cta{
       padding:110px 0 125px;
     }
+
     .cta-box{
       display:grid;
       grid-template-columns:1.4fr .6fr;
@@ -284,6 +357,7 @@
       background:#eeecff;
       border:1px solid #d8d2ff;
     }
+
     .cta-box h2{
       max-width:720px;
       font-size:clamp(43px,5.5vw,72px);
@@ -291,6 +365,7 @@
       letter-spacing:-.085em;
       margin:14px 0 20px;
     }
+
     .cta-box p{
       max-width:570px;
       color:#59546f;
@@ -298,14 +373,17 @@
       line-height:1.6;
       margin:0;
     }
+
     .cta-action{
       display:flex;
       justify-content:flex-end;
       align-items:flex-end;
     }
+
     /* =========================================================
        DARK MODE
        ========================================================= */
+
     body.dark-theme .capabilities-hero-copy,
     body.dark-theme .capability-main p,
     body.dark-theme .capability-card p,
@@ -313,528 +391,844 @@
     body.dark-theme .use-case p{
       color:#c2c5d5;
     }
+
     body.dark-theme .hero-side-box,
     body.dark-theme .capability-card,
     body.dark-theme .use-case{
       background:#171a28;
     }
+
     body.dark-theme .capability-card:hover{
       background:#1d2030;
     }
+
     body.dark-theme .capability-detail{
       color:#c2c5d5;
     }
+
     body.dark-theme .cta-box{
       background:#242044;
       border-color:#3c356d;
     }
+
     body.dark-theme .cta-box p{
       color:#c6c1dd;
     }
+
     /* =========================================================
        RESPONSIVE
        ========================================================= */
+
     @media(max-width:900px){
+
       .capabilities-hero{
         padding:85px 0 75px;
       }
+
       .capabilities-hero-grid{
         grid-template-columns:1fr;
         gap:55px;
       }
+
       .hero-side{
         max-width:600px;
       }
+
       .capability-row{
         grid-template-columns:55px 1fr;
         gap:20px;
       }
+
       .capability-details{
         grid-column:2;
         margin-top:5px;
       }
+
       .capability-section-head,
       .quality-layout{
         grid-template-columns:1fr;
         gap:25px;
       }
+
       .capability-section-head p{
         margin-top:0;
       }
+
       .quality-content{
         padding-top:0;
       }
+
       .capability-cards{
         grid-template-columns:1fr 1fr;
       }
+
       .cta-box{
         grid-template-columns:1fr;
         gap:40px;
       }
+
       .cta-action{
         justify-content:flex-start;
       }
+
     }
+
     @media(max-width:800px){
+
       .capability-section,
       .quality-section,
       .use-cases{
         padding:78px 0;
       }
+
       .use-case-grid{
         grid-template-columns:1fr;
         margin-top:45px;
       }
+
       .capabilities-cta{
         padding:78px 0 85px;
       }
+
       .cta-box{
         padding:35px;
       }
+
     }
+
     @media(max-width:600px){
+
       .capabilities-hero{
         padding:65px 0 60px;
       }
+
       .capabilities-hero h1{
         font-size:clamp(48px,15vw,70px);
       }
+
       .capabilities-hero-copy{
         font-size:16px;
       }
+
       .capability-row{
         grid-template-columns:1fr;
         gap:15px;
         padding:42px 0;
       }
+
       .capability-number{
         padding-top:0;
       }
+
       .capability-details{
         grid-column:auto;
         margin-top:10px;
       }
+
       .capability-main h2{
         font-size:40px;
       }
+
       .capability-cards{
         grid-template-columns:1fr;
       }
+
       .capability-card{
         min-height:230px;
       }
+
       .capability-card-number{
         margin-bottom:55px;
       }
+
       .use-case{
         min-height:190px;
         padding:24px;
       }
+
       .use-case-label{
         margin-bottom:45px;
       }
+
       .cta-box{
         padding:28px 24px;
       }
+
       .cta-box h2{
         font-size:43px;
       }
+
     }
+
   </style>
+
 </head>
+
+
 <body>
+
   <!-- =======================================================
        SHARED NAVIGATION
        ======================================================= -->
+
   <div id="site-nav"></div>
+
+
   <!-- =======================================================
-       HERO
+       PAGE CONTENT
        ======================================================= -->
+
   <main>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
     <section class="capabilities-hero">
+
       <div class="shell">
+
         <div class="capabilities-hero-grid">
+
           <div>
+
             <div class="hero-kicker">
               ALPHEX AI / CAPABILITIES
             </div>
+
             <h1>
               AI systems built for real work.
             </h1>
+
             <p class="capabilities-hero-copy">
-              Alphex AI designs, builds, and improves practical AI systems
-              that help teams answer questions, automate workflows, work
-              with knowledge, and make better decisions.
+              Alphex AI helps organizations design, build, integrate,
+              and improve practical AI systems around the way their
+              teams actually work.
             </p>
+
           </div>
+
+
           <div class="hero-side">
+
             <div class="hero-side-box">
+
               <div class="hero-side-label">
-                What we build
+                What we do
               </div>
+
               <h2 class="hero-side-title">
-                From conversation to automation.
+                From AI strategy to working systems.
               </h2>
+
               <p class="hero-side-copy">
-                We combine AI models, your data, business rules, tools,
-                evaluation, and human oversight into systems designed around
-                the work your team actually needs to accomplish.
+                We combine AI models, business knowledge, automation,
+                integrations, and thoughtful system design to create
+                AI solutions that solve practical business problems.
               </p>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
+
     <!-- =====================================================
-         CORE CAPABILITIES
+         CORE SERVICES
          ===================================================== -->
+
     <section class="capabilities-list">
+
       <div class="shell">
+
+
+        <!-- 01 -->
+
         <div class="capability-row">
+
           <div class="capability-number">
             01
           </div>
+
           <div class="capability-main">
+
+            <h2>
+              AI Strategy
+            </h2>
+
+            <p>
+              Identify where AI can create meaningful value and turn
+              business goals into practical AI opportunities, workflows,
+              and implementation plans.
+            </p>
+
+          </div>
+
+          <div class="capability-details">
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>AI opportunity discovery</span>
+            </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>Use-case identification</span>
+            </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>AI workflow planning</span>
+            </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>Implementation roadmaps</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- 02 -->
+
+        <div class="capability-row">
+
+          <div class="capability-number">
+            02
+          </div>
+
+          <div class="capability-main">
+
             <h2>
               AI Chatbots
             </h2>
+
             <p>
-              Customer-facing and internal AI assistants that understand
-              conversations, answer questions, guide users, and know when
-              a human should take over.
+              Customer-facing and internal AI assistants that answer
+              questions, guide users, maintain context, and support
+              human handoff when needed.
             </p>
+
           </div>
+
           <div class="capability-details">
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
-              <span>Website and customer support assistants</span>
+              <span>Website AI assistants</span>
             </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>Customer support assistants</span>
+            </div>
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
               <span>Internal team assistants</span>
             </div>
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
               <span>Context-aware conversations</span>
             </div>
-            <div class="capability-detail">
-              <span class="capability-detail-mark">+</span>
-              <span>Human handoff workflows</span>
-            </div>
+
           </div>
+
         </div>
+
+
+        <!-- 03 -->
+
         <div class="capability-row">
-          <div class="capability-number">
-            02
-          </div>
-          <div class="capability-main">
-            <h2>
-              Knowledge &amp; RAG
-            </h2>
-            <p>
-              AI systems connected to your business knowledge so answers
-              can be grounded in approved documents, policies, databases,
-              and other trusted information.
-            </p>
-          </div>
-          <div class="capability-details">
-            <div class="capability-detail">
-              <span class="capability-detail-mark">+</span>
-              <span>Document and knowledge-base search</span>
-            </div>
-            <div class="capability-detail">
-              <span class="capability-detail-mark">+</span>
-              <span>Grounded question answering</span>
-            </div>
-            <div class="capability-detail">
-              <span class="capability-detail-mark">+</span>
-              <span>Source-aware responses</span>
-            </div>
-            <div class="capability-detail">
-              <span class="capability-detail-mark">+</span>
-              <span>Knowledge retrieval workflows</span>
-            </div>
-          </div>
-        </div>
-        <div class="capability-row">
+
           <div class="capability-number">
             03
           </div>
+
           <div class="capability-main">
+
+            <h2>
+              Knowledge Systems
+            </h2>
+
+            <p>
+              AI systems connected to trusted business information so
+              teams can search, retrieve, and work with organizational
+              knowledge more naturally.
+            </p>
+
+          </div>
+
+          <div class="capability-details">
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>Knowledge-base search</span>
+            </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>Document-based AI</span>
+            </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>Grounded responses</span>
+            </div>
+
+            <div class="capability-detail">
+              <span class="capability-detail-mark">+</span>
+              <span>RAG-based systems</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- 04 -->
+
+        <div class="capability-row">
+
+          <div class="capability-number">
+            04
+          </div>
+
+          <div class="capability-main">
+
             <h2>
               AI Agents
             </h2>
+
             <p>
-              AI systems that can move beyond answering questions and
-              perform structured tasks using tools, business rules,
-              workflows, and controlled actions.
+              AI systems that can perform structured tasks using tools,
+              business rules, workflows, and controlled actions instead
+              of simply generating a response.
             </p>
+
           </div>
+
           <div class="capability-details">
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
               <span>Multi-step task execution</span>
             </div>
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
-              <span>Tool and API integrations</span>
+              <span>Tool integrations</span>
             </div>
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
               <span>Workflow orchestration</span>
             </div>
+
             <div class="capability-detail">
               <span class="capability-detail-mark">+</span>
-              <span>Controlled automation</span>
+              <span>Controlled AI actions</span>
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
+
     <!-- =====================================================
-         ADDITIONAL CAPABILITIES
+         EXTENDED SERVICES
          ===================================================== -->
+
     <section class="capability-section">
+
       <div class="shell">
+
         <div class="capability-section-head">
+
           <div>
+
             <div class="section-label">
               01 / Extended capabilities
             </div>
+
             <h2>
-              More than a chatbot.
+              AI that fits the workflow.
             </h2>
+
           </div>
+
           <div>
+
             <p>
-              Modern AI systems often need more than a model. Alphex AI
-              connects models with automation, evaluation, multimodal
-              understanding, and the systems your organization already uses.
+              AI becomes more useful when it works with the systems,
+              processes, and people already inside an organization.
+              We build around those connections rather than treating
+              AI as a standalone tool.
             </p>
+
           </div>
+
         </div>
+
+
         <div class="capability-cards">
+
+
           <article class="capability-card">
-            <div class="capability-card-number">
-              04
-            </div>
-            <h3>
-              AI Automation
-            </h3>
-            <p>
-              Turn repetitive processes into reliable AI-assisted workflows
-              that can classify, summarize, route, extract, and act on
-              information.
-            </p>
-          </article>
-          <article class="capability-card">
+
             <div class="capability-card-number">
               05
             </div>
+
             <h3>
-              AI Evaluation &amp; QA
+              AI Automation
             </h3>
+
             <p>
-              Test AI outputs for factuality, relevance, instruction
-              following, completeness, safety, consistency, and overall
-              quality before and after deployment.
+              Turn repetitive processes into AI-assisted workflows
+              that can classify, summarize, extract, route, validate,
+              and process information.
             </p>
+
           </article>
+
+
           <article class="capability-card">
+
             <div class="capability-card-number">
               06
             </div>
-            <h3>
-              Multimodal AI
-            </h3>
-            <p>
-              Build systems that can work across text, images, audio, video,
-              documents, and other forms of information.
-            </p>
-          </article>
-          <article class="capability-card">
-            <div class="capability-card-number">
-              07
-            </div>
-            <h3>
-              Custom AI Systems
-            </h3>
-            <p>
-              Design AI solutions around your specific business process,
-              data, users, integrations, security requirements, and
-              operational goals.
-            </p>
-          </article>
-          <article class="capability-card">
-            <div class="capability-card-number">
-              08
-            </div>
+
             <h3>
               AI Integrations
             </h3>
+
             <p>
               Connect AI capabilities with the software, databases,
-              communication tools, APIs, and internal systems your team
-              already relies on.
+              APIs, communication tools, and internal systems your
+              organization already uses.
             </p>
+
           </article>
+
+
           <article class="capability-card">
+
+            <div class="capability-card-number">
+              07
+            </div>
+
+            <h3>
+              Custom AI Solutions
+            </h3>
+
+            <p>
+              Design AI systems around specific business processes,
+              users, data, operational requirements, and organizational
+              goals.
+            </p>
+
+          </article>
+
+
+          <article class="capability-card">
+
+            <div class="capability-card-number">
+              08
+            </div>
+
+            <h3>
+              AI Optimization
+            </h3>
+
+            <p>
+              Improve AI systems by identifying weak points, refining
+              workflows, improving prompts and context, and measuring
+              real-world performance.
+            </p>
+
+          </article>
+
+
+          <article class="capability-card">
+
             <div class="capability-card-number">
               09
             </div>
+
             <h3>
-              Continuous Improvement
+              Multimodal AI
             </h3>
+
             <p>
-              Monitor real-world performance, identify failure patterns,
-              evaluate changes, and continuously improve the system over
-              time.
+              Build AI experiences that can work across text, images,
+              audio, video, documents, and other forms of information.
             </p>
+
           </article>
-        </div>
-      </div>
-    </section>
-    <!-- =====================================================
-         QUALITY
-         ===================================================== -->
-    <section class="quality-section">
-      <div class="shell">
-        <div class="quality-layout">
-          <div>
-            <div class="section-label">
-              02 / Quality by design
+
+
+          <article class="capability-card">
+
+            <div class="capability-card-number">
+              10
             </div>
-            <h2>
-              Useful AI needs a quality bar.
-            </h2>
-          </div>
-          <div class="quality-content">
+
+            <h3>
+              AI Implementation
+            </h3>
+
             <p>
-              We do not treat an AI system as finished simply because it
-              produces an answer. Alphex AI focuses on whether that answer
-              is useful, grounded, safe, and appropriate for the task.
+              Move from an AI idea to a usable system through structured
+              development, testing, integration, deployment, and
+              ongoing improvement.
             </p>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUALITY / APPROACH
+         ===================================================== -->
+
+    <section class="quality-section">
+
+      <div class="shell">
+
+        <div class="quality-layout">
+
+          <div>
+
+            <div class="section-label">
+              02 / Our approach
+            </div>
+
+            <h2>
+              Useful AI needs more than a model.
+            </h2>
+
+          </div>
+
+
+          <div class="quality-content">
+
+            <p>
+              We focus on the complete system around the AI: the
+              information it receives, the task it performs, the
+              experience it creates, and the way people interact with it.
+            </p>
+
+
             <div class="quality-list">
+
               <div class="quality-item">
                 <span class="quality-item-mark">01</span>
-                <span>Factuality and groundedness</span>
+                <span>Clear business objective</span>
               </div>
+
               <div class="quality-item">
                 <span class="quality-item-mark">02</span>
-                <span>Instruction following</span>
+                <span>Relevant and trusted information</span>
               </div>
+
               <div class="quality-item">
                 <span class="quality-item-mark">03</span>
-                <span>Relevance and completeness</span>
+                <span>Reliable workflow design</span>
               </div>
+
               <div class="quality-item">
                 <span class="quality-item-mark">04</span>
-                <span>Safety and responsible behavior</span>
+                <span>Responsible AI behavior</span>
               </div>
+
               <div class="quality-item">
                 <span class="quality-item-mark">05</span>
-                <span>Consistency across real use cases</span>
+                <span>Human oversight where appropriate</span>
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
+
     <!-- =====================================================
          USE CASES
          ===================================================== -->
+
     <section class="use-cases">
+
       <div class="shell">
+
         <div class="section-label">
           03 / Where it works
         </div>
+
+
         <div class="intro">
+
           <div>
+
             <h2 class="section-title">
               Built around the work.
             </h2>
+
           </div>
+
           <div>
+
             <p class="section-copy">
-              The right AI system depends on the problem. We design around
-              the workflow instead of forcing every business into the same
-              product.
+              Every organization has different problems. We start with
+              the workflow, understand what needs to improve, and design
+              the AI system around that reality.
             </p>
+
           </div>
+
         </div>
+
+
         <div class="use-case-grid">
+
+
           <article class="use-case">
+
             <div class="use-case-label">
               Customer experience
             </div>
+
             <h3>
               Help customers get answers faster.
             </h3>
+
             <p>
               AI assistants can handle common questions, guide users,
-              retrieve relevant information, and escalate complex requests.
+              retrieve relevant information, and support escalation
+              when a human is needed.
             </p>
+
           </article>
+
+
           <article class="use-case">
+
             <div class="use-case-label">
-              Internal knowledge
+              Internal operations
             </div>
+
             <h3>
-              Make company knowledge easier to use.
+              Give teams an intelligent assistant.
             </h3>
+
             <p>
-              Give teams a natural interface for finding information across
-              approved documents, policies, procedures, and knowledge bases.
+              Help employees find information, understand documents,
+              summarize work, and interact with internal knowledge
+              through natural language.
             </p>
+
           </article>
+
+
           <article class="use-case">
+
             <div class="use-case-label">
-              Operations
+              Business workflows
             </div>
+
             <h3>
-              Automate repetitive work.
+              Reduce repetitive work.
             </h3>
+
             <p>
-              Use AI to classify, extract, summarize, route, validate, and
-              move information through operational workflows.
+              Use AI to classify, extract, summarize, route, validate,
+              and process information across recurring operational tasks.
             </p>
+
           </article>
+
+
           <article class="use-case">
+
             <div class="use-case-label">
-              AI products
+              AI transformation
             </div>
+
             <h3>
-              Build better AI products.
+              Turn an AI idea into something useful.
             </h3>
+
             <p>
-              Add evaluation, quality assurance, multimodal capabilities,
-              agent workflows, and AI infrastructure to new or existing
-              products.
+              From early strategy through implementation, integration,
+              and improvement, we help organizations move practical AI
+              initiatives forward.
             </p>
+
           </article>
+
+
         </div>
+
       </div>
+
     </section>
+
+
     <!-- =====================================================
          CTA
          ===================================================== -->
+
     <section class="capabilities-cta">
+
       <div class="shell">
+
         <div class="cta-box">
+
           <div>
+
             <div class="section-label">
               ALPHEX AI / START HERE
             </div>
+
             <h2>
               Have an AI problem worth solving?
             </h2>
+
             <p>
-              Tell us what your team is trying to accomplish. We can help
-              identify where AI fits, what should be built, and how to
-              evaluate it before putting it into real work.
+              Tell us what your team is trying to accomplish. We can
+              help identify where AI fits, what should be built, and
+              how to turn the idea into a practical system.
             </p>
+
           </div>
+
+
           <div class="cta-action">
+
             <a
               class="pill dark"
               href="mailto:hello@alphex.ai?subject=Alphex%20AI%20project%20discussion"
@@ -842,67 +1236,102 @@
               Start a conversation
               <span>↗</span>
             </a>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
   </main>
+
+
   <!-- =======================================================
        SHARED FOOTER
        ======================================================= -->
+
   <div id="site-footer"></div>
+
+
   <!-- =======================================================
        SHARED SITE JAVASCRIPT
        ======================================================= -->
+
   <script src="site.js"></script>
+
+
   <!-- =======================================================
        LOAD SHARED NAV + FOOTER
        ======================================================= -->
+
   <script>
+
     async function loadSharedComponent(elementId, file){
+
       try{
+
         const response = await fetch(file);
+
         if(!response.ok){
           throw new Error(
             `Unable to load ${file}: ${response.status}`
           );
         }
+
         const html = await response.text();
+
         document.getElementById(elementId).innerHTML = html;
+
         /*
-         * If site.js exposes a navigation/theme initializer,
-         * run it after the shared navigation has been inserted.
+         * Support either initializer name if site.js
+         * exposes one after loading the shared component.
          */
+
         if(
           typeof window.initializeSite === 'function'
         ){
           window.initializeSite();
         }
+
         if(
           typeof window.initSite === 'function'
         ){
           window.initSite();
         }
+
       }catch(error){
+
         console.error(
           `Alphex AI: failed to load ${file}`,
           error
         );
+
       }
+
     }
+
+
     document.addEventListener(
       'DOMContentLoaded',
       function(){
+
         loadSharedComponent(
           'site-nav',
           'nav.html'
         );
+
         loadSharedComponent(
           'site-footer',
           'footer.html'
         );
+
       }
     );
+
   </script>
+
 </body>
+
 </html>
