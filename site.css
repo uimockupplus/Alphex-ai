@@ -791,3 +791,14 @@ body.dark-theme .hero-kicker{
     transition-duration:.01ms!important;
   }
 }
+.pricing-test-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+@media(max-width:800px){
+  .pricing-test-grid{
+    grid-template-columns:1fr;
+  }
+}
