@@ -9,12 +9,9 @@
     'https://nxqxhakjbtdzreimpkdz.supabase.co';
   const SUPABASE_PUBLISHABLE_KEY =
     'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
-  /* -------------------------------------------------------
-     SUPABASE CLIENT
-     ------------------------------------------------------- */
   let supabaseClient = null;
   /* -------------------------------------------------------
-     LOAD SUPABASE JS IF NEEDED
+     LOAD SUPABASE
      ------------------------------------------------------- */
   function loadSupabase() {
     return new Promise((resolve, reject) => {
@@ -86,9 +83,12 @@
     }
   }
   /* -------------------------------------------------------
-     LOAD SHARED COMPONENTS
+     LOAD SHARED COMPONENT
      ------------------------------------------------------- */
-  const loadComponent = async (selector, file) => {
+  const loadComponent = async (
+    selector,
+    file
+  ) => {
     const container =
       document.querySelector(selector);
     if (!container) {
@@ -112,7 +112,7 @@
     }
   };
   /* -------------------------------------------------------
-     START SHARED COMPONENTS
+     INITIALIZE SITE
      ------------------------------------------------------- */
   async function initializeSite() {
     await Promise.all([
@@ -134,9 +134,13 @@
      ------------------------------------------------------- */
   function initializeNavigation() {
     const menuButton =
-      document.querySelector('.mobile-menu');
+      document.querySelector(
+        '.mobile-menu'
+      );
     const mobilePanel =
-      document.querySelector('.mobile-panel');
+      document.querySelector(
+        '.mobile-panel'
+      );
     if (!menuButton || !mobilePanel) {
       return;
     }
@@ -255,20 +259,14 @@
         );
       if (icon) {
         icon.textContent =
-          dark
-            ? '☀'
-            : '☾';
+          dark ? '☀' : '☾';
       }
       if (label) {
         label.textContent =
-          dark
-            ? 'Light'
-            : 'Dark';
+          dark ? 'Light' : 'Dark';
       }
       saveTheme(
-        dark
-          ? 'dark'
-          : 'light'
+        dark ? 'dark' : 'light'
       );
     };
     const savedTheme =
@@ -323,7 +321,7 @@
     );
   }
   /* -------------------------------------------------------
-     UPDATE AUTH UI
+     UPDATE AUTHENTICATION UI
      ------------------------------------------------------- */
   function updateAuthUI(session) {
     const signInButton =
@@ -352,6 +350,7 @@
     if (!button) {
       return;
     }
+    removeAccountMenu();
     button.className =
       'pill dark header-demo';
     button.href =
@@ -365,9 +364,11 @@
     button.removeAttribute(
       'aria-expanded'
     );
+    button.removeAttribute(
+      'aria-label'
+    );
     button.innerHTML =
       'Sign in <span>↗</span>';
-    removeAccountMenu();
   }
   /* -------------------------------------------------------
      LOGGED IN NAVIGATION
@@ -384,10 +385,10 @@
     }
     const user =
       session.user;
-    const email =
-      user?.email || '';
     const metadata =
       user?.user_metadata || {};
+    const email =
+      user?.email || '';
     const fullName =
       metadata.full_name ||
       metadata.name ||
@@ -420,7 +421,11 @@
       `Open account menu for ${fullName}`
     );
     button.innerHTML =
-      `<span class="profile-initial">${escapeHtml(initial)}</span>`;
+      `
+        <span class="profile-initial">
+          ${escapeHtml(initial)}
+        </span>
+      `;
     injectProfileStyles();
     createAccountMenu(
       button,
@@ -437,13 +442,6 @@
     email
   ) {
     removeAccountMenu();
-    const navActions =
-      document.querySelector(
-        '.nav-actions'
-      );
-    if (!navActions) {
-      return;
-    }
     const wrapper =
       document.createElement(
         'div'
@@ -492,14 +490,6 @@
       </div>
       <div class="account-menu-divider"></div>
       <a
-        href="workspace.html"
-        class="account-menu-item"
-        role="menuitem"
-      >
-        <span>Workspace</span>
-        <span>↗</span>
-      </a>
-      <a
         href="#"
         class="account-menu-item account-link-disabled"
         role="menuitem"
@@ -543,15 +533,15 @@
         }
       }
     );
-    const workspaceLink =
+    const accountLink =
       menu.querySelector(
-        'a[href="workspace.html"]'
+        '.account-link-disabled'
       );
-    if (workspaceLink) {
-      workspaceLink.addEventListener(
+    if (accountLink) {
+      accountLink.addEventListener(
         'click',
-        () => {
-          closeAllAccountMenus();
+        event => {
+          event.preventDefault();
         }
       );
     }
@@ -592,7 +582,7 @@
     }
   }
   /* -------------------------------------------------------
-     CLOSE ACCOUNT MENUS
+     CLOSE ACCOUNT MENU
      ------------------------------------------------------- */
   function closeAllAccountMenus() {
     document
@@ -745,17 +735,18 @@
         cursor: pointer;
         transition:
           transform .2s ease,
-          box-shadow .2s ease,
-          border-color .2s ease;
+          box-shadow .2s ease;
       }
       .profile-button:hover {
-        transform: translateY(-2px);
+        transform:
+          translateY(-2px);
         box-shadow:
           0 8px 22px
           rgba(112,87,255,.24);
       }
       .profile-initial {
-        font-family: var(--sans);
+        font-family:
+          var(--sans);
         font-size: 14px;
         font-weight: 500;
         line-height: 1;
@@ -769,12 +760,15 @@
       /* ACCOUNT MENU */
       .account-menu {
         position: absolute;
-        top: calc(100% + 12px);
+        top:
+          calc(100% + 12px);
         right: 0;
         width: 270px;
         padding: 10px;
-        background: var(--white);
-        border: 1px solid var(--border);
+        background:
+          var(--white);
+        border:
+          1px solid var(--border);
         border-radius: 18px;
         box-shadow:
           0 18px 50px
@@ -784,7 +778,8 @@
         transform:
           translateY(-6px)
           scale(.98);
-        transform-origin: top right;
+        transform-origin:
+          top right;
         transition:
           opacity .18s ease,
           visibility .18s ease,
@@ -799,7 +794,7 @@
           translateY(0)
           scale(1);
       }
-      /* ACCOUNT USER */
+      /* USER INFORMATION */
       .account-menu-user {
         display: flex;
         align-items: center;
@@ -829,7 +824,8 @@
       }
       .account-menu-details strong {
         overflow: hidden;
-        color: var(--ink);
+        color:
+          var(--ink);
         font-size: 13px;
         font-weight: 500;
         text-overflow: ellipsis;
@@ -837,7 +833,8 @@
       }
       .account-menu-details span {
         overflow: hidden;
-        color: var(--muted);
+        color:
+          var(--muted);
         font-size: 10px;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -846,9 +843,10 @@
       .account-menu-divider {
         height: 1px;
         margin: 5px 0;
-        background: var(--border);
+        background:
+          var(--border);
       }
-      /* MENU ITEMS */
+      /* ACCOUNT LINK */
       .account-menu-item {
         display: flex;
         align-items: center;
@@ -857,25 +855,15 @@
         width: 100%;
         padding: 11px 10px;
         border-radius: 10px;
-        color: var(--ink);
+        color:
+          var(--ink);
         text-decoration: none;
         font-size: 12px;
         font-weight: 500;
-        transition:
-          background .18s ease,
-          color .18s ease;
-      }
-      .account-menu-item:hover {
-        background: var(--lavender);
-        color: var(--accent-dark);
       }
       .account-link-disabled {
-        opacity: .45;
+        opacity: .5;
         cursor: default;
-      }
-      .account-link-disabled:hover {
-        background: transparent;
-        color: var(--ink);
       }
       /* SIGN OUT */
       .account-menu-signout {
@@ -885,8 +873,10 @@
         padding: 11px 10px;
         border: 0;
         border-radius: 10px;
-        background: transparent;
-        color: var(--ink);
+        background:
+          transparent;
+        color:
+          var(--ink);
         font-size: 12px;
         font-weight: 500;
         text-align: left;
@@ -896,41 +886,38 @@
           color .18s ease;
       }
       .account-menu-signout:hover {
-        background: #fff0f0;
-        color: #b42318;
+        background:
+          #fff0f0;
+        color:
+          #b42318;
       }
       /* DARK MODE */
       body.dark-theme
-      .account-menu {
-        background:
-          var(--white);
-        box-shadow:
-          0 18px 50px
-          rgba(0,0,0,.35);
-      }
-      body.dark-theme
       .account-menu-item:hover {
-        background: #242044;
-        color: #c8c0ff;
+        background:
+          #242044;
+        color:
+          #c8c0ff;
       }
       body.dark-theme
       .account-menu-avatar {
-        background: #242044;
-        color: #c8c0ff;
+        background:
+          #242044;
+        color:
+          #c8c0ff;
       }
       body.dark-theme
       .account-menu-signout:hover {
-        background: #321f24;
-        color: #ffb4b4;
+        background:
+          #321f24;
+        color:
+          #ffb4b4;
       }
       /* MOBILE */
       @media(max-width:800px) {
-        .account-menu-wrapper {
-          position: static;
-        }
         .account-menu {
           position: fixed;
-          top: 76px;
+          top: 80px;
           right: 14px;
           width:
             min(
@@ -938,13 +925,10 @@
               calc(100vw - 28px)
             );
         }
-        body.dark-theme
-        .account-menu {
-          top: 68px;
-        }
       }
       @media(max-width:480px) {
         .account-menu {
+          top: 74px;
           right: 14px;
           width:
             calc(100vw - 28px);
@@ -956,7 +940,7 @@
     );
   }
   /* -------------------------------------------------------
-     START
+     START ALPHEX AI
      ------------------------------------------------------- */
   initializeSite();
 })();
