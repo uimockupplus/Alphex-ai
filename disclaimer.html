@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Disclaimer for Alphex AI. Important information about AI-generated outputs, services, third-party technologies, professional advice, and use of Alphex AI systems."
+  />
+
+  <meta
+    name="theme-color"
+    content="#f7f7f5"
+  />
+
+  <title>Disclaimer — Alphex AI</title>
+
+  <link rel="stylesheet" href="site.css" />
+
+  <style>
+    /* =========================================================
+       ALPHEX AI — DISCLAIMER PAGE
+       ========================================================= */
+
+    .legal-hero{
+      padding:105px 0 90px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .legal-hero-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:100px;
+      align-items:end;
+    }
+
+    .legal-hero h1{
+      max-width:800px;
+      margin:15px 0 0;
+      font-size:clamp(55px,7vw,95px);
+      line-height:.88;
+      letter-spacing:-.09em;
+      font-weight:300;
+    }
+
+    .legal-intro{
+      max-width:650px;
+      color:#595955;
+      font-size:17px;
+      line-height:1.65;
+    }
+
+    .legal-meta{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      margin-top:25px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-meta-dot{
+      width:7px;
+      height:7px;
+      flex:0 0 7px;
+      border-radius:50%;
+      background:var(--cyan);
+    }
+
+    /* =========================================================
+       LEGAL LAYOUT
+       ========================================================= */
+
+    .legal-layout{
+      padding:95px 0 120px;
+    }
+
+    .legal-layout-inner{
+      display:grid;
+      grid-template-columns:260px minmax(0,1fr);
+      gap:90px;
+      align-items:start;
+    }
+
+    .legal-sidebar{
+      position:sticky;
+      top:105px;
+      min-width:0;
+    }
+
+    .legal-sidebar-title{
+      margin-bottom:18px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-sidebar a{
+      display:block;
+      padding:8px 0;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:12px;
+      transition:color .2s ease, transform .2s ease;
+    }
+
+    .legal-sidebar a:hover{
+      color:var(--accent-dark);
+      transform:translateX(3px);
+    }
+
+    .legal-content{
+      width:100%;
+      max-width:760px;
+      min-width:0;
+    }
+
+    .legal-content section{
+      margin-bottom:65px;
+      scroll-margin-top:105px;
+    }
+
+    .legal-content section:last-child{
+      margin-bottom:0;
+    }
+
+    .legal-content h2{
+      margin:0 0 17px;
+      font-size:28px;
+      line-height:1.05;
+      letter-spacing:-.055em;
+      font-weight:400;
+    }
+
+    .legal-content h3{
+      margin:30px 0 10px;
+      font-size:17px;
+      line-height:1.2;
+      font-weight:500;
+      letter-spacing:-.025em;
+    }
+
+    .legal-content p{
+      margin:0 0 16px;
+      color:#5f5f5a;
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .legal-content ul{
+      margin:12px 0 20px;
+      padding-left:22px;
+    }
+
+    .legal-content li{
+      margin-bottom:9px;
+      color:#5f5f5a;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .legal-content a{
+      color:var(--accent-dark);
+      text-underline-offset:3px;
+      overflow-wrap:anywhere;
+    }
+
+    .legal-callout{
+      margin:30px 0;
+      padding:23px 25px;
+      border:1px solid var(--border);
+      background:var(--soft);
+    }
+
+    .legal-callout p{
+      margin:0;
+    }
+
+    .legal-contact{
+      width:100%;
+      max-width:100%;
+      padding:25px;
+      border:1px solid var(--border);
+    }
+
+    .legal-contact-label{
+      margin-bottom:8px;
+      font:9px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-contact a{
+      display:inline-block;
+      max-width:100%;
+      font-size:15px;
+      color:var(--ink);
+      text-decoration:none;
+      overflow-wrap:anywhere;
+    }
+
+    .legal-contact a:hover{
+      color:var(--accent-dark);
+    }
+
+    /* =========================================================
+       TABLET / MOBILE
+       ========================================================= */
+
+    @media(max-width:900px){
+
+      .legal-hero{
+        padding:80px 0 70px;
+      }
+
+      .legal-hero-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+      }
+
+      .legal-layout{
+        padding:75px 0 90px;
+      }
+
+      .legal-layout-inner{
+        grid-template-columns:1fr;
+        gap:45px;
+      }
+
+      .legal-sidebar{
+        position:static;
+        width:100%;
+        border-bottom:1px solid var(--border);
+        padding-bottom:25px;
+      }
+
+      .legal-sidebar a{
+        display:inline-block;
+        margin-right:18px;
+      }
+
+      .legal-content{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+      }
+    }
+
+    @media(max-width:600px){
+
+      .legal-hero{
+        padding:65px 0 55px;
+      }
+
+      .legal-hero-grid{
+        gap:30px;
+      }
+
+      .legal-hero h1{
+        max-width:100%;
+        font-size:clamp(48px,14vw,72px);
+        line-height:.9;
+      }
+
+      .legal-intro{
+        max-width:100%;
+        font-size:15px;
+        line-height:1.6;
+      }
+
+      .legal-meta{
+        flex-wrap:wrap;
+        line-height:1.5;
+      }
+
+      .legal-layout{
+        padding:60px 0 75px;
+      }
+
+      .legal-layout-inner{
+        gap:35px;
+      }
+
+      .legal-sidebar{
+        padding-bottom:20px;
+      }
+
+      .legal-sidebar a{
+        font-size:11px;
+        margin-right:13px;
+        padding:6px 0;
+      }
+
+      .legal-content section{
+        margin-bottom:50px;
+        scroll-margin-top:85px;
+      }
+
+      .legal-content h2{
+        max-width:100%;
+        font-size:25px;
+        line-height:1.08;
+      }
+
+      .legal-content h3{
+        font-size:16px;
+      }
+
+      .legal-content p,
+      .legal-content li{
+        font-size:13px;
+        line-height:1.7;
+      }
+
+      .legal-content ul{
+        padding-left:20px;
+      }
+
+      .legal-callout{
+        padding:20px;
+      }
+
+      .legal-contact{
+        padding:20px;
+      }
+    }
+
+    @media(max-width:380px){
+
+      .legal-hero h1{
+        font-size:46px;
+      }
+
+      .legal-content h2{
+        font-size:23px;
+      }
+
+      .legal-sidebar a{
+        margin-right:9px;
+        font-size:10px;
+      }
+
+      .legal-contact{
+        padding:17px;
+      }
+
+      .legal-contact a{
+        font-size:14px;
+      }
+    }
+
+    /* =========================================================
+       DARK THEME
+       ========================================================= */
+
+    body.dark-theme .legal-intro,
+    body.dark-theme .legal-content p,
+    body.dark-theme .legal-content li{
+      color:#c2c5d5;
+    }
+
+    body.dark-theme .legal-callout{
+      background:#171a28;
+    }
+
+    body.dark-theme .legal-contact{
+      background:#171a28;
+    }
+
+    body.dark-theme .legal-contact a{
+      color:var(--ink);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Shared navigation -->
+  <div id="site-nav"></div>
+
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="legal-hero">
+
+      <div class="shell">
+
+        <div class="legal-hero-grid">
+
+          <div>
+
+            <div class="hero-kicker">
+              ALPHEX AI / LEGAL
+            </div>
+
+            <h1>
+              Disclaimer
+            </h1>
+
+          </div>
+
+
+          <div class="legal-intro">
+
+            <p>
+              This Disclaimer explains important limitations relating
+              to the Alphex AI website, AI-generated information,
+              services, third-party technologies, and your use of
+              Alphex AI systems.
+            </p>
+
+            <div class="legal-meta">
+              <span class="legal-meta-dot"></span>
+              Last updated: October 6, 2026
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DISCLAIMER CONTENT
+         ===================================================== -->
+
+    <section class="legal-layout">
+
+      <div class="shell legal-layout-inner">
+
+        <aside class="legal-sidebar">
+
+          <div class="legal-sidebar-title">
+            On this page
+          </div>
+
+          <a href="#general">
+            01 / General
+          </a>
+
+          <a href="#ai">
+            02 / AI outputs
+          </a>
+
+          <a href="#accuracy">
+            03 / Accuracy
+          </a>
+
+          <a href="#professional">
+            04 / Professional advice
+          </a>
+
+          <a href="#services">
+            05 / Services
+          </a>
+
+          <a href="#third-party">
+            06 / Third-party services
+          </a>
+
+          <a href="#availability">
+            07 / Availability
+          </a>
+
+          <a href="#client">
+            08 / Client responsibility
+          </a>
+
+          <a href="#external">
+            09 / External links
+          </a>
+
+          <a href="#liability">
+            10 / Liability
+          </a>
+
+          <a href="#changes">
+            11 / Changes
+          </a>
+
+          <a href="#contact">
+            12 / Contact
+          </a>
+
+        </aside>
+
+
+        <article class="legal-content">
+
+          <!-- =================================================
+               01
+               ================================================= -->
+
+          <section id="general">
+
+            <h2>
+              01 — General information
+            </h2>
+
+            <p>
+              The information published on the Alphex AI website is
+              provided for general informational purposes and to help
+              visitors understand our company, services, products,
+              capabilities, and approach to AI.
+            </p>
+
+            <p>
+              While we aim to keep information useful and accurate,
+              we do not guarantee that every piece of information on
+              the website is complete, current, or suitable for every
+              situation.
+            </p>
+
+            <p>
+              Your use of information obtained from the website is at
+              your own discretion and responsibility.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               02
+               ================================================= -->
+
+          <section id="ai">
+
+            <h2>
+              02 — AI-generated outputs
+            </h2>
+
+            <p>
+              Alphex AI may design, build, integrate, or provide
+              access to systems that use artificial intelligence,
+              machine learning, large language models, retrieval
+              systems, computer vision, automation, or other AI
+              technologies.
+            </p>
+
+            <p>
+              AI systems can generate outputs that are inaccurate,
+              incomplete, outdated, biased, misleading, or otherwise
+              unsuitable for a particular purpose.
+            </p>
+
+            <p>
+              AI-generated content should therefore be treated as
+              assistance rather than an automatically authoritative
+              source of truth.
+            </p>
+
+            <div class="legal-callout">
+
+              <p>
+                Always review important AI-generated information
+                before relying on it for business, financial, legal,
+                medical, operational, security, or other consequential
+                decisions.
+              </p>
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               03
+               ================================================= -->
+
+          <section id="accuracy">
+
+            <h2>
+              03 — Accuracy and reliability
+            </h2>
+
+            <p>
+              Alphex AI makes reasonable efforts to design reliable
+              systems and improve the quality of AI-assisted outputs.
+              However, no AI system can guarantee perfect accuracy in
+              every situation.
+            </p>
+
+            <p>
+              Outputs may depend on the underlying model, available
+              information, retrieved data, user instructions,
+              integrations, configuration, system conditions, and
+              other factors.
+            </p>
+
+            <p>
+              Alphex AI does not guarantee that an AI-generated answer,
+              recommendation, classification, summary, prediction, or
+              other output will always be correct or complete.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               04
+               ================================================= -->
+
+          <section id="professional">
+
+            <h2>
+              04 — No professional advice
+            </h2>
+
+            <p>
+              Content provided through the Alphex AI website or
+              AI-powered experiences does not constitute legal,
+              financial, medical, accounting, investment, insurance,
+              security, or other professional advice.
+            </p>
+
+            <p>
+              Where professional judgment is required, you should
+              consult an appropriately qualified professional before
+              taking action.
+            </p>
+
+            <p>
+              The use of AI assistance does not replace the
+              responsibility of a qualified professional to review
+              information and make appropriate decisions.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               05
+               ================================================= -->
+
+          <section id="services">
+
+            <h2>
+              05 — AI services and implementations
+            </h2>
+
+            <p>
+              Alphex AI provides services including AI strategy and
+              consulting, conversational AI, knowledge and RAG
+              systems, AI agents, automation, integrations, custom AI
+              solutions, multimodal systems, implementation, testing,
+              and optimization.
+            </p>
+
+            <p>
+              The performance of an implemented AI system may depend
+              on factors outside Alphex AI's direct control, including
+              third-party models, APIs, infrastructure, data quality,
+              business processes, user behavior, and changes to
+              external technology.
+            </p>
+
+            <p>
+              Project-specific expectations, deliverables, warranties,
+              service levels, responsibilities, and limitations should
+              be established in the applicable project agreement.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               06
+               ================================================= -->
+
+          <section id="third-party">
+
+            <h2>
+              06 — Third-party technologies
+            </h2>
+
+            <p>
+              AI solutions may use third-party technologies such as
+              model providers, APIs, hosting platforms, authentication
+              systems, databases, analytics tools, communication
+              platforms, or other infrastructure.
+            </p>
+
+            <p>
+              These third parties operate independently and may change
+              their pricing, availability, functionality, policies,
+              models, APIs, or technical requirements.
+            </p>
+
+            <p>
+              Alphex AI cannot guarantee the continued availability,
+              performance, accuracy, or functionality of an independent
+              third-party service.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               07
+               ================================================= -->
+
+          <section id="availability">
+
+            <h2>
+              07 — Availability and continuity
+            </h2>
+
+            <p>
+              We aim to keep the Alphex AI website and relevant
+              services available and functional, but uninterrupted
+              availability cannot be guaranteed.
+            </p>
+
+            <p>
+              Services may occasionally be affected by maintenance,
+              technical problems, infrastructure failures, third-party
+              outages, security incidents, network conditions, or
+              circumstances outside our reasonable control.
+            </p>
+
+            <p>
+              We may modify, suspend, replace, or discontinue website
+              features or online experiences where reasonably necessary.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               08
+               ================================================= -->
+
+          <section id="client">
+
+            <h2>
+              08 — Client responsibility
+            </h2>
+
+            <p>
+              Clients and users remain responsible for determining
+              whether an AI system, output, workflow, or
+              recommendation is appropriate for their particular
+              circumstances.
+            </p>
+
+            <p>
+              Clients are also responsible for the quality, legality,
+              permissions, and suitability of information or data they
+              provide for use in an AI project.
+            </p>
+
+            <p>
+              Appropriate human review, testing, monitoring, access
+              controls, and operational safeguards should be applied
+              where the nature of the system or use case requires them.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               09
+               ================================================= -->
+
+          <section id="external">
+
+            <h2>
+              09 — External links and resources
+            </h2>
+
+            <p>
+              The Alphex AI website may reference or link to external
+              websites, services, documentation, tools, or resources.
+            </p>
+
+            <p>
+              These external resources are operated by third parties.
+              Alphex AI does not necessarily control or endorse their
+              content, policies, security, availability, or practices.
+            </p>
+
+            <p>
+              You should review the applicable terms and privacy
+              policies of external services before using them.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               10
+               ================================================= -->
+
+          <section id="liability">
+
+            <h2>
+              10 — Limitation of responsibility
+            </h2>
+
+            <p>
+              To the extent permitted by applicable law, Alphex AI is
+              not responsible for losses arising solely from reliance
+              on general website information, unreviewed AI-generated
+              output, or independent third-party services.
+            </p>
+
+            <p>
+              Nothing in this Disclaimer is intended to exclude or
+              limit liability that cannot lawfully be excluded or
+              limited.
+            </p>
+
+            <p>
+              For paid service engagements, the applicable written
+              agreement may contain additional provisions governing
+              warranties, responsibilities, risk allocation, and
+              limitations of liability.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               11
+               ================================================= -->
+
+          <section id="changes">
+
+            <h2>
+              11 — Changes to this Disclaimer
+            </h2>
+
+            <p>
+              Alphex AI may update this Disclaimer when our services,
+              technology, business practices, or legal requirements
+              change.
+            </p>
+
+            <p>
+              The updated version will be published on this page with
+              a revised update date.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               12
+               ================================================= -->
+
+          <section id="contact">
+
+            <h2>
+              12 — Contact Alphex AI
+            </h2>
+
+            <p>
+              If you have questions about this Disclaimer or how AI
+              services are provided by Alphex AI, contact us.
+            </p>
+
+            <div class="legal-contact">
+
+              <div class="legal-contact-label">
+                General enquiries
+              </div>
+
+              <a href="mailto:hello@alphex.ai?subject=Disclaimer%20enquiry">
+                hello@alphex.ai
+              </a>
+
+            </div>
+
+          </section>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Shared footer -->
+  <div id="site-footer"></div>
+
+
+  <!-- Shared site behavior -->
+  <script src="site.js"></script>
+
+</body>
+</html>
