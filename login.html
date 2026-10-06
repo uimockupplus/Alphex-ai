@@ -1,17 +1,15 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-<meta
-name=“viewport”
-content=“width=device-width, initial-scale=1.0”
-
-<meta
-name=“description”
-content=“Sign in to Alphex AI.”
-
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <meta
+    name="description"
+    content="Sign in to Alphex AI."
+  >
   <title>Sign In — Alphex AI</title>
   <link
     rel="stylesheet"
@@ -32,7 +30,7 @@ content=“Sign in to Alphex AI.”
       padding:90px 0 110px;
     }
     .auth-shell{
-      width:min(100% - 32px, 460px);
+      width:min(100% - 32px,460px);
       margin:auto;
     }
     .auth-header{
@@ -61,6 +59,7 @@ content=“Sign in to Alphex AI.”
       line-height:1.6;
     }
     .auth-card{
+      width:100%;
       background:var(--white);
       border:1px solid var(--border);
       border-radius:22px;
@@ -77,12 +76,14 @@ content=“Sign in to Alphex AI.”
       display:flex;
       flex-direction:column;
       gap:8px;
+      min-width:0;
     }
     .field-row{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
+      min-width:0;
     }
     .field-label{
       font:10px var(--mono);
@@ -95,6 +96,7 @@ content=“Sign in to Alphex AI.”
       font-size:11px;
       text-decoration:none;
       transition:color .2s ease;
+      white-space:nowrap;
     }
     .field-link:hover{
       color:var(--accent);
@@ -103,6 +105,7 @@ content=“Sign in to Alphex AI.”
     }
     .field-input{
       width:100%;
+      max-width:100%;
       height:50px;
       border:1px solid var(--border);
       border-radius:11px;
@@ -126,6 +129,8 @@ content=“Sign in to Alphex AI.”
     }
     .password-wrap{
       position:relative;
+      width:100%;
+      min-width:0;
     }
     .password-wrap .field-input{
       padding-right:72px;
@@ -143,6 +148,7 @@ content=“Sign in to Alphex AI.”
       letter-spacing:.04em;
       cursor:pointer;
       padding:7px;
+      white-space:nowrap;
     }
     .password-toggle:hover{
       color:var(--accent-dark);
@@ -186,6 +192,7 @@ content=“Sign in to Alphex AI.”
       border-radius:10px;
       font-size:12px;
       line-height:1.5;
+      overflow-wrap:anywhere;
     }
     .auth-status.show{
       display:block;
@@ -236,12 +243,18 @@ content=“Sign in to Alphex AI.”
       transition:
         border-color .2s ease,
         background .2s ease,
-        transform .2s ease;
+        transform .2s ease,
+        opacity .2s ease;
     }
     .google-button:hover{
       border-color:var(--accent);
       background:var(--lavender);
       transform:translateY(-1px);
+    }
+    .google-button:disabled{
+      cursor:not-allowed;
+      opacity:.65;
+      transform:none;
     }
     .google-icon{
       width:19px;
@@ -249,6 +262,7 @@ content=“Sign in to Alphex AI.”
       display:flex;
       align-items:center;
       justify-content:center;
+      flex:0 0 19px;
       border:1px solid var(--border);
       border-radius:50%;
       font-size:11px;
@@ -302,41 +316,139 @@ content=“Sign in to Alphex AI.”
       color:#a8e1d7;
     }
     /* =====================================================
-       RESPONSIVE
+       TABLET
        ===================================================== */
     @media(max-width:800px){
       .auth-page{
         min-height:calc(100vh - 68px);
         padding:72px 0 82px;
       }
+      .auth-shell{
+        width:min(calc(100% - 36px),460px);
+      }
       .auth-card{
         padding:25px;
       }
     }
+    /* =====================================================
+       MOBILE
+       ===================================================== */
     @media(max-width:480px){
       .auth-page{
-        padding:55px 0 65px;
+        min-height:auto;
+        padding:48px 0 58px;
       }
       .auth-shell{
         width:calc(100% - 28px);
       }
-      .auth-card{
-        padding:21px;
-        border-radius:18px;
+      .auth-header{
+        margin-bottom:25px;
+      }
+      .auth-kicker{
+        font-size:9px;
+        margin-bottom:14px;
       }
       .auth-title{
-        font-size:44px;
+        font-size:42px;
+        line-height:1;
       }
       .auth-copy{
+        max-width:330px;
+        margin-top:15px;
         font-size:13px;
+        line-height:1.55;
+      }
+      .auth-card{
+        padding:20px 17px;
+        border-radius:18px;
+      }
+      .auth-form{
+        gap:16px;
+      }
+      .field{
+        gap:7px;
+      }
+      .field-row{
+        gap:10px;
+      }
+      .field-label{
+        font-size:9px;
+      }
+      .field-link{
+        font-size:9px;
       }
       .field-input{
         height:48px;
+        padding:0 13px;
+        font-size:14px;
+      }
+      .password-wrap .field-input{
+        padding-right:66px;
+      }
+      .password-toggle{
+        right:7px;
+        padding:7px 5px;
+        font-size:9px;
       }
       .auth-submit{
         min-height:48px;
       }
+      .auth-divider{
+        margin:21px 0;
+      }
+      .google-button{
+        min-height:47px;
+      }
+      .terms{
+        font-size:9px;
+        line-height:1.65;
+      }
+      .auth-footer{
+        margin-top:23px;
+        font-size:11px;
+      }
+      .auth-note{
+        max-width:300px;
+        margin-top:19px;
+        font-size:8px;
+      }
     }
+    /* =====================================================
+       VERY SMALL PHONES
+       ===================================================== */
+    @media(max-width:360px){
+      .auth-shell{
+        width:calc(100% - 20px);
+      }
+      .auth-card{
+        padding:18px 14px;
+      }
+      .auth-title{
+        font-size:38px;
+      }
+      .auth-copy{
+        font-size:12px;
+      }
+      .field-row{
+        align-items:flex-start;
+      }
+      .field-input{
+        font-size:13px;
+      }
+      .password-wrap .field-input{
+        padding-right:62px;
+      }
+      .password-toggle{
+        right:5px;
+        font-size:8px;
+      }
+      .field-link{
+        font-size:8px;
+      }
+    }
+    /* =====================================================
+       ACCESSIBILITY / MOTION
+       ===================================================== */
     @media(prefers-reduced-motion:reduce){
       .auth-submit,
       .google-button,
@@ -355,127 +467,127 @@ content=“Sign in to Alphex AI.”
        LOGIN
        ===================================================== -->
   <main class="auth-page">
-<div class="auth-shell">
-  <header class="auth-header">
-    <div class="auth-kicker">
-      Alphex AI / Account
-    </div>
-    <h1 class="auth-title">
-      Welcome back.
-    </h1>
-    <p class="auth-copy">
-      Sign in to continue to your Alphex AI workspace.
-    </p>
-  </header>
-  <section class="auth-card">
-    <form
-      class="auth-form"
-      id="login-form"
-      novalidate
-    >
-      <!-- EMAIL -->
-      <div class="field">
-        <label
-          class="field-label"
-          for="login-email"
+    <div class="auth-shell">
+      <header class="auth-header">
+        <div class="auth-kicker">
+          Alphex AI / Account
+        </div>
+        <h1 class="auth-title">
+          Welcome back.
+        </h1>
+        <p class="auth-copy">
+          Sign in to continue to your Alphex AI workspace.
+        </p>
+      </header>
+      <section class="auth-card">
+        <form
+          class="auth-form"
+          id="login-form"
+          novalidate
         >
-          Email
-        </label>
-        <input
-          class="field-input"
-          id="login-email"
-          name="email"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-          required
+          <!-- EMAIL -->
+          <div class="field">
+            <label
+              class="field-label"
+              for="login-email"
+            >
+              Email
+            </label>
+            <input
+              class="field-input"
+              id="login-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            >
+          </div>
+          <!-- PASSWORD -->
+          <div class="field">
+            <div class="field-row">
+              <label
+                class="field-label"
+                for="login-password"
+              >
+                Password
+              </label>
+              <a
+                class="field-link"
+                href="#"
+                id="forgot-password"
+              >
+                Forgot password?
+              </a>
+            </div>
+            <div class="password-wrap">
+              <input
+                class="field-input"
+                id="login-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                required
+              >
+              <button
+                class="password-toggle"
+                type="button"
+                id="password-toggle"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+            </div>
+          </div>
+          <!-- STATUS -->
+          <div
+            class="auth-status"
+            id="login-status"
+            role="status"
+            aria-live="polite"
+          ></div>
+          <!-- SUBMIT -->
+          <button
+            class="auth-submit"
+            id="login-submit"
+            type="submit"
+          >
+            Sign in
+          </button>
+        </form>
+        <!-- DIVIDER -->
+        <div class="auth-divider">
+          <span>
+            or
+          </span>
+        </div>
+        <!-- GOOGLE -->
+        <button
+          class="google-button"
+          id="google-login"
+          type="button"
         >
-      </div>
-      <!-- PASSWORD -->
-      <div class="field">
-        <div class="field-row">
-          <label
-            class="field-label"
-            for="login-password"
+          <span
+            class="google-icon"
+            aria-hidden="true"
           >
-            Password
-          </label>
-          <a
-            class="field-link"
-            href="#"
-            id="forgot-password"
-          >
-            Forgot password?
+            G
+          </span>
+          Continue with Google
+        </button>
+        <!-- CREATE ACCOUNT -->
+        <div class="auth-footer">
+          Don't have an account?
+          <a href="signup.html">
+            Create one
           </a>
         </div>
-        <div class="password-wrap">
-          <input
-            class="field-input"
-            id="login-password"
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Enter your password"
-            required
-          >
-          <button
-            class="password-toggle"
-            type="button"
-            id="password-toggle"
-            aria-label="Show password"
-          >
-            Show
-          </button>
-        </div>
-      </div>
-      <!-- STATUS -->
-      <div
-        class="auth-status"
-        id="login-status"
-        role="status"
-        aria-live="polite"
-      ></div>
-      <!-- SUBMIT -->
-      <button
-        class="auth-submit"
-        id="login-submit"
-        type="submit"
-      >
-        Sign in
-      </button>
-    </form>
-    <!-- DIVIDER -->
-    <div class="auth-divider">
-      <span>
-        or
-      </span>
+      </section>
+      <p class="auth-note">
+        Secure authentication powered by Alphex AI.
+      </p>
     </div>
-    <!-- GOOGLE -->
-    <button
-      class="google-button"
-      id="google-login"
-      type="button"
-    >
-      <span
-        class="google-icon"
-        aria-hidden="true"
-      >
-        G
-      </span>
-      Continue with Google
-    </button>
-    <!-- CREATE ACCOUNT -->
-    <div class="auth-footer">
-      Don't have an account?
-      <a href="signup.html">
-        Create one
-      </a>
-    </div>
-  </section>
-  <p class="auth-note">
-    Secure authentication powered by Alphex AI.
-  </p>
-</div>
   </main>
   <!-- =====================================================
        SHARED FOOTER
@@ -648,8 +760,10 @@ content=“Sign in to Alphex AI.”
               data,
               error
             } = await supabase.auth.signInWithPassword({
-              email: emailValue,
-              password: passwordValue
+              email:
+                emailValue,
+              password:
+                passwordValue
             });
             if (error) {
               console.error(
@@ -679,10 +793,6 @@ content=“Sign in to Alphex AI.”
               'Signed in successfully. Opening your workspace...',
               'success'
             );
-            /*
-             * Give the browser a moment to update
-             * the Supabase session before navigation.
-             */
             setTimeout(() => {
               window.location.replace(
                 'workspace.html'
@@ -710,14 +820,14 @@ content=“Sign in to Alphex AI.”
         async () => {
           clearStatus();
           googleLogin.disabled = true;
-          googleLogin.textContent =
+          googleLogin.innerHTML =
             'Connecting to Google...';
           try {
             const {
-              data,
               error
             } = await supabase.auth.signInWithOAuth({
-              provider: 'google',
+              provider:
+                'google',
               options: {
                 redirectTo:
                   `${window.location.origin}/workspace.html`
