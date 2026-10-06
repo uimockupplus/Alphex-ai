@@ -486,8 +486,8 @@
           Create your account.
         </h1>
         <p class="auth-copy">
-          Set up your Alphex AI account and get ready
-          to work with AI evaluation tools.
+          Create an Alphex AI account to stay connected
+          with our services, products, and future capabilities.
         </p>
       </header>
       <section class="auth-card">
@@ -691,27 +691,49 @@
          ELEMENTS
          --------------------------------------------------- */
       const form =
-        document.getElementById('signup-form');
+        document.getElementById(
+          'signup-form'
+        );
       const name =
-        document.getElementById('signup-name');
+        document.getElementById(
+          'signup-name'
+        );
       const email =
-        document.getElementById('signup-email');
+        document.getElementById(
+          'signup-email'
+        );
       const password =
-        document.getElementById('signup-password');
+        document.getElementById(
+          'signup-password'
+        );
       const confirmPassword =
-        document.getElementById('signup-confirm-password');
+        document.getElementById(
+          'signup-confirm-password'
+        );
       const submit =
-        document.getElementById('signup-submit');
+        document.getElementById(
+          'signup-submit'
+        );
       const status =
-        document.getElementById('signup-status');
+        document.getElementById(
+          'signup-status'
+        );
       const passwordToggle =
-        document.getElementById('password-toggle');
+        document.getElementById(
+          'password-toggle'
+        );
       const confirmPasswordToggle =
-        document.getElementById('confirm-password-toggle');
+        document.getElementById(
+          'confirm-password-toggle'
+        );
       const strengthBar =
-        document.getElementById('password-strength-bar');
+        document.getElementById(
+          'password-strength-bar'
+        );
       const googleSignup =
-        document.getElementById('google-signup');
+        document.getElementById(
+          'google-signup'
+        );
       /* ---------------------------------------------------
          STATUS
          --------------------------------------------------- */
@@ -719,43 +741,47 @@
         message,
         type = 'error'
       ) => {
-        status.textContent = message;
+        status.textContent =
+          message;
         status.className =
           `auth-status show ${type}`;
       };
       const clearStatus = () => {
-        status.textContent = '';
+        status.textContent =
+          '';
         status.className =
           'auth-status';
       };
       /* ---------------------------------------------------
          EXISTING SESSION
          --------------------------------------------------- */
-      const checkExistingSession = async () => {
-        try {
-          const {
-            data,
-            error
-          } = await supabase.auth.getSession();
-          if (error) {
+      const checkExistingSession =
+        async () => {
+          try {
+            const {
+              data,
+              error
+            } =
+              await supabase.auth.getSession();
+            if (error) {
+              console.error(
+                'Session check error:',
+                error
+              );
+              return;
+            }
+            if (data.session) {
+              window.location.replace(
+                'index.html'
+              );
+            }
+          } catch (error) {
             console.error(
-              'Session check error:',
+              'Unable to check session:',
               error
             );
-            return;
           }
-          if (data.session) {
-            window.location.replace(
-              'workspace.html'
-            );
-          }
-        } catch (error) {
-          console.error(
-            'Unable to check session:',
-            error
-          );
-        }
-      };
+        };
       checkExistingSession();
       /* ---------------------------------------------------
          AUTH STATE
@@ -767,7 +793,7 @@
             session
           ) {
             window.location.replace(
-              'workspace.html'
+              'index.html'
             );
           }
         }
@@ -818,27 +844,41 @@
           const value =
             password.value;
           let strength = 0;
-          if (value.length >= 8) {
+          if (
+            value.length >= 8
+          ) {
             strength += 25;
           }
-          if (/[a-z]/.test(value)) {
+          if (
+            /[a-z]/.test(value)
+          ) {
             strength += 25;
           }
-          if (/[A-Z]/.test(value)) {
+          if (
+            /[A-Z]/.test(value)
+          ) {
             strength += 25;
           }
-          if (/[0-9!@#$%^&*]/.test(value)) {
+          if (
+            /[0-9!@#$%^&*]/.test(value)
+          ) {
             strength += 25;
           }
           strengthBar.style.width =
             `${strength}%`;
-          if (strength <= 25) {
+          if (
+            strength <= 25
+          ) {
             strengthBar.style.background =
               '#d9534f';
-          } else if (strength <= 50) {
+          } else if (
+            strength <= 50
+          ) {
             strengthBar.style.background =
               '#d99b35';
-          } else if (strength <= 75) {
+          } else if (
+            strength <= 75
+          ) {
             strengthBar.style.background =
               '#6b8e5b';
           } else {
@@ -885,14 +925,18 @@
             email.focus();
             return;
           }
-          if (passwordValue.length < 8) {
+          if (
+            passwordValue.length < 8
+          ) {
             showStatus(
               'Your password must contain at least 8 characters.'
             );
             password.focus();
             return;
           }
-          if (passwordValue !== confirmValue) {
+          if (
+            passwordValue !== confirmValue
+          ) {
             showStatus(
               'Your passwords do not match.'
             );
@@ -900,27 +944,33 @@
             return;
           }
           /* LOADING */
-          submit.disabled = true;
+          submit.disabled =
+            true;
           submit.textContent =
             'Creating account...';
           try {
             const {
               data,
               error
-            } = await supabase.auth.signUp({
-              email:
-                emailValue,
-              password:
-                passwordValue,
-              options: {
-                data: {
-                  full_name:
-                    nameValue
-                },
-                emailRedirectTo:
-                  `${window.location.origin}/workspace.html`
-              }
-            });
+            } =
+              await supabase.auth.signUp({
+                email:
+                  emailValue,
+                password:
+                  passwordValue,
+                options: {
+                  data: {
+                    full_name:
+                      nameValue
+                  },
+                  /*
+                   * After email confirmation,
+                   * return to the Alphex AI homepage.
+                   */
+                  emailRedirectTo:
+                    `${window.location.origin}/index.html`
+                }
+              });
             if (error) {
               console.error(
                 'Supabase signup error:',
@@ -931,14 +981,16 @@
                   error
                 )
               );
-              submit.disabled = false;
+              submit.disabled =
+                false;
               submit.textContent =
                 'Create account';
               return;
             }
             /*
-             * If Supabase has email confirmation
-             * enabled, session will be null.
+             * Email confirmation is enabled.
+             * Supabase creates the user but does
+             * not create an active session yet.
              */
             if (
               data.user &&
@@ -948,32 +1000,37 @@
                 'Account created. Please check your email and confirm your account before signing in.',
                 'success'
               );
-              submit.disabled = false;
+              submit.disabled =
+                false;
               submit.textContent =
                 'Account created';
               return;
             }
             /*
-             * If email confirmation is disabled,
-             * Supabase can create an active session.
+             * Email confirmation is disabled.
+             * Supabase creates an active session.
              */
             if (data.session) {
               showStatus(
-                'Account created successfully. Opening your workspace...',
+                'Account created successfully. Opening Alphex AI...',
                 'success'
               );
-              setTimeout(() => {
-                window.location.replace(
-                  'workspace.html'
-                );
-              }, 500);
+              setTimeout(
+                () => {
+                  window.location.replace(
+                    'index.html'
+                  );
+                },
+                500
+              );
               return;
             }
             showStatus(
               'Your account was created. Please sign in to continue.',
               'success'
             );
-            submit.disabled = false;
+            submit.disabled =
+              false;
             submit.textContent =
               'Create account';
           } catch (error) {
@@ -984,7 +1041,8 @@
             showStatus(
               'Something went wrong while creating your account. Please try again.'
             );
-            submit.disabled = false;
+            submit.disabled =
+              false;
             submit.textContent =
               'Create account';
           }
@@ -997,20 +1055,26 @@
         'click',
         async () => {
           clearStatus();
-          googleSignup.disabled = true;
+          googleSignup.disabled =
+            true;
           googleSignup.innerHTML =
             'Connecting to Google...';
           try {
             const {
               error
-            } = await supabase.auth.signInWithOAuth({
-              provider:
-                'google',
-              options: {
-                redirectTo:
-                  `${window.location.origin}/workspace.html`
-              }
-            });
+            } =
+              await supabase.auth.signInWithOAuth({
+                provider:
+                  'google',
+                options: {
+                  /*
+                   * Google authentication also returns
+                   * to the Alphex AI homepage.
+                   */
+                  redirectTo:
+                    `${window.location.origin}/index.html`
+                }
+              });
             if (error) {
               console.error(
                 'Google signup error:',
@@ -1021,7 +1085,8 @@
                   error
                 )
               );
-              googleSignup.disabled = false;
+              googleSignup.disabled =
+                false;
               googleSignup.innerHTML = `
                 <span
                   class="google-icon"
@@ -1040,7 +1105,8 @@
             showStatus(
               'Google sign-up could not be started. Please try again.'
             );
-            googleSignup.disabled = false;
+            googleSignup.disabled =
+              false;
             googleSignup.innerHTML = `
               <span
                 class="google-icon"
@@ -1056,7 +1122,9 @@
       /* ---------------------------------------------------
          FRIENDLY AUTH ERRORS
          --------------------------------------------------- */
-      function getFriendlyAuthError(error) {
+      function getFriendlyAuthError(
+        error
+      ) {
         const message =
           String(
             error?.message || ''
