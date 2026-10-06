@@ -541,6 +541,12 @@ body.dark-theme .pill.dark,body.dark-theme .pill.dark:hover,body.dark-theme .hea
 
 /* Typography update only: preserve the supplied dark-mode UI. */
 body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!important}.pill,.nav-links a,.mobile-panel a,.faq-list summary,.product-mark{font-weight:500}.hero-copy,.section-copy,.feature p,.band p,.price-card p,.faq-list p,.footer-brand p{font-weight:300}.footer-group h4,.section-label,.hero-kicker,.mono,.product-number,.product-status{font-weight:400}
+
+/* Monochrome product cards: match the surrounding UI. */
+.product-card.ai,.product-card.jobs{background:#fff;border:1px solid #d4d4d0}.product-card.ai .product-mark,.product-card.jobs .product-mark{background:#111;color:#fff;box-shadow:none}.product-card .product-tags span{background:#fff;border-color:#c8c8c4;color:#111}.product-card .product-tags span:hover{background:#111;color:#fff;border-color:#111}.product-card:hover{box-shadow:0 20px 55px rgba(0,0,0,.1)}body.dark-theme .product-card.ai,body.dark-theme .product-card.jobs{background:#171717;border-color:#3b3b3b}body.dark-theme .product-card.ai .product-mark,body.dark-theme .product-card.jobs .product-mark{background:#fff;color:#111;box-shadow:none}body.dark-theme .product-card .product-tags span{background:#171717;border-color:#555;color:#fff}body.dark-theme .product-card .product-tags span:hover{background:#fff;color:#111;border-color:#fff}body.dark-theme .product-card:hover{box-shadow:0 20px 55px rgba(0,0,0,.45)}
+
+/* Subtle transparent product-card treatment. */
+.product-card.ai,.product-card.jobs{background:rgba(255,255,255,.72);border-color:rgba(16,16,16,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.product-card .product-tags span{background:rgba(255,255,255,.48)}body.dark-theme .product-card.ai,body.dark-theme .product-card.jobs{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}body.dark-theme .product-card .product-tags span{background:rgba(255,255,255,.04)}
 </style>
 </head>
 
@@ -551,7 +557,7 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
     <a class="wordmark" href="#top">alphex ai</a>
 
     <div class="nav-links">
-      <a href="#capabilities">Capabilities</a>
+      <a href="#capabilities">Capabilities</a><a href="#products">Products</a>
       <a href="#products">Products</a>
       <a href="#process">Process</a>
       <a href="#pricing">Pricing</a>
