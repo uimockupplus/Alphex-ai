@@ -69,21 +69,30 @@
     .legal-meta-dot{
       width:7px;
       height:7px;
+      flex:0 0 7px;
       border-radius:50%;
       background:var(--cyan);
     }
 
+    /* =========================================================
+       LEGAL LAYOUT
+       ========================================================= */
+
     .legal-layout{
-      display:grid;
-      grid-template-columns:260px 1fr;
-      gap:90px;
       padding:95px 0 120px;
+    }
+
+    .legal-layout-inner{
+      display:grid;
+      grid-template-columns:260px minmax(0,1fr);
+      gap:90px;
       align-items:start;
     }
 
     .legal-sidebar{
       position:sticky;
       top:105px;
+      min-width:0;
     }
 
     .legal-sidebar-title{
@@ -109,7 +118,9 @@
     }
 
     .legal-content{
+      width:100%;
       max-width:760px;
+      min-width:0;
     }
 
     .legal-content section{
@@ -159,6 +170,7 @@
     .legal-content a{
       color:var(--accent-dark);
       text-underline-offset:3px;
+      overflow-wrap:anywhere;
     }
 
     .legal-callout{
@@ -173,6 +185,8 @@
     }
 
     .legal-contact{
+      width:100%;
+      max-width:100%;
       padding:25px;
       border:1px solid var(--border);
     }
@@ -186,14 +200,21 @@
     }
 
     .legal-contact a{
+      display:inline-block;
+      max-width:100%;
       font-size:15px;
       color:var(--ink);
       text-decoration:none;
+      overflow-wrap:anywhere;
     }
 
     .legal-contact a:hover{
       color:var(--accent-dark);
     }
+
+    /* =========================================================
+       TABLET / MOBILE
+       ========================================================= */
 
     @media(max-width:900px){
 
@@ -207,13 +228,17 @@
       }
 
       .legal-layout{
+        padding:75px 0 90px;
+      }
+
+      .legal-layout-inner{
         grid-template-columns:1fr;
         gap:45px;
-        padding:75px 0 90px;
       }
 
       .legal-sidebar{
         position:static;
+        width:100%;
         border-bottom:1px solid var(--border);
         padding-bottom:25px;
       }
@@ -222,21 +247,114 @@
         display:inline-block;
         margin-right:18px;
       }
+
+      .legal-content{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+      }
     }
 
     @media(max-width:600px){
 
+      .legal-hero{
+        padding:65px 0 55px;
+      }
+
+      .legal-hero-grid{
+        gap:30px;
+      }
+
       .legal-hero h1{
-        font-size:clamp(52px,15vw,78px);
+        max-width:100%;
+        font-size:clamp(48px,14vw,72px);
+        line-height:.9;
+      }
+
+      .legal-intro{
+        max-width:100%;
+        font-size:15px;
+        line-height:1.6;
+      }
+
+      .legal-meta{
+        flex-wrap:wrap;
+        line-height:1.5;
+      }
+
+      .legal-layout{
+        padding:60px 0 75px;
+      }
+
+      .legal-layout-inner{
+        gap:35px;
+      }
+
+      .legal-sidebar{
+        padding-bottom:20px;
+      }
+
+      .legal-sidebar a{
+        font-size:11px;
+        margin-right:13px;
+        padding:6px 0;
+      }
+
+      .legal-content section{
+        margin-bottom:50px;
+        scroll-margin-top:85px;
       }
 
       .legal-content h2{
+        max-width:100%;
         font-size:25px;
+        line-height:1.08;
+      }
+
+      .legal-content h3{
+        font-size:16px;
       }
 
       .legal-content p,
       .legal-content li{
         font-size:13px;
+        line-height:1.7;
+      }
+
+      .legal-content ul{
+        padding-left:20px;
+      }
+
+      .legal-callout{
+        padding:20px;
+      }
+
+      .legal-contact{
+        padding:20px;
+      }
+    }
+
+    @media(max-width:380px){
+
+      .legal-hero h1{
+        font-size:46px;
+      }
+
+      .legal-content h2{
+        font-size:23px;
+      }
+
+      .legal-sidebar a{
+        margin-right:9px;
+        font-size:10px;
+      }
+
+      .legal-contact{
+        padding:17px;
+      }
+
+      .legal-contact a{
+        font-size:14px;
       }
     }
 
@@ -323,7 +441,7 @@
 
     <section class="legal-layout">
 
-      <div class="shell" style="display:contents;">
+      <div class="shell legal-layout-inner">
 
         <aside class="legal-sidebar">
 
