@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Learn about Alphex AI — a service-based AI company building practical AI systems, automation, agents, knowledge systems, and AI-powered products."
+  />
+
+  <meta
+    name="theme-color"
+    content="#f7f7f5"
+  />
+
+  <title>About — Alphex AI</title>
+
+  <link rel="stylesheet" href="site.css" />
+
+  <style>
+    /* =========================================================
+       ALPHEX AI — ABOUT PAGE
+       Page-specific styles only
+       ========================================================= */
+
+    .about-hero{
+      padding:110px 0 105px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .about-hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:90px;
+      align-items:end;
+    }
+
+    .about-hero h1{
+      max-width:920px;
+      margin:16px 0 0;
+      font-size:clamp(58px,8vw,108px);
+      line-height:.88;
+      letter-spacing:-.09em;
+      font-weight:300;
+    }
+
+    .about-hero-copy{
+      max-width:470px;
+      color:#595955;
+      font-size:17px;
+      line-height:1.6;
+    }
+
+    .about-hero-copy p{
+      margin-bottom:24px;
+    }
+
+    .about-marker{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .about-marker-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--cyan);
+    }
+
+    /* =========================================================
+       INTRO
+       ========================================================= */
+
+    .about-intro{
+      padding:120px 0;
+    }
+
+    .about-intro-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:100px;
+      align-items:start;
+    }
+
+    .about-intro h2{
+      max-width:520px;
+      margin:15px 0 0;
+      font-size:clamp(45px,5.5vw,76px);
+      line-height:.92;
+      letter-spacing:-.085em;
+    }
+
+    .about-intro-copy{
+      max-width:690px;
+      color:#595955;
+      font-size:18px;
+      line-height:1.7;
+    }
+
+    .about-intro-copy p{
+      margin-bottom:25px;
+    }
+
+    .about-intro-copy p:last-child{
+      margin-bottom:0;
+    }
+
+    /* =========================================================
+       PRINCIPLES
+       ========================================================= */
+
+    .principles{
+      padding:110px 0;
+      background:var(--soft);
+    }
+
+    .principles-header{
+      display:grid;
+      grid-template-columns:.75fr 1.25fr;
+      gap:100px;
+      margin-bottom:65px;
+    }
+
+    .principles-header h2{
+      max-width:700px;
+      margin:15px 0 0;
+      font-size:clamp(44px,5vw,70px);
+      line-height:.94;
+      letter-spacing:-.08em;
+    }
+
+    .principles-copy{
+      max-width:560px;
+      color:#595955;
+      font-size:16px;
+      line-height:1.65;
+      padding-top:5px;
+    }
+
+    .principles-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-top:1px solid var(--border);
+      border-left:1px solid var(--border);
+    }
+
+    .principle{
+      min-height:270px;
+      padding:28px;
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+    }
+
+    .principle-number{
+      font:10px var(--mono);
+      color:var(--accent-dark);
+      margin-bottom:70px;
+    }
+
+    .principle h3{
+      margin:0 0 10px;
+      font-size:23px;
+      line-height:1.05;
+      letter-spacing:-.05em;
+      font-weight:400;
+    }
+
+    .principle p{
+      max-width:310px;
+      margin:0;
+      color:#666660;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    /* =========================================================
+       HOW WE THINK
+       ========================================================= */
+
+    .thinking{
+      padding:120px 0;
+    }
+
+    .thinking-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:90px;
+    }
+
+    .thinking h2{
+      max-width:570px;
+      margin:15px 0 0;
+      font-size:clamp(45px,5.5vw,76px);
+      line-height:.92;
+      letter-spacing:-.085em;
+    }
+
+    .thinking-content{
+      border-top:1px solid var(--border);
+    }
+
+    .thinking-item{
+      display:grid;
+      grid-template-columns:40px 1fr;
+      gap:18px;
+      padding:25px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .thinking-number{
+      font:10px var(--mono);
+      color:var(--muted);
+      padding-top:4px;
+    }
+
+    .thinking-item h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:400;
+      letter-spacing:-.03em;
+    }
+
+    .thinking-item p{
+      margin:0;
+      max-width:570px;
+      color:#666660;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    /* =========================================================
+       ECOSYSTEM
+       ========================================================= */
+
+    .ecosystem{
+      padding:110px 0;
+      background:var(--ink);
+      color:var(--paper);
+    }
+
+    .ecosystem-grid{
+      display:grid;
+      grid-template-columns:.7fr 1.3fr;
+      gap:100px;
+      align-items:start;
+    }
+
+    .ecosystem .section-label{
+      color:#b9afff;
+    }
+
+    .ecosystem h2{
+      max-width:560px;
+      margin:15px 0 0;
+      font-size:clamp(45px,5.5vw,76px);
+      line-height:.92;
+      letter-spacing:-.085em;
+    }
+
+    .ecosystem-copy{
+      max-width:680px;
+      color:#c7c7c7;
+      font-size:17px;
+      line-height:1.65;
+    }
+
+    .ecosystem-copy > p{
+      margin-bottom:38px;
+    }
+
+    .ecosystem-structure{
+      border-top:1px solid rgba(255,255,255,.2);
+    }
+
+    .ecosystem-row{
+      display:grid;
+      grid-template-columns:130px 1fr;
+      gap:30px;
+      padding:24px 0;
+      border-bottom:1px solid rgba(255,255,255,.2);
+    }
+
+    .ecosystem-type{
+      font:9px var(--mono);
+      color:#999;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      padding-top:5px;
+    }
+
+    .ecosystem-name{
+      margin:0 0 7px;
+      font-size:19px;
+      font-weight:400;
+    }
+
+    .ecosystem-description{
+      margin:0;
+      color:#aaa;
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    /* =========================================================
+       QUALITY BAR
+       ========================================================= */
+
+    .quality{
+      padding:120px 0;
+    }
+
+    .quality-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:100px;
+    }
+
+    .quality h2{
+      max-width:530px;
+      margin:15px 0 0;
+      font-size:clamp(45px,5.5vw,75px);
+      line-height:.92;
+      letter-spacing:-.085em;
+    }
+
+    .quality-copy{
+      max-width:680px;
+      color:#595955;
+      font-size:17px;
+      line-height:1.65;
+    }
+
+    .quality-list{
+      margin-top:40px;
+      border-top:1px solid var(--border);
+    }
+
+    .quality-item{
+      display:grid;
+      grid-template-columns:40px 1fr;
+      gap:18px;
+      padding:22px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .quality-icon{
+      width:24px;
+      height:24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--accent);
+      border-radius:50%;
+      color:var(--accent-dark);
+      font-size:11px;
+    }
+
+    .quality-item h3{
+      margin:0 0 6px;
+      font-size:16px;
+      font-weight:400;
+    }
+
+    .quality-item p{
+      margin:0;
+      color:#666660;
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    /* =========================================================
+       CTA
+       ========================================================= */
+
+    .about-cta{
+      padding:115px 0;
+      border-top:1px solid var(--border);
+    }
+
+    .about-cta-inner{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:60px;
+    }
+
+    .about-cta h2{
+      max-width:720px;
+      margin:15px 0 0;
+      font-size:clamp(45px,6vw,82px);
+      line-height:.9;
+      letter-spacing:-.09em;
+    }
+
+    .about-cta-copy{
+      max-width:330px;
+      color:#666660;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .about-cta-actions{
+      display:flex;
+      gap:10px;
+      margin-top:25px;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media(max-width:900px){
+
+      .about-hero{
+        padding:82px 0 75px;
+      }
+
+      .about-hero-grid{
+        grid-template-columns:1fr;
+        gap:45px;
+      }
+
+      .about-intro{
+        padding:80px 0;
+      }
+
+      .about-intro-grid,
+      .thinking-grid,
+      .quality-grid{
+        grid-template-columns:1fr;
+        gap:55px;
+      }
+
+      .principles{
+        padding:80px 0;
+      }
+
+      .principles-header{
+        grid-template-columns:1fr;
+        gap:35px;
+        margin-bottom:50px;
+      }
+
+      .principles-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .ecosystem{
+        padding:80px 0;
+      }
+
+      .ecosystem-grid{
+        grid-template-columns:1fr;
+        gap:55px;
+      }
+
+      .quality{
+        padding:80px 0;
+      }
+
+      .about-cta{
+        padding:85px 0;
+      }
+
+      .about-cta-inner{
+        display:block;
+      }
+
+      .about-cta-copy{
+        margin-top:35px;
+      }
+    }
+
+    @media(max-width:600px){
+
+      .about-hero h1{
+        font-size:clamp(54px,16vw,82px);
+      }
+
+      .principles-grid{
+        grid-template-columns:1fr;
+      }
+
+      .principle{
+        min-height:auto;
+      }
+
+      .principle-number{
+        margin-bottom:55px;
+      }
+
+      .ecosystem-row{
+        grid-template-columns:1fr;
+        gap:9px;
+      }
+
+      .about-cta-actions{
+        display:block;
+      }
+
+      .about-cta-actions .pill{
+        width:100%;
+        margin-bottom:9px;
+      }
+    }
+
+    /* =========================================================
+       DARK THEME
+       ========================================================= */
+
+    body.dark-theme .about-hero-copy,
+    body.dark-theme .about-intro-copy,
+    body.dark-theme .principles-copy,
+    body.dark-theme .quality-copy,
+    body.dark-theme .about-cta-copy{
+      color:#c2c5d5;
+    }
+
+    body.dark-theme .principles{
+      background:#171a28;
+    }
+
+    body.dark-theme .principle p,
+    body.dark-theme .thinking-item p,
+    body.dark-theme .quality-item p{
+      color:#aeb2c4;
+    }
+
+    body.dark-theme .principle-number,
+    body.dark-theme .thinking-number{
+      color:#aaa0ff;
+    }
+
+    body.dark-theme .ecosystem{
+      background:#f5f4ff;
+      color:#101010;
+    }
+
+    body.dark-theme .ecosystem .section-label{
+      color:#5540d8;
+    }
+
+    body.dark-theme .ecosystem-copy{
+      color:#55575f;
+    }
+
+    body.dark-theme .ecosystem-structure{
+      border-color:#d4d4d0;
+    }
+
+    body.dark-theme .ecosystem-row{
+      border-color:#d4d4d0;
+    }
+
+    body.dark-theme .ecosystem-type{
+      color:#74746f;
+    }
+
+    body.dark-theme .ecosystem-description{
+      color:#74746f;
+    }
+
+    body.dark-theme .quality-icon{
+      color:#bfb5ff;
+      border-color:#8172ff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Shared navigation -->
+  <div id="site-nav"></div>
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="about-hero">
+
+      <div class="shell">
+
+        <div class="about-hero-grid">
+
+          <div>
+
+            <div class="hero-kicker">
+              ALPHEX AI / ABOUT
+            </div>
+
+            <h1>
+              Building AI for work that matters.
+            </h1>
+
+          </div>
+
+          <div class="about-hero-copy">
+
+            <p>
+              Alphex AI is a service-based AI company focused on
+              turning practical problems into reliable AI systems.
+            </p>
+
+            <p>
+              We work across strategy, implementation, automation,
+              AI agents, knowledge systems, integrations, and
+              custom AI solutions.
+            </p>
+
+            <div class="about-marker">
+              <span class="about-marker-dot"></span>
+              Hyderabad, India
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INTRODUCTION
+         ===================================================== -->
+
+    <section class="about-intro">
+
+      <div class="shell">
+
+        <div class="about-intro-grid">
+
+          <div>
+
+            <div class="section-label">
+              WHY ALPHEX AI
+            </div>
+
+            <h2>
+              AI should solve problems, not create new ones.
+            </h2>
+
+          </div>
+
+          <div class="about-intro-copy">
+
+            <p>
+              AI has become remarkably capable, but capability alone
+              does not make a system useful. Real organizations need
+              systems that fit their workflows, work with their data,
+              integrate with existing tools, and behave consistently.
+            </p>
+
+            <p>
+              That's where Alphex AI focuses.
+            </p>
+
+            <p>
+              We help organizations identify where AI can create
+              meaningful value, design the right solution, build it,
+              test it, and improve it over time.
+            </p>
+
+            <p>
+              Our approach is deliberately practical. We care about
+              the outcome first and the technology second.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRINCIPLES
+         ===================================================== -->
+
+    <section class="principles">
+
+      <div class="shell">
+
+        <div class="principles-header">
+
+          <div>
+
+            <div class="section-label">
+              OUR PRINCIPLES
+            </div>
+
+            <h2>
+              A different standard for building AI.
+            </h2>
+
+          </div>
+
+          <div class="principles-copy">
+
+            <p>
+              Every AI system we build should have a reason to exist,
+              a measurable purpose, and a clear path to improvement.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="principles-grid">
+
+          <article class="principle">
+
+            <div class="principle-number">
+              01 / USEFULNESS
+            </div>
+
+            <h3>
+              Start with the problem.
+            </h3>
+
+            <p>
+              We begin with the workflow, user, or business problem
+              rather than forcing AI into a process simply because
+              the technology exists.
+            </p>
+
+          </article>
+
+
+          <article class="principle">
+
+            <div class="principle-number">
+              02 / QUALITY
+            </div>
+
+            <h3>
+              Quality is part of the build.
+            </h3>
+
+            <p>
+              Evaluation, testing, reliability, and human oversight
+              should be considered from the beginning rather than
+              added after something goes wrong.
+            </p>
+
+          </article>
+
+
+          <article class="principle">
+
+            <div class="principle-number">
+              03 / CONTEXT
+            </div>
+
+            <h3>
+              Context makes AI useful.
+            </h3>
+
+            <p>
+              Systems become more valuable when they understand the
+              right information, users, workflows, and constraints.
+            </p>
+
+          </article>
+
+
+          <article class="principle">
+
+            <div class="principle-number">
+              04 / SIMPLICITY
+            </div>
+
+            <h3>
+              Complexity needs a reason.
+            </h3>
+
+            <p>
+              We prefer understandable architectures and practical
+              solutions over unnecessary technical complexity.
+            </p>
+
+          </article>
+
+
+          <article class="principle">
+
+            <div class="principle-number">
+              05 / TRANSPARENCY
+            </div>
+
+            <h3>
+              Clear expectations matter.
+            </h3>
+
+            <p>
+              Scope, limitations, dependencies, and trade-offs should
+              be visible before implementation begins.
+            </p>
+
+          </article>
+
+
+          <article class="principle">
+
+            <div class="principle-number">
+              06 / IMPROVEMENT
+            </div>
+
+            <h3>
+              Launch is not the finish line.
+            </h3>
+
+            <p>
+              AI systems should be observed, evaluated, and improved
+              as real users and real-world conditions reveal new needs.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW WE THINK
+         ===================================================== -->
+
+    <section class="thinking">
+
+      <div class="shell">
+
+        <div class="thinking-grid">
+
+          <div>
+
+            <div class="section-label">
+              HOW WE THINK
+            </div>
+
+            <h2>
+              Technology should disappear into the workflow.
+            </h2>
+
+          </div>
+
+
+          <div class="thinking-content">
+
+            <div class="thinking-item">
+
+              <div class="thinking-number">
+                01
+              </div>
+
+              <div>
+
+                <h3>
+                  Understand before building.
+                </h3>
+
+                <p>
+                  We first understand the users, workflow, data,
+                  constraints, and desired outcome.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="thinking-item">
+
+              <div class="thinking-number">
+                02
+              </div>
+
+              <div>
+
+                <h3>
+                  Build around real usage.
+                </h3>
+
+                <p>
+                  The system should fit how people actually work,
+                  rather than requiring everyone to change their
+                  process around the technology.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="thinking-item">
+
+              <div class="thinking-number">
+                03
+              </div>
+
+              <div>
+
+                <h3>
+                  Design for uncertainty.
+                </h3>
+
+                <p>
+                  AI systems can be uncertain. Good systems make that
+                  uncertainty manageable through grounding, validation,
+                  guardrails, and appropriate human involvement.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="thinking-item">
+
+              <div class="thinking-number">
+                04
+              </div>
+
+              <div>
+
+                <h3>
+                  Measure what matters.
+                </h3>
+
+                <p>
+                  A system should be evaluated against meaningful
+                  outcomes rather than judged only by how impressive
+                  its demonstrations look.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="thinking-item">
+
+              <div class="thinking-number">
+                05
+              </div>
+
+              <div>
+
+                <h3>
+                  Keep improving.
+                </h3>
+
+                <p>
+                  Feedback from real usage becomes part of the next
+                  iteration, helping the system become more useful
+                  over time.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ECOSYSTEM
+         ===================================================== -->
+
+    <section class="ecosystem">
+
+      <div class="shell">
+
+        <div class="ecosystem-grid">
+
+          <div>
+
+            <div class="section-label">
+              THE ALPHEX AI ECOSYSTEM
+            </div>
+
+            <h2>
+              One company. Multiple ways to improve the AI ecosystem.
+            </h2>
+
+          </div>
+
+
+          <div class="ecosystem-copy">
+
+            <p>
+              Alphex AI is the parent company behind a growing set
+              of AI initiatives. Our service work helps organizations
+              build and improve AI systems, while our products address
+              broader needs across the AI ecosystem.
+            </p>
+
+            <div class="ecosystem-structure">
+
+              <div class="ecosystem-row">
+
+                <div class="ecosystem-type">
+                  Parent
+                </div>
+
+                <div>
+
+                  <div class="ecosystem-name">
+                    Alphex AI
+                  </div>
+
+                  <p class="ecosystem-description">
+                    AI strategy, implementation, automation, agents,
+                    knowledge systems, integrations, and custom AI
+                    solutions.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="ecosystem-row">
+
+                <div class="ecosystem-type">
+                  Product 01
+                </div>
+
+                <div>
+
+                  <div class="ecosystem-name">
+                    EvalLoop AI
+                  </div>
+
+                  <p class="ecosystem-description">
+                    An AI evaluation and quality platform being built
+                    to help teams understand and improve AI system
+                    performance.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="ecosystem-row">
+
+                <div class="ecosystem-type">
+                  Product 02
+                </div>
+
+                <div>
+
+                  <div class="ecosystem-name">
+                    EvalLoop Jobs
+                  </div>
+
+                  <p class="ecosystem-description">
+                    An independent opportunity discovery platform
+                    connecting people with AI, data annotation,
+                    evaluation, training, and related opportunities.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUALITY
+         ===================================================== -->
+
+    <section class="quality">
+
+      <div class="shell">
+
+        <div class="quality-grid">
+
+          <div>
+
+            <div class="section-label">
+              OUR QUALITY BAR
+            </div>
+
+            <h2>
+              We don't measure AI by the demo alone.
+            </h2>
+
+          </div>
+
+
+          <div class="quality-copy">
+
+            <p>
+              A convincing prototype is only the beginning. Real
+              AI systems have to work under real conditions, with
+              real users, real information, and real constraints.
+            </p>
+
+            <div class="quality-list">
+
+              <div class="quality-item">
+
+                <div class="quality-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <h3>
+                    Grounded
+                  </h3>
+
+                  <p>
+                    The system should use appropriate information
+                    rather than confidently inventing answers.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="quality-item">
+
+                <div class="quality-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <h3>
+                    Reliable
+                  </h3>
+
+                  <p>
+                    Important workflows should behave consistently
+                    across expected use cases.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="quality-item">
+
+                <div class="quality-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <h3>
+                    Understandable
+                  </h3>
+
+                  <p>
+                    Teams should understand what the system does,
+                    what it depends on, and where its limitations are.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="quality-item">
+
+                <div class="quality-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <h3>
+                    Human-aware
+                  </h3>
+
+                  <p>
+                    When automation is not appropriate, the system
+                    should know when a person needs to be involved.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="quality-item">
+
+                <div class="quality-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <h3>
+                    Improveable
+                  </h3>
+
+                  <p>
+                    Performance should be observable so the system
+                    can be evaluated and improved over time.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CTA
+         ===================================================== -->
+
+    <section class="about-cta">
+
+      <div class="shell">
+
+        <div class="about-cta-inner">
+
+          <div>
+
+            <div class="section-label">
+              START A CONVERSATION
+            </div>
+
+            <h2>
+              Have a problem worth solving with AI?
+            </h2>
+
+          </div>
+
+
+          <div class="about-cta-copy">
+
+            <p>
+              Tell us what you're trying to build, automate, improve,
+              or understand.
+            </p>
+
+            <div class="about-cta-actions">
+
+              <a
+                class="pill dark"
+                href="contact.html"
+              >
+                Contact Alphex AI
+                <span>↗</span>
+              </a>
+
+              <a
+                class="pill light"
+                href="pricing.html"
+              >
+                Explore pricing
+                <span>↗</span>
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Shared footer -->
+  <div id="site-footer"></div>
+
+
+  <!-- Shared site behavior -->
+  <script src="site.js"></script>
+
+</body>
+</html>
