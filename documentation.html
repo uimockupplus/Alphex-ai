@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Alphex AI documentation. Learn about our AI services, implementation approach, conversational AI, RAG systems, AI agents, automation, integrations, and custom AI solutions."
+  />
+
+  <meta
+    name="theme-color"
+    content="#f7f7f5"
+  />
+
+  <title>Documentation — Alphex AI</title>
+
+  <link rel="stylesheet" href="site.css" />
+
+  <style>
+
+    /* =========================================================
+       ALPHEX AI — DOCUMENTATION
+       ========================================================= */
+
+    .docs-hero{
+      padding:105px 0 90px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .docs-hero-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:100px;
+      align-items:end;
+    }
+
+    .docs-hero h1{
+      max-width:820px;
+      margin:15px 0 0;
+      font-size:clamp(55px,7vw,95px);
+      line-height:.88;
+      letter-spacing:-.09em;
+      font-weight:300;
+    }
+
+    .docs-hero-copy{
+      max-width:650px;
+      color:#595955;
+      font-size:17px;
+      line-height:1.65;
+    }
+
+    .docs-hero-copy p{
+      margin:0;
+    }
+
+    .docs-meta{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      margin-top:25px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .docs-meta-dot{
+      width:7px;
+      height:7px;
+      flex:0 0 7px;
+      border-radius:50%;
+      background:var(--cyan);
+    }
+
+
+    /* =========================================================
+       DOCUMENTATION LAYOUT
+       ========================================================= */
+
+    .docs-layout{
+      padding:95px 0 120px;
+    }
+
+    .docs-layout-inner{
+      display:grid;
+      grid-template-columns:240px minmax(0,1fr);
+      gap:90px;
+      align-items:start;
+    }
+
+    .docs-sidebar{
+      position:sticky;
+      top:105px;
+      min-width:0;
+    }
+
+    .docs-sidebar-title{
+      margin-bottom:18px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .docs-sidebar a{
+      display:block;
+      padding:8px 0;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:12px;
+      transition:
+        color .2s ease,
+        transform .2s ease;
+    }
+
+    .docs-sidebar a:hover{
+      color:var(--accent-dark);
+      transform:translateX(3px);
+    }
+
+    .docs-content{
+      width:100%;
+      max-width:820px;
+      min-width:0;
+    }
+
+    .docs-section{
+      margin-bottom:85px;
+      scroll-margin-top:105px;
+    }
+
+    .docs-section:last-child{
+      margin-bottom:0;
+    }
+
+    .docs-number{
+      margin-bottom:12px;
+      font:10px var(--mono);
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .docs-content h2{
+      margin:0 0 20px;
+      font-size:38px;
+      line-height:1;
+      letter-spacing:-.065em;
+      font-weight:300;
+    }
+
+    .docs-content h3{
+      margin:34px 0 10px;
+      font-size:19px;
+      line-height:1.15;
+      letter-spacing:-.035em;
+      font-weight:500;
+    }
+
+    .docs-content p{
+      margin:0 0 17px;
+      color:#5f5f5a;
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .docs-content ul{
+      margin:15px 0 22px;
+      padding-left:22px;
+    }
+
+    .docs-content li{
+      margin-bottom:10px;
+      color:#5f5f5a;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .docs-content strong{
+      color:var(--ink);
+      font-weight:500;
+    }
+
+    .docs-content a{
+      color:var(--accent-dark);
+      text-underline-offset:3px;
+      overflow-wrap:anywhere;
+    }
+
+
+    /* =========================================================
+       INTRO CALLOUT
+       ========================================================= */
+
+    .docs-callout{
+      margin:30px 0;
+      padding:26px 28px;
+      border:1px solid var(--border);
+      background:var(--soft);
+    }
+
+    .docs-callout-label{
+      margin-bottom:9px;
+      font:9px var(--mono);
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .docs-callout p{
+      margin:0;
+    }
+
+
+    /* =========================================================
+       SERVICE GRID
+       ========================================================= */
+
+    .docs-service-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:30px;
+    }
+
+    .docs-service{
+      min-width:0;
+      padding:24px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.35);
+      transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+    }
+
+    .docs-service:hover{
+      transform:translateY(-3px);
+      border-color:var(--accent);
+      background:var(--lavender);
+    }
+
+    .docs-service-number{
+      margin-bottom:28px;
+      font:9px var(--mono);
+      color:var(--muted);
+    }
+
+    .docs-service h3{
+      margin:0 0 9px;
+      font-size:19px;
+      font-weight:400;
+    }
+
+    .docs-service p{
+      margin:0;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+
+    /* =========================================================
+       PROCESS
+       ========================================================= */
+
+    .docs-process{
+      margin-top:30px;
+      border-top:1px solid var(--border);
+    }
+
+    .docs-process-step{
+      display:grid;
+      grid-template-columns:70px 1fr;
+      gap:25px;
+      padding:25px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .docs-process-number{
+      font:10px var(--mono);
+      color:var(--accent);
+    }
+
+    .docs-process-step h3{
+      margin:0 0 7px;
+      font-size:19px;
+      font-weight:400;
+    }
+
+    .docs-process-step p{
+      margin:0;
+    }
+
+
+    /* =========================================================
+       TECHNICAL CONCEPTS
+       ========================================================= */
+
+    .docs-concept{
+      margin-top:30px;
+      border-top:1px solid var(--border);
+    }
+
+    .docs-concept-row{
+      display:grid;
+      grid-template-columns:200px 1fr;
+      gap:35px;
+      padding:22px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .docs-concept-name{
+      font:11px var(--mono);
+      color:var(--ink);
+    }
+
+    .docs-concept-row p{
+      margin:0;
+    }
+
+
+    /* =========================================================
+       GET STARTED
+       ========================================================= */
+
+    .docs-start{
+      margin-top:30px;
+      padding:32px;
+      border:1px solid var(--border);
+      background:linear-gradient(
+        135deg,
+        var(--lavender),
+        var(--mint)
+      );
+    }
+
+    .docs-start h3{
+      margin:0 0 12px;
+      font-size:28px;
+      font-weight:300;
+      letter-spacing:-.05em;
+    }
+
+    .docs-start p{
+      max-width:620px;
+      margin-bottom:22px;
+    }
+
+    .docs-start-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media(max-width:900px){
+
+      .docs-hero{
+        padding:80px 0 70px;
+      }
+
+      .docs-hero-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+      }
+
+      .docs-layout{
+        padding:75px 0 90px;
+      }
+
+      .docs-layout-inner{
+        grid-template-columns:1fr;
+        gap:45px;
+      }
+
+      .docs-sidebar{
+        position:static;
+        width:100%;
+        border-bottom:1px solid var(--border);
+        padding-bottom:25px;
+      }
+
+      .docs-sidebar a{
+        display:inline-block;
+        margin-right:18px;
+      }
+
+      .docs-content{
+        max-width:100%;
+      }
+
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media(max-width:600px){
+
+      .docs-hero{
+        padding:65px 0 55px;
+      }
+
+      .docs-hero-grid{
+        gap:30px;
+      }
+
+      .docs-hero h1{
+        max-width:100%;
+        font-size:clamp(48px,14vw,72px);
+        line-height:.9;
+      }
+
+      .docs-hero-copy{
+        max-width:100%;
+        font-size:15px;
+        line-height:1.6;
+      }
+
+      .docs-meta{
+        flex-wrap:wrap;
+        line-height:1.5;
+      }
+
+      .docs-layout{
+        padding:60px 0 75px;
+      }
+
+      .docs-layout-inner{
+        gap:35px;
+      }
+
+      .docs-sidebar{
+        padding-bottom:20px;
+      }
+
+      .docs-sidebar a{
+        font-size:11px;
+        margin-right:13px;
+        padding:6px 0;
+      }
+
+      .docs-section{
+        margin-bottom:65px;
+        scroll-margin-top:85px;
+      }
+
+      .docs-content h2{
+        font-size:32px;
+      }
+
+      .docs-content p,
+      .docs-content li{
+        font-size:13px;
+        line-height:1.7;
+      }
+
+      .docs-service-grid{
+        grid-template-columns:1fr;
+      }
+
+      .docs-service{
+        padding:21px;
+      }
+
+      .docs-process-step{
+        grid-template-columns:45px 1fr;
+        gap:15px;
+      }
+
+      .docs-concept-row{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      .docs-start{
+        padding:24px;
+      }
+
+      .docs-start h3{
+        font-size:25px;
+      }
+
+    }
+
+
+    /* =========================================================
+       SMALL MOBILE
+       ========================================================= */
+
+    @media(max-width:380px){
+
+      .docs-hero h1{
+        font-size:46px;
+      }
+
+      .docs-content h2{
+        font-size:29px;
+      }
+
+      .docs-sidebar a{
+        margin-right:9px;
+        font-size:10px;
+      }
+
+      .docs-start{
+        padding:20px;
+      }
+
+    }
+
+
+    /* =========================================================
+       DARK THEME
+       ========================================================= */
+
+    body.dark-theme .docs-hero-copy,
+    body.dark-theme .docs-content p,
+    body.dark-theme .docs-content li{
+      color:#c2c5d5;
+    }
+
+    body.dark-theme .docs-service{
+      background:#171a28;
+    }
+
+    body.dark-theme .docs-service:hover{
+      background:#242044;
+      border-color:#8172ff;
+    }
+
+    body.dark-theme .docs-callout{
+      background:#171a28;
+    }
+
+    body.dark-theme .docs-start{
+      background:linear-gradient(
+        135deg,
+        #242044,
+        #17312f
+      );
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <!-- =======================================================
+       SHARED NAVIGATION
+       ======================================================= -->
+
+  <div id="site-nav"></div>
+
+
+  <main>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="docs-hero">
+
+      <div class="shell">
+
+        <div class="docs-hero-grid">
+
+          <div>
+
+            <div class="hero-kicker">
+              ALPHEX AI / DOCUMENTATION
+            </div>
+
+            <h1>
+              Build with AI that fits your business.
+            </h1>
+
+          </div>
+
+
+          <div class="docs-hero-copy">
+
+            <p>
+              This documentation provides a practical overview of
+              Alphex AI, our services, implementation approach, and
+              the technologies and systems we can help businesses
+              design and deploy.
+            </p>
+
+            <div class="docs-meta">
+              <span class="docs-meta-dot"></span>
+              ALPHEX AI / SERVICE DOCUMENTATION
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DOCUMENTATION
+         ===================================================== -->
+
+    <section class="docs-layout">
+
+      <div class="shell docs-layout-inner">
+
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="docs-sidebar">
+
+          <div class="docs-sidebar-title">
+            Documentation
+          </div>
+
+          <a href="#overview">
+            01 / Overview
+          </a>
+
+          <a href="#services">
+            02 / Services
+          </a>
+
+          <a href="#systems">
+            03 / AI systems
+          </a>
+
+          <a href="#process">
+            04 / Process
+          </a>
+
+          <a href="#implementation">
+            05 / Implementation
+          </a>
+
+          <a href="#quality">
+            06 / Quality
+          </a>
+
+          <a href="#security">
+            07 / Security
+          </a>
+
+          <a href="#engagement">
+            08 / Engagement
+          </a>
+
+          <a href="#start">
+            09 / Get started
+          </a>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <article class="docs-content">
+
+
+          <!-- =================================================
+               01 — OVERVIEW
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="overview"
+          >
+
+            <div class="docs-number">
+              01 / Overview
+            </div>
+
+            <h2>
+              AI built around real work.
+            </h2>
+
+            <p>
+              Alphex AI is an AI services company that helps
+              businesses design, build, integrate, automate, and
+              improve practical AI systems.
+            </p>
+
+            <p>
+              We focus on applying AI to real business problems rather
+              than adding AI simply for the sake of adding technology.
+              Each engagement starts with understanding the workflow,
+              users, data, constraints, and desired outcome.
+            </p>
+
+            <div class="docs-callout">
+
+              <div class="docs-callout-label">
+                Core principle
+              </div>
+
+              <p>
+                The goal is not simply to build an AI model. The goal
+                is to build a useful system that fits the way people
+                and businesses actually work.
+              </p>
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               02 — SERVICES
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="services"
+          >
+
+            <div class="docs-number">
+              02 / Services
+            </div>
+
+            <h2>
+              What we build.
+            </h2>
+
+            <p>
+              Alphex AI provides end-to-end AI services ranging from
+              strategy and system design to implementation,
+              integration, testing, and optimization.
+            </p>
+
+
+            <div class="docs-service-grid">
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 01
+                </div>
+
+                <h3>
+                  AI Strategy & Consulting
+                </h3>
+
+                <p>
+                  Identify practical AI opportunities, define use
+                  cases, evaluate technical options, and create an
+                  implementation roadmap.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 02
+                </div>
+
+                <h3>
+                  AI Conversational Systems
+                </h3>
+
+                <p>
+                  Build AI assistants and conversational interfaces
+                  that can answer questions, understand context, and
+                  support users across business workflows.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 03
+                </div>
+
+                <h3>
+                  RAG & Knowledge Systems
+                </h3>
+
+                <p>
+                  Connect AI systems to business documents, knowledge
+                  bases, and approved information so responses can be
+                  grounded in relevant sources.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 04
+                </div>
+
+                <h3>
+                  AI Agents
+                </h3>
+
+                <p>
+                  Design AI-powered systems that can reason through
+                  tasks, use tools, interact with services, and
+                  complete defined workflows.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 05
+                </div>
+
+                <h3>
+                  AI Automation
+                </h3>
+
+                <p>
+                  Automate repetitive processes by connecting AI with
+                  business workflows, applications, data, and
+                  operational systems.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 06
+                </div>
+
+                <h3>
+                  AI Integrations
+                </h3>
+
+                <p>
+                  Connect AI capabilities with existing software,
+                  APIs, databases, communication platforms, and
+                  business tools.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 07
+                </div>
+
+                <h3>
+                  Custom AI Solutions
+                </h3>
+
+                <p>
+                  Design and implement AI systems around specific
+                  business requirements where an off-the-shelf
+                  solution is not enough.
+                </p>
+
+              </div>
+
+
+              <div class="docs-service">
+
+                <div class="docs-service-number">
+                  SERVICE / 08
+                </div>
+
+                <h3>
+                  AI Optimization
+                </h3>
+
+                <p>
+                  Improve existing AI systems through evaluation,
+                  prompt optimization, workflow refinement, testing,
+                  monitoring, and iteration.
+                </p>
+
+              </div>
+
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               03 — AI SYSTEMS
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="systems"
+          >
+
+            <div class="docs-number">
+              03 / AI systems
+            </div>
+
+            <h2>
+              How an AI system comes together.
+            </h2>
+
+            <p>
+              A production AI solution is usually more than a model.
+              It combines models with data, instructions, business
+              logic, interfaces, integrations, and operational
+              safeguards.
+            </p>
+
+            <div class="docs-concept">
+
+
+              <div class="docs-concept-row">
+
+                <div class="docs-concept-name">
+                  MODEL
+                </div>
+
+                <p>
+                  The AI model generates, interprets, classifies,
+                  summarizes, reasons over, or transforms information
+                  based on the selected use case.
+                </p>
+
+              </div>
+
+
+              <div class="docs-concept-row">
+
+                <div class="docs-concept-name">
+                  CONTEXT
+                </div>
+
+                <p>
+                  Relevant information, instructions, conversation
+                  history, or business context supplied to the system
+                  so it can produce more useful results.
+                </p>
+
+              </div>
+
+
+              <div class="docs-concept-row">
+
+                <div class="docs-concept-name">
+                  KNOWLEDGE
+                </div>
+
+                <p>
+                  Business information that can be retrieved and
+                  provided to an AI system when answers need to be
+                  grounded in specific sources.
+                </p>
+
+              </div>
+
+
+              <div class="docs-concept-row">
+
+                <div class="docs-concept-name">
+                  TOOLS
+                </div>
+
+                <p>
+                  External capabilities such as APIs, databases,
+                  search systems, business applications, or other
+                  services that an AI workflow may use.
+                </p>
+
+              </div>
+
+
+              <div class="docs-concept-row">
+
+                <div class="docs-concept-name">
+                  WORKFLOW
+                </div>
+
+                <p>
+                  The sequence of actions, decisions, validations, and
+                  human interactions required to complete a business
+                  task.
+                </p>
+
+              </div>
+
+
+              <div class="docs-concept-row">
+
+                <div class="docs-concept-name">
+                  INTERFACE
+                </div>
+
+                <p>
+                  The place where users interact with the system,
+                  such as a website, chat interface, internal tool,
+                  application, or business workflow.
+                </p>
+
+              </div>
+
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               04 — PROCESS
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="process"
+          >
+
+            <div class="docs-number">
+              04 / Process
+            </div>
+
+            <h2>
+              From idea to working system.
+            </h2>
+
+            <p>
+              Our implementation process is designed to reduce
+              unnecessary complexity and validate the most important
+              assumptions before a system is deployed.
+            </p>
+
+
+            <div class="docs-process">
+
+
+              <div class="docs-process-step">
+
+                <div class="docs-process-number">
+                  01
+                </div>
+
+                <div>
+
+                  <h3>
+                    Discover
+                  </h3>
+
+                  <p>
+                    Understand the business problem, users, workflow,
+                    data, constraints, and desired outcome.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="docs-process-step">
+
+                <div class="docs-process-number">
+                  02
+                </div>
+
+                <div>
+
+                  <h3>
+                    Design
+                  </h3>
+
+                  <p>
+                    Define the system architecture, AI approach,
+                    integrations, user experience, and operational
+                    requirements.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="docs-process-step">
+
+                <div class="docs-process-number">
+                  03
+                </div>
+
+                <div>
+
+                  <h3>
+                    Build
+                  </h3>
+
+                  <p>
+                    Develop the AI workflow, interface, integrations,
+                    prompts, retrieval systems, tools, and supporting
+                    infrastructure.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="docs-process-step">
+
+                <div class="docs-process-number">
+                  04
+                </div>
+
+                <div>
+
+                  <h3>
+                    Test
+                  </h3>
+
+                  <p>
+                    Evaluate outputs, edge cases, workflow behavior,
+                    reliability, usability, and failure scenarios.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="docs-process-step">
+
+                <div class="docs-process-number">
+                  05
+                </div>
+
+                <div>
+
+                  <h3>
+                    Launch
+                  </h3>
+
+                  <p>
+                    Deploy the system into the intended environment
+                    with appropriate configuration, access, and
+                    operational processes.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="docs-process-step">
+
+                <div class="docs-process-number">
+                  06
+                </div>
+
+                <div>
+
+                  <h3>
+                    Improve
+                  </h3>
+
+                  <p>
+                    Monitor real-world behavior and continuously
+                    improve prompts, workflows, knowledge, models,
+                    integrations, and user experience.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               05 — IMPLEMENTATION
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="implementation"
+          >
+
+            <div class="docs-number">
+              05 / Implementation
+            </div>
+
+            <h2>
+              Designed for your existing environment.
+            </h2>
+
+            <p>
+              Alphex AI solutions can be designed around an
+              organization's existing technology rather than requiring
+              every business to replace its current systems.
+            </p>
+
+            <p>
+              Depending on the project, an implementation may connect
+              with existing websites, applications, APIs, databases,
+              knowledge repositories, communication tools, or internal
+              workflows.
+            </p>
+
+            <p>
+              The specific architecture depends on the business
+              requirements, technical environment, data sensitivity,
+              expected usage, and operational constraints of each
+              project.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               06 — QUALITY
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="quality"
+          >
+
+            <div class="docs-number">
+              06 / Quality
+            </div>
+
+            <h2>
+              AI systems need a quality bar.
+            </h2>
+
+            <p>
+              AI outputs can vary. A useful AI implementation therefore
+              requires more than simply connecting an application to a
+              model.
+            </p>
+
+            <p>
+              Depending on the project, we may evaluate areas such as:
+            </p>
+
+            <ul>
+
+              <li>
+                Factual accuracy
+              </li>
+
+              <li>
+                Instruction following
+              </li>
+
+              <li>
+                Relevance and completeness
+              </li>
+
+              <li>
+                Grounding in approved information
+              </li>
+
+              <li>
+                Safety and appropriate behavior
+              </li>
+
+              <li>
+                Consistency across common use cases
+              </li>
+
+              <li>
+                User experience and workflow fit
+              </li>
+
+              <li>
+                Failure and edge-case handling
+              </li>
+
+            </ul>
+
+            <p>
+              The exact evaluation approach depends on the system and
+              the consequences of incorrect output.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               07 — SECURITY
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="security"
+          >
+
+            <div class="docs-number">
+              07 / Security
+            </div>
+
+            <h2>
+              Security and responsible implementation.
+            </h2>
+
+            <p>
+              Security considerations should be incorporated into the
+              design of an AI system rather than treated as an
+              afterthought.
+            </p>
+
+            <p>
+              Depending on the project, considerations may include
+              authentication, authorization, data access, secrets
+              management, logging, input validation, model access,
+              third-party dependencies, and protection of sensitive
+              information.
+            </p>
+
+            <p>
+              Specific security controls and responsibilities should
+              be agreed according to the requirements and risk profile
+              of the project.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               08 — ENGAGEMENT
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="engagement"
+          >
+
+            <div class="docs-number">
+              08 / Engagement
+            </div>
+
+            <h2>
+              How projects work.
+            </h2>
+
+            <p>
+              Alphex AI works through flexible service engagements
+              rather than requiring every client to follow a single
+              fixed package.
+            </p>
+
+            <p>
+              A project may begin with a discovery discussion,
+              followed by a defined scope, technical approach,
+              timeline, deliverables, and commercial agreement.
+            </p>
+
+            <p>
+              Depending on the requirement, an engagement can focus on
+              strategy, a specific AI implementation, an integration,
+              an automation workflow, or ongoing improvement.
+            </p>
+
+            <div class="docs-callout">
+
+              <div class="docs-callout-label">
+                Important
+              </div>
+
+              <p>
+                Project-specific scope, pricing, responsibilities,
+                timelines, deliverables, and other commercial terms are
+                defined separately for each engagement.
+              </p>
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               09 — GET STARTED
+               ================================================= -->
+
+          <section
+            class="docs-section"
+            id="start"
+          >
+
+            <div class="docs-number">
+              09 / Get started
+            </div>
+
+            <h2>
+              Have an AI problem to solve?
+            </h2>
+
+            <p>
+              You do not need to have the complete technical solution
+              figured out before contacting Alphex AI.
+            </p>
+
+            <p>
+              Tell us what you are trying to improve, automate, build,
+              or understand. We can start from the business problem
+              and determine what kind of AI system makes sense.
+            </p>
+
+
+            <div class="docs-start">
+
+              <h3>
+                Start with the problem.
+              </h3>
+
+              <p>
+                Share your goals, workflow, current tools, and
+                challenges. We will help determine the most practical
+                next step.
+              </p>
+
+              <div class="docs-start-actions">
+
+                <a
+                  class="pill dark"
+                  href="contact.html"
+                >
+                  Contact Alphex AI
+                  <span>↗</span>
+                </a>
+
+                <a
+                  class="pill light"
+                  href="pricing.html"
+                >
+                  View pricing
+                  <span>↗</span>
+                </a>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       SHARED FOOTER
+       ======================================================= -->
+
+  <div id="site-footer"></div>
+
+
+  <!-- =======================================================
+       SHARED SITE SCRIPT
+       ======================================================= -->
+
+  <script src="site.js"></script>
+
+</body>
+</html>
