@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Create your Alphex AI account."
+  >
+
+  <title>Create Account — Alphex AI</title>
+
+  <link
+    rel="stylesheet"
+    href="site.css"
+  >
+
+  <style>
+
+    /* =====================================================
+       ALPHEX AI — SIGNUP PAGE
+       Page-specific styles only
+       ===================================================== */
+
+    .auth-page{
+      min-height:calc(100vh - 76px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:90px 0 110px;
+    }
+
+    .auth-shell{
+      width:min(100% - 32px,460px);
+      margin:auto;
+    }
+
+    .auth-header{
+      text-align:center;
+      margin-bottom:34px;
+    }
+
+    .auth-kicker{
+      font:10px var(--mono);
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin-bottom:18px;
+    }
+
+    .auth-title{
+      margin:0;
+      font-size:clamp(42px,6vw,58px);
+      line-height:.98;
+      letter-spacing:-.075em;
+      font-weight:300;
+    }
+
+    .auth-copy{
+      max-width:380px;
+      margin:18px auto 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .auth-card{
+      background:var(--white);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:30px;
+      box-shadow:
+        0 18px 50px rgba(16,16,16,.06);
+    }
+
+    .auth-form{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field-label{
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .field-input{
+      width:100%;
+      height:50px;
+
+      border:1px solid var(--border);
+      border-radius:11px;
+
+      padding:0 15px;
+
+      background:var(--paper);
+      color:var(--ink);
+
+      outline:none;
+
+      font-size:14px;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    .field-input::placeholder{
+      color:#999994;
+    }
+
+    .field-input:focus{
+      border-color:var(--accent);
+      background:var(--white);
+      box-shadow:0 0 0 3px rgba(112,87,255,.12);
+    }
+
+    .password-wrap{
+      position:relative;
+    }
+
+    .password-wrap .field-input{
+      padding-right:72px;
+    }
+
+    .password-toggle{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+
+      border:0;
+      background:transparent;
+
+      color:var(--muted);
+
+      font:10px var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.04em;
+
+      cursor:pointer;
+
+      padding:7px;
+    }
+
+    .password-toggle:hover{
+      color:var(--accent-dark);
+    }
+
+    .password-strength{
+      height:3px;
+      width:100%;
+
+      margin-top:2px;
+
+      background:var(--soft);
+      border-radius:999px;
+
+      overflow:hidden;
+    }
+
+    .password-strength-bar{
+      display:block;
+
+      width:0;
+      height:100%;
+
+      background:var(--accent);
+
+      border-radius:999px;
+
+      transition:
+        width .25s ease,
+        background .25s ease;
+    }
+
+    .password-hint{
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.5;
+    }
+
+    .auth-submit{
+      width:100%;
+      min-height:50px;
+
+      margin-top:3px;
+
+      border:1px solid var(--accent-dark);
+      border-radius:999px;
+
+      background:linear-gradient(
+        110deg,
+        var(--accent-dark),
+        var(--accent)
+      );
+
+      color:#fff;
+
+      font-size:13px;
+      font-weight:500;
+
+      cursor:pointer;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+    }
+
+    .auth-submit:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 24px rgba(85,64,216,.18);
+    }
+
+    .auth-submit:active{
+      transform:translateY(0);
+    }
+
+    .auth-submit:disabled{
+      cursor:not-allowed;
+      opacity:.65;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .auth-status{
+      display:none;
+
+      padding:11px 13px;
+
+      border-radius:10px;
+
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .auth-status.show{
+      display:block;
+    }
+
+    .auth-status.error{
+      background:#fff0f0;
+      border:1px solid #f0cccc;
+      color:#a52c2c;
+    }
+
+    .auth-status.success{
+      background:var(--mint);
+      border:1px solid #b8e7dc;
+      color:#17685e;
+    }
+
+    .auth-divider{
+      display:flex;
+      align-items:center;
+      gap:14px;
+
+      margin:25px 0;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after{
+      content:'';
+      flex:1;
+      height:1px;
+      background:var(--border);
+    }
+
+    .auth-divider span{
+      color:var(--muted);
+      font:9px var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .google-button{
+      width:100%;
+      min-height:48px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+
+      border:1px solid var(--border);
+      border-radius:999px;
+
+      background:transparent;
+      color:var(--ink);
+
+      font-size:12px;
+      font-weight:500;
+
+      cursor:pointer;
+
+      transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+    }
+
+    .google-button:hover{
+      border-color:var(--accent);
+      background:var(--lavender);
+      transform:translateY(-1px);
+    }
+
+    .google-icon{
+      width:19px;
+      height:19px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      border:1px solid var(--border);
+      border-radius:50%;
+
+      font-size:11px;
+      font-weight:500;
+    }
+
+    .terms{
+      margin:21px 0 0;
+
+      color:var(--muted);
+
+      text-align:center;
+
+      font-size:10px;
+      line-height:1.6;
+    }
+
+    .terms a{
+      color:var(--accent-dark);
+      text-decoration:none;
+    }
+
+    .terms a:hover{
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .auth-footer{
+      margin-top:27px;
+
+      text-align:center;
+
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .auth-footer a{
+      color:var(--accent-dark);
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    .auth-footer a:hover{
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .auth-note{
+      margin:22px auto 0;
+
+      max-width:390px;
+
+      color:var(--muted);
+
+      text-align:center;
+
+      font:9px var(--mono);
+      line-height:1.6;
+      letter-spacing:.02em;
+    }
+
+    /* =====================================================
+       DARK MODE
+       ===================================================== */
+
+    body.dark-theme .auth-card{
+      box-shadow:0 18px 50px rgba(0,0,0,.22);
+    }
+
+    body.dark-theme .field-input{
+      background:#151823;
+      border-color:var(--border);
+    }
+
+    body.dark-theme .field-input:focus{
+      background:#171a28;
+    }
+
+    body.dark-theme .password-strength{
+      background:#292d3d;
+    }
+
+    body.dark-theme .auth-status.error{
+      background:#321d23;
+      border-color:#5b3039;
+      color:#f0aab5;
+    }
+
+    body.dark-theme .auth-status.success{
+      background:#16322e;
+      border-color:#285b53;
+      color:#a8e1d7;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media(max-width:800px){
+
+      .auth-page{
+        min-height:calc(100vh - 68px);
+        padding:72px 0 82px;
+      }
+
+      .auth-card{
+        padding:25px;
+      }
+
+    }
+
+    @media(max-width:480px){
+
+      .auth-page{
+        padding:55px 0 65px;
+      }
+
+      .auth-shell{
+        width:calc(100% - 28px);
+      }
+
+      .auth-card{
+        padding:21px;
+        border-radius:18px;
+      }
+
+      .auth-title{
+        font-size:44px;
+      }
+
+      .auth-copy{
+        font-size:13px;
+      }
+
+      .field-input{
+        height:48px;
+      }
+
+      .auth-submit{
+        min-height:48px;
+      }
+
+    }
+
+    @media(prefers-reduced-motion:reduce){
+
+      .auth-submit,
+      .google-button,
+      .field-input,
+      .password-strength-bar{
+        transition:none;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       SHARED NAVIGATION
+       ===================================================== -->
+
+  <div id="site-nav"></div>
+
+
+  <!-- =====================================================
+       SIGN UP
+       ===================================================== -->
+
+  <main class="auth-page">
+
+    <div class="auth-shell">
+
+
+      <header class="auth-header">
+
+        <div class="auth-kicker">
+          Alphex AI / Account
+        </div>
+
+        <h1 class="auth-title">
+          Create your account.
+        </h1>
+
+        <p class="auth-copy">
+          Set up your Alphex AI account and get ready
+          to work with AI evaluation tools.
+        </p>
+
+      </header>
+
+
+      <section class="auth-card">
+
+        <form
+          class="auth-form"
+          id="signup-form"
+          novalidate
+        >
+
+
+          <!-- NAME -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="signup-name"
+            >
+              Full name
+            </label>
+
+            <input
+              class="field-input"
+              id="signup-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Your name"
+              required
+            >
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="signup-email"
+            >
+              Email
+            </label>
+
+            <input
+              class="field-input"
+              id="signup-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            >
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="signup-password"
+            >
+              Password
+            </label>
+
+            <div class="password-wrap">
+
+              <input
+                class="field-input"
+                id="signup-password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Create a password"
+                minlength="8"
+                required
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                id="password-toggle"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+
+            </div>
+
+            <div
+              class="password-strength"
+              aria-hidden="true"
+            >
+              <span
+                class="password-strength-bar"
+                id="password-strength-bar"
+              ></span>
+            </div>
+
+            <div class="password-hint">
+              Use at least 8 characters.
+            </div>
+
+          </div>
+
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="signup-confirm-password"
+            >
+              Confirm password
+            </label>
+
+            <div class="password-wrap">
+
+              <input
+                class="field-input"
+                id="signup-confirm-password"
+                name="confirmPassword"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Enter your password again"
+                minlength="8"
+                required
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                id="confirm-password-toggle"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div
+            class="auth-status"
+            id="signup-status"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+
+          <!-- SUBMIT -->
+
+          <button
+            class="auth-submit"
+            id="signup-submit"
+            type="submit"
+          >
+            Create account
+          </button>
+
+        </form>
+
+
+        <!-- TERMS -->
+
+        <p class="terms">
+
+          By creating an account, you agree to the
+          <a href="#">
+            Terms of Service
+          </a>
+          and
+          <a href="#">
+            Privacy Policy
+          </a>.
+
+        </p>
+
+
+        <!-- DIVIDER -->
+
+        <div class="auth-divider">
+
+          <span>
+            or
+          </span>
+
+        </div>
+
+
+        <!-- GOOGLE -->
+
+        <button
+          class="google-button"
+          id="google-signup"
+          type="button"
+        >
+
+          <span
+            class="google-icon"
+            aria-hidden="true"
+          >
+            G
+          </span>
+
+          Continue with Google
+
+        </button>
+
+
+        <!-- LOGIN -->
+
+        <div class="auth-footer">
+
+          Already have an account?
+
+          <a href="login.html">
+            Sign in
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <p class="auth-note">
+        Authentication is currently being prepared.
+        Your account will be securely connected through
+        Alphex AI authentication services.
+      </p>
+
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       SHARED FOOTER
+       ===================================================== -->
+
+  <div id="site-footer"></div>
+
+
+  <!-- =====================================================
+       SHARED JAVASCRIPT
+       ===================================================== -->
+
+  <script src="site.js"></script>
+
+
+  <!-- =====================================================
+       SIGNUP PAGE BEHAVIOR
+       Prepared for future Supabase integration
+       ===================================================== -->
+
+  <script>
+
+    (() => {
+
+      const form =
+        document.getElementById('signup-form');
+
+      const name =
+        document.getElementById('signup-name');
+
+      const email =
+        document.getElementById('signup-email');
+
+      const password =
+        document.getElementById('signup-password');
+
+      const confirmPassword =
+        document.getElementById('signup-confirm-password');
+
+      const submit =
+        document.getElementById('signup-submit');
+
+      const status =
+        document.getElementById('signup-status');
+
+      const passwordToggle =
+        document.getElementById('password-toggle');
+
+      const confirmPasswordToggle =
+        document.getElementById('confirm-password-toggle');
+
+      const strengthBar =
+        document.getElementById('password-strength-bar');
+
+      const googleSignup =
+        document.getElementById('google-signup');
+
+
+      /* ---------------------------------------------------
+         STATUS
+         --------------------------------------------------- */
+
+      const showStatus = (
+        message,
+        type = 'error'
+      ) => {
+
+        status.textContent = message;
+
+        status.className =
+          `auth-status show ${type}`;
+
+      };
+
+
+      const clearStatus = () => {
+
+        status.textContent = '';
+
+        status.className =
+          'auth-status';
+
+      };
+
+
+      /* ---------------------------------------------------
+         PASSWORD VISIBILITY
+         --------------------------------------------------- */
+
+      const setupPasswordToggle = (
+        button,
+        input
+      ) => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            const isPassword =
+              input.type === 'password';
+
+            input.type =
+              isPassword
+                ? 'text'
+                : 'password';
+
+            button.textContent =
+              isPassword
+                ? 'Hide'
+                : 'Show';
+
+            button.setAttribute(
+              'aria-label',
+              isPassword
+                ? 'Hide password'
+                : 'Show password'
+            );
+
+          }
+        );
+
+      };
+
+
+      setupPasswordToggle(
+        passwordToggle,
+        password
+      );
+
+      setupPasswordToggle(
+        confirmPasswordToggle,
+        confirmPassword
+      );
+
+
+      /* ---------------------------------------------------
+         PASSWORD STRENGTH
+         --------------------------------------------------- */
+
+      password.addEventListener(
+        'input',
+        () => {
+
+          const value =
+            password.value;
+
+          let strength = 0;
+
+
+          if (value.length >= 8) {
+            strength += 25;
+          }
+
+          if (/[a-z]/.test(value)) {
+            strength += 25;
+          }
+
+          if (/[A-Z]/.test(value)) {
+            strength += 25;
+          }
+
+          if (/[0-9!@#$%^&*]/.test(value)) {
+            strength += 25;
+          }
+
+
+          strengthBar.style.width =
+            `${strength}%`;
+
+        }
+      );
+
+
+      /* ---------------------------------------------------
+         FORM
+         --------------------------------------------------- */
+
+      form.addEventListener(
+        'submit',
+        event => {
+
+          event.preventDefault();
+
+          clearStatus();
+
+
+          const nameValue =
+            name.value.trim();
+
+          const emailValue =
+            email.value.trim();
+
+          const passwordValue =
+            password.value;
+
+          const confirmValue =
+            confirmPassword.value;
+
+
+          if (!nameValue) {
+
+            showStatus(
+              'Please enter your name.'
+            );
+
+            name.focus();
+
+            return;
+
+          }
+
+
+          if (!emailValue) {
+
+            showStatus(
+              'Please enter your email address.'
+            );
+
+            email.focus();
+
+            return;
+
+          }
+
+
+          if (!email.validity.valid) {
+
+            showStatus(
+              'Please enter a valid email address.'
+            );
+
+            email.focus();
+
+            return;
+
+          }
+
+
+          if (passwordValue.length < 8) {
+
+            showStatus(
+              'Your password must contain at least 8 characters.'
+            );
+
+            password.focus();
+
+            return;
+
+          }
+
+
+          if (passwordValue !== confirmValue) {
+
+            showStatus(
+              'Your passwords do not match.'
+            );
+
+            confirmPassword.focus();
+
+            return;
+
+          }
+
+
+          /*
+           * Supabase authentication will be
+           * connected here later.
+           *
+           * Example future flow:
+           *
+           * const { data, error } =
+           *   await supabase.auth.signUp({
+           *     email: emailValue,
+           *     password: passwordValue,
+           *     options: {
+           *       data: {
+           *         full_name: nameValue
+           *       }
+           *     }
+           *   });
+           */
+
+
+          showStatus(
+            'Account creation will be connected here soon.',
+            'success'
+          );
+
+        }
+      );
+
+
+      /* ---------------------------------------------------
+         GOOGLE AUTH
+         --------------------------------------------------- */
+
+      googleSignup.addEventListener(
+        'click',
+        () => {
+
+          showStatus(
+            'Google sign-up will be connected soon.',
+            'success'
+          );
+
+        }
+      );
+
+    })();
+
+  </script>
+
+
+</body>
+
+</html>
