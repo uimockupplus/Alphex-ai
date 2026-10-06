@@ -399,10 +399,6 @@
       .google-button{
         min-height:47px;
       }
-      .terms{
-        font-size:9px;
-        line-height:1.65;
-      }
       .auth-footer{
         margin-top:23px;
         font-size:11px;
@@ -476,7 +472,8 @@
           Welcome back.
         </h1>
         <p class="auth-copy">
-          Sign in to continue to your Alphex AI workspace.
+          Sign in to continue with Alphex AI
+          and stay connected with our services.
         </p>
       </header>
       <section class="auth-card">
@@ -618,21 +615,37 @@
          ELEMENTS
          --------------------------------------------------- */
       const form =
-        document.getElementById('login-form');
+        document.getElementById(
+          'login-form'
+        );
       const email =
-        document.getElementById('login-email');
+        document.getElementById(
+          'login-email'
+        );
       const password =
-        document.getElementById('login-password');
+        document.getElementById(
+          'login-password'
+        );
       const submit =
-        document.getElementById('login-submit');
+        document.getElementById(
+          'login-submit'
+        );
       const status =
-        document.getElementById('login-status');
+        document.getElementById(
+          'login-status'
+        );
       const passwordToggle =
-        document.getElementById('password-toggle');
+        document.getElementById(
+          'password-toggle'
+        );
       const googleLogin =
-        document.getElementById('google-login');
+        document.getElementById(
+          'google-login'
+        );
       const forgotPassword =
-        document.getElementById('forgot-password');
+        document.getElementById(
+          'forgot-password'
+        );
       /* ---------------------------------------------------
          STATUS
          --------------------------------------------------- */
@@ -640,43 +653,47 @@
         message,
         type = 'error'
       ) => {
-        status.textContent = message;
+        status.textContent =
+          message;
         status.className =
           `auth-status show ${type}`;
       };
       const clearStatus = () => {
-        status.textContent = '';
+        status.textContent =
+          '';
         status.className =
           'auth-status';
       };
       /* ---------------------------------------------------
          INITIAL SESSION CHECK
          --------------------------------------------------- */
-      const checkExistingSession = async () => {
-        try {
-          const {
-            data,
-            error
-          } = await supabase.auth.getSession();
-          if (error) {
+      const checkExistingSession =
+        async () => {
+          try {
+            const {
+              data,
+              error
+            } =
+              await supabase.auth.getSession();
+            if (error) {
+              console.error(
+                'Session check error:',
+                error
+              );
+              return;
+            }
+            if (data.session) {
+              window.location.replace(
+                'index.html'
+              );
+            }
+          } catch (error) {
             console.error(
-              'Session check error:',
+              'Unable to check session:',
               error
             );
-            return;
           }
-          if (data.session) {
-            window.location.replace(
-              'workspace.html'
-            );
-          }
-        } catch (error) {
-          console.error(
-            'Unable to check session:',
-            error
-          );
-        }
-      };
+        };
       checkExistingSession();
       /* ---------------------------------------------------
          AUTH STATE
@@ -688,7 +705,7 @@
             session
           ) {
             window.location.replace(
-              'workspace.html'
+              'index.html'
             );
           }
         }
@@ -752,19 +769,21 @@
             return;
           }
           /* LOADING */
-          submit.disabled = true;
+          submit.disabled =
+            true;
           submit.textContent =
             'Signing in...';
           try {
             const {
               data,
               error
-            } = await supabase.auth.signInWithPassword({
-              email:
-                emailValue,
-              password:
-                passwordValue
-            });
+            } =
+              await supabase.auth.signInWithPassword({
+                email:
+                  emailValue,
+                password:
+                  passwordValue
+              });
             if (error) {
               console.error(
                 'Supabase login error:',
@@ -775,7 +794,8 @@
                   error
                 )
               );
-              submit.disabled = false;
+              submit.disabled =
+                false;
               submit.textContent =
                 'Sign in';
               return;
@@ -784,20 +804,24 @@
               showStatus(
                 'Sign-in completed, but no active session was created.'
               );
-              submit.disabled = false;
+              submit.disabled =
+                false;
               submit.textContent =
                 'Sign in';
               return;
             }
             showStatus(
-              'Signed in successfully. Opening your workspace...',
+              'Signed in successfully. Opening Alphex AI...',
               'success'
             );
-            setTimeout(() => {
-              window.location.replace(
-                'workspace.html'
-              );
-            }, 500);
+            setTimeout(
+              () => {
+                window.location.replace(
+                  'index.html'
+                );
+              },
+              500
+            );
           } catch (error) {
             console.error(
               'Unexpected login error:',
@@ -806,7 +830,8 @@
             showStatus(
               'Something went wrong while signing in. Please try again.'
             );
-            submit.disabled = false;
+            submit.disabled =
+              false;
             submit.textContent =
               'Sign in';
           }
@@ -819,20 +844,22 @@
         'click',
         async () => {
           clearStatus();
-          googleLogin.disabled = true;
+          googleLogin.disabled =
+            true;
           googleLogin.innerHTML =
             'Connecting to Google...';
           try {
             const {
               error
-            } = await supabase.auth.signInWithOAuth({
-              provider:
-                'google',
-              options: {
-                redirectTo:
-                  `${window.location.origin}/workspace.html`
-              }
-            });
+            } =
+              await supabase.auth.signInWithOAuth({
+                provider:
+                  'google',
+                options: {
+                  redirectTo:
+                    `${window.location.origin}/index.html`
+                }
+              });
             if (error) {
               console.error(
                 'Google authentication error:',
@@ -843,7 +870,8 @@
                   error
                 )
               );
-              googleLogin.disabled = false;
+              googleLogin.disabled =
+                false;
               googleLogin.innerHTML = `
                 <span
                   class="google-icon"
@@ -862,7 +890,8 @@
             showStatus(
               'Google sign-in could not be started. Please try again.'
             );
-            googleLogin.disabled = false;
+            googleLogin.disabled =
+              false;
             googleLogin.innerHTML = `
               <span
                 class="google-icon"
@@ -902,13 +931,14 @@
           try {
             const {
               error
-            } = await supabase.auth.resetPasswordForEmail(
-              emailValue,
-              {
-                redirectTo:
-                  `${window.location.origin}/reset-password.html`
-              }
-            );
+            } =
+              await supabase.auth.resetPasswordForEmail(
+                emailValue,
+                {
+                  redirectTo:
+                    `${window.location.origin}/reset-password.html`
+                }
+              );
             if (error) {
               console.error(
                 'Password recovery error:',
@@ -939,7 +969,9 @@
       /* ---------------------------------------------------
          FRIENDLY ERROR MESSAGES
          --------------------------------------------------- */
-      function getFriendlyAuthError(error) {
+      function getFriendlyAuthError(
+        error
+      ) {
         const message =
           String(
             error?.message || ''
