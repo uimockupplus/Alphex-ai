@@ -1,34 +1,29 @@
 <!doctype html>
+
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+name=“viewport”
+content=“width=device-width, initial-scale=1.0”
 
-  <meta
-    name="description"
-    content="Sign in to Alphex AI."
-  >
+<meta
+name=“description”
+content=“Sign in to Alphex AI.”
 
   <title>Sign In — Alphex AI</title>
-
   <link
     rel="stylesheet"
     href="site.css"
   >
-
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-
     /* =====================================================
        ALPHEX AI — LOGIN PAGE
        Page-specific styles only
        ===================================================== */
-
     .auth-page{
       min-height:calc(100vh - 76px);
       display:flex;
@@ -36,17 +31,14 @@
       justify-content:center;
       padding:90px 0 110px;
     }
-
     .auth-shell{
       width:min(100% - 32px, 460px);
       margin:auto;
     }
-
     .auth-header{
       text-align:center;
       margin-bottom:34px;
     }
-
     .auth-kicker{
       font:10px var(--mono);
       color:var(--accent);
@@ -54,7 +46,6 @@
       letter-spacing:.12em;
       margin-bottom:18px;
     }
-
     .auth-title{
       margin:0;
       font-size:clamp(42px,6vw,58px);
@@ -62,7 +53,6 @@
       letter-spacing:-.075em;
       font-weight:300;
     }
-
     .auth-copy{
       max-width:360px;
       margin:18px auto 0;
@@ -70,7 +60,6 @@
       font-size:14px;
       line-height:1.6;
     }
-
     .auth-card{
       background:var(--white);
       border:1px solid var(--border);
@@ -79,189 +68,144 @@
       box-shadow:
         0 18px 50px rgba(16,16,16,.06);
     }
-
     .auth-form{
       display:flex;
       flex-direction:column;
       gap:18px;
     }
-
     .field{
       display:flex;
       flex-direction:column;
       gap:8px;
     }
-
     .field-row{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
     }
-
     .field-label{
       font:10px var(--mono);
       color:var(--muted);
       text-transform:uppercase;
       letter-spacing:.08em;
     }
-
     .field-link{
       color:var(--accent-dark);
       font-size:11px;
       text-decoration:none;
       transition:color .2s ease;
     }
-
     .field-link:hover{
       color:var(--accent);
       text-decoration:underline;
       text-underline-offset:3px;
     }
-
     .field-input{
       width:100%;
       height:50px;
-
       border:1px solid var(--border);
       border-radius:11px;
-
       padding:0 15px;
-
       background:var(--paper);
       color:var(--ink);
-
       outline:none;
-
       font-size:14px;
-
       transition:
         border-color .2s ease,
         box-shadow .2s ease,
         background .2s ease;
     }
-
     .field-input::placeholder{
       color:#999994;
     }
-
     .field-input:focus{
       border-color:var(--accent);
       background:var(--white);
       box-shadow:0 0 0 3px rgba(112,87,255,.12);
     }
-
     .password-wrap{
       position:relative;
     }
-
     .password-wrap .field-input{
       padding-right:72px;
     }
-
     .password-toggle{
       position:absolute;
       right:10px;
       top:50%;
       transform:translateY(-50%);
-
       border:0;
       background:transparent;
-
       color:var(--muted);
-
       font:10px var(--mono);
       text-transform:uppercase;
       letter-spacing:.04em;
-
       cursor:pointer;
-
       padding:7px;
     }
-
     .password-toggle:hover{
       color:var(--accent-dark);
     }
-
     .auth-submit{
       width:100%;
       min-height:50px;
-
       margin-top:3px;
-
       border:1px solid var(--accent-dark);
       border-radius:999px;
-
       background:linear-gradient(
         110deg,
         var(--accent-dark),
         var(--accent)
       );
-
       color:#fff;
-
       font-size:13px;
       font-weight:500;
-
       cursor:pointer;
-
       transition:
         transform .2s ease,
         box-shadow .2s ease,
         opacity .2s ease;
     }
-
     .auth-submit:hover{
       transform:translateY(-2px);
       box-shadow:0 10px 24px rgba(85,64,216,.18);
     }
-
     .auth-submit:active{
       transform:translateY(0);
     }
-
     .auth-submit:disabled{
       cursor:not-allowed;
       opacity:.65;
       transform:none;
       box-shadow:none;
     }
-
     .auth-status{
       display:none;
-
       padding:11px 13px;
-
       border-radius:10px;
-
       font-size:12px;
       line-height:1.5;
     }
-
     .auth-status.show{
       display:block;
     }
-
     .auth-status.error{
       background:#fff0f0;
       border:1px solid #f0cccc;
       color:#a52c2c;
     }
-
     .auth-status.success{
       background:var(--mint);
       border:1px solid #b8e7dc;
       color:#17685e;
     }
-
     .auth-divider{
       display:flex;
       align-items:center;
       gap:14px;
-
       margin:25px 0;
     }
-
     .auth-divider::before,
     .auth-divider::after{
       content:'';
@@ -269,619 +213,661 @@
       height:1px;
       background:var(--border);
     }
-
     .auth-divider span{
       color:var(--muted);
       font:9px var(--mono);
       text-transform:uppercase;
       letter-spacing:.08em;
     }
-
     .google-button{
       width:100%;
       min-height:48px;
-
       display:flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-
       border:1px solid var(--border);
       border-radius:999px;
-
       background:transparent;
       color:var(--ink);
-
       font-size:12px;
       font-weight:500;
-
       cursor:pointer;
-
       transition:
         border-color .2s ease,
         background .2s ease,
         transform .2s ease;
     }
-
     .google-button:hover{
       border-color:var(--accent);
       background:var(--lavender);
       transform:translateY(-1px);
     }
-
     .google-icon{
       width:19px;
       height:19px;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       border:1px solid var(--border);
       border-radius:50%;
-
       font-size:11px;
       font-weight:500;
     }
-
     .auth-footer{
       margin-top:27px;
-
       text-align:center;
-
       color:var(--muted);
       font-size:12px;
     }
-
     .auth-footer a{
       color:var(--accent-dark);
       text-decoration:none;
       font-weight:500;
     }
-
     .auth-footer a:hover{
       text-decoration:underline;
       text-underline-offset:3px;
     }
-
     .auth-note{
       margin:22px auto 0;
-
       max-width:390px;
-
       color:var(--muted);
-
       text-align:center;
-
       font:9px var(--mono);
       line-height:1.6;
       letter-spacing:.02em;
     }
-
     /* =====================================================
        DARK MODE
        ===================================================== */
-
     body.dark-theme .auth-card{
       box-shadow:0 18px 50px rgba(0,0,0,.22);
     }
-
     body.dark-theme .field-input{
       background:#151823;
       border-color:var(--border);
     }
-
     body.dark-theme .field-input:focus{
       background:#171a28;
     }
-
     body.dark-theme .auth-status.error{
       background:#321d23;
       border-color:#5b3039;
       color:#f0aab5;
     }
-
     body.dark-theme .auth-status.success{
       background:#16322e;
       border-color:#285b53;
       color:#a8e1d7;
     }
-
     /* =====================================================
        RESPONSIVE
        ===================================================== */
-
     @media(max-width:800px){
-
       .auth-page{
         min-height:calc(100vh - 68px);
         padding:72px 0 82px;
       }
-
       .auth-card{
         padding:25px;
       }
-
     }
-
     @media(max-width:480px){
-
       .auth-page{
         padding:55px 0 65px;
       }
-
       .auth-shell{
         width:calc(100% - 28px);
       }
-
       .auth-card{
         padding:21px;
         border-radius:18px;
       }
-
       .auth-title{
         font-size:44px;
       }
-
       .auth-copy{
         font-size:13px;
       }
-
       .field-input{
         height:48px;
       }
-
       .auth-submit{
         min-height:48px;
       }
-
     }
-
     @media(prefers-reduced-motion:reduce){
-
       .auth-submit,
       .google-button,
       .field-input{
         transition:none;
       }
-
     }
-
   </style>
-
 </head>
-
-
 <body>
-
-
   <!-- =====================================================
        SHARED NAVIGATION
        ===================================================== -->
-
   <div id="site-nav"></div>
-
-
   <!-- =====================================================
        LOGIN
        ===================================================== -->
-
   <main class="auth-page">
-
-    <div class="auth-shell">
-
-
-      <header class="auth-header">
-
-        <div class="auth-kicker">
-          Alphex AI / Account
-        </div>
-
-        <h1 class="auth-title">
-          Welcome back.
-        </h1>
-
-        <p class="auth-copy">
-          Sign in to continue to your Alphex AI workspace.
-        </p>
-
-      </header>
-
-
-      <section class="auth-card">
-
-        <form
-          class="auth-form"
-          id="login-form"
-          novalidate
-        >
-
-
-          <!-- EMAIL -->
-
-          <div class="field">
-
-            <label
-              class="field-label"
-              for="login-email"
-            >
-              Email
-            </label>
-
-            <input
-              class="field-input"
-              id="login-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              placeholder="you@example.com"
-              required
-            >
-
-          </div>
-
-
-          <!-- PASSWORD -->
-
-          <div class="field">
-
-            <div class="field-row">
-
-              <label
-                class="field-label"
-                for="login-password"
-              >
-                Password
-              </label>
-
-              <a
-                class="field-link"
-                href="#"
-                id="forgot-password"
-              >
-                Forgot password?
-              </a>
-
-            </div>
-
-            <div class="password-wrap">
-
-              <input
-                class="field-input"
-                id="login-password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Enter your password"
-                required
-              >
-
-              <button
-                class="password-toggle"
-                type="button"
-                id="password-toggle"
-                aria-label="Show password"
-              >
-                Show
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <!-- STATUS -->
-
-          <div
-            class="auth-status"
-            id="login-status"
-            role="status"
-            aria-live="polite"
-          ></div>
-
-
-          <!-- SUBMIT -->
-
-          <button
-            class="auth-submit"
-            id="login-submit"
-            type="submit"
-          >
-            Sign in
-          </button>
-
-        </form>
-
-
-        <!-- DIVIDER -->
-
-        <div class="auth-divider">
-
-          <span>
-            or
-          </span>
-
-        </div>
-
-
-        <!-- GOOGLE -->
-
-        <button
-          class="google-button"
-          id="google-login"
-          type="button"
-        >
-
-          <span
-            class="google-icon"
-            aria-hidden="true"
-          >
-            G
-          </span>
-
-          Continue with Google
-
-        </button>
-
-
-        <!-- CREATE ACCOUNT -->
-
-        <div class="auth-footer">
-
-          Don't have an account?
-
-          <a href="signup.html">
-            Create one
-          </a>
-
-        </div>
-
-      </section>
-
-
-      <p class="auth-note">
-        Authentication is currently being prepared.
-        Your account will be securely connected through
-        Alphex AI authentication services.
-      </p>
-
-
+<div class="auth-shell">
+  <header class="auth-header">
+    <div class="auth-kicker">
+      Alphex AI / Account
     </div>
-
+    <h1 class="auth-title">
+      Welcome back.
+    </h1>
+    <p class="auth-copy">
+      Sign in to continue to your Alphex AI workspace.
+    </p>
+  </header>
+  <section class="auth-card">
+    <form
+      class="auth-form"
+      id="login-form"
+      novalidate
+    >
+      <!-- EMAIL -->
+      <div class="field">
+        <label
+          class="field-label"
+          for="login-email"
+        >
+          Email
+        </label>
+        <input
+          class="field-input"
+          id="login-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+      </div>
+      <!-- PASSWORD -->
+      <div class="field">
+        <div class="field-row">
+          <label
+            class="field-label"
+            for="login-password"
+          >
+            Password
+          </label>
+          <a
+            class="field-link"
+            href="#"
+            id="forgot-password"
+          >
+            Forgot password?
+          </a>
+        </div>
+        <div class="password-wrap">
+          <input
+            class="field-input"
+            id="login-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+            required
+          >
+          <button
+            class="password-toggle"
+            type="button"
+            id="password-toggle"
+            aria-label="Show password"
+          >
+            Show
+          </button>
+        </div>
+      </div>
+      <!-- STATUS -->
+      <div
+        class="auth-status"
+        id="login-status"
+        role="status"
+        aria-live="polite"
+      ></div>
+      <!-- SUBMIT -->
+      <button
+        class="auth-submit"
+        id="login-submit"
+        type="submit"
+      >
+        Sign in
+      </button>
+    </form>
+    <!-- DIVIDER -->
+    <div class="auth-divider">
+      <span>
+        or
+      </span>
+    </div>
+    <!-- GOOGLE -->
+    <button
+      class="google-button"
+      id="google-login"
+      type="button"
+    >
+      <span
+        class="google-icon"
+        aria-hidden="true"
+      >
+        G
+      </span>
+      Continue with Google
+    </button>
+    <!-- CREATE ACCOUNT -->
+    <div class="auth-footer">
+      Don't have an account?
+      <a href="signup.html">
+        Create one
+      </a>
+    </div>
+  </section>
+  <p class="auth-note">
+    Secure authentication powered by Alphex AI.
+  </p>
+</div>
   </main>
-
-
   <!-- =====================================================
        SHARED FOOTER
        ===================================================== -->
-
   <div id="site-footer"></div>
-
-
   <!-- =====================================================
        SHARED JAVASCRIPT
        ===================================================== -->
-
   <script src="site.js"></script>
-
-
   <!-- =====================================================
-       LOGIN PAGE BEHAVIOR
-       Prepared for future Supabase integration
+       SUPABASE AUTHENTICATION
        ===================================================== -->
-
   <script>
-
     (() => {
-
+      /* ---------------------------------------------------
+         SUPABASE CONFIGURATION
+         --------------------------------------------------- */
+      const SUPABASE_URL =
+        'https://nxqxhakjbtdzreimpkdz.supabase.co';
+      const SUPABASE_PUBLISHABLE_KEY =
+        'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
+      const supabase =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+      /* ---------------------------------------------------
+         ELEMENTS
+         --------------------------------------------------- */
       const form =
         document.getElementById('login-form');
-
       const email =
         document.getElementById('login-email');
-
       const password =
         document.getElementById('login-password');
-
       const submit =
         document.getElementById('login-submit');
-
       const status =
         document.getElementById('login-status');
-
       const passwordToggle =
         document.getElementById('password-toggle');
-
       const googleLogin =
         document.getElementById('google-login');
-
       const forgotPassword =
         document.getElementById('forgot-password');
-
-
       /* ---------------------------------------------------
          STATUS
          --------------------------------------------------- */
-
       const showStatus = (
         message,
         type = 'error'
       ) => {
-
         status.textContent = message;
-
         status.className =
           `auth-status show ${type}`;
-
       };
-
-
       const clearStatus = () => {
-
         status.textContent = '';
-
         status.className =
           'auth-status';
-
       };
-
-
+      /* ---------------------------------------------------
+         INITIAL SESSION CHECK
+         --------------------------------------------------- */
+      const checkExistingSession = async () => {
+        try {
+          const {
+            data,
+            error
+          } = await supabase.auth.getSession();
+          if (error) {
+            console.error(
+              'Session check error:',
+              error
+            );
+            return;
+          }
+          if (data.session) {
+            window.location.replace(
+              'workspace.html'
+            );
+          }
+        } catch (error) {
+          console.error(
+            'Unable to check session:',
+            error
+          );
+        }
+      };
+      checkExistingSession();
+      /* ---------------------------------------------------
+         AUTH STATE
+         --------------------------------------------------- */
+      supabase.auth.onAuthStateChange(
+        (event, session) => {
+          if (
+            event === 'SIGNED_IN' &&
+            session
+          ) {
+            window.location.replace(
+              'workspace.html'
+            );
+          }
+        }
+      );
       /* ---------------------------------------------------
          PASSWORD VISIBILITY
          --------------------------------------------------- */
-
       passwordToggle.addEventListener(
         'click',
         () => {
-
           const isPassword =
             password.type === 'password';
-
           password.type =
             isPassword
               ? 'text'
               : 'password';
-
           passwordToggle.textContent =
             isPassword
               ? 'Hide'
               : 'Show';
-
           passwordToggle.setAttribute(
             'aria-label',
             isPassword
               ? 'Hide password'
               : 'Show password'
           );
-
         }
       );
-
-
       /* ---------------------------------------------------
-         FORM
+         LOGIN
          --------------------------------------------------- */
-
       form.addEventListener(
         'submit',
-        event => {
-
+        async event => {
           event.preventDefault();
-
           clearStatus();
-
-
           const emailValue =
             email.value.trim();
-
           const passwordValue =
             password.value;
-
-
+          /* VALIDATION */
           if (!emailValue) {
-
             showStatus(
               'Please enter your email address.'
             );
-
             email.focus();
-
             return;
-
           }
-
-
           if (!email.validity.valid) {
-
             showStatus(
               'Please enter a valid email address.'
             );
-
             email.focus();
-
             return;
-
           }
-
-
           if (!passwordValue) {
-
             showStatus(
               'Please enter your password.'
             );
-
             password.focus();
-
             return;
-
           }
-
-
-          /*
-           * Supabase authentication will be
-           * connected here later.
-           *
-           * Example future flow:
-           *
-           * const { data, error } =
-           *   await supabase.auth.signInWithPassword({
-           *     email: emailValue,
-           *     password: passwordValue
-           *   });
-           */
-
-
-          showStatus(
-            'Authentication will be connected here soon.',
-            'success'
-          );
-
+          /* LOADING */
+          submit.disabled = true;
+          submit.textContent =
+            'Signing in...';
+          try {
+            const {
+              data,
+              error
+            } = await supabase.auth.signInWithPassword({
+              email: emailValue,
+              password: passwordValue
+            });
+            if (error) {
+              console.error(
+                'Supabase login error:',
+                error
+              );
+              showStatus(
+                getFriendlyAuthError(
+                  error
+                )
+              );
+              submit.disabled = false;
+              submit.textContent =
+                'Sign in';
+              return;
+            }
+            if (!data.session) {
+              showStatus(
+                'Sign-in completed, but no active session was created.'
+              );
+              submit.disabled = false;
+              submit.textContent =
+                'Sign in';
+              return;
+            }
+            showStatus(
+              'Signed in successfully. Opening your workspace...',
+              'success'
+            );
+            /*
+             * Give the browser a moment to update
+             * the Supabase session before navigation.
+             */
+            setTimeout(() => {
+              window.location.replace(
+                'workspace.html'
+              );
+            }, 500);
+          } catch (error) {
+            console.error(
+              'Unexpected login error:',
+              error
+            );
+            showStatus(
+              'Something went wrong while signing in. Please try again.'
+            );
+            submit.disabled = false;
+            submit.textContent =
+              'Sign in';
+          }
         }
       );
-
-
       /* ---------------------------------------------------
          GOOGLE AUTH
          --------------------------------------------------- */
-
       googleLogin.addEventListener(
         'click',
-        () => {
-
-          showStatus(
-            'Google sign-in will be connected soon.',
-            'success'
-          );
-
+        async () => {
+          clearStatus();
+          googleLogin.disabled = true;
+          googleLogin.textContent =
+            'Connecting to Google...';
+          try {
+            const {
+              data,
+              error
+            } = await supabase.auth.signInWithOAuth({
+              provider: 'google',
+              options: {
+                redirectTo:
+                  `${window.location.origin}/workspace.html`
+              }
+            });
+            if (error) {
+              console.error(
+                'Google authentication error:',
+                error
+              );
+              showStatus(
+                getFriendlyAuthError(
+                  error
+                )
+              );
+              googleLogin.disabled = false;
+              googleLogin.innerHTML = `
+                <span
+                  class="google-icon"
+                  aria-hidden="true"
+                >
+                  G
+                </span>
+                Continue with Google
+              `;
+            }
+          } catch (error) {
+            console.error(
+              'Unexpected Google auth error:',
+              error
+            );
+            showStatus(
+              'Google sign-in could not be started. Please try again.'
+            );
+            googleLogin.disabled = false;
+            googleLogin.innerHTML = `
+              <span
+                class="google-icon"
+                aria-hidden="true"
+              >
+                G
+              </span>
+              Continue with Google
+            `;
+          }
         }
       );
-
-
       /* ---------------------------------------------------
          FORGOT PASSWORD
          --------------------------------------------------- */
-
       forgotPassword.addEventListener(
         'click',
-        event => {
-
+        async event => {
           event.preventDefault();
-
           clearStatus();
-
-          showStatus(
-            'Password recovery will be available soon.',
-            'success'
-          );
-
+          const emailValue =
+            email.value.trim();
+          if (!emailValue) {
+            showStatus(
+              'Enter your email address first, then click Forgot password.'
+            );
+            email.focus();
+            return;
+          }
+          if (!email.validity.valid) {
+            showStatus(
+              'Please enter a valid email address first.'
+            );
+            email.focus();
+            return;
+          }
+          try {
+            const {
+              error
+            } = await supabase.auth.resetPasswordForEmail(
+              emailValue,
+              {
+                redirectTo:
+                  `${window.location.origin}/reset-password.html`
+              }
+            );
+            if (error) {
+              console.error(
+                'Password recovery error:',
+                error
+              );
+              showStatus(
+                getFriendlyAuthError(
+                  error
+                )
+              );
+              return;
+            }
+            showStatus(
+              'Password reset instructions have been sent to your email.',
+              'success'
+            );
+          } catch (error) {
+            console.error(
+              'Unexpected password recovery error:',
+              error
+            );
+            showStatus(
+              'Unable to start password recovery. Please try again.'
+            );
+          }
         }
       );
-
+      /* ---------------------------------------------------
+         FRIENDLY ERROR MESSAGES
+         --------------------------------------------------- */
+      function getFriendlyAuthError(error) {
+        const message =
+          String(
+            error?.message || ''
+          ).toLowerCase();
+        if (
+          message.includes(
+            'invalid login credentials'
+          )
+        ) {
+          return 'Incorrect email or password. Please check your details and try again.';
+        }
+        if (
+          message.includes(
+            'email not confirmed'
+          )
+        ) {
+          return 'Please confirm your email address before signing in.';
+        }
+        if (
+          message.includes(
+            'too many requests'
+          )
+        ) {
+          return 'Too many attempts. Please wait a moment and try again.';
+        }
+        if (
+          message.includes(
+            'network'
+          )
+        ) {
+          return 'Network error. Please check your internet connection and try again.';
+        }
+        return (
+          error?.message ||
+          'Unable to sign in. Please try again.'
+        );
+      }
     })();
-
   </script>
-
-
 </body>
-
 </html>
