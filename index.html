@@ -151,7 +151,6 @@ h1 span{display:block}
 .band-card{margin-top:42px}
 .faq-list{margin-top:44px}
 .footer{gap:10px;flex-wrap:wrap}
-.footer .mono{width:100%;order:3}
 }
 
 @media(max-width:480px){
@@ -565,15 +564,18 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
     </div>
 
     <div class="nav-actions">
-      <a class="pill light contact-link" href="mailto:hello@alphex.ai?subject=Alphex%20AI%20demo">Contact</a>
+      <a class="pill light contact-link" href="mailto:hello@alphex.ai?subject=Alphex%20AI%20demo">
+        Contact
+      </a>
 
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
         <span class="theme-icon">☾</span>
         <span class="theme-label">Dark</span>
       </button>
 
-      <a class="pill dark header-demo" href="mailto:hello@alphex.ai?subject=Alphex%20AI%20demo">
-        Book a demo <span>↗</span>
+      <!-- CHANGED: Book a demo → Sign in -->
+      <a class="pill dark header-demo" href="/auth/login.html">
+        Sign in <span>↗</span>
       </a>
 
       <button class="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">
@@ -590,7 +592,13 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
     <a href="#process">Process</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="mailto:hello@alphex.ai?subject=Alphex%20AI%20demo">Contact us <span>↗</span></a>
+
+    <!-- ADDED: Sign in -->
+    <a href="/auth/login.html">Sign in <span>↗</span></a>
+
+    <a href="mailto:hello@alphex.ai?subject=Alphex%20AI%20demo">
+      Contact us <span>↗</span>
+    </a>
   </div>
 </div>
 
@@ -614,7 +622,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
   </div>
 </div>
 
-<!-- ORIGINAL HERO — PRESERVED -->
 <section class="hero shell">
 
   <div class="hero-kicker">AI systems for real work</div>
@@ -638,7 +645,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
     </a>
   </div>
 
-  <!-- ORIGINAL WORKSPACE — PRESERVED -->
   <div class="hero-stage">
     <div class="stage-ui">
 
@@ -682,7 +688,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
 
 </section>
 
-<!-- ORIGINAL CAPABILITIES — PRESERVED -->
 <section class="section shell" id="capabilities">
 
   <div class="intro">
@@ -795,7 +800,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
   </div>
 </section>
 
-<!-- NEW PRODUCT SECTION — ONLY ADDITION -->
 <section class="section products-section" id="products">
 
   <div class="shell">
@@ -815,7 +819,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
 
     <div class="products-grid">
 
-      <!-- EvalLoop AI -->
       <article class="product-card ai">
 
         <div class="product-top">
@@ -849,7 +852,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
 
       </article>
 
-      <!-- EvalLoop Jobs -->
       <article class="product-card jobs">
 
         <div class="product-top">
@@ -888,7 +890,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
   </div>
 </section>
 
-<!-- ORIGINAL QUALITY BAR — PRESERVED -->
 <section class="band">
 
   <div class="shell band-inner">
@@ -935,7 +936,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
   </div>
 </section>
 
-<!-- ORIGINAL PRICING — PRESERVED -->
 <section class="section pricing" id="pricing">
 
   <div class="shell">
@@ -985,7 +985,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
   </div>
 </section>
 
-<!-- ORIGINAL FAQ — PRESERVED -->
 <section class="section shell faq-grid" id="faq">
 
   <div>
@@ -1028,7 +1027,6 @@ body{font-weight:400}h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!import
   </div>
 </section>
 
-<!-- ORIGINAL CTA — PRESERVED -->
 <section class="cta">
 
   <div class="shell">
