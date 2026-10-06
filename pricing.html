@@ -12,16 +12,591 @@
 
   <meta
     name="description"
-    content="Alphex AI pricing."
+    content="Alphex AI builds conversational AI, RAG knowledge systems, and AI agents for real business workflows."
   >
 
   <title>Pricing — Alphex AI</title>
 
   <link rel="stylesheet" href="site.css">
 
+  <style>
+
+    /* =====================================================
+       PRICING PAGE
+       ===================================================== */
+
+    .pricing-hero{
+      padding-bottom:70px;
+    }
+
+    .pricing-hero h1{
+      max-width:980px;
+      margin:20px 0 26px;
+      font-size:clamp(58px,9vw,110px);
+      line-height:.9;
+      letter-spacing:-.095em;
+      font-weight:300;
+    }
+
+    .pricing-hero-copy{
+      max-width:590px;
+      color:#595955;
+      font-size:18px;
+      line-height:1.6;
+    }
+
+    .pricing-intro{
+      margin-top:55px;
+      max-width:700px;
+    }
+
+    .pricing-intro h2{
+      font-size:clamp(38px,5vw,62px);
+      line-height:.98;
+      letter-spacing:-.075em;
+      margin:0 0 18px;
+    }
+
+    .pricing-intro p{
+      color:#666661;
+      font-size:16px;
+      line-height:1.6;
+      max-width:600px;
+    }
+
+    /* =====================================================
+       OFFER CARDS
+       ===================================================== */
+
+    .pricing-test-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:50px;
+    }
+
+    .offer-card{
+      position:relative;
+
+      background:rgba(255,255,255,.72);
+
+      border:1px solid rgba(16,16,16,.18);
+      border-radius:25px;
+
+      padding:30px;
+
+      min-height:650px;
+
+      display:flex;
+      flex-direction:column;
+
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+
+      transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .offer-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 20px 55px rgba(0,0,0,.10);
+    }
+
+    .offer-card.featured{
+      background:linear-gradient(
+        145deg,
+        #302261,
+        #151522
+      );
+
+      color:#fff;
+
+      border-color:#6656c9;
+
+      box-shadow:
+        0 18px 50px rgba(48,34,97,.18);
+    }
+
+    .offer-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:15px;
+    }
+
+    .offer-number{
+      font:10px var(--mono);
+      color:var(--muted);
+      letter-spacing:.08em;
+    }
+
+    .offer-card.featured .offer-number{
+      color:#a9a1c9;
+    }
+
+    .offer-badge{
+      padding:6px 9px;
+      border-radius:999px;
+
+      background:#111;
+      color:#fff;
+
+      font:9px var(--mono);
+      letter-spacing:.04em;
+    }
+
+    .offer-card.featured .offer-badge{
+      background:#fff;
+      color:#201942;
+    }
+
+    .offer-card .section-label{
+      margin-top:65px;
+    }
+
+    .offer-card.featured .section-label{
+      color:#bfb5ff;
+    }
+
+    .offer-card h2{
+      font-size:42px;
+      line-height:.95;
+      letter-spacing:-.075em;
+      margin:10px 0 17px;
+    }
+
+    .offer-description{
+      color:#595955;
+      font-size:14px;
+      line-height:1.6;
+      max-width:330px;
+      margin:0;
+    }
+
+    .offer-card.featured .offer-description{
+      color:#c7c9d8;
+    }
+
+    /* =====================================================
+       FEATURES
+       ===================================================== */
+
+    .offer-features{
+      list-style:none;
+
+      padding:0;
+      margin:30px 0 0;
+
+      display:grid;
+      gap:12px;
+    }
+
+    .offer-features li{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+
+      color:#353532;
+
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .offer-card.featured .offer-features li{
+      color:#e0e1ea;
+    }
+
+    .offer-features li::before{
+      content:'✓';
+
+      flex:0 0 auto;
+
+      width:19px;
+      height:19px;
+
+      display:grid;
+      place-items:center;
+
+      border:1px solid #aaa;
+
+      border-radius:50%;
+
+      font-size:10px;
+      line-height:1;
+    }
+
+    .offer-card.featured .offer-features li::before{
+      border-color:#7e73b4;
+      color:#8df0df;
+    }
+
+    /* =====================================================
+       PRICE
+       ===================================================== */
+
+    .offer-bottom{
+      margin-top:auto;
+      padding-top:35px;
+    }
+
+    .offer-price{
+      font-size:30px;
+      line-height:1;
+      letter-spacing:-.06em;
+    }
+
+    .offer-price small{
+      font:10px var(--mono);
+      color:var(--muted);
+      letter-spacing:0;
+    }
+
+    .offer-card.featured .offer-price small{
+      color:#aaa;
+    }
+
+    .offer-note{
+      margin:10px 0 0;
+
+      color:var(--muted);
+
+      font-size:11px;
+      line-height:1.5;
+    }
+
+    .offer-card.featured .offer-note{
+      color:#aaa;
+    }
+
+    .offer-bottom .pill{
+      margin-top:20px;
+      align-self:flex-start;
+    }
+
+    /* =====================================================
+       HOW PRICING WORKS
+       ===================================================== */
+
+    .pricing-model{
+      margin-top:100px;
+
+      padding-top:70px;
+
+      border-top:1px solid var(--border);
+    }
+
+    .pricing-model-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:80px;
+    }
+
+    .pricing-model h2{
+      max-width:650px;
+
+      font-size:clamp(42px,5vw,68px);
+      line-height:.95;
+      letter-spacing:-.08em;
+
+      margin:15px 0 20px;
+    }
+
+    .pricing-model-copy{
+      max-width:480px;
+
+      color:#595955;
+
+      font-size:16px;
+      line-height:1.6;
+    }
+
+    .pricing-factors{
+      display:grid;
+
+      border-top:1px solid var(--border);
+    }
+
+    .pricing-factor{
+      display:grid;
+      grid-template-columns:90px 1fr;
+
+      gap:25px;
+
+      padding:20px 0;
+
+      border-bottom:1px solid var(--border);
+    }
+
+    .pricing-factor-number{
+      font:10px var(--mono);
+      color:var(--muted);
+    }
+
+    .pricing-factor h3{
+      margin:0 0 6px;
+
+      font-size:18px;
+      letter-spacing:-.04em;
+    }
+
+    .pricing-factor p{
+      margin:0;
+
+      color:var(--muted);
+
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    /* =====================================================
+       CORE OFFERING STRIP
+       ===================================================== */
+
+    .offering-strip{
+      margin-top:100px;
+
+      padding:55px 0;
+
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+    }
+
+    .offering-strip-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .offering-item{
+      padding:10px 30px;
+
+      border-left:1px solid var(--border);
+    }
+
+    .offering-item:first-child{
+      border-left:0;
+      padding-left:0;
+    }
+
+    .offering-item h3{
+      margin:0 0 9px;
+
+      font-size:21px;
+      letter-spacing:-.05em;
+    }
+
+    .offering-item p{
+      margin:0;
+
+      max-width:280px;
+
+      color:var(--muted);
+
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .offering-number{
+      display:block;
+
+      margin-bottom:30px;
+
+      font:10px var(--mono);
+      color:var(--accent);
+    }
+
+    /* =====================================================
+       CTA
+       ===================================================== */
+
+    .pricing-cta{
+      padding:130px 0;
+
+      background:linear-gradient(
+        120deg,
+        #161131,
+        #111 60%,
+        #103b3a
+      );
+
+      color:#fff;
+
+      margin-top:0;
+    }
+
+    .pricing-cta-inner{
+      text-align:center;
+    }
+
+    .pricing-cta h2{
+      max-width:900px;
+
+      margin:18px auto 25px;
+
+      font-size:clamp(55px,8vw,105px);
+      line-height:.9;
+      letter-spacing:-.095em;
+      font-weight:300;
+    }
+
+    .pricing-cta p{
+      max-width:480px;
+
+      margin:0 auto 30px;
+
+      color:#aaa;
+
+      font-size:16px;
+      line-height:1.6;
+    }
+
+    /* =====================================================
+       DARK MODE
+       ===================================================== */
+
+    body.dark-theme .pricing-hero-copy{
+      color:#e1e3f0;
+    }
+
+    body.dark-theme .pricing-intro p{
+      color:#c2c5d5;
+    }
+
+    body.dark-theme .offer-card{
+      background:rgba(255,255,255,.07);
+      border-color:rgba(255,255,255,.22);
+    }
+
+    body.dark-theme .offer-card:hover{
+      box-shadow:0 20px 55px rgba(0,0,0,.45);
+    }
+
+    body.dark-theme .offer-card.featured{
+      background:linear-gradient(
+        145deg,
+        #302261,
+        #151522
+      );
+
+      border-color:#6656c9;
+    }
+
+    body.dark-theme .offer-description{
+      color:#c0c3d2;
+    }
+
+    body.dark-theme .offer-features li{
+      color:#d5d7e1;
+    }
+
+    body.dark-theme .offer-features li::before{
+      border-color:#555;
+    }
+
+    body.dark-theme .pricing-model-copy{
+      color:#c2c5d5;
+    }
+
+    body.dark-theme .offering-item p{
+      color:#b8bbca;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media(max-width:900px){
+
+      .pricing-test-grid{
+        grid-template-columns:1fr;
+      }
+
+      .offer-card{
+        min-height:560px;
+      }
+
+      .pricing-model-grid{
+        grid-template-columns:1fr;
+        gap:55px;
+      }
+
+      .offering-strip-grid{
+        grid-template-columns:1fr;
+        gap:30px;
+      }
+
+      .offering-item{
+        border-left:0;
+        border-top:1px solid var(--border);
+        padding:25px 0 0;
+      }
+
+      .offering-item:first-child{
+        border-top:0;
+        padding-top:0;
+      }
+
+    }
+
+    @media(max-width:480px){
+
+      .pricing-hero{
+        padding-bottom:45px;
+      }
+
+      .pricing-hero h1{
+        font-size:clamp(50px,14vw,70px);
+      }
+
+      .pricing-hero-copy{
+        font-size:15px;
+      }
+
+      .pricing-intro h2{
+        font-size:42px;
+      }
+
+      .offer-card{
+        min-height:540px;
+        padding:24px;
+      }
+
+      .offer-card h2{
+        font-size:37px;
+      }
+
+      .pricing-model{
+        margin-top:70px;
+        padding-top:50px;
+      }
+
+      .pricing-factor{
+        grid-template-columns:55px 1fr;
+        gap:15px;
+      }
+
+      .offering-strip{
+        margin-top:70px;
+      }
+
+      .pricing-cta{
+        padding:95px 0 105px;
+      }
+
+      .pricing-cta h2{
+        font-size:clamp(50px,14vw,70px);
+      }
+
+    }
+
+  </style>
+
 </head>
 
+
 <body>
+
 
   <!-- =====================================================
        SHARED NAVIGATION
@@ -32,11 +607,12 @@
 
   <main>
 
+
     <!-- =====================================================
-         PAGE HERO
+         HERO
          ===================================================== -->
 
-    <section class="section">
+    <section class="section pricing-hero">
 
       <div class="shell">
 
@@ -44,23 +620,16 @@
           ALPHEX AI / PRICING
         </div>
 
-        <h1
-          style="
-            max-width:900px;
-            margin:20px 0 25px;
-            font-size:clamp(58px,9vw,110px);
-            line-height:.9;
-            letter-spacing:-.095em;
-            font-weight:300;
-          "
-        >
-          Simple plans.<br>
-          Clear value.
+        <h1>
+          AI systems built<br>
+          around your work.
         </h1>
 
-        <p class="section-copy">
-          Start with what you need today and expand as your
-          AI workflows grow.
+        <p class="pricing-hero-copy">
+          From customer conversations to knowledge retrieval
+          and autonomous workflows, Alphex AI builds practical
+          AI systems that help businesses communicate, find
+          information, and get work done.
         </p>
 
       </div>
@@ -69,7 +638,7 @@
 
 
     <!-- =====================================================
-         PRICING
+         CORE OFFERINGS
          ===================================================== -->
 
     <section
@@ -79,229 +648,531 @@
 
       <div class="shell">
 
-        <div
-          style="
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:18px;
-          "
-          class="pricing-test-grid"
-        >
+        <div class="pricing-intro">
 
-          <!-- Starter -->
+          <div class="section-label">
+            WHAT WE OFFER
+          </div>
 
-          <article
-            style="
-              background:var(--white);
-              border:1px solid var(--border);
-              border-radius:24px;
-              padding:30px;
-              min-height:410px;
-              display:flex;
-              flex-direction:column;
-            "
-          >
+          <h2>
+            Three ways we make AI useful.
+          </h2>
 
-            <div class="section-label">
-              STARTER
+          <p>
+            Alphex AI focuses on three connected areas:
+            conversational AI for communication, RAG for
+            grounded knowledge, and AI agents for getting
+            work done.
+          </p>
+
+        </div>
+
+
+        <div class="pricing-test-grid">
+
+
+          <!-- =================================================
+               01 / CONVERSATIONAL AI
+               ================================================= -->
+
+          <article class="offer-card">
+
+            <div class="offer-top">
+
+              <span class="offer-number">
+                OFFERING / 01
+              </span>
+
+              <span class="offer-badge">
+                STARTING POINT
+              </span>
+
             </div>
 
-            <h2
-              style="
-                margin:65px 0 12px;
-                font-size:38px;
-                line-height:.95;
-                letter-spacing:-.07em;
-              "
-            >
-              Essential
-            </h2>
 
-            <p
-              style="
-                color:var(--muted);
-                max-width:280px;
-              "
-            >
-              A focused starting point for teams
-              exploring AI-powered workflows.
-            </p>
+            <div>
 
-            <div
-              style="
-                margin-top:auto;
-                font-size:30px;
-                letter-spacing:-.05em;
-              "
-            >
-              ₹8k
-              <span
+              <div class="section-label">
+                CONVERSATIONAL AI
+              </div>
+
+              <h2>
+                AI assistants that talk naturally.
+              </h2>
+
+              <p class="offer-description">
+                Build an AI chatbot that can understand
+                customer questions, maintain conversation
+                context, and respond in a way that fits
+                your business.
+              </p>
+
+
+              <ul class="offer-features">
+
+                <li>
+                  Website AI chatbot
+                </li>
+
+                <li>
+                  Customer support conversations
+                </li>
+
+                <li>
+                  FAQ and common-question handling
+                </li>
+
+                <li>
+                  Lead capture and qualification
+                </li>
+
+                <li>
+                  Custom tone, personality, and instructions
+                </li>
+
+                <li>
+                  Context-aware conversations
+                </li>
+
+                <li>
+                  Human handoff when needed
+                </li>
+
+                <li>
+                  Conversation testing before launch
+                </li>
+
+              </ul>
+
+            </div>
+
+
+            <div class="offer-bottom">
+
+              <div class="offer-price">
+                From ₹8k
+                <small>/ setup</small>
+              </div>
+
+              <p class="offer-note">
+                Final pricing depends on scope,
+                integrations, and requirements.
+              </p>
+
+              <a
+                class="pill light"
+                href="mailto:hello@alphex.ai?subject=Alphex%20AI%20Conversational%20AI"
+              >
+                Discuss Conversational AI <span>↗</span>
+              </a>
+
+            </div>
+
+          </article>
+
+
+          <!-- =================================================
+               02 / RAG
+               ================================================= -->
+
+          <article class="offer-card featured">
+
+            <div class="offer-top">
+
+              <span class="offer-number">
+                OFFERING / 02
+              </span>
+
+              <span class="offer-badge">
+                MOST REQUESTED
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <div class="section-label">
+                RAG & KNOWLEDGE AI
+              </div>
+
+              <h2>
+                AI that knows your information.
+              </h2>
+
+              <p class="offer-description">
+                Connect your business knowledge to an AI
+                assistant so it can retrieve relevant
+                information and generate grounded answers
+                instead of relying only on general knowledge.
+              </p>
+
+
+              <ul class="offer-features">
+
+                <li>
+                  Everything in Conversational AI
+                </li>
+
+                <li>
+                  Company documents and knowledge bases
+                </li>
+
+                <li>
+                  RAG implementation
+                </li>
+
+                <li>
+                  PDF and document knowledge
+                </li>
+
+                <li>
+                  Grounded responses
+                </li>
+
+                <li>
+                  Relevant information retrieval
+                </li>
+
+                <li>
+                  Reduced hallucination risk
+                </li>
+
+                <li>
+                  Knowledge updates as your information changes
+                </li>
+
+              </ul>
+
+            </div>
+
+
+            <div class="offer-bottom">
+
+              <div class="offer-price">
+                From ₹22k
+                <small>/ setup</small>
+              </div>
+
+              <p class="offer-note">
+                Final pricing depends on data volume,
+                integrations, and knowledge complexity.
+              </p>
+
+              <a
+                class="pill"
+                href="mailto:hello@alphex.ai?subject=Alphex%20AI%20RAG%20and%20Knowledge%20AI"
                 style="
-                  font:10px var(--mono);
-                  color:var(--muted);
+                  background:#fff;
+                  color:#201942;
+                  border-color:#fff;
                 "
               >
-                / setup
-              </span>
-            </div>
+                Discuss RAG <span>↗</span>
+              </a>
 
-            <a
-              class="pill light"
-              href="mailto:hello@alphex.ai?subject=Alphex%20AI%20Starter%20plan"
-              style="
-                margin-top:20px;
-                align-self:flex-start;
-              "
-            >
-              Talk to us <span>↗</span>
-            </a>
+            </div>
 
           </article>
 
 
-          <!-- Growth -->
+          <!-- =================================================
+               03 / AI AGENTS
+               ================================================= -->
 
-          <article
-            style="
-              background:linear-gradient(
-                145deg,
-                #302261,
-                #151522
-              );
-              color:#fff;
-              border:1px solid #6656c9;
-              border-radius:24px;
-              padding:30px;
-              min-height:410px;
-              display:flex;
-              flex-direction:column;
-            "
-          >
+          <article class="offer-card">
 
-            <div
-              class="section-label"
-              style="color:#bfb5ff;"
-            >
-              GROWTH / POPULAR
+            <div class="offer-top">
+
+              <span class="offer-number">
+                OFFERING / 03
+              </span>
+
+              <span class="offer-badge">
+                CUSTOM
+              </span>
+
             </div>
 
-            <h2
-              style="
-                margin:65px 0 12px;
-                font-size:38px;
-                line-height:.95;
-                letter-spacing:-.07em;
-              "
-            >
-              Grounded
-            </h2>
 
-            <p
-              style="
-                color:#c7c9d8;
-                max-width:280px;
-              "
-            >
-              AI assistance with knowledge search,
-              grounding, and human handoff.
-            </p>
+            <div>
 
-            <div
-              style="
-                margin-top:auto;
-                font-size:30px;
-                letter-spacing:-.05em;
-              "
-            >
-              ₹22k
-              <span
-                style="
-                  font:10px var(--mono);
-                  color:#aaa;
-                "
+              <div class="section-label">
+                AI AGENTS & AUTOMATION
+              </div>
+
+              <h2>
+                AI that can actually do the work.
+              </h2>
+
+              <p class="offer-description">
+                Go beyond conversations. Build AI agents that
+                can use tools, follow workflows, interact with
+                systems, and complete multi-step tasks within
+                defined boundaries.
+              </p>
+
+
+              <ul class="offer-features">
+
+                <li>
+                  Everything in RAG & Knowledge AI
+                </li>
+
+                <li>
+                  AI agents and autonomous workflows
+                </li>
+
+                <li>
+                  Multi-step task execution
+                </li>
+
+                <li>
+                  API and tool integrations
+                </li>
+
+                <li>
+                  CRM and business-system integrations
+                </li>
+
+                <li>
+                  Automated repetitive tasks
+                </li>
+
+                <li>
+                  Decision-based workflows
+                </li>
+
+                <li>
+                  Human approval and handoff points
+                </li>
+
+                <li>
+                  Custom agent testing and evaluation
+                </li>
+
+              </ul>
+
+            </div>
+
+
+            <div class="offer-bottom">
+
+              <div class="offer-price">
+                Let's talk
+              </div>
+
+              <p class="offer-note">
+                Custom pricing based on workflow,
+                integrations, complexity, and deployment.
+              </p>
+
+              <a
+                class="pill light"
+                href="mailto:hello@alphex.ai?subject=Alphex%20AI%20Agents%20and%20Automation"
               >
-                / setup
+                Discuss AI Agents <span>↗</span>
+              </a>
+
+            </div>
+
+          </article>
+
+
+        </div>
+
+
+        <!-- =================================================
+             HOW PRICING WORKS
+             ================================================= -->
+
+        <div class="pricing-model">
+
+          <div class="pricing-model-grid">
+
+            <div>
+
+              <div class="section-label">
+                HOW PRICING WORKS
+              </div>
+
+              <h2>
+                Built around your requirements.
+              </h2>
+
+              <p class="pricing-model-copy">
+                The prices shown above are starting points
+                for implementation. Every Alphex AI system
+                is scoped around the business problem,
+                information sources, integrations, and
+                level of automation required.
+              </p>
+
+            </div>
+
+
+            <div class="pricing-factors">
+
+              <div class="pricing-factor">
+
+                <div class="pricing-factor-number">
+                  01
+                </div>
+
+                <div>
+
+                  <h3>
+                    Implementation
+                  </h3>
+
+                  <p>
+                    Building, configuring, testing, and
+                    deploying your AI system.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="pricing-factor">
+
+                <div class="pricing-factor-number">
+                  02
+                </div>
+
+                <div>
+
+                  <h3>
+                    Knowledge & data
+                  </h3>
+
+                  <p>
+                    The amount and complexity of documents,
+                    knowledge sources, and data your system
+                    needs to work with.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="pricing-factor">
+
+                <div class="pricing-factor-number">
+                  03
+                </div>
+
+                <div>
+
+                  <h3>
+                    Integrations
+                  </h3>
+
+                  <p>
+                    External tools, APIs, CRMs, websites,
+                    and business systems connected to the AI.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="pricing-factor">
+
+                <div class="pricing-factor-number">
+                  04
+                </div>
+
+                <div>
+
+                  <h3>
+                    Ongoing support
+                  </h3>
+
+                  <p>
+                    Monitoring, improvements, knowledge
+                    updates, and additional workflow changes
+                    can be scoped separately.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             THE ALPHEX AI APPROACH
+             ================================================= -->
+
+        <div class="offering-strip">
+
+          <div class="offering-strip-grid">
+
+
+            <div class="offering-item">
+
+              <span class="offering-number">
+                01 / TALK
               </span>
+
+              <h3>
+                Conversational AI
+              </h3>
+
+              <p>
+                Help customers and teams communicate with
+                an AI assistant that understands context.
+              </p>
+
             </div>
 
-            <a
-              class="pill"
-              href="mailto:hello@alphex.ai?subject=Alphex%20AI%20Growth%20plan"
-              style="
-                margin-top:20px;
-                align-self:flex-start;
-                background:#fff;
-                color:#201942;
-                border-color:#fff;
-              "
-            >
-              Talk to us <span>↗</span>
-            </a>
 
-          </article>
+            <div class="offering-item">
 
+              <span class="offering-number">
+                02 / KNOW
+              </span>
 
-          <!-- Custom -->
+              <h3>
+                RAG & Knowledge
+              </h3>
 
-          <article
-            style="
-              background:var(--white);
-              border:1px solid var(--border);
-              border-radius:24px;
-              padding:30px;
-              min-height:410px;
-              display:flex;
-              flex-direction:column;
-            "
-          >
+              <p>
+                Give AI access to the right information so
+                answers can be grounded in your knowledge.
+              </p>
 
-            <div class="section-label">
-              CUSTOM
             </div>
 
-            <h2
-              style="
-                margin:65px 0 12px;
-                font-size:38px;
-                line-height:.95;
-                letter-spacing:-.07em;
-              "
-            >
-              Automated
-            </h2>
 
-            <p
-              style="
-                color:var(--muted);
-                max-width:280px;
-              "
-            >
-              Agents, integrations, custom workflows,
-              and more advanced AI systems.
-            </p>
+            <div class="offering-item">
 
-            <div
-              style="
-                margin-top:auto;
-                font-size:30px;
-                letter-spacing:-.05em;
-              "
-            >
-              Let's talk
+              <span class="offering-number">
+                03 / ACT
+              </span>
+
+              <h3>
+                AI Agents
+              </h3>
+
+              <p>
+                Connect AI to tools and workflows so it can
+                take meaningful actions within clear limits.
+              </p>
+
             </div>
 
-            <a
-              class="pill light"
-              href="mailto:hello@alphex.ai?subject=Alphex%20AI%20Custom%20plan"
-              style="
-                margin-top:20px;
-                align-self:flex-start;
-              "
-            >
-              Contact us <span>↗</span>
-            </a>
 
-          </article>
+          </div>
 
         </div>
 
@@ -314,19 +1185,9 @@
          CTA
          ===================================================== -->
 
-    <section
-      style="
-        padding:130px 0;
-        background:#111;
-        color:#fff;
-        margin-top:40px;
-      "
-    >
+    <section class="pricing-cta">
 
-      <div
-        class="shell"
-        style="text-align:center;"
-      >
+      <div class="shell pricing-cta-inner">
 
         <div
           class="section-label"
@@ -335,28 +1196,14 @@
           READY WHEN YOU ARE
         </div>
 
-        <h2
-          style="
-            max-width:850px;
-            margin:18px auto 25px;
-            font-size:clamp(55px,8vw,105px);
-            line-height:.9;
-            letter-spacing:-.095em;
-            font-weight:300;
-          "
-        >
-          Let's build something useful.
+        <h2>
+          Tell us what you want AI to do.
         </h2>
 
-        <p
-          style="
-            max-width:430px;
-            margin:0 auto 30px;
-            color:#aaa;
-          "
-        >
-          Tell us what you're trying to improve.
-          We'll help you find the right starting point.
+        <p>
+          Whether you need a conversational AI assistant,
+          a knowledge-powered RAG system, or an AI agent,
+          we'll help you find the right starting point.
         </p>
 
         <a
