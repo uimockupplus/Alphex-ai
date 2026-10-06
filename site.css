@@ -802,3 +802,64 @@ body.dark-theme .hero-kicker{
     grid-template-columns:1fr;
   }
 }
+/* =========================================================
+   GLOBAL MOBILE CONTENT OVERFLOW FIX
+   Keeps shared pages inside the viewport
+   ========================================================= */
+
+html,
+body{
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+*,
+*::before,
+*::after{
+  max-width:100%;
+}
+
+img,
+svg,
+video,
+iframe{
+  max-width:100%;
+}
+
+p,
+li,
+h1,
+h2,
+h3,
+h4,
+a{
+  overflow-wrap:break-word;
+}
+
+@media(max-width:800px){
+
+  .shell{
+    width:min(100% - 36px,620px);
+    max-width:calc(100% - 36px);
+  }
+
+  .section,
+  .intro{
+    max-width:100%;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .shell{
+    width:calc(100% - 28px);
+    max-width:calc(100% - 28px);
+  }
+
+  .section{
+    width:100%;
+    max-width:100%;
+  }
+
+}
