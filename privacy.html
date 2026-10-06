@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Privacy Policy for Alphex AI. Learn how Alphex AI handles information provided through its website, services, accounts, enquiries, and AI-powered experiences."
+  />
+
+  <meta
+    name="theme-color"
+    content="#f7f7f5"
+  />
+
+  <title>Privacy Policy — Alphex AI</title>
+
+  <link rel="stylesheet" href="site.css" />
+
+  <style>
+    /* =========================================================
+       ALPHEX AI — PRIVACY PAGE
+       ========================================================= */
+
+    .legal-hero{
+      padding:105px 0 90px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .legal-hero-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:100px;
+      align-items:end;
+    }
+
+    .legal-hero h1{
+      max-width:800px;
+      margin:15px 0 0;
+      font-size:clamp(55px,7vw,95px);
+      line-height:.88;
+      letter-spacing:-.09em;
+      font-weight:300;
+    }
+
+    .legal-intro{
+      max-width:650px;
+      color:#595955;
+      font-size:17px;
+      line-height:1.65;
+    }
+
+    .legal-meta{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      margin-top:25px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-meta-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--cyan);
+    }
+
+    .legal-layout{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:90px;
+      padding:95px 0 120px;
+      align-items:start;
+    }
+
+    .legal-sidebar{
+      position:sticky;
+      top:105px;
+    }
+
+    .legal-sidebar-title{
+      margin-bottom:18px;
+      font:10px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-sidebar a{
+      display:block;
+      padding:8px 0;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:12px;
+      transition:color .2s ease, transform .2s ease;
+    }
+
+    .legal-sidebar a:hover{
+      color:var(--accent-dark);
+      transform:translateX(3px);
+    }
+
+    .legal-content{
+      max-width:760px;
+    }
+
+    .legal-content section{
+      margin-bottom:65px;
+      scroll-margin-top:105px;
+    }
+
+    .legal-content section:last-child{
+      margin-bottom:0;
+    }
+
+    .legal-content h2{
+      margin:0 0 17px;
+      font-size:28px;
+      line-height:1.05;
+      letter-spacing:-.055em;
+      font-weight:400;
+    }
+
+    .legal-content h3{
+      margin:30px 0 10px;
+      font-size:17px;
+      line-height:1.2;
+      font-weight:500;
+      letter-spacing:-.025em;
+    }
+
+    .legal-content p{
+      margin:0 0 16px;
+      color:#5f5f5a;
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .legal-content ul{
+      margin:12px 0 20px;
+      padding-left:22px;
+    }
+
+    .legal-content li{
+      margin-bottom:9px;
+      color:#5f5f5a;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .legal-content a{
+      color:var(--accent-dark);
+      text-underline-offset:3px;
+    }
+
+    .legal-callout{
+      margin:30px 0;
+      padding:23px 25px;
+      border:1px solid var(--border);
+      background:var(--soft);
+    }
+
+    .legal-callout p{
+      margin:0;
+    }
+
+    .legal-contact{
+      padding:25px;
+      border:1px solid var(--border);
+    }
+
+    .legal-contact-label{
+      margin-bottom:8px;
+      font:9px var(--mono);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-contact a{
+      font-size:15px;
+      color:var(--ink);
+      text-decoration:none;
+    }
+
+    .legal-contact a:hover{
+      color:var(--accent-dark);
+    }
+
+    @media(max-width:900px){
+
+      .legal-hero{
+        padding:80px 0 70px;
+      }
+
+      .legal-hero-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+      }
+
+      .legal-layout{
+        grid-template-columns:1fr;
+        gap:45px;
+        padding:75px 0 90px;
+      }
+
+      .legal-sidebar{
+        position:static;
+        border-bottom:1px solid var(--border);
+        padding-bottom:25px;
+      }
+
+      .legal-sidebar a{
+        display:inline-block;
+        margin-right:18px;
+      }
+    }
+
+    @media(max-width:600px){
+
+      .legal-hero h1{
+        font-size:clamp(52px,15vw,78px);
+      }
+
+      .legal-content h2{
+        font-size:25px;
+      }
+
+      .legal-content p,
+      .legal-content li{
+        font-size:13px;
+      }
+    }
+
+    /* =========================================================
+       DARK THEME
+       ========================================================= */
+
+    body.dark-theme .legal-intro,
+    body.dark-theme .legal-content p,
+    body.dark-theme .legal-content li{
+      color:#c2c5d5;
+    }
+
+    body.dark-theme .legal-callout{
+      background:#171a28;
+    }
+
+    body.dark-theme .legal-contact{
+      background:#171a28;
+    }
+
+    body.dark-theme .legal-contact a{
+      color:var(--ink);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Shared navigation -->
+  <div id="site-nav"></div>
+
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="legal-hero">
+
+      <div class="shell">
+
+        <div class="legal-hero-grid">
+
+          <div>
+
+            <div class="hero-kicker">
+              ALPHEX AI / LEGAL
+            </div>
+
+            <h1>
+              Privacy Policy
+            </h1>
+
+          </div>
+
+
+          <div class="legal-intro">
+
+            <p>
+              This Privacy Policy explains how Alphex AI handles
+              information in connection with the Alphex AI website,
+              enquiries, accounts, services, and AI-powered experiences.
+            </p>
+
+            <div class="legal-meta">
+              <span class="legal-meta-dot"></span>
+              Last updated: October 6, 2026
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LEGAL CONTENT
+         ===================================================== -->
+
+    <section class="legal-layout">
+
+      <div class="shell" style="display:contents;">
+
+        <aside class="legal-sidebar">
+
+          <div class="legal-sidebar-title">
+            On this page
+          </div>
+
+          <a href="#scope">
+            01 / Scope
+          </a>
+
+          <a href="#information">
+            02 / Information
+          </a>
+
+          <a href="#use">
+            03 / How we use it
+          </a>
+
+          <a href="#sharing">
+            04 / Sharing
+          </a>
+
+          <a href="#cookies">
+            05 / Cookies
+          </a>
+
+          <a href="#security">
+            06 / Security
+          </a>
+
+          <a href="#retention">
+            07 / Retention
+          </a>
+
+          <a href="#rights">
+            08 / Your choices
+          </a>
+
+          <a href="#children">
+            09 / Children
+          </a>
+
+          <a href="#changes">
+            10 / Changes
+          </a>
+
+          <a href="#contact">
+            11 / Contact
+          </a>
+
+        </aside>
+
+
+        <article class="legal-content">
+
+          <!-- =================================================
+               01
+               ================================================= -->
+
+          <section id="scope">
+
+            <h2>
+              01 — Scope
+            </h2>
+
+            <p>
+              This Privacy Policy applies to information collected
+              through Alphex AI's website and related online
+              experiences operated by Alphex AI.
+            </p>
+
+            <p>
+              Alphex AI is an AI services company that provides
+              services such as conversational AI, knowledge and RAG
+              systems, AI agents, automation, integrations, and
+              custom AI solutions.
+            </p>
+
+            <p>
+              If a specific service engagement has its own agreement
+              governing data processing or confidentiality, that
+              agreement may contain additional terms that apply to
+              the relevant information.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               02
+               ================================================= -->
+
+          <section id="information">
+
+            <h2>
+              02 — Information we may collect
+            </h2>
+
+            <p>
+              The information collected depends on how you interact
+              with Alphex AI.
+            </p>
+
+            <h3>
+              Information you provide
+            </h3>
+
+            <p>
+              When you contact us, create an account, request
+              information, or use certain features, you may provide
+              information such as:
+            </p>
+
+            <ul>
+
+              <li>
+                Name and contact information.
+              </li>
+
+              <li>
+                Email address.
+              </li>
+
+              <li>
+                Company or organization information.
+              </li>
+
+              <li>
+                Information included in enquiries or project
+                descriptions.
+              </li>
+
+              <li>
+                Information you voluntarily provide while interacting
+                with an Alphex AI AI-powered experience.
+              </li>
+
+            </ul>
+
+
+            <h3>
+              Account information
+            </h3>
+
+            <p>
+              If account functionality is available, authentication
+              providers may process information required to create
+              and maintain your account, such as your email address,
+              account identifier, and authentication information.
+            </p>
+
+            <p>
+              Authentication credentials such as passwords should
+              not be provided to Alphex AI through ordinary enquiry
+              forms or email.
+            </p>
+
+
+            <h3>
+              Technical information
+            </h3>
+
+            <p>
+              Our website or supporting services may automatically
+              receive certain technical information, such as browser
+              type, device information, approximate location derived
+              from network information, pages visited, referring
+              pages, and general usage information.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               03
+               ================================================= -->
+
+          <section id="use">
+
+            <h2>
+              03 — How we use information
+            </h2>
+
+            <p>
+              Alphex AI may use information for purposes including:
+            </p>
+
+            <ul>
+
+              <li>
+                Responding to enquiries and requests.
+              </li>
+
+              <li>
+                Understanding potential project requirements.
+              </li>
+
+              <li>
+                Providing and improving our services.
+              </li>
+
+              <li>
+                Providing account-related functionality.
+              </li>
+
+              <li>
+                Operating and maintaining our website.
+              </li>
+
+              <li>
+                Understanding website usage and improving the
+                user experience.
+              </li>
+
+              <li>
+                Detecting, preventing, and addressing security or
+                technical issues.
+              </li>
+
+              <li>
+                Communicating with users about relevant service or
+                account matters.
+              </li>
+
+              <li>
+                Complying with applicable legal obligations.
+              </li>
+
+            </ul>
+
+
+            <div class="legal-callout">
+
+              <p>
+                We aim to collect and use information for legitimate
+                business and service purposes rather than collecting
+                information unnecessarily.
+              </p>
+
+            </div>
+
+          </section>
+
+
+          <!-- =================================================
+               04
+               ================================================= -->
+
+          <section id="sharing">
+
+            <h2>
+              04 — When information may be shared
+            </h2>
+
+            <p>
+              Alphex AI does not treat your personal information as
+              something to sell as a standalone product.
+            </p>
+
+            <p>
+              Information may be shared with service providers or
+              technology partners when reasonably necessary to
+              operate our website, authentication, communications,
+              hosting, analytics, AI functionality, or other business
+              operations.
+            </p>
+
+            <p>
+              Depending on the feature or service involved, these
+              providers may include hosting providers, authentication
+              services, analytics providers, communication services,
+              AI infrastructure providers, and other technology
+              providers.
+            </p>
+
+            <p>
+              We may also disclose information when required by law,
+              legal process, or to protect the rights, security, or
+              property of Alphex AI, our users, or others.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               05
+               ================================================= -->
+
+          <section id="cookies">
+
+            <h2>
+              05 — Cookies and analytics
+            </h2>
+
+            <p>
+              Alphex AI may use cookies, local storage, pixels, or
+              similar technologies to support website functionality,
+              remember preferences, maintain sessions, understand
+              usage, and improve the website.
+            </p>
+
+            <p>
+              We may also use analytics services to understand general
+              website traffic and usage patterns.
+            </p>
+
+            <p>
+              Your browser may allow you to control or block certain
+              cookies. Some website functionality may not work as
+              intended if required technologies are disabled.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               06
+               ================================================= -->
+
+          <section id="security">
+
+            <h2>
+              06 — Security
+            </h2>
+
+            <p>
+              Alphex AI takes reasonable technical and organizational
+              measures intended to protect information against
+              unauthorized access, misuse, alteration, disclosure,
+              or destruction.
+            </p>
+
+            <p>
+              However, no internet transmission, online service, or
+              storage system can be guaranteed to be completely secure.
+              You should avoid sending sensitive information through
+              ordinary website forms or email unless specifically
+              requested through an appropriate secure process.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               07
+               ================================================= -->
+
+          <section id="retention">
+
+            <h2>
+              07 — Data retention
+            </h2>
+
+            <p>
+              We retain information for as long as reasonably necessary
+              for the purpose for which it was collected, to provide
+              services, maintain appropriate business records, resolve
+              disputes, enforce agreements, comply with legal
+              obligations, or protect legitimate business interests.
+            </p>
+
+            <p>
+              Retention periods may vary depending on the type of
+              information and the context in which it was collected.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               08
+               ================================================= -->
+
+          <section id="rights">
+
+            <h2>
+              08 — Your choices and rights
+            </h2>
+
+            <p>
+              Depending on applicable law and your circumstances, you
+              may have rights relating to personal information,
+              including rights to request access, correction,
+              deletion, restriction, or other forms of control.
+            </p>
+
+            <p>
+              You may also choose not to provide certain information.
+              However, some information may be necessary to respond
+              to an enquiry, provide a requested service, or operate
+              an account.
+            </p>
+
+            <p>
+              To make a privacy-related request, contact us using the
+              details provided below.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               09
+               ================================================= -->
+
+          <section id="children">
+
+            <h2>
+              09 — Children's privacy
+            </h2>
+
+            <p>
+              Alphex AI's services and business offerings are intended
+              for businesses and general audiences rather than
+              specifically for children.
+            </p>
+
+            <p>
+              We do not knowingly seek to collect personal information
+              from children in circumstances where doing so would be
+              prohibited by applicable law.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               10
+               ================================================= -->
+
+          <section id="changes">
+
+            <h2>
+              10 — Changes to this policy
+            </h2>
+
+            <p>
+              We may update this Privacy Policy from time to time to
+              reflect changes to our services, technology, business
+              practices, or legal requirements.
+            </p>
+
+            <p>
+              When changes are made, the updated version will be
+              published on this page with a revised update date.
+            </p>
+
+          </section>
+
+
+          <!-- =================================================
+               11
+               ================================================= -->
+
+          <section id="contact">
+
+            <h2>
+              11 — Contact Alphex AI
+            </h2>
+
+            <p>
+              If you have questions about this Privacy Policy or
+              want to make a privacy-related request, contact us.
+            </p>
+
+            <div class="legal-contact">
+
+              <div class="legal-contact-label">
+                Privacy enquiries
+              </div>
+
+              <a href="mailto:hello@alphex.ai?subject=Privacy%20enquiry">
+                hello@alphex.ai
+              </a>
+
+            </div>
+
+          </section>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Shared footer -->
+  <div id="site-footer"></div>
+
+
+  <!-- Shared site behavior -->
+  <script src="site.js"></script>
+
+</body>
+</html>
