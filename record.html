@@ -1,0 +1,2531 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Manage your Alphex AI account, profile, preferences, and security."
+  />
+
+  <title>Account — Alphex AI</title>
+
+  <!-- Existing Alphex fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Existing shared files -->
+  <link rel="stylesheet" href="site.css" />
+  <link rel="stylesheet" href="nav.css" />
+
+  <style>
+    /* =========================================================
+       ALPHEX AI — ACCOUNT PAGE
+       Page-specific styles only.
+       Existing shared UI files are not modified.
+       ========================================================= */
+
+    .account-page {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: clamp(52px, 8vw, 96px) 0 100px;
+    }
+
+    .account-header {
+      margin-bottom: 36px;
+    }
+
+    .account-eyebrow {
+      margin: 0 0 10px;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .account-title {
+      margin: 0;
+      color: var(--text);
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      font-weight: 300 !important;
+    }
+
+    .account-subtitle {
+      max-width: 620px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .account-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .account-card {
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      background: var(--surface, rgba(255,255,255,.55));
+      border-radius: 18px;
+      padding: 24px;
+      transition:
+        border-color .2s ease,
+        background .2s ease;
+    }
+
+    .account-card:hover {
+      border-color: rgba(112,87,255,.22);
+    }
+
+    .account-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .account-card-title {
+      margin: 0;
+      color: var(--text);
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .account-card-description {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .account-button {
+      appearance: none;
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      background: transparent;
+      color: var(--text);
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 9px;
+      font: 400 12px "Inter", sans-serif;
+      cursor: pointer;
+      transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+    }
+
+    .account-button:hover {
+      border-color: rgba(112,87,255,.45);
+      background: rgba(112,87,255,.06);
+    }
+
+    .account-button.primary {
+      border-color: #7057ff;
+      background: #7057ff;
+      color: #fff;
+    }
+
+    .account-button.primary:hover {
+      border-color: #6249ee;
+      background: #6249ee;
+    }
+
+    .account-button.primary.is-disabled,
+    .account-button.primary:disabled {
+      opacity: .38;
+      cursor: not-allowed;
+      border-color: var(--border, rgba(20,20,25,.1));
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .account-button.danger {
+      color: #b84a4a;
+      border-color: rgba(184,74,74,.22);
+    }
+
+    .account-button.danger:hover {
+      background: rgba(184,74,74,.07);
+      border-color: rgba(184,74,74,.38);
+    }
+
+    .account-button:disabled {
+      cursor: not-allowed;
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 26px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border, rgba(20,20,25,.08));
+    }
+
+    .account-avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(112,87,255,.11);
+      color: #7057ff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .profile-identity {
+      min-width: 0;
+    }
+
+    .profile-name {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-email {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 22px;
+    }
+
+    .account-field {
+      min-width: 0;
+    }
+
+    .account-field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .account-field input {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: rgba(127,127,127,.055);
+      color: var(--text);
+      padding: 0 12px;
+      outline: none;
+      font: 400 13px "Inter", sans-serif;
+      transition:
+        border-color .2s ease,
+        background .2s ease;
+    }
+
+    .account-field input:disabled {
+      opacity: 1;
+      cursor: default;
+    }
+
+    .account-field input:not(:disabled) {
+      border-color: rgba(112,87,255,.32);
+      background: transparent;
+    }
+
+    .account-field input:focus {
+      border-color: #7057ff;
+      box-shadow: 0 0 0 3px rgba(112,87,255,.08);
+    }
+
+    .field-note {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .profile-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border, rgba(20,20,25,.08));
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 17px 0;
+      border-top: 1px solid var(--border, rgba(20,20,25,.08));
+    }
+
+    .setting-row:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .setting-copy {
+      min-width: 0;
+    }
+
+    .setting-name {
+      margin: 0;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .setting-description {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .segmented-control {
+      display: flex;
+      flex: 0 0 auto;
+      padding: 3px;
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      border-radius: 10px;
+      background: rgba(127,127,127,.045);
+    }
+
+    .segment {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 7px 11px;
+      border-radius: 7px;
+      font: 400 11px "Inter", sans-serif;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+
+    .segment:hover {
+      color: var(--text);
+    }
+
+    .segment.active {
+      background: var(--text);
+      color: var(--bg, #f7f7f5);
+    }
+
+    .switch {
+      position: relative;
+      width: 42px;
+      height: 24px;
+      flex: 0 0 42px;
+    }
+
+    .switch input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(127,127,127,.2);
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 2px;
+      left: 2px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.16);
+      transition: transform .2s ease;
+    }
+
+    .switch input:checked + .switch-track {
+      background: #7057ff;
+      border-color: #7057ff;
+    }
+
+    .switch input:checked + .switch-track::after {
+      transform: translateX(18px);
+    }
+
+    .switch input:focus-visible + .switch-track {
+      outline: 2px solid rgba(112,87,255,.45);
+      outline-offset: 3px;
+    }
+
+    .security-row,
+    .workspace-row,
+    .account-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 15px 0;
+      border-top: 1px solid var(--border, rgba(20,20,25,.08));
+    }
+
+    .security-row:first-child,
+    .workspace-row:first-child,
+    .account-action-row:first-child {
+      border-top: 0;
+    }
+
+    .row-label {
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .row-value {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .row-value.active {
+      color: #2c9b76;
+    }
+
+    .row-action {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: #7057ff;
+      font: 400 11px "Inter", sans-serif;
+      cursor: pointer;
+    }
+
+    .row-action:hover {
+      text-decoration: underline;
+    }
+
+    .status-message {
+      display: none;
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 9px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .status-message.show {
+      display: block;
+    }
+
+    .status-message.success {
+      background: rgba(44,155,118,.08);
+      color: #2c9b76;
+    }
+
+    .status-message.error {
+      background: rgba(184,74,74,.08);
+      color: #b84a4a;
+    }
+
+    .account-footer {
+      margin-top: 16px;
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .account-footer .account-action-row {
+      padding: 18px 24px;
+    }
+
+    .danger-copy .row-label {
+      color: #b84a4a;
+    }
+
+    .loading-state {
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =========================================================
+       MODALS
+       ========================================================= */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(8,9,14,.56);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.show {
+      display: grid;
+    }
+
+    .modal {
+      width: min(430px, 100%);
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      border-radius: 18px;
+      background: var(--surface, #fff);
+      color: var(--text);
+      padding: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.22);
+    }
+
+    .modal h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 300 !important;
+    }
+
+    .modal p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .modal input {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 16px;
+      min-height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--border, rgba(20,20,25,.1));
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text);
+      outline: none;
+      font: 400 13px "Inter", sans-serif;
+    }
+
+    .modal input:focus {
+      border-color: #7057ff;
+      box-shadow: 0 0 0 3px rgba(112,87,255,.08);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 700px) {
+      .account-page {
+        width: min(100% - 28px, 980px);
+        padding-top: 40px;
+      }
+
+      .account-card {
+        padding: 18px;
+        border-radius: 15px;
+      }
+
+      .profile-fields {
+        grid-template-columns: 1fr;
+      }
+
+      .setting-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .segmented-control {
+        width: 100%;
+      }
+
+      .segment {
+        flex: 1;
+      }
+
+      .profile-actions {
+        justify-content: stretch;
+      }
+
+      .profile-actions .account-button {
+        flex: 1;
+      }
+
+      .account-footer .account-action-row {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Existing Alphex navigation -->
+  <div id="site-nav"></div>
+
+  <main class="account-page">
+
+    <header class="account-header">
+      <p class="account-eyebrow">ACCOUNT</p>
+
+      <h1 class="account-title">
+        Your account
+      </h1>
+
+      <p class="account-subtitle">
+        Manage your profile, preferences, and account security.
+        Changes are saved to your Alphex AI account.
+      </p>
+    </header>
+
+    <!-- Loading -->
+    <div id="loadingState" class="account-card loading-state">
+      Loading your account…
+    </div>
+
+    <!-- Account -->
+    <div id="accountContent" class="account-stack hidden">
+
+      <!-- =====================================================
+           PROFILE
+           ===================================================== -->
+
+      <section class="account-card">
+
+        <div class="account-card-head">
+
+          <div>
+            <h2 class="account-card-title">
+              Profile
+            </h2>
+
+            <p class="account-card-description">
+              Your personal and professional information.
+            </p>
+          </div>
+
+          <button
+            id="editProfileBtn"
+            class="account-button"
+            type="button"
+          >
+            Edit
+          </button>
+
+        </div>
+
+        <div class="profile-top">
+
+          <div
+            id="accountAvatar"
+            class="account-avatar"
+          >
+            U
+          </div>
+
+          <div class="profile-identity">
+
+            <p
+              id="profileDisplayName"
+              class="profile-name"
+            >
+              User
+            </p>
+
+            <p
+              id="profileDisplayEmail"
+              class="profile-email"
+            >
+              —
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="profile-fields">
+
+          <div class="account-field">
+
+            <label for="fullName">
+              Full name
+            </label>
+
+            <input
+              id="fullName"
+              type="text"
+              autocomplete="name"
+              disabled
+            />
+
+          </div>
+
+          <div class="account-field">
+
+            <label for="email">
+              Email
+            </label>
+
+            <input
+              id="email"
+              type="email"
+              autocomplete="email"
+              disabled
+            />
+
+            <p class="field-note">
+              Your authentication email cannot be changed here.
+            </p>
+
+          </div>
+
+          <div class="account-field">
+
+            <label for="company">
+              Company
+            </label>
+
+            <input
+              id="company"
+              type="text"
+              autocomplete="organization"
+              disabled
+            />
+
+          </div>
+
+          <div class="account-field">
+
+            <label for="role">
+              Role
+            </label>
+
+            <input
+              id="role"
+              type="text"
+              autocomplete="organization-title"
+              disabled
+            />
+
+          </div>
+
+        </div>
+
+        <!-- Edit mode actions -->
+        <div
+          id="profileActions"
+          class="profile-actions hidden"
+        >
+
+          <button
+            id="cancelProfileBtn"
+            class="account-button"
+            type="button"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="saveProfileBtn"
+            class="account-button primary is-disabled"
+            type="button"
+            disabled
+          >
+            Save changes
+          </button>
+
+        </div>
+
+        <div
+          id="profileStatus"
+          class="status-message"
+        ></div>
+
+      </section>
+
+
+      <!-- =====================================================
+           PREFERENCES
+           ===================================================== -->
+
+      <section class="account-card">
+
+        <div class="account-card-head">
+
+          <div>
+
+            <h2 class="account-card-title">
+              Preferences
+            </h2>
+
+            <p class="account-card-description">
+              Choose how Alphex AI looks and communicates with you.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Appearance -->
+
+        <div class="setting-row">
+
+          <div class="setting-copy">
+
+            <p class="setting-name">
+              Appearance
+            </p>
+
+            <p class="setting-description">
+              Choose how Alphex AI looks on your devices.
+            </p>
+
+          </div>
+
+          <div
+            id="themeControl"
+            class="segmented-control"
+            role="group"
+            aria-label="Appearance"
+          >
+
+            <button
+              class="segment"
+              data-theme="light"
+              type="button"
+            >
+              Light
+            </button>
+
+            <button
+              class="segment"
+              data-theme="dark"
+              type="button"
+            >
+              Dark
+            </button>
+
+            <button
+              class="segment"
+              data-theme="system"
+              type="button"
+            >
+              System
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Email notifications -->
+
+        <div class="setting-row">
+
+          <div class="setting-copy">
+
+            <p class="setting-name">
+              Email notifications
+            </p>
+
+            <p class="setting-description">
+              Important account and security notifications.
+            </p>
+
+          </div>
+
+          <label
+            class="switch"
+            aria-label="Email notifications"
+          >
+
+            <input
+              id="emailNotifications"
+              type="checkbox"
+            />
+
+            <span class="switch-track"></span>
+
+          </label>
+
+        </div>
+
+
+        <!-- Product updates -->
+
+        <div class="setting-row">
+
+          <div class="setting-copy">
+
+            <p class="setting-name">
+              Product updates
+            </p>
+
+            <p class="setting-description">
+              Occasional updates about new Alphex AI products and features.
+            </p>
+
+          </div>
+
+          <label
+            class="switch"
+            aria-label="Product updates"
+          >
+
+            <input
+              id="productUpdates"
+              type="checkbox"
+            />
+
+            <span class="switch-track"></span>
+
+          </label>
+
+        </div>
+
+        <div
+          id="preferencesStatus"
+          class="status-message"
+        ></div>
+
+      </section>
+
+
+      <!-- =====================================================
+           SECURITY
+           ===================================================== -->
+
+      <section class="account-card">
+
+        <div class="account-card-head">
+
+          <div>
+
+            <h2 class="account-card-title">
+              Security
+            </h2>
+
+            <p class="account-card-description">
+              Manage authentication and account access.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="security-row">
+
+          <div>
+
+            <div class="row-label">
+              Password
+            </div>
+
+            <div class="setting-description">
+              Change the password used to sign in.
+            </div>
+
+          </div>
+
+          <button
+            id="changePasswordBtn"
+            class="row-action"
+            type="button"
+          >
+            Change →
+          </button>
+
+        </div>
+
+
+        <div class="security-row">
+
+          <div>
+
+            <div class="row-label">
+              Authentication
+            </div>
+
+            <div class="setting-description">
+              Your current Alphex AI authentication session.
+            </div>
+
+          </div>
+
+          <div class="row-value active">
+            ACTIVE
+          </div>
+
+        </div>
+
+        <div
+          id="securityStatus"
+          class="status-message"
+        ></div>
+
+      </section>
+
+
+      <!-- =====================================================
+           WORKSPACE
+           ===================================================== -->
+
+      <section class="account-card">
+
+        <div class="account-card-head">
+
+          <div>
+
+            <h2 class="account-card-title">
+              Workspace
+            </h2>
+
+            <p class="account-card-description">
+              Your current Alphex AI workspace.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="workspace-row">
+
+          <div>
+
+            <div class="row-label">
+              Personal workspace
+            </div>
+
+            <div class="setting-description">
+              Your default workspace for Alphex AI products.
+            </div>
+
+          </div>
+
+          <div class="row-value">
+            OWNER
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           ACCOUNT ACTIONS
+           ===================================================== -->
+
+      <section class="account-footer">
+
+        <div class="account-action-row">
+
+          <div>
+
+            <div class="row-label">
+              Sign out
+            </div>
+
+            <div class="setting-description">
+              End your current Alphex AI session.
+            </div>
+
+          </div>
+
+          <button
+            id="signOutBtn"
+            class="account-button"
+            type="button"
+          >
+            Sign out
+          </button>
+
+        </div>
+
+
+        <div class="account-action-row danger-copy">
+
+          <div>
+
+            <div class="row-label">
+              Delete account
+            </div>
+
+            <div class="setting-description">
+              Permanently delete your Alphex AI account and associated data.
+            </div>
+
+          </div>
+
+          <button
+            id="deleteAccountBtn"
+            class="account-button danger"
+            type="button"
+          >
+            Delete
+          </button>
+
+        </div>
+
+        <div
+          id="accountActionStatus"
+          class="status-message"
+          style="margin:0 24px 18px;"
+        ></div>
+
+      </section>
+
+    </div>
+  </main>
+
+
+  <!-- =========================================================
+       PASSWORD MODAL
+       ========================================================= -->
+
+  <div
+    id="passwordModal"
+    class="modal-backdrop"
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="passwordModalTitle"
+    >
+
+      <h2 id="passwordModalTitle">
+        Change password
+      </h2>
+
+      <p>
+        Enter a new password for your Alphex AI account.
+      </p>
+
+      <input
+        id="newPassword"
+        type="password"
+        minlength="8"
+        autocomplete="new-password"
+        placeholder="New password"
+      />
+
+      <div class="modal-actions">
+
+        <button
+          id="cancelPasswordBtn"
+          class="account-button"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="savePasswordBtn"
+          class="account-button primary"
+          type="button"
+        >
+          Update password
+        </button>
+
+      </div>
+
+      <div
+        id="passwordStatus"
+        class="status-message"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       DELETE MODAL
+       ========================================================= -->
+
+  <div
+    id="deleteModal"
+    class="modal-backdrop"
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="deleteModalTitle"
+    >
+
+      <h2 id="deleteModalTitle">
+        Delete account?
+      </h2>
+
+      <p>
+        This action is permanent. Type
+        <strong>DELETE</strong>
+        below to confirm.
+      </p>
+
+      <input
+        id="deleteConfirmation"
+        type="text"
+        autocomplete="off"
+        placeholder="Type DELETE"
+      />
+
+      <div class="modal-actions">
+
+        <button
+          id="cancelDeleteBtn"
+          class="account-button"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="confirmDeleteBtn"
+          class="account-button danger"
+          type="button"
+          disabled
+        >
+          Confirm deletion
+        </button>
+
+      </div>
+
+      <div
+        id="deleteStatus"
+        class="status-message"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       SUPABASE
+       ========================================================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+  <script>
+    /* =========================================================
+       ALPHEX AI — ACCOUNT / RECORD LOGIC
+       ========================================================= */
+
+    const SUPABASE_URL =
+      'https://nxqxhakjbtdzreimpkdz.supabase.co';
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    let currentUser = null;
+
+    let savedProfile = {
+      full_name: '',
+      company: '',
+      role: ''
+    };
+
+    let savedPreferences = {
+      theme: 'system',
+      email_notifications: true,
+      product_updates: true
+    };
+
+    let editingProfile = false;
+
+
+    const $ = (id) =>
+      document.getElementById(id);
+
+
+    /* =========================================================
+       STATUS
+       ========================================================= */
+
+    function showStatus(element, message, type) {
+
+      element.textContent = message;
+
+      element.className =
+        'status-message show ' + type;
+    }
+
+
+    function clearStatus(element) {
+
+      element.textContent = '';
+
+      element.className =
+        'status-message';
+    }
+
+
+    /* =========================================================
+       AVATAR
+       ========================================================= */
+
+    function getInitial(name, email) {
+
+      const source =
+        (name || email || 'U').trim();
+
+      return source
+        .charAt(0)
+        .toUpperCase();
+    }
+
+
+    /* =========================================================
+       THEME
+       ========================================================= */
+
+    function applyTheme(theme) {
+
+      const root =
+        document.documentElement;
+
+      if (theme === 'dark') {
+
+        root.setAttribute(
+          'data-theme',
+          'dark'
+        );
+
+      } else if (theme === 'light') {
+
+        root.setAttribute(
+          'data-theme',
+          'light'
+        );
+
+      } else {
+
+        root.removeAttribute(
+          'data-theme'
+        );
+      }
+
+
+      document
+        .querySelectorAll('[data-theme]')
+        .forEach((button) => {
+
+          button.classList.toggle(
+            'active',
+            button.dataset.theme === theme
+          );
+
+        });
+    }
+
+
+    /* =========================================================
+       LOAD PROFILE
+       ========================================================= */
+
+    async function loadProfile() {
+
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from('profiles')
+        .select(
+          'user_id, full_name, company, role, avatar_url'
+        )
+        .eq(
+          'user_id',
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      /* If the user doesn't have a profile yet,
+         create one automatically. */
+
+      if (!data) {
+
+        const initialName =
+          currentUser.user_metadata?.full_name ||
+          currentUser.user_metadata?.name ||
+          '';
+
+
+        const newProfile = {
+
+          user_id:
+            currentUser.id,
+
+          full_name:
+            initialName,
+
+          company:
+            '',
+
+          role:
+            '',
+
+          avatar_url:
+            null
+        };
+
+
+        const {
+          data: created,
+          error: insertError
+        } = await supabaseClient
+          .from('profiles')
+          .insert(newProfile)
+          .select()
+          .single();
+
+
+        if (insertError) {
+          throw insertError;
+        }
+
+
+        return created;
+      }
+
+
+      return data;
+    }
+
+
+    /* =========================================================
+       LOAD PREFERENCES
+       ========================================================= */
+
+    async function loadPreferences() {
+
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from('preferences')
+        .select(
+          'user_id, theme, email_notifications, product_updates'
+        )
+        .eq(
+          'user_id',
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      /* Create default preferences
+         for a first-time user. */
+
+      if (!data) {
+
+        const defaults = {
+
+          user_id:
+            currentUser.id,
+
+          theme:
+            'system',
+
+          email_notifications:
+            true,
+
+          product_updates:
+            true
+        };
+
+
+        const {
+          data: created,
+          error: insertError
+        } = await supabaseClient
+          .from('preferences')
+          .insert(defaults)
+          .select()
+          .single();
+
+
+        if (insertError) {
+          throw insertError;
+        }
+
+
+        return created;
+      }
+
+
+      return data;
+    }
+
+
+    /* =========================================================
+       RENDER PROFILE
+       ========================================================= */
+
+    function renderProfile(profile) {
+
+      savedProfile = {
+
+        full_name:
+          profile.full_name || '',
+
+        company:
+          profile.company || '',
+
+        role:
+          profile.role || ''
+      };
+
+
+      $('fullName').value =
+        savedProfile.full_name;
+
+      $('email').value =
+        currentUser.email || '';
+
+      $('company').value =
+        savedProfile.company;
+
+      $('role').value =
+        savedProfile.role;
+
+
+      const displayName =
+        savedProfile.full_name ||
+        currentUser.email ||
+        'User';
+
+
+      $('profileDisplayName').textContent =
+        displayName;
+
+
+      $('profileDisplayEmail').textContent =
+        currentUser.email || '—';
+
+
+      $('accountAvatar').textContent =
+        getInitial(
+          savedProfile.full_name,
+          currentUser.email
+        );
+    }
+
+
+    /* =========================================================
+       RENDER PREFERENCES
+       ========================================================= */
+
+    function renderPreferences(preferences) {
+
+      savedPreferences = {
+
+        theme:
+          preferences.theme || 'system',
+
+        email_notifications:
+          preferences.email_notifications !== false,
+
+        product_updates:
+          preferences.product_updates !== false
+      };
+
+
+      applyTheme(
+        savedPreferences.theme
+      );
+
+
+      $('emailNotifications').checked =
+        savedPreferences.email_notifications;
+
+
+      $('productUpdates').checked =
+        savedPreferences.product_updates;
+    }
+
+
+    /* =========================================================
+       PROFILE EDIT MODE
+       ========================================================= */
+
+    function setProfileEditing(enabled) {
+
+      editingProfile =
+        enabled;
+
+
+      $('fullName').disabled =
+        !enabled;
+
+      $('company').disabled =
+        !enabled;
+
+      $('role').disabled =
+        !enabled;
+
+
+      $('editProfileBtn')
+        .classList
+        .toggle(
+          'hidden',
+          enabled
+        );
+
+
+      $('profileActions')
+        .classList
+        .toggle(
+          'hidden',
+          !enabled
+        );
+
+
+      if (!enabled) {
+
+        $('fullName').value =
+          savedProfile.full_name;
+
+        $('company').value =
+          savedProfile.company;
+
+        $('role').value =
+          savedProfile.role;
+      }
+
+
+      updateSaveState();
+    }
+
+
+    function hasProfileChanges() {
+
+      return (
+
+        $('fullName').value.trim() !==
+          savedProfile.full_name ||
+
+        $('company').value.trim() !==
+          savedProfile.company ||
+
+        $('role').value.trim() !==
+          savedProfile.role
+
+      );
+    }
+
+
+    function updateSaveState() {
+
+      const saveButton =
+        $('saveProfileBtn');
+
+
+      const dirty =
+        editingProfile &&
+        hasProfileChanges();
+
+
+      saveButton.disabled =
+        !dirty;
+
+
+      saveButton.classList.toggle(
+        'is-disabled',
+        !dirty
+      );
+    }
+
+
+    /* =========================================================
+       SAVE PROFILE TO SUPABASE
+       ========================================================= */
+
+    async function saveProfile() {
+
+      if (!hasProfileChanges()) {
+        return;
+      }
+
+
+      const saveButton =
+        $('saveProfileBtn');
+
+
+      saveButton.disabled =
+        true;
+
+      saveButton.textContent =
+        'Saving…';
+
+
+      clearStatus(
+        $('profileStatus')
+      );
+
+
+      const updates = {
+
+        full_name:
+          $('fullName').value.trim(),
+
+        company:
+          $('company').value.trim(),
+
+        role:
+          $('role').value.trim(),
+
+        updated_at:
+          new Date().toISOString()
+      };
+
+
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from('profiles')
+        .update(updates)
+        .eq(
+          'user_id',
+          currentUser.id
+        )
+        .select()
+        .single();
+
+
+      if (error) {
+
+        saveButton.textContent =
+          'Save changes';
+
+        updateSaveState();
+
+
+        showStatus(
+          $('profileStatus'),
+          error.message ||
+            'Could not save your profile.',
+          'error'
+        );
+
+        return;
+      }
+
+
+      renderProfile(data);
+
+      setProfileEditing(false);
+
+
+      showStatus(
+        $('profileStatus'),
+        'Your profile has been saved.',
+        'success'
+      );
+    }
+
+
+    /* =========================================================
+       SAVE PREFERENCES TO SUPABASE
+       ========================================================= */
+
+    async function savePreferences(partial) {
+
+      const next = {
+
+        ...savedPreferences,
+
+        ...partial,
+
+        updated_at:
+          new Date().toISOString()
+      };
+
+
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from('preferences')
+        .update(next)
+        .eq(
+          'user_id',
+          currentUser.id
+        )
+        .select()
+        .single();
+
+
+      if (error) {
+
+        renderPreferences(
+          savedPreferences
+        );
+
+
+        showStatus(
+          $('preferencesStatus'),
+          error.message ||
+            'Could not save your preference.',
+          'error'
+        );
+
+
+        return false;
+      }
+
+
+      renderPreferences(data);
+
+
+      showStatus(
+        $('preferencesStatus'),
+        'Preference saved.',
+        'success'
+      );
+
+
+      setTimeout(() => {
+
+        clearStatus(
+          $('preferencesStatus')
+        );
+
+      }, 2200);
+
+
+      return true;
+    }
+
+
+    /* =========================================================
+       CHANGE PASSWORD
+       ========================================================= */
+
+    async function changePassword() {
+
+      const password =
+        $('newPassword').value;
+
+
+      clearStatus(
+        $('passwordStatus')
+      );
+
+
+      if (password.length < 8) {
+
+        showStatus(
+          $('passwordStatus'),
+          'Password must be at least 8 characters.',
+          'error'
+        );
+
+        return;
+      }
+
+
+      const button =
+        $('savePasswordBtn');
+
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        'Updating…';
+
+
+      const {
+        error
+      } = await supabaseClient.auth.updateUser({
+
+        password:
+          password
+      });
+
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        'Update password';
+
+
+      if (error) {
+
+        showStatus(
+          $('passwordStatus'),
+          error.message ||
+            'Could not update your password.',
+          'error'
+        );
+
+        return;
+      }
+
+
+      $('newPassword').value = '';
+
+
+      showStatus(
+        $('passwordStatus'),
+        'Your password has been updated.',
+        'success'
+      );
+
+
+      setTimeout(() => {
+
+        closeModal(
+          'passwordModal'
+        );
+
+        clearStatus(
+          $('passwordStatus')
+        );
+
+      }, 1200);
+    }
+
+
+    /* =========================================================
+       MODALS
+       ========================================================= */
+
+    function openModal(id) {
+
+      $(id)
+        .classList
+        .add('show');
+
+
+      $(id).setAttribute(
+        'aria-hidden',
+        'false'
+      );
+    }
+
+
+    function closeModal(id) {
+
+      $(id)
+        .classList
+        .remove('show');
+
+
+      $(id).setAttribute(
+        'aria-hidden',
+        'true'
+      );
+    }
+
+
+    /* =========================================================
+       SIGN OUT
+       ========================================================= */
+
+    async function signOut() {
+
+      const button =
+        $('signOutBtn');
+
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        'Signing out…';
+
+
+      const {
+        error
+      } = await supabaseClient
+        .auth
+        .signOut();
+
+
+      if (error) {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          'Sign out';
+
+
+        showStatus(
+          $('accountActionStatus'),
+          error.message ||
+            'Could not sign out.',
+          'error'
+        );
+
+        return;
+      }
+
+
+      window.location.href =
+        'login.html';
+    }
+
+
+    /* =========================================================
+       INITIALIZE ACCOUNT
+       ========================================================= */
+
+    async function initializeAccount() {
+
+      try {
+
+        const {
+
+          data: {
+            user
+          },
+
+          error: userError
+
+        } = await supabaseClient
+          .auth
+          .getUser();
+
+
+        if (userError) {
+          throw userError;
+        }
+
+
+        /* User is not authenticated */
+
+        if (!user) {
+
+          window.location.href =
+            'login.html';
+
+          return;
+        }
+
+
+        currentUser =
+          user;
+
+
+        /* Load both records */
+
+        const [
+          profile,
+          preferences
+        ] = await Promise.all([
+
+          loadProfile(),
+
+          loadPreferences()
+
+        ]);
+
+
+        renderProfile(
+          profile
+        );
+
+
+        renderPreferences(
+          preferences
+        );
+
+
+        $('loadingState')
+          .classList
+          .add('hidden');
+
+
+        $('accountContent')
+          .classList
+          .remove('hidden');
+
+
+      } catch (error) {
+
+        console.error(
+          'Account initialization error:',
+          error
+        );
+
+
+        $('loadingState').textContent =
+          'Unable to load your account. Please refresh and try again.';
+      }
+    }
+
+
+    /* =========================================================
+       PROFILE EVENTS
+       ========================================================= */
+
+    $('editProfileBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          clearStatus(
+            $('profileStatus')
+          );
+
+          setProfileEditing(
+            true
+          );
+
+          $('fullName').focus();
+        }
+      );
+
+
+    $('cancelProfileBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          clearStatus(
+            $('profileStatus')
+          );
+
+          setProfileEditing(
+            false
+          );
+        }
+      );
+
+
+    [
+      'fullName',
+      'company',
+      'role'
+    ].forEach((id) => {
+
+      $(id).addEventListener(
+        'input',
+        updateSaveState
+      );
+
+    });
+
+
+    $('saveProfileBtn')
+      .addEventListener(
+        'click',
+        saveProfile
+      );
+
+
+    /* =========================================================
+       APPEARANCE
+       ========================================================= */
+
+    document
+      .querySelectorAll('[data-theme]')
+      .forEach((button) => {
+
+        button.addEventListener(
+          'click',
+          async () => {
+
+            const theme =
+              button.dataset.theme;
+
+
+            applyTheme(
+              theme
+            );
+
+
+            await savePreferences({
+              theme
+            });
+
+          }
+        );
+
+      });
+
+
+    /* =========================================================
+       NOTIFICATIONS
+       ========================================================= */
+
+    $('emailNotifications')
+      .addEventListener(
+        'change',
+        async (event) => {
+
+          await savePreferences({
+
+            email_notifications:
+              event.target.checked
+
+          });
+
+        }
+      );
+
+
+    $('productUpdates')
+      .addEventListener(
+        'change',
+        async (event) => {
+
+          await savePreferences({
+
+            product_updates:
+              event.target.checked
+
+          });
+
+        }
+      );
+
+
+    /* =========================================================
+       PASSWORD
+       ========================================================= */
+
+    $('changePasswordBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          $('newPassword').value =
+            '';
+
+          clearStatus(
+            $('passwordStatus')
+          );
+
+
+          openModal(
+            'passwordModal'
+          );
+
+
+          setTimeout(
+            () => $('newPassword').focus(),
+            50
+          );
+
+        }
+      );
+
+
+    $('cancelPasswordBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          closeModal(
+            'passwordModal'
+          );
+
+        }
+      );
+
+
+    $('savePasswordBtn')
+      .addEventListener(
+        'click',
+        changePassword
+      );
+
+
+    $('newPassword')
+      .addEventListener(
+        'keydown',
+        (event) => {
+
+          if (event.key === 'Enter') {
+
+            changePassword();
+
+          }
+
+        }
+      );
+
+
+    /* =========================================================
+       SIGN OUT
+       ========================================================= */
+
+    $('signOutBtn')
+      .addEventListener(
+        'click',
+        signOut
+      );
+
+
+    /* =========================================================
+       DELETE ACCOUNT CONFIRMATION
+       ========================================================= */
+
+    $('deleteAccountBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          $('deleteConfirmation')
+            .value = '';
+
+          $('confirmDeleteBtn')
+            .disabled = true;
+
+          clearStatus(
+            $('deleteStatus')
+          );
+
+
+          openModal(
+            'deleteModal'
+          );
+
+
+          setTimeout(
+            () =>
+              $('deleteConfirmation').focus(),
+            50
+          );
+
+        }
+      );
+
+
+    $('deleteConfirmation')
+      .addEventListener(
+        'input',
+        (event) => {
+
+          $('confirmDeleteBtn')
+            .disabled =
+              event.target.value.trim() !==
+              'DELETE';
+
+        }
+      );
+
+
+    $('cancelDeleteBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          closeModal(
+            'deleteModal'
+          );
+
+        }
+      );
+
+
+    /*
+      IMPORTANT:
+
+      Supabase Auth user deletion requires a secure server-side
+      function using the service role key.
+
+      We intentionally do NOT put the service-role key in this
+      browser file.
+
+      Therefore this button currently provides the confirmation
+      UX but does not falsely claim that the account was deleted.
+    */
+
+    $('confirmDeleteBtn')
+      .addEventListener(
+        'click',
+        () => {
+
+          showStatus(
+            $('deleteStatus'),
+            'Account deletion requires a secure server-side Supabase function. No account was deleted.',
+            'error'
+          );
+
+        }
+      );
+
+
+    /* =========================================================
+       MODAL CLICK OUTSIDE
+       ========================================================= */
+
+    document
+      .querySelectorAll('.modal-backdrop')
+      .forEach((modal) => {
+
+        modal.addEventListener(
+          'click',
+          (event) => {
+
+            if (
+              event.target === modal
+            ) {
+
+              modal.classList.remove(
+                'show'
+              );
+
+              modal.setAttribute(
+                'aria-hidden',
+                'true'
+              );
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /* =========================================================
+       ESCAPE KEY
+       ========================================================= */
+
+    document.addEventListener(
+      'keydown',
+      (event) => {
+
+        if (
+          event.key === 'Escape'
+        ) {
+
+          document
+            .querySelectorAll(
+              '.modal-backdrop.show'
+            )
+            .forEach((modal) => {
+
+              modal.classList.remove(
+                'show'
+              );
+
+              modal.setAttribute(
+                'aria-hidden',
+                'true'
+              );
+
+            });
+
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       AUTH STATE
+       ========================================================= */
+
+    supabaseClient
+      .auth
+      .onAuthStateChange(
+        (event, session) => {
+
+          if (
+            event === 'SIGNED_OUT' ||
+            !session
+          ) {
+
+            if (
+              window.location.pathname
+                .endsWith('record.html')
+            ) {
+
+              window.location.href =
+                'login.html';
+
+            }
+
+          }
+
+        }
+      );
+
+
+    /* =========================================================
+       START
+       ========================================================= */
+
+    initializeAccount();
+
+  </script>
+
+
+  <!-- Existing shared site JavaScript -->
+  <script src="site.js"></script>
+
+</body>
+</html>
