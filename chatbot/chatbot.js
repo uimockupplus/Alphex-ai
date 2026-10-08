@@ -13,6 +13,7 @@
 
    IMPORTANT:
    Never put the Groq API key in this file.
+   Never put the Supabase service-role key in this file.
    ========================================================= */
 
 (() => {
@@ -101,8 +102,11 @@
   /* =========================================================
      SUPABASE
      ---------------------------------------------------------
-     The website may already have Supabase loaded.
-     We intentionally do not expose any secret key here.
+     IMPORTANT:
+     This is the PUBLIC publishable key.
+     It is safe for browser-side Supabase client usage.
+
+     NEVER put the Supabase service-role/secret key here.
      ========================================================= */
 
   const SUPABASE_URL =
@@ -555,7 +559,12 @@
           state.conversationId =
             response.conversation_id;
 
+          state.hasExistingConversation =
+            true;
+
           saveStoredConversation();
+
+          renderReturningUserState();
         }
 
       } else {
@@ -604,11 +613,14 @@
 
      No Groq API key is used here.
 
-     The browser talks to:
-        /api/chatbot
+     No Supabase service-role/secret key is used here.
 
-     The secure backend will:
-        - authenticate the user
+     The browser sends the user's Supabase access token
+     to the secure backend.
+
+     The backend will:
+        - verify the access token
+        - identify the authenticated user
         - load profile
         - load memories
         - load conversation
@@ -636,6 +648,13 @@
         title: document.title
       },
 
+      /*
+       This is informational only.
+       The backend MUST identify the user
+       from the Authorization token and must
+       NOT trust this user ID for authorization.
+      */
+
       user: session?.user
         ? {
             id: session.user.id,
@@ -645,16 +664,33 @@
     };
 
 
+    /*
+     Build secure request headers.
+
+     The Supabase access token is temporary
+     authentication information.
+
+     It is NOT the service-role key.
+    */
+
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+
+    if (session?.access_token) {
+      headers.Authorization =
+        `Bearer ${session.access_token}`;
+    }
+
+
     const response =
       await fetch(
         CONFIG.API_ENDPOINT,
         {
           method: 'POST',
 
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
+          headers,
 
           body:
             JSON.stringify(payload)
@@ -1238,13 +1274,6 @@
     hideWelcomeState();
 
 
-    /*
-     The secure backend will eventually return
-     the complete previous conversation.
-
-     For now, request it from the backend.
-    */
-
     if (!state.conversationId) {
       return;
     }
@@ -1256,6 +1285,18 @@
         await getCurrentSession();
 
 
+      const headers = {
+        'Accept':
+          'application/json'
+      };
+
+
+      if (session?.access_token) {
+        headers.Authorization =
+          `Bearer ${session.access_token}`;
+      }
+
+
       const response =
         await fetch(
           `${CONFIG.API_ENDPOINT}?conversation_id=${encodeURIComponent(
@@ -1264,17 +1305,7 @@
           {
             method: 'GET',
 
-            headers: {
-              'Accept':
-                'application/json',
-
-              ...(session?.access_token
-                ? {
-                    'Authorization':
-                      `Bearer ${session.access_token}`
-                  }
-                : {})
-            }
+            headers
           }
         );
 
@@ -1295,6 +1326,8 @@
       ) {
 
         clearRenderedMessages();
+
+        state.messages = [];
 
 
         data.messages.forEach(
