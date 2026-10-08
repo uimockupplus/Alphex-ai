@@ -1,41 +1,19 @@
 <header class="topbar">
-
   <div class="shell nav">
 
-    <a class="wordmark" href="index.html">
-      alphex ai
-    </a>
+    <a class="wordmark" href="index.html">alphex ai</a>
 
     <div class="nav-links">
-
-      <a href="/capabilities.html">
-        Capabilities
-      </a>
-
-      <a href="/products.html">
-        Products
-      </a>
-
-      <a href="/process.html">
-        Process
-      </a>
-
-      <a href="/pricing.html">
-        Pricing
-      </a>
-
-      <a href="index.html#faq">
-        FAQ
-      </a>
-
+      <a href="capabilities.html">Capabilities</a>
+      <a href="products.html">Products</a>
+      <a href="process.html">Process</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
     </div>
 
     <div class="nav-actions">
 
-      <a
-        class="pill light contact-link"
-        href="/contact.html"
-      >
+      <a class="pill light contact-link" href="contact.html">
         Contact
       </a>
 
@@ -49,46 +27,106 @@
         <span class="theme-label">Dark</span>
       </button>
 
+      <!-- Logged out -->
       <a
         class="pill dark header-demo"
-        href="/login.html"
+        id="loginNavButton"
+        href="login.html"
       >
         Sign in <span>↗</span>
       </a>
 
+      <!-- Logged in -->
+      <div
+        class="auth-profile"
+        id="authProfile"
+        style="display:none;"
+      >
+        <button
+          class="profile-button"
+          id="profileButton"
+          type="button"
+          aria-label="Open account menu"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          <span id="profileInitial">A</span>
+        </button>
+
+        <div
+          class="profile-menu"
+          id="profileMenu"
+          aria-hidden="true"
+        >
+          <div class="profile-user">
+            <div
+              class="profile-name"
+              id="profileName"
+            >
+              Alphex AI
+            </div>
+
+            <div
+              class="profile-email"
+              id="profileEmail"
+            >
+              account
+            </div>
+          </div>
+
+          <a
+            href="workspace.html"
+            class="profile-account"
+          >
+            Workspace
+          </a>
+
+          <button
+            class="profile-signout"
+            id="profileSignout"
+            type="button"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile -->
       <button
         class="mobile-menu"
         type="button"
         aria-label="Open navigation"
         aria-expanded="false"
+        aria-controls="mobilePanel"
       >
         <span></span>
         <span></span>
       </button>
 
     </div>
-
   </div>
-
 </header>
 
-<div class="mobile-panel" aria-hidden="true">
-
+<div
+  class="mobile-panel"
+  id="mobilePanel"
+  aria-hidden="true"
+>
   <div class="mobile-panel-inner">
 
-    <a href="/capabilities.html">
+    <a href="capabilities.html">
       Capabilities
     </a>
 
-    <a href="/products.html">
+    <a href="products.html">
       Products
     </a>
 
-    <a href="/process.html">
+    <a href="process.html">
       Process
     </a>
 
-    <a href="/pricing.html">
+    <a href="pricing.html">
       Pricing
     </a>
 
@@ -96,10 +134,28 @@
       FAQ
     </a>
 
-    <a href="/contact.html">
+    <!-- Logged out -->
+    <a
+      class="mobile-auth-link logged-out"
+      id="mobileLoginLink"
+      href="login.html"
+    >
+      Sign in <span>↗</span>
+    </a>
+
+    <!-- Logged in -->
+    <a
+      class="mobile-auth-link logged-in"
+      id="mobileProfileLink"
+      href="workspace.html"
+      style="display:none;"
+    >
+      Workspace <span>→</span>
+    </a>
+
+    <a href="contact.html">
       Contact us <span>↗</span>
     </a>
 
   </div>
-
 </div>
