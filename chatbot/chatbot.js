@@ -10,11 +10,6 @@
    - Supabase authenticated-user awareness
    - Secure backend communication
    - Backend AI responses through /api/chatbot
-
-   IMPORTANT:
-   Never put the Groq API key in this file.
-   Never put the Gemini API key in this file.
-   Never put the Supabase service-role key in this file.
    ========================================================= */
 
 (() => {
@@ -73,6 +68,13 @@
 
   const newConversationButton =
     document.getElementById('chat-new-conversation');
+
+  /*
+   IMPORTANT:
+   #chat-messages is the actual scrolling container.
+  */
+  const chatMessages =
+    document.getElementById('chat-messages');
 
   const messageList =
     document.getElementById('chat-message-list');
@@ -337,18 +339,12 @@
     /* =======================================================
        SUGGESTED PROMPTS
        -------------------------------------------------------
-       IMPORTANT:
-
-       The HTML uses:
+       HTML uses:
 
        data-prompt="..."
 
-       NOT:
-
-       data-chat-prompt="..."
-
-       Event delegation is used so the buttons continue to
-       work even if the welcome UI is injected/re-rendered.
+       Event delegation keeps the buttons working even if
+       the welcome UI is dynamically changed/re-rendered.
        ======================================================= */
 
     document.addEventListener(
@@ -510,7 +506,14 @@
     );
 
 
+    /*
+     Give the browser time to render the opened
+     chat window before calculating its scroll height.
+    */
+
     setTimeout(() => {
+
+      scrollMessagesToBottom(true);
 
       if (chatInput) {
 
@@ -809,8 +812,6 @@
 
 
     /*
-     IMPORTANT:
-
      Do NOT send user IDs or emails as trusted
      authorization information.
 
@@ -1021,7 +1022,13 @@
     });
 
 
-    scrollMessagesToBottom();
+    /*
+     IMPORTANT:
+     Scroll the actual #chat-messages container,
+     not #chat-message-list.
+    */
+
+    scrollMessagesToBottom(true);
 
 
     return messageElement;
@@ -1208,7 +1215,11 @@
       false;
 
 
-    scrollMessagesToBottom();
+    /*
+     Make sure the thinking indicator is visible.
+    */
+
+    scrollMessagesToBottom(true);
   }
 
 
@@ -1224,17 +1235,88 @@
   }
 
 
-  function scrollMessagesToBottom() {
+  /* =========================================================
+     CHAT SCROLLING
+     ---------------------------------------------------------
+     IMPORTANT:
 
-    if (!messageList) {
+     #chat-messages is the actual scrolling container.
+
+     The previous implementation attempted to set
+     scrollTop on #chat-message-list, which does not
+     control the visible chatbot viewport.
+
+     This implementation waits for the browser to finish
+     rendering before calculating the final scroll position.
+     ========================================================= */
+
+  function scrollMessagesToBottom(
+    force = true
+  ) {
+
+    if (!chatMessages) {
       return;
     }
 
 
     requestAnimationFrame(() => {
 
-      messageList.scrollTop =
-        messageList.scrollHeight;
+      requestAnimationFrame(() => {
+
+        const targetTop =
+          chatMessages.scrollHeight -
+          chatMessages.clientHeight;
+
+
+        if (force) {
+
+          chatMessages.scrollTo({
+
+            top:
+              Math.max(
+                0,
+                targetTop
+              ),
+
+            behavior:
+              'smooth'
+          });
+
+          return;
+        }
+
+
+        /*
+         Only follow the conversation when the visitor
+         is already close to the bottom.
+
+         This allows the user to manually read older
+         messages without the chatbot fighting their scroll.
+        */
+
+        const distanceFromBottom =
+          chatMessages.scrollHeight -
+          chatMessages.scrollTop -
+          chatMessages.clientHeight;
+
+
+        if (
+          distanceFromBottom < 180
+        ) {
+
+          chatMessages.scrollTo({
+
+            top:
+              Math.max(
+                0,
+                targetTop
+              ),
+
+            behavior:
+              'smooth'
+          });
+        }
+      });
     });
   }
 
@@ -1619,6 +1701,14 @@
             }
           }
         );
+
+
+        /*
+         After all messages have been inserted,
+         move to the latest message.
+        */
+
+        scrollMessagesToBottom(true);
       }
 
     } catch (error) {
@@ -1676,6 +1766,22 @@
 
 
     renderReturningUserState();
+
+
+    /*
+     Reset the scroll position to the top when
+     starting a completely new conversation.
+    */
+
+    if (chatMessages) {
+
+      chatMessages.scrollTo({
+
+        top: 0,
+
+        behavior: 'auto'
+      });
+    }
 
 
     if (chatInput) {
