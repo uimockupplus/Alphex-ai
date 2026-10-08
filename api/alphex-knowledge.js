@@ -2,6 +2,7 @@
    ALPHEX AI — VERIFIED KNOWLEDGE BASE
    ---------------------------------------------------------
    Source of truth for the Alphex AI website assistant.
+
    COMPANY STRUCTURE
    -----------------
    Alphex AI
@@ -19,6 +20,7 @@
       |
       +-- EvalLoop Jobs
             +-- AI opportunity discovery platform
+
    IMPORTANT
    ---------
    - Alphex AI is primarily a client-focused AI service provider.
@@ -30,6 +32,7 @@
    - General questions may still be answered naturally.
    - This file contains no API keys or secrets.
    ========================================================= */
+
 const ALPHEX_KNOWLEDGE = {
   /* =======================================================
      COMPANY
@@ -68,6 +71,7 @@ const ALPHEX_KNOWLEDGE = {
       'Built for real work'
     ]
   },
+
   /* =======================================================
      BUSINESS MODEL
      ======================================================= */
@@ -97,6 +101,7 @@ const ALPHEX_KNOWLEDGE = {
       'Industry-specific AI solutions'
     ]
   },
+
   /* =======================================================
      CLIENT AI SOLUTIONS
      ======================================================= */
@@ -115,6 +120,7 @@ const ALPHEX_KNOWLEDGE = {
         'Human handoff'
       ]
     },
+
     knowledge_systems: {
       name:
         'Knowledge Systems',
@@ -130,6 +136,7 @@ const ALPHEX_KNOWLEDGE = {
         'Context-aware answers'
       ]
     },
+
     rag: {
       name:
         'RAG',
@@ -147,6 +154,7 @@ const ALPHEX_KNOWLEDGE = {
         'Customer support knowledge'
       ]
     },
+
     ai_agents: {
       name:
         'AI Agents',
@@ -167,6 +175,7 @@ const ALPHEX_KNOWLEDGE = {
         'Human handoff where needed'
       ]
     },
+
     custom_workflows: {
       name:
         'Custom AI Workflows',
@@ -182,6 +191,7 @@ const ALPHEX_KNOWLEDGE = {
       ]
     }
   },
+
   /* =======================================================
      CUSTOMER WORK AREAS
      ======================================================= */
@@ -199,6 +209,7 @@ const ALPHEX_KNOWLEDGE = {
         'Routing requests to the right person'
       ]
     },
+
     teams: {
       name:
         'Teams',
@@ -212,6 +223,7 @@ const ALPHEX_KNOWLEDGE = {
         'Information support for better-informed decisions'
       ]
     },
+
     operations: {
       name:
         'Operations',
@@ -226,6 +238,7 @@ const ALPHEX_KNOWLEDGE = {
       ]
     }
   },
+
   /* =======================================================
      BUSINESS OUTCOMES
      ======================================================= */
@@ -267,6 +280,7 @@ const ALPHEX_KNOWLEDGE = {
         'Define where automation stops and a person takes over.'
     }
   ],
+
   /* =======================================================
      PLATFORM ARCHITECTURE
      ======================================================= */
@@ -305,6 +319,7 @@ const ALPHEX_KNOWLEDGE = {
           'Test behavior, review outcomes, and use findings to guide improvements.'
       }
     ],
+
     core_components: [
       {
         name:
@@ -344,6 +359,7 @@ const ALPHEX_KNOWLEDGE = {
       }
     ]
   },
+
   /* =======================================================
      DELIVERY PROCESS
      ======================================================= */
@@ -375,6 +391,7 @@ const ALPHEX_KNOWLEDGE = {
       }
     ]
   },
+
   /* =======================================================
      WHY ALPHEX
      ======================================================= */
@@ -416,6 +433,7 @@ const ALPHEX_KNOWLEDGE = {
         'Use evaluation and feedback to identify what to refine over time.'
     }
   ],
+
   /* =======================================================
      QUALITY BAR
      ======================================================= */
@@ -429,6 +447,7 @@ const ALPHEX_KNOWLEDGE = {
       'Reviewed after launch'
     ]
   },
+
   /* =======================================================
      TRUST, SECURITY + RESPONSIBLE AI
      ======================================================= */
@@ -455,6 +474,7 @@ const ALPHEX_KNOWLEDGE = {
     important_boundary:
       'Alphex AI does not claim certifications or universal security guarantees in its public positioning. Controls, hosting, retention, and access requirements should be confirmed for the specific implementation.'
   },
+
   /* =======================================================
      INDUSTRY SOLUTIONS
      ======================================================= */
@@ -474,6 +494,7 @@ const ALPHEX_KNOWLEDGE = {
       boundary:
         'Advice, eligibility decisions, and other consequential actions stay with authorized people.'
     },
+
     {
       name:
         'Healthcare',
@@ -489,6 +510,7 @@ const ALPHEX_KNOWLEDGE = {
       boundary:
         'Clinical guidance and patient-care decisions require qualified human oversight.'
     },
+
     {
       name:
         'SaaS + technology',
@@ -503,6 +525,7 @@ const ALPHEX_KNOWLEDGE = {
         'Internal engineering or sales knowledge search'
       ]
     },
+
     {
       name:
         'Professional services',
@@ -517,6 +540,7 @@ const ALPHEX_KNOWLEDGE = {
         'Workflow checklists and handoffs'
       ]
     },
+
     {
       name:
         'E-commerce',
@@ -533,6 +557,7 @@ const ALPHEX_KNOWLEDGE = {
       boundary:
         'The system should not guess or promise an outcome when an exception requires human review.'
     },
+
     {
       name:
         'Growing businesses',
@@ -549,15 +574,17 @@ const ALPHEX_KNOWLEDGE = {
       ]
     }
   ],
+
   industry_boundary:
-    'These are example industry applications, not claims of existing customers, deployments, pre-built certified solutions, or specialized certifications.'
-  },
+    'These are example industry applications, not claims of existing customers, deployments, pre-built certified solutions, or specialized certifications.',
+
   /* =======================================================
      CHILD PRODUCTS
      ======================================================= */
   products: {
     relationship:
       'EvalLoop AI and EvalLoop Jobs are products built by Alphex AI. They are distinct from Alphex AI’s client-focused AI service work.',
+
     evalLoopAI: {
       name:
         'EvalLoop AI',
@@ -581,6 +608,7 @@ const ALPHEX_KNOWLEDGE = {
       relationship_to_alphex:
         'EvalLoop AI is a child product of Alphex AI.'
     },
+
     evalLoopJobs: {
       name:
         'EvalLoop Jobs',
@@ -607,6 +635,7 @@ const ALPHEX_KNOWLEDGE = {
         'Applications are made through the original hiring company, hiring platform, project provider, or contributor network associated with each opportunity.'
     }
   },
+
   /* =======================================================
      EVALUATION
      ======================================================= */
@@ -624,12 +653,14 @@ const ALPHEX_KNOWLEDGE = {
     purpose:
       'Evaluation helps test expected behavior, risky edge cases, uncertainty, and overall AI quality.'
   },
+
   /* =======================================================
      PRICING
      ======================================================= */
   pricing: {
     currency:
       'INR',
+
     plans: [
       {
         name:
@@ -641,6 +672,7 @@ const ALPHEX_KNOWLEDGE = {
         price:
           'From ₹8k / setup'
       },
+
       {
         name:
           'Growth',
@@ -653,6 +685,7 @@ const ALPHEX_KNOWLEDGE = {
         price:
           'From ₹22k / setup'
       },
+
       {
         name:
           'Custom',
@@ -664,9 +697,11 @@ const ALPHEX_KNOWLEDGE = {
           'Custom scope'
       }
     ],
+
     pricing_boundary:
       'These are publicly presented starting prices. Do not invent final project pricing, discounts, contracts, SLAs, implementation fees, or delivery timelines. Specific projects should be scoped with Alphex AI.'
   },
+
   /* =======================================================
      CHATBOT IDENTITY
      ======================================================= */
@@ -680,6 +715,7 @@ const ALPHEX_KNOWLEDGE = {
     primary_goal:
       'Help visitors understand Alphex AI, explore its services and products, ask general AI questions, and understand whether Alphex AI may be relevant to their requirements.'
   },
+
   /* =======================================================
      CHATBOT CONVERSATIONAL BEHAVIOR
      ======================================================= */
@@ -701,6 +737,7 @@ const ALPHEX_KNOWLEDGE = {
       'For mixed questions, answer both the general and Alphex-specific portions when appropriate.'
     ]
   },
+
   /* =======================================================
      GENERAL AI QUESTIONS
      ======================================================= */
@@ -717,12 +754,14 @@ const ALPHEX_KNOWLEDGE = {
       'Do not present general model knowledge as a company claim.'
     ]
   },
+
   /* =======================================================
      BUSINESS ENQUIRIES
      ======================================================= */
   business_enquiries: {
     description:
       'Alphex Minibot should be able to understand visitors who are exploring an AI solution for their business.',
+
     common_requirements: [
       'Chatbot development',
       'Customer support automation',
@@ -737,6 +776,7 @@ const ALPHEX_KNOWLEDGE = {
       'Industry-specific AI solution',
       'AI evaluation and quality'
     ],
+
     response_approach: [
       'Understand what the visitor is trying to accomplish.',
       'Identify the relevant Alphex AI capability.',
@@ -747,12 +787,14 @@ const ALPHEX_KNOWLEDGE = {
       'Guide genuine commercial enquiries toward the official contact channel.'
     ]
   },
+
   /* =======================================================
      CONTACT / HANDOFF
      ======================================================= */
   contact: {
     purpose:
       'Guide genuine business enquiries toward the official Alphex AI contact channel.',
+
     lead_signals: [
       'Business collaboration',
       'Custom chatbot requirement',
@@ -767,9 +809,11 @@ const ALPHEX_KNOWLEDGE = {
       'Commercial enquiry',
       'Product partnership discussion'
     ],
+
     behavior:
       'Understand the requirement, explain the relevant verified capability, and guide the visitor toward the official Alphex AI contact route when appropriate.'
   },
+
   /* =======================================================
      WEBSITE SECTIONS
      ======================================================= */
@@ -788,6 +832,7 @@ const ALPHEX_KNOWLEDGE = {
     'Terms of Service',
     'Disclaimer'
   ],
+
   /* =======================================================
      CURRENT PUBLIC BOUNDARIES
      ======================================================= */
@@ -813,6 +858,7 @@ const ALPHEX_KNOWLEDGE = {
     'Do not invent final pricing beyond the publicly stated starting prices.',
     'When uncertain about an Alphex-specific fact, say that the information is not currently available rather than guessing.'
   ],
+
   /* =======================================================
      RESPONSE STYLE
      ======================================================= */
@@ -826,8 +872,10 @@ const ALPHEX_KNOWLEDGE = {
       'Conversational',
       'Technically informed'
     ],
+
     preferred_behavior:
       'Answer directly first, then provide useful context when it helps.',
+
     avoid: [
       'Corporate buzzword overload',
       'Fake enthusiasm',
@@ -839,15 +887,18 @@ const ALPHEX_KNOWLEDGE = {
     ]
   }
 };
+
 /* =========================================================
    KNOWLEDGE HELPERS
    ========================================================= */
+
 /**
  * Returns the complete Alphex AI knowledge object.
  */
 function getAlphexKnowledge() {
   return ALPHEX_KNOWLEDGE;
 }
+
 /**
  * Converts the complete knowledge object into text
  * suitable for inclusion in an LLM system prompt.
@@ -859,6 +910,7 @@ function getAlphexKnowledgeText() {
     2
   );
 }
+
 /**
  * Returns product-focused knowledge.
  */
@@ -866,20 +918,27 @@ function getAlphexProductKnowledge() {
   return {
     company:
       ALPHEX_KNOWLEDGE.company,
+
     business_model:
       ALPHEX_KNOWLEDGE.business_model,
+
     solutions:
       ALPHEX_KNOWLEDGE.solutions,
+
     products:
       ALPHEX_KNOWLEDGE.products,
+
     evaluation:
       ALPHEX_KNOWLEDGE.evaluation,
+
     pricing:
       ALPHEX_KNOWLEDGE.pricing,
+
     boundaries:
       ALPHEX_KNOWLEDGE.boundaries
   };
 }
+
 /**
  * Returns chatbot-specific rules for the backend
  * system prompt.
@@ -888,17 +947,25 @@ function getAlphexChatbotRules() {
   return [
     ...ALPHEX_KNOWLEDGE.chatbot_behavior.principles,
     ...ALPHEX_KNOWLEDGE.boundaries,
+
     'Alphex AI is primarily a client-focused AI service provider.',
+
     'Alphex AI builds conversational chatbots, knowledge systems, RAG solutions, AI agents, and custom AI workflows for client requirements.',
+
     'EvalLoop AI and EvalLoop Jobs are child products built by Alphex AI.',
+
     'Do not confuse Alphex AI’s client services with the separate EvalLoop AI and EvalLoop Jobs products.',
+
     'When a visitor asks what Alphex AI does, explain the client-focused AI services first, then mention its child products when relevant.',
+
     'When a visitor asks about EvalLoop AI or EvalLoop Jobs specifically, focus on that product rather than describing it as the entirety of Alphex AI.'
   ];
 }
+
 /* =========================================================
    EXPORT
    ========================================================= */
+
 if (
   typeof module !== 'undefined' &&
   module.exports
