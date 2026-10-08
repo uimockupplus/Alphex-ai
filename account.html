@@ -11,7 +11,6 @@
 
   <title>Account — Alphex AI</title>
 
-  <!-- Existing Alphex fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -20,66 +19,157 @@
     rel="stylesheet"
   />
 
-  <!-- Existing global styles -->
   <link rel="stylesheet" href="site.css" />
   <link rel="stylesheet" href="nav.css" />
+
+  <!--
+    IMPORTANT:
+    Apply the saved global theme before the page renders.
+    This prevents the account page/navbar from initially
+    appearing in light mode before JavaScript finishes.
+  -->
+  <script>
+    (function () {
+      try {
+        var saved =
+          localStorage.getItem('alphex-theme') ||
+          localStorage.getItem('theme');
+
+        if (
+          saved !== 'light' &&
+          saved !== 'dark' &&
+          saved !== 'system'
+        ) {
+          saved = 'system';
+        }
+
+        var resolved = saved;
+
+        if (saved === 'system') {
+          resolved =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        }
+
+        document.documentElement.setAttribute(
+          'data-theme',
+          resolved
+        );
+
+        document.documentElement.setAttribute(
+          'data-alphex-theme',
+          saved
+        );
+      } catch (error) {
+        document.documentElement.setAttribute(
+          'data-theme',
+          'light'
+        );
+
+        document.documentElement.setAttribute(
+          'data-alphex-theme',
+          'system'
+        );
+      }
+    })();
+  </script>
 
   <style>
     /* =========================================================
        ALPHEX AI — ACCOUNT PAGE
        Page-specific styles only.
-       Does not modify site.css or nav.css.
+       Global site/navigation design is preserved.
        ========================================================= */
 
     :root {
       --account-bg: #f7f7f5;
-      --account-surface: rgba(255,255,255,.72);
+      --account-surface: rgba(255,255,255,.78);
       --account-surface-solid: #ffffff;
-      --account-border: rgba(15,18,25,.09);
+      --account-input: #ffffff;
+
       --account-text: #101211;
       --account-muted: #666b73;
+
+      --account-border: rgba(15,18,25,.09);
       --account-soft: #f0f0ed;
-      --account-input: #ffffff;
-      --account-shadow: 0 18px 50px rgba(16,18,17,.06);
+
+      --account-shadow:
+        0 18px 50px rgba(16,18,17,.055);
+
       --account-danger: #c53d4d;
       --account-success: #2b8a68;
+      --account-accent: #7057ff;
     }
 
-    html[data-account-theme="dark"] {
+    /*
+      IMPORTANT:
+      These are global theme states.
+
+      The account page does NOT use a separate
+      data-account-theme anymore.
+    */
+
+    html[data-theme="dark"] {
       --account-bg: #0e1019;
-      --account-surface: rgba(23,27,38,.92);
+      --account-surface: #171b26;
       --account-surface-solid: #171b26;
-      --account-border: rgba(255,255,255,.10);
+      --account-input: #11141e;
+
       --account-text: #f3f4f7;
       --account-muted: #a5aab5;
+
+      --account-border: rgba(255,255,255,.10);
       --account-soft: #202431;
-      --account-input: #141722;
-      --account-shadow: 0 18px 50px rgba(0,0,0,.28);
+
+      --account-shadow:
+        0 18px 50px rgba(0,0,0,.28);
     }
 
-    html[data-account-theme="light"] {
+    html[data-theme="light"] {
       --account-bg: #f7f7f5;
-      --account-surface: rgba(255,255,255,.72);
+      --account-surface: rgba(255,255,255,.78);
       --account-surface-solid: #ffffff;
-      --account-border: rgba(15,18,25,.09);
+      --account-input: #ffffff;
+
       --account-text: #101211;
       --account-muted: #666b73;
+
+      --account-border: rgba(15,18,25,.09);
       --account-soft: #f0f0ed;
-      --account-input: #ffffff;
-      --account-shadow: 0 18px 50px rgba(16,18,17,.06);
+
+      --account-shadow:
+        0 18px 50px rgba(16,18,17,.055);
     }
 
-    html[data-account-theme="dark"] body {
-      background: var(--account-bg) !important;
-      color: var(--account-text);
+    /* =========================================================
+       GLOBAL PAGE THEME
+       ========================================================= */
+
+    html[data-theme="dark"] body {
+      background: #0e1019 !important;
+      color: #f3f4f7;
     }
 
-    html[data-account-theme="light"] body {
-      background: var(--account-bg) !important;
-      color: var(--account-text);
+    html[data-theme="light"] body {
+      background: #f7f7f5 !important;
+      color: #101211;
     }
 
-    /* ---------- Page ---------- */
+    html[data-theme="dark"] .account-page {
+      background: #0e1019;
+      color: #f3f4f7;
+    }
+
+    html[data-theme="light"] .account-page {
+      background: #f7f7f5;
+      color: #101211;
+    }
+
+    /* =========================================================
+       ACCOUNT PAGE
+       ========================================================= */
 
     .account-page {
       min-height: calc(100vh - 72px);
@@ -87,8 +177,8 @@
       background: var(--account-bg);
       color: var(--account-text);
       transition:
-        background-color .25s ease,
-        color .25s ease;
+        background-color .22s ease,
+        color .22s ease;
     }
 
     .account-container {
@@ -127,7 +217,9 @@
       color: var(--account-muted);
     }
 
-    /* ---------- Sections ---------- */
+    /* =========================================================
+       SECTIONS
+       ========================================================= */
 
     .account-section {
       margin-bottom: 18px;
@@ -136,12 +228,17 @@
       border-radius: 18px;
       background: var(--account-surface);
       box-shadow: var(--account-shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+
       transition:
-        background-color .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
+        background-color .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+    }
+
+    html[data-theme="dark"] .account-section {
+      background: #171b26;
+      border-color: rgba(255,255,255,.09);
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
     }
 
     .account-section-header {
@@ -167,7 +264,9 @@
       color: var(--account-muted);
     }
 
-    /* ---------- Buttons ---------- */
+    /* =========================================================
+       BUTTONS
+       ========================================================= */
 
     .account-btn {
       appearance: none;
@@ -178,6 +277,7 @@
       border-radius: 9px;
       padding: 11px 15px;
       cursor: pointer;
+
       transition:
         background-color .18s ease,
         border-color .18s ease,
@@ -197,7 +297,7 @@
     }
 
     .account-btn-primary {
-      color: #ffffff;
+      color: #fff;
       background: #7057ff;
       border-color: #7057ff;
     }
@@ -228,11 +328,13 @@
       border-color: rgba(197,61,77,.4);
     }
 
-    /* ---------- Profile ---------- */
+    /* =========================================================
+       PROFILE
+       ========================================================= */
 
     .profile-layout {
       display: grid;
-      grid-template-columns: 110px minmax(0, 1fr);
+      grid-template-columns: 110px minmax(0,1fr);
       gap: 30px;
       align-items: start;
     }
@@ -250,7 +352,7 @@
       justify-content: center;
       border-radius: 50%;
       background: #7057ff;
-      color: #ffffff;
+      color: #fff;
       font-size: 27px;
       font-weight: 400;
       user-select: none;
@@ -262,7 +364,7 @@
 
     .profile-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2,minmax(0,1fr));
       gap: 20px;
     }
 
@@ -312,11 +414,18 @@
       background: var(--account-input);
       border: 1px solid var(--account-border);
       outline: none;
+
       transition:
         border-color .18s ease,
         box-shadow .18s ease,
-        background-color .25s ease,
-        color .25s ease;
+        background-color .22s ease,
+        color .22s ease;
+    }
+
+    html[data-theme="dark"] .account-input {
+      background: #11141e;
+      color: #f3f4f7;
+      border-color: rgba(255,255,255,.11);
     }
 
     .account-input:focus {
@@ -341,7 +450,9 @@
       margin-top: 24px;
     }
 
-    /* ---------- Preferences ---------- */
+    /* =========================================================
+       PREFERENCES
+       ========================================================= */
 
     .preference-list {
       display: flex;
@@ -384,7 +495,9 @@
       color: var(--account-muted);
     }
 
-    /* ---------- Appearance ---------- */
+    /* =========================================================
+       APPEARANCE
+       ========================================================= */
 
     .theme-options {
       display: inline-flex;
@@ -406,6 +519,7 @@
       font-family: inherit;
       font-size: 11px;
       cursor: pointer;
+
       transition:
         background-color .18s ease,
         color .18s ease,
@@ -422,11 +536,15 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.08);
     }
 
-    html[data-account-theme="dark"] .theme-option.active {
-      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    html[data-theme="dark"] .theme-option.active {
+      background: #282d3b;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.28);
     }
 
-    /* ---------- Toggle ---------- */
+    /* =========================================================
+       TOGGLE
+       ========================================================= */
 
     .switch {
       position: relative;
@@ -450,6 +568,7 @@
       background: var(--account-soft);
       border: 1px solid var(--account-border);
       cursor: pointer;
+
       transition:
         background-color .18s ease,
         border-color .18s ease;
@@ -464,6 +583,7 @@
       left: 2px;
       border-radius: 50%;
       background: var(--account-muted);
+
       transition:
         transform .18s ease,
         background-color .18s ease;
@@ -476,14 +596,12 @@
 
     .switch input:checked + .switch-track::after {
       transform: translateX(18px);
-      background: #ffffff;
+      background: #fff;
     }
 
-    .switch input:focus-visible + .switch-track {
-      box-shadow: 0 0 0 3px rgba(112,87,255,.14);
-    }
-
-    /* ---------- Status ---------- */
+    /* =========================================================
+       STATUS
+       ========================================================= */
 
     .status-line {
       display: flex;
@@ -499,7 +617,8 @@
       flex: 0 0 auto;
       border-radius: 50%;
       background: var(--account-success);
-      box-shadow: 0 0 0 4px rgba(43,138,104,.10);
+      box-shadow:
+        0 0 0 4px rgba(43,138,104,.10);
     }
 
     .status-mono {
@@ -510,7 +629,9 @@
       color: var(--account-success);
     }
 
-    /* ---------- Workspace ---------- */
+    /* =========================================================
+       WORKSPACE
+       ========================================================= */
 
     .workspace-info {
       display: grid;
@@ -544,7 +665,9 @@
       background: var(--account-soft);
     }
 
-    /* ---------- Account actions ---------- */
+    /* =========================================================
+       ACCOUNT ACTIONS
+       ========================================================= */
 
     .account-actions {
       display: flex;
@@ -571,25 +694,35 @@
       color: var(--account-muted);
     }
 
-    /* ---------- Message ---------- */
+    /* =========================================================
+       MESSAGE
+       ========================================================= */
 
     .account-message {
       position: fixed;
       right: 22px;
       bottom: 22px;
       z-index: 1000;
-      max-width: min(380px, calc(100vw - 44px));
+      max-width: min(380px,calc(100vw - 44px));
+
       padding: 13px 15px;
+
       border: 1px solid var(--account-border);
       border-radius: 11px;
+
       color: var(--account-text);
       background: var(--account-surface-solid);
+
       box-shadow: 0 16px 40px rgba(0,0,0,.14);
+
       font-size: 12px;
       line-height: 1.5;
+
       opacity: 0;
       pointer-events: none;
+
       transform: translateY(10px);
+
       transition:
         opacity .2s ease,
         transform .2s ease;
@@ -606,10 +739,12 @@
     }
 
     .account-message.error {
-      border-color: rgba(197,61,77,.3);
+      border-color: rgba(197,61,77,.30);
     }
 
-    /* ---------- Loading ---------- */
+    /* =========================================================
+       LOADING
+       ========================================================= */
 
     .account-loading {
       padding: 40px 0;
@@ -620,17 +755,23 @@
       letter-spacing: .04em;
     }
 
-    /* ---------- Modal ---------- */
+    /* =========================================================
+       MODAL
+       ========================================================= */
 
     .account-modal {
       position: fixed;
       inset: 0;
       z-index: 2000;
+
       display: none;
       align-items: center;
       justify-content: center;
+
       padding: 20px;
+
       background: rgba(5,7,12,.58);
+
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
@@ -640,13 +781,21 @@
     }
 
     .account-modal-card {
-      width: min(460px, 100%);
+      width: min(460px,100%);
       padding: 26px;
+
       border: 1px solid var(--account-border);
       border-radius: 16px;
+
       background: var(--account-surface-solid);
       color: var(--account-text);
+
       box-shadow: 0 28px 80px rgba(0,0,0,.28);
+    }
+
+    html[data-theme="dark"] .account-modal-card {
+      background: #171b26;
+      border-color: rgba(255,255,255,.11);
     }
 
     .account-modal-title {
@@ -678,9 +827,12 @@
       margin-top: 16px;
     }
 
-    /* ---------- Mobile ---------- */
+    /* =========================================================
+       MOBILE
+       ========================================================= */
 
     @media (max-width: 720px) {
+
       .account-page {
         padding: 42px 18px 80px;
       }
@@ -688,10 +840,6 @@
       .account-section {
         padding: 21px;
         border-radius: 15px;
-      }
-
-      .account-section-header {
-        align-items: flex-start;
       }
 
       .profile-layout {
@@ -716,10 +864,6 @@
         align-items: flex-start;
       }
 
-      .preference-row .theme-options {
-        flex: 0 0 auto;
-      }
-
       .workspace-info {
         grid-template-columns: 1fr;
         align-items: flex-start;
@@ -740,6 +884,7 @@
     }
 
     @media (max-width: 480px) {
+
       .account-section-header {
         flex-direction: column;
       }
@@ -777,7 +922,6 @@
 
 <body>
 
-  <!-- Existing shared navigation -->
   <div id="site-nav"></div>
 
   <main class="account-page">
@@ -785,13 +929,16 @@
 
       <header class="account-header">
         <p class="account-eyebrow">Account</p>
-        <h1 class="account-title">Your account</h1>
+
+        <h1 class="account-title">
+          Your account
+        </h1>
+
         <p class="account-description">
           Manage your profile, preferences, security, and workspace settings.
         </p>
       </header>
 
-      <!-- Loading -->
       <div id="account-loading" class="account-loading">
         Loading account...
       </div>
@@ -805,8 +952,12 @@
         <section class="account-section">
 
           <div class="account-section-header">
+
             <div>
-              <h2 class="account-section-title">Profile</h2>
+              <h2 class="account-section-title">
+                Profile
+              </h2>
+
               <p class="account-section-description">
                 Your personal information and workspace identity.
               </p>
@@ -819,18 +970,20 @@
             >
               Edit
             </button>
+
           </div>
 
           <div class="profile-layout">
 
             <div class="profile-avatar-column">
+
               <div
                 id="profile-avatar"
                 class="profile-avatar"
-                aria-label="Profile avatar"
               >
                 U
               </div>
+
             </div>
 
             <div class="profile-fields">
@@ -838,10 +991,8 @@
               <div class="profile-grid">
 
                 <div class="account-field full">
-                  <label
-                    class="account-label"
-                    for="profile-full-name"
-                  >
+
+                  <label class="account-label">
                     Full name
                   </label>
 
@@ -860,9 +1011,11 @@
                     maxlength="120"
                     style="display:none;"
                   />
+
                 </div>
 
                 <div class="account-field">
+
                   <label class="account-label">
                     Email
                   </label>
@@ -873,9 +1026,11 @@
                   >
                     —
                   </div>
+
                 </div>
 
                 <div class="account-field">
+
                   <label
                     class="account-label"
                     for="profile-company"
@@ -898,9 +1053,11 @@
                     maxlength="120"
                     style="display:none;"
                   />
+
                 </div>
 
                 <div class="account-field full">
+
                   <label
                     class="account-label"
                     for="profile-role"
@@ -923,6 +1080,7 @@
                     maxlength="120"
                     style="display:none;"
                   />
+
                 </div>
 
               </div>
@@ -932,6 +1090,7 @@
                 class="profile-actions"
                 style="display:none;"
               >
+
                 <button
                   type="button"
                   id="cancel-profile-btn"
@@ -948,10 +1107,13 @@
                 >
                   Save changes
                 </button>
+
               </div>
 
             </div>
+
           </div>
+
         </section>
 
         <!-- =====================================================
@@ -961,25 +1123,33 @@
         <section class="account-section">
 
           <div class="account-section-header">
+
             <div>
-              <h2 class="account-section-title">Preferences</h2>
+              <h2 class="account-section-title">
+                Preferences
+              </h2>
+
               <p class="account-section-description">
                 Control how Alphex AI behaves for your account.
               </p>
             </div>
+
           </div>
 
           <div class="preference-list">
 
-            <!-- Appearance -->
-
             <div class="preference-row">
 
               <div class="preference-copy">
-                <p class="preference-name">Appearance</p>
-                <p class="preference-description">
-                  Choose how Alphex AI looks on your device.
+
+                <p class="preference-name">
+                  Appearance
                 </p>
+
+                <p class="preference-description">
+                  Choose how Alphex AI looks across the website.
+                </p>
+
               </div>
 
               <div
@@ -992,6 +1162,7 @@
                   type="button"
                   class="theme-option"
                   data-theme-choice="light"
+                  aria-pressed="false"
                 >
                   Light
                 </button>
@@ -1000,6 +1171,7 @@
                   type="button"
                   class="theme-option"
                   data-theme-choice="dark"
+                  aria-pressed="false"
                 >
                   Dark
                 </button>
@@ -1008,18 +1180,19 @@
                   type="button"
                   class="theme-option"
                   data-theme-choice="system"
+                  aria-pressed="false"
                 >
                   System
                 </button>
 
               </div>
-            </div>
 
-            <!-- Email notifications -->
+            </div>
 
             <div class="preference-row">
 
               <div class="preference-copy">
+
                 <p class="preference-name">
                   Email notifications
                 </p>
@@ -1027,24 +1200,26 @@
                 <p class="preference-description">
                   Receive important account and service notifications.
                 </p>
+
               </div>
 
               <label class="switch">
+
                 <input
                   id="email-notifications-toggle"
                   type="checkbox"
                 />
 
                 <span class="switch-track"></span>
+
               </label>
 
             </div>
 
-            <!-- Product updates -->
-
             <div class="preference-row">
 
               <div class="preference-copy">
+
                 <p class="preference-name">
                   Product updates
                 </p>
@@ -1052,20 +1227,24 @@
                 <p class="preference-description">
                   Receive occasional updates about Alphex AI products.
                 </p>
+
               </div>
 
               <label class="switch">
+
                 <input
                   id="product-updates-toggle"
                   type="checkbox"
                 />
 
                 <span class="switch-track"></span>
+
               </label>
 
             </div>
 
           </div>
+
         </section>
 
         <!-- =====================================================
@@ -1075,12 +1254,17 @@
         <section class="account-section">
 
           <div class="account-section-header">
+
             <div>
-              <h2 class="account-section-title">Security</h2>
+              <h2 class="account-section-title">
+                Security
+              </h2>
+
               <p class="account-section-description">
                 Manage your authentication and password.
               </p>
             </div>
+
           </div>
 
           <div class="preference-list">
@@ -1088,6 +1272,7 @@
             <div class="preference-row">
 
               <div class="preference-copy">
+
                 <p class="preference-name">
                   Authentication
                 </p>
@@ -1095,12 +1280,21 @@
                 <p class="preference-description">
                   Your account is authenticated through Supabase.
                 </p>
+
               </div>
 
               <div class="status-line">
+
                 <span class="status-dot"></span>
-                <span>Active</span>
-                <span class="status-mono">SECURE</span>
+
+                <span>
+                  Active
+                </span>
+
+                <span class="status-mono">
+                  SECURE
+                </span>
+
               </div>
 
             </div>
@@ -1108,6 +1302,7 @@
             <div class="preference-row">
 
               <div class="preference-copy">
+
                 <p class="preference-name">
                   Password
                 </p>
@@ -1115,6 +1310,7 @@
                 <p class="preference-description">
                   Change your account password.
                 </p>
+
               </div>
 
               <button
@@ -1128,6 +1324,7 @@
             </div>
 
           </div>
+
         </section>
 
         <!-- =====================================================
@@ -1137,17 +1334,23 @@
         <section class="account-section">
 
           <div class="account-section-header">
+
             <div>
-              <h2 class="account-section-title">Workspace</h2>
+              <h2 class="account-section-title">
+                Workspace
+              </h2>
+
               <p class="account-section-description">
                 Your current Alphex AI workspace.
               </p>
             </div>
+
           </div>
 
           <div class="workspace-info">
 
             <div>
+
               <p class="workspace-name">
                 Personal workspace
               </p>
@@ -1155,6 +1358,7 @@
               <p class="workspace-role">
                 You are the owner of this workspace.
               </p>
+
             </div>
 
             <span class="workspace-badge">
@@ -1162,10 +1366,11 @@
             </span>
 
           </div>
+
         </section>
 
         <!-- =====================================================
-             ACCOUNT ACTIONS
+             SIGN OUT
              ===================================================== -->
 
         <section class="account-section">
@@ -1197,7 +1402,7 @@
         </section>
 
         <!-- =====================================================
-             DELETE ACCOUNT
+             DELETE
              ===================================================== -->
 
         <section class="account-section">
@@ -1211,8 +1416,7 @@
               </p>
 
               <p class="account-actions-description">
-                Permanently deleting an authenticated Supabase user
-                requires a secure server-side operation.
+                Permanent account deletion requires a secure server-side operation.
               </p>
 
             </div>
@@ -1253,15 +1457,11 @@
     class="account-modal"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="password-modal-title"
   >
 
     <div class="account-modal-card">
 
-      <h2
-        id="password-modal-title"
-        class="account-modal-title"
-      >
+      <h2 class="account-modal-title">
         Change password
       </h2>
 
@@ -1334,6 +1534,7 @@
       </div>
 
     </div>
+
   </div>
 
   <!-- =========================================================
@@ -1345,22 +1546,18 @@
     class="account-modal"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="delete-modal-title"
   >
 
     <div class="account-modal-card">
 
-      <h2
-        id="delete-modal-title"
-        class="account-modal-title"
-      >
+      <h2 class="account-modal-title">
         Delete account
       </h2>
 
       <p class="account-modal-description">
         Account deletion must be performed through a secure
-        server-side Supabase function. This frontend will not
-        expose privileged credentials or attempt an unsafe deletion.
+        server-side Supabase function. No privileged credentials
+        are exposed in this page.
       </p>
 
       <div class="account-modal-actions">
@@ -1384,6 +1581,7 @@
       </div>
 
     </div>
+
   </div>
 
   <!-- =========================================================
@@ -1394,7 +1592,7 @@
 
   <script>
     /* =========================================================
-       ALPHEX AI — ACCOUNT LOGIC
+       ALPHEX AI — ACCOUNT APPLICATION
        ========================================================= */
 
     const SUPABASE_URL =
@@ -1431,7 +1629,6 @@
     };
 
     let editingProfile = false;
-
     let messageTimer = null;
 
     /* =========================================================
@@ -1509,19 +1706,23 @@
         'account-message show ' + type;
 
       messageTimer = setTimeout(() => {
-        messageElement.className = 'account-message';
+
+        messageElement.className =
+          'account-message';
+
       }, 3200);
     }
 
     /* =========================================================
-       THEME
+       GLOBAL THEME SYSTEM
        ========================================================= */
 
     function getSystemTheme() {
 
-      return window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches
+      return window.matchMedia &&
+        window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches
         ? 'dark'
         : 'light';
     }
@@ -1539,41 +1740,111 @@
       return getSystemTheme();
     }
 
-    function applyAccountTheme(theme) {
+    function getSavedTheme() {
 
-      const resolvedTheme =
+      let theme = null;
+
+      try {
+
+        theme =
+          localStorage.getItem(
+            'alphex-theme'
+          ) ||
+          localStorage.getItem(
+            'theme'
+          );
+
+      } catch (error) {
+        theme = null;
+      }
+
+      if (
+        theme !== 'light' &&
+        theme !== 'dark' &&
+        theme !== 'system'
+      ) {
+        theme = 'system';
+      }
+
+      return theme;
+    }
+
+    function writeGlobalTheme(theme) {
+
+      const resolved =
         resolveTheme(theme);
 
-      document.documentElement.setAttribute(
-        'data-account-theme',
-        resolvedTheme
-      );
+      /*
+       * THIS IS THE IMPORTANT PART.
+       *
+       * The entire website uses the same
+       * document-level theme state.
+       */
 
       document.documentElement.setAttribute(
         'data-theme',
-        resolvedTheme
+        resolved
       );
 
-      updateThemeButtons(theme);
+      document.documentElement.setAttribute(
+        'data-alphex-theme',
+        theme
+      );
 
-      /*
-       * Keep the shared site theme synchronized
-       * when the existing global CSS uses data-theme.
-       */
       try {
+
         localStorage.setItem(
           'alphex-theme',
           theme
         );
+
+        /*
+         * Keep this alias for compatibility
+         * with existing site code if it uses
+         * "theme" instead.
+         */
+        localStorage.setItem(
+          'theme',
+          theme
+        );
+
       } catch (error) {
-        /* Ignore storage errors */
+        console.warn(
+          'Could not save local theme preference.',
+          error
+        );
       }
+
+      /*
+       * Tell any other Alphex scripts on this
+       * page that the global theme changed.
+       */
+      window.dispatchEvent(
+        new CustomEvent(
+          'alphex-theme-change',
+          {
+            detail: {
+              theme: theme,
+              resolvedTheme: resolved
+            }
+          }
+        )
+      );
+
+      /*
+       * Also update the browser color scheme
+       * for native controls where supported.
+       */
+      document.documentElement.style.colorScheme =
+        resolved;
     }
 
-    function updateThemeButtons(theme) {
+    function renderThemeButtons(theme) {
 
       document
-        .querySelectorAll('[data-theme-choice]')
+        .querySelectorAll(
+          '[data-theme-choice]'
+        )
         .forEach(button => {
 
           const active =
@@ -1586,86 +1857,179 @@
 
           button.setAttribute(
             'aria-pressed',
-            active ? 'true' : 'false'
+            active
+              ? 'true'
+              : 'false'
           );
         });
     }
 
-    async function saveThemePreference(theme) {
+    async function setGlobalTheme(theme) {
 
-      if (!currentUser) {
+      if (
+        theme !== 'light' &&
+        theme !== 'dark' &&
+        theme !== 'system'
+      ) {
         return;
       }
 
+      /*
+       * Change the entire website immediately.
+       */
+      writeGlobalTheme(theme);
+
+      /*
+       * Update Account UI immediately.
+       */
+      renderThemeButtons(theme);
+
+      /*
+       * Keep local preference in memory.
+       */
       preferenceData.theme = theme;
+
+      /*
+       * Persist the same global preference
+       * in Supabase.
+       */
+      if (!currentUser) {
+        return;
+      }
 
       const { error } =
         await supabaseClient
           .from('preferences')
           .upsert(
             {
-              user_id: currentUser.id,
-              theme: theme,
+              user_id:
+                currentUser.id,
+
+              theme:
+                theme,
+
               email_notifications:
                 preferenceData.email_notifications,
+
               product_updates:
                 preferenceData.product_updates
             },
             {
-              onConflict: 'user_id'
+              onConflict:
+                'user_id'
             }
           );
 
       if (error) {
+
         console.error(
-          'Theme preference error:',
+          'Theme preference save error:',
           error
         );
 
         showMessage(
-          'Theme changed locally, but could not be saved.',
+          'Theme changed, but could not be saved to your account.',
           'error'
         );
       }
     }
 
+    /*
+     * Initialize immediately from local state.
+     */
+    writeGlobalTheme(
+      getSavedTheme()
+    );
+
+    /*
+     * Appearance controls.
+     */
     document
-      .querySelectorAll('[data-theme-choice]')
+      .querySelectorAll(
+        '[data-theme-choice]'
+      )
       .forEach(button => {
 
         button.addEventListener(
           'click',
-          async () => {
+          () => {
 
-            const theme =
-              button.dataset.themeChoice;
+            setGlobalTheme(
+              button.dataset.themeChoice
+            );
 
-            /*
-             * Immediate visual change.
-             */
-            applyAccountTheme(theme);
-
-            /*
-             * Persist to Supabase.
-             */
-            await saveThemePreference(theme);
           }
         );
+
       });
 
+    /*
+     * If System is selected and the operating
+     * system changes, update the whole site.
+     */
     const systemThemeMedia =
       window.matchMedia(
         '(prefers-color-scheme: dark)'
       );
 
-    systemThemeMedia.addEventListener(
-      'change',
-      () => {
+    function handleSystemThemeChange() {
+
+      if (
+        preferenceData.theme ===
+        'system'
+      ) {
+
+        writeGlobalTheme(
+          'system'
+        );
+
+        renderThemeButtons(
+          'system'
+        );
+      }
+    }
+
+    if (
+      systemThemeMedia.addEventListener
+    ) {
+
+      systemThemeMedia.addEventListener(
+        'change',
+        handleSystemThemeChange
+      );
+
+    } else if (
+      systemThemeMedia.addListener
+    ) {
+
+      systemThemeMedia.addListener(
+        handleSystemThemeChange
+      );
+    }
+
+    /*
+     * If another Alphex component changes
+     * the theme, keep Account synchronized.
+     */
+    window.addEventListener(
+      'alphex-theme-change',
+      event => {
+
+        const theme =
+          event.detail?.theme;
 
         if (
-          preferenceData.theme === 'system'
+          theme === 'light' ||
+          theme === 'dark' ||
+          theme === 'system'
         ) {
-          applyAccountTheme('system');
+
+          preferenceData.theme =
+            theme;
+
+          renderThemeButtons(
+            theme
+          );
         }
       }
     );
@@ -1684,16 +2048,20 @@
       }
 
       const parts =
-        cleanName.split(/\s+/).filter(Boolean);
+        cleanName
+          .split(/\s+/)
+          .filter(Boolean);
 
       if (parts.length === 1) {
+
         return parts[0]
           .substring(0, 1)
           .toUpperCase();
       }
 
       return (
-        parts[0].substring(0, 1) +
+        parts[0]
+          .substring(0, 1) +
         parts[parts.length - 1]
           .substring(0, 1)
       ).toUpperCase();
@@ -1704,25 +2072,21 @@
       const name =
         profileData.full_name ||
         currentUser?.user_metadata?.full_name ||
+        currentUser?.user_metadata?.name ||
         currentUser?.email?.split('@')[0] ||
         'User';
 
-      const company =
-        profileData.company || '—';
-
-      const role =
-        profileData.role || '—';
-
-      fullNameValue.textContent = name;
+      fullNameValue.textContent =
+        name;
 
       emailValue.textContent =
         currentUser?.email || '—';
 
       companyValue.textContent =
-        company;
+        profileData.company || '—';
 
       roleValue.textContent =
-        role;
+        profileData.role || '—';
 
       fullNameInput.value =
         profileData.full_name || '';
@@ -1845,11 +2209,14 @@
 
     async function loadProfile() {
 
-      const { data, error } =
+      const {
+        data,
+        error
+      } =
         await supabaseClient
           .from('profiles')
           .select(
-            'user_id, full_name, company, role, avatar_url'
+            'user_id,full_name,company,role,avatar_url'
           )
           .eq(
             'user_id',
@@ -1858,11 +2225,6 @@
           .maybeSingle();
 
       if (error) {
-        console.error(
-          'Profile load error:',
-          error
-        );
-
         throw error;
       }
 
@@ -1901,23 +2263,22 @@
           avatar_url: ''
         };
 
-        const { error: insertError } =
+        const {
+          error: insertError
+        } =
           await supabaseClient
             .from('profiles')
-            .insert(initialProfile);
+            .insert(
+              initialProfile
+            );
 
         if (insertError) {
-          console.error(
-            'Profile insert error:',
-            insertError
-          );
-
           throw insertError;
         }
 
         profileData = {
           full_name:
-            initialProfile.full_name,
+            initialName,
 
           company: '',
           role: '',
@@ -1949,12 +2310,15 @@
         return;
       }
 
-      saveProfileButton.disabled = true;
+      saveProfileButton.disabled =
+        true;
 
       const edited =
         getEditedProfile();
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from('profiles')
           .upsert(
@@ -1975,7 +2339,8 @@
                 profileData.avatar_url || ''
             },
             {
-              onConflict: 'user_id'
+              onConflict:
+                'user_id'
             }
           );
 
@@ -2007,14 +2372,7 @@
         edited.role;
 
       originalProfile = {
-        full_name:
-          edited.full_name,
-
-        company:
-          edited.company,
-
-        role:
-          edited.role
+        ...edited
       };
 
       renderProfile();
@@ -2026,9 +2384,8 @@
       );
 
       /*
-       * Update the auth user's display metadata
-       * when possible so the shared navigation
-       * can use the same name.
+       * Keep Supabase Auth metadata aligned
+       * with the profile name.
        */
       try {
 
@@ -2042,13 +2399,29 @@
           }
         });
 
-      } catch (metadataError) {
+      } catch (error) {
 
         console.warn(
-          'Could not update auth metadata:',
-          metadataError
+          'Auth metadata update failed:',
+          error
         );
       }
+
+      /*
+       * Notify shared navigation that the
+       * account identity may have changed.
+       */
+      window.dispatchEvent(
+        new CustomEvent(
+          'alphex-profile-change',
+          {
+            detail: {
+              full_name:
+                edited.full_name
+            }
+          }
+        )
+      );
     }
 
     editProfileButton.addEventListener(
@@ -2098,8 +2471,15 @@
 
     function renderPreferences() {
 
-      applyAccountTheme(
-        preferenceData.theme || 'system'
+      /*
+       * Apply GLOBAL theme.
+       */
+      writeGlobalTheme(
+        preferenceData.theme
+      );
+
+      renderThemeButtons(
+        preferenceData.theme
       );
 
       emailNotificationsToggle.checked =
@@ -2115,11 +2495,14 @@
 
     async function loadPreferences() {
 
-      const { data, error } =
+      const {
+        data,
+        error
+      } =
         await supabaseClient
           .from('preferences')
           .select(
-            'user_id, theme, email_notifications, product_updates'
+            'user_id,theme,email_notifications,product_updates'
           )
           .eq(
             'user_id',
@@ -2128,12 +2511,6 @@
           .maybeSingle();
 
       if (error) {
-
-        console.error(
-          'Preferences load error:',
-          error
-        );
-
         throw error;
       }
 
@@ -2160,32 +2537,38 @@
           user_id:
             currentUser.id,
 
-          theme: 'system',
+          theme:
+            getSavedTheme(),
 
-          email_notifications: true,
+          email_notifications:
+            true,
 
-          product_updates: true
+          product_updates:
+            true
         };
 
-        const { error: insertError } =
+        const {
+          error: insertError
+        } =
           await supabaseClient
             .from('preferences')
-            .insert(defaults);
+            .insert(
+              defaults
+            );
 
         if (insertError) {
-
-          console.error(
-            'Preferences insert error:',
-            insertError
-          );
-
           throw insertError;
         }
 
         preferenceData = {
-          theme: 'system',
-          email_notifications: true,
-          product_updates: true
+          theme:
+            defaults.theme,
+
+          email_notifications:
+            true,
+
+          product_updates:
+            true
         };
       }
 
@@ -2195,10 +2578,12 @@
     async function savePreferences() {
 
       if (!currentUser) {
-        return;
+        return false;
       }
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient
           .from('preferences')
           .upsert(
@@ -2216,7 +2601,8 @@
                 preferenceData.product_updates
             },
             {
-              onConflict: 'user_id'
+              onConflict:
+                'user_id'
             }
           );
 
@@ -2266,21 +2652,23 @@
 
     function openPasswordModal() {
 
-      document
-        .getElementById('new-password')
-        .value = '';
+      document.getElementById(
+        'new-password'
+      ).value = '';
 
-      document
-        .getElementById('confirm-password')
-        .value = '';
+      document.getElementById(
+        'confirm-password'
+      ).value = '';
 
-      passwordModal.classList.add('open');
+      passwordModal.classList.add(
+        'open'
+      );
 
       setTimeout(() => {
 
-        document
-          .getElementById('new-password')
-          .focus();
+        document.getElementById(
+          'new-password'
+        ).focus();
 
       }, 50);
     }
@@ -2295,14 +2683,14 @@
     async function changePassword() {
 
       const newPassword =
-        document
-          .getElementById('new-password')
-          .value;
+        document.getElementById(
+          'new-password'
+        ).value;
 
       const confirmPassword =
-        document
-          .getElementById('confirm-password')
-          .value;
+        document.getElementById(
+          'confirm-password'
+        ).value;
 
       if (newPassword.length < 8) {
 
@@ -2314,7 +2702,10 @@
         return;
       }
 
-      if (newPassword !== confirmPassword) {
+      if (
+        newPassword !==
+        confirmPassword
+      ) {
 
         showMessage(
           'Passwords do not match.',
@@ -2331,19 +2722,17 @@
 
       button.disabled = true;
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient.auth.updateUser({
-          password: newPassword
+          password:
+            newPassword
         });
 
       button.disabled = false;
 
       if (error) {
-
-        console.error(
-          'Password update error:',
-          error
-        );
 
         showMessage(
           error.message ||
@@ -2362,21 +2751,27 @@
     }
 
     document
-      .getElementById('change-password-btn')
+      .getElementById(
+        'change-password-btn'
+      )
       .addEventListener(
         'click',
         openPasswordModal
       );
 
     document
-      .getElementById('cancel-password-btn')
+      .getElementById(
+        'cancel-password-btn'
+      )
       .addEventListener(
         'click',
         closePasswordModal
       );
 
     document
-      .getElementById('save-password-btn')
+      .getElementById(
+        'save-password-btn'
+      )
       .addEventListener(
         'click',
         changePassword
@@ -2387,35 +2782,39 @@
        ========================================================= */
 
     function openDeleteModal() {
-
       deleteModal.classList.add(
         'open'
       );
     }
 
     function closeDeleteModal() {
-
       deleteModal.classList.remove(
         'open'
       );
     }
 
     document
-      .getElementById('delete-account-btn')
+      .getElementById(
+        'delete-account-btn'
+      )
       .addEventListener(
         'click',
         openDeleteModal
       );
 
     document
-      .getElementById('cancel-delete-btn')
+      .getElementById(
+        'cancel-delete-btn'
+      )
       .addEventListener(
         'click',
         closeDeleteModal
       );
 
     document
-      .getElementById('confirm-delete-btn')
+      .getElementById(
+        'confirm-delete-btn'
+      )
       .addEventListener(
         'click',
         () => {
@@ -2434,7 +2833,9 @@
        ========================================================= */
 
     document
-      .getElementById('sign-out-btn')
+      .getElementById(
+        'sign-out-btn'
+      )
       .addEventListener(
         'click',
         async () => {
@@ -2446,15 +2847,12 @@
 
           button.disabled = true;
 
-          const { error } =
+          const {
+            error
+          } =
             await supabaseClient.auth.signOut();
 
           if (error) {
-
-            console.error(
-              'Sign out error:',
-              error
-            );
 
             button.disabled = false;
 
@@ -2472,7 +2870,7 @@
       );
 
     /* =========================================================
-       MODAL OUTSIDE CLICK
+       MODALS
        ========================================================= */
 
     passwordModal.addEventListener(
@@ -2501,15 +2899,14 @@
       }
     );
 
-    /* =========================================================
-       ESCAPE KEY
-       ========================================================= */
-
     document.addEventListener(
       'keydown',
       event => {
 
-        if (event.key !== 'Escape') {
+        if (
+          event.key !==
+          'Escape'
+        ) {
           return;
         }
 
@@ -2547,6 +2944,10 @@
 
         currentUser = user;
 
+        /*
+         * Load account-specific information.
+         * The global theme is restored from Supabase.
+         */
         await loadProfile();
 
         await loadPreferences();
@@ -2578,7 +2979,8 @@
       (event, session) => {
 
         if (
-          event === 'SIGNED_OUT' ||
+          event ===
+          'SIGNED_OUT' ||
           !session
         ) {
 
@@ -2588,17 +2990,10 @@
       }
     );
 
-    /*
-     * Apply a temporary system theme immediately
-     * so the page does not flash the wrong mode
-     * before Supabase preferences are loaded.
-     */
-    applyAccountTheme('system');
-
     initializeAccount();
   </script>
 
-  <!-- Existing shared site JavaScript -->
+  <!-- Existing shared Alphex JavaScript -->
   <script src="site.js"></script>
 
 </body>
