@@ -22,60 +22,6 @@
   <link rel="stylesheet" href="site.css" />
   <link rel="stylesheet" href="nav.css" />
 
-  <!--
-    IMPORTANT:
-    Apply the saved global theme before the page renders.
-    This prevents the account page/navbar from initially
-    appearing in light mode before JavaScript finishes.
-  -->
-  <script>
-    (function () {
-      try {
-        var saved =
-          localStorage.getItem('alphex-theme') ||
-          localStorage.getItem('theme');
-
-        if (
-          saved !== 'light' &&
-          saved !== 'dark' &&
-          saved !== 'system'
-        ) {
-          saved = 'system';
-        }
-
-        var resolved = saved;
-
-        if (saved === 'system') {
-          resolved =
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark'
-              : 'light';
-        }
-
-        document.documentElement.setAttribute(
-          'data-theme',
-          resolved
-        );
-
-        document.documentElement.setAttribute(
-          'data-alphex-theme',
-          saved
-        );
-      } catch (error) {
-        document.documentElement.setAttribute(
-          'data-theme',
-          'light'
-        );
-
-        document.documentElement.setAttribute(
-          'data-alphex-theme',
-          'system'
-        );
-      }
-    })();
-  </script>
-
   <style>
     /* =========================================================
        ALPHEX AI — ACCOUNT PAGE
@@ -102,14 +48,6 @@
       --account-success: #2b8a68;
       --account-accent: #7057ff;
     }
-
-    /*
-      IMPORTANT:
-      These are global theme states.
-
-      The account page does NOT use a separate
-      data-account-theme anymore.
-    */
 
     html[data-theme="dark"] {
       --account-bg: #0e1019;
@@ -496,53 +434,6 @@
     }
 
     /* =========================================================
-       APPEARANCE
-       ========================================================= */
-
-    .theme-options {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      padding: 3px;
-      border-radius: 10px;
-      background: var(--account-soft);
-      border: 1px solid var(--account-border);
-    }
-
-    .theme-option {
-      appearance: none;
-      border: 0;
-      border-radius: 7px;
-      padding: 8px 11px;
-      background: transparent;
-      color: var(--account-muted);
-      font-family: inherit;
-      font-size: 11px;
-      cursor: pointer;
-
-      transition:
-        background-color .18s ease,
-        color .18s ease,
-        box-shadow .18s ease;
-    }
-
-    .theme-option:hover {
-      color: var(--account-text);
-    }
-
-    .theme-option.active {
-      color: var(--account-text);
-      background: var(--account-surface-solid);
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    html[data-theme="dark"] .theme-option.active {
-      background: #282d3b;
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,.28);
-    }
-
-    /* =========================================================
        TOGGLE
        ========================================================= */
 
@@ -889,14 +780,6 @@
         flex-direction: column;
       }
 
-      .theme-options {
-        width: 100%;
-      }
-
-      .theme-option {
-        flex: 1;
-      }
-
       .profile-actions {
         flex-direction: column;
       }
@@ -1137,57 +1020,6 @@
           </div>
 
           <div class="preference-list">
-
-            <div class="preference-row">
-
-              <div class="preference-copy">
-
-                <p class="preference-name">
-                  Appearance
-                </p>
-
-                <p class="preference-description">
-                  Choose how Alphex AI looks across the website.
-                </p>
-
-              </div>
-
-              <div
-                class="theme-options"
-                role="group"
-                aria-label="Appearance"
-              >
-
-                <button
-                  type="button"
-                  class="theme-option"
-                  data-theme-choice="light"
-                  aria-pressed="false"
-                >
-                  Light
-                </button>
-
-                <button
-                  type="button"
-                  class="theme-option"
-                  data-theme-choice="dark"
-                  aria-pressed="false"
-                >
-                  Dark
-                </button>
-
-                <button
-                  type="button"
-                  class="theme-option"
-                  data-theme-choice="system"
-                  aria-pressed="false"
-                >
-                  System
-                </button>
-
-              </div>
-
-            </div>
 
             <div class="preference-row">
 
@@ -1617,7 +1449,6 @@
     };
 
     let preferenceData = {
-      theme: 'system',
       email_notifications: true,
       product_updates: true
     };
@@ -1712,327 +1543,6 @@
 
       }, 3200);
     }
-
-    /* =========================================================
-       GLOBAL THEME SYSTEM
-       ========================================================= */
-
-    function getSystemTheme() {
-
-      return window.matchMedia &&
-        window.matchMedia(
-          '(prefers-color-scheme: dark)'
-        ).matches
-        ? 'dark'
-        : 'light';
-    }
-
-    function resolveTheme(theme) {
-
-      if (theme === 'dark') {
-        return 'dark';
-      }
-
-      if (theme === 'light') {
-        return 'light';
-      }
-
-      return getSystemTheme();
-    }
-
-    function getSavedTheme() {
-
-      let theme = null;
-
-      try {
-
-        theme =
-          localStorage.getItem(
-            'alphex-theme'
-          ) ||
-          localStorage.getItem(
-            'theme'
-          );
-
-      } catch (error) {
-        theme = null;
-      }
-
-      if (
-        theme !== 'light' &&
-        theme !== 'dark' &&
-        theme !== 'system'
-      ) {
-        theme = 'system';
-      }
-
-      return theme;
-    }
-
-    function writeGlobalTheme(theme) {
-
-      const resolved =
-        resolveTheme(theme);
-
-      /*
-       * THIS IS THE IMPORTANT PART.
-       *
-       * The entire website uses the same
-       * document-level theme state.
-       */
-
-      document.documentElement.setAttribute(
-        'data-theme',
-        resolved
-      );
-
-      document.documentElement.setAttribute(
-        'data-alphex-theme',
-        theme
-      );
-
-      try {
-
-        localStorage.setItem(
-          'alphex-theme',
-          theme
-        );
-
-        /*
-         * Keep this alias for compatibility
-         * with existing site code if it uses
-         * "theme" instead.
-         */
-        localStorage.setItem(
-          'theme',
-          theme
-        );
-
-      } catch (error) {
-        console.warn(
-          'Could not save local theme preference.',
-          error
-        );
-      }
-
-      /*
-       * Tell any other Alphex scripts on this
-       * page that the global theme changed.
-       */
-      window.dispatchEvent(
-        new CustomEvent(
-          'alphex-theme-change',
-          {
-            detail: {
-              theme: theme,
-              resolvedTheme: resolved
-            }
-          }
-        )
-      );
-
-      /*
-       * Also update the browser color scheme
-       * for native controls where supported.
-       */
-      document.documentElement.style.colorScheme =
-        resolved;
-    }
-
-    function renderThemeButtons(theme) {
-
-      document
-        .querySelectorAll(
-          '[data-theme-choice]'
-        )
-        .forEach(button => {
-
-          const active =
-            button.dataset.themeChoice === theme;
-
-          button.classList.toggle(
-            'active',
-            active
-          );
-
-          button.setAttribute(
-            'aria-pressed',
-            active
-              ? 'true'
-              : 'false'
-          );
-        });
-    }
-
-    async function setGlobalTheme(theme) {
-
-      if (
-        theme !== 'light' &&
-        theme !== 'dark' &&
-        theme !== 'system'
-      ) {
-        return;
-      }
-
-      /*
-       * Change the entire website immediately.
-       */
-      writeGlobalTheme(theme);
-
-      /*
-       * Update Account UI immediately.
-       */
-      renderThemeButtons(theme);
-
-      /*
-       * Keep local preference in memory.
-       */
-      preferenceData.theme = theme;
-
-      /*
-       * Persist the same global preference
-       * in Supabase.
-       */
-      if (!currentUser) {
-        return;
-      }
-
-      const { error } =
-        await supabaseClient
-          .from('preferences')
-          .upsert(
-            {
-              user_id:
-                currentUser.id,
-
-              theme:
-                theme,
-
-              email_notifications:
-                preferenceData.email_notifications,
-
-              product_updates:
-                preferenceData.product_updates
-            },
-            {
-              onConflict:
-                'user_id'
-            }
-          );
-
-      if (error) {
-
-        console.error(
-          'Theme preference save error:',
-          error
-        );
-
-        showMessage(
-          'Theme changed, but could not be saved to your account.',
-          'error'
-        );
-      }
-    }
-
-    /*
-     * Initialize immediately from local state.
-     */
-    writeGlobalTheme(
-      getSavedTheme()
-    );
-
-    /*
-     * Appearance controls.
-     */
-    document
-      .querySelectorAll(
-        '[data-theme-choice]'
-      )
-      .forEach(button => {
-
-        button.addEventListener(
-          'click',
-          () => {
-
-            setGlobalTheme(
-              button.dataset.themeChoice
-            );
-
-          }
-        );
-
-      });
-
-    /*
-     * If System is selected and the operating
-     * system changes, update the whole site.
-     */
-    const systemThemeMedia =
-      window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      );
-
-    function handleSystemThemeChange() {
-
-      if (
-        preferenceData.theme ===
-        'system'
-      ) {
-
-        writeGlobalTheme(
-          'system'
-        );
-
-        renderThemeButtons(
-          'system'
-        );
-      }
-    }
-
-    if (
-      systemThemeMedia.addEventListener
-    ) {
-
-      systemThemeMedia.addEventListener(
-        'change',
-        handleSystemThemeChange
-      );
-
-    } else if (
-      systemThemeMedia.addListener
-    ) {
-
-      systemThemeMedia.addListener(
-        handleSystemThemeChange
-      );
-    }
-
-    /*
-     * If another Alphex component changes
-     * the theme, keep Account synchronized.
-     */
-    window.addEventListener(
-      'alphex-theme-change',
-      event => {
-
-        const theme =
-          event.detail?.theme;
-
-        if (
-          theme === 'light' ||
-          theme === 'dark' ||
-          theme === 'system'
-        ) {
-
-          preferenceData.theme =
-            theme;
-
-          renderThemeButtons(
-            theme
-          );
-        }
-      }
-    );
 
     /* =========================================================
        PROFILE
@@ -2383,10 +1893,6 @@
         'Profile changes saved.'
       );
 
-      /*
-       * Keep Supabase Auth metadata aligned
-       * with the profile name.
-       */
       try {
 
         await supabaseClient.auth.updateUser({
@@ -2407,10 +1913,6 @@
         );
       }
 
-      /*
-       * Notify shared navigation that the
-       * account identity may have changed.
-       */
       window.dispatchEvent(
         new CustomEvent(
           'alphex-profile-change',
@@ -2471,17 +1973,6 @@
 
     function renderPreferences() {
 
-      /*
-       * Apply GLOBAL theme.
-       */
-      writeGlobalTheme(
-        preferenceData.theme
-      );
-
-      renderThemeButtons(
-        preferenceData.theme
-      );
-
       emailNotificationsToggle.checked =
         Boolean(
           preferenceData.email_notifications
@@ -2502,7 +1993,7 @@
         await supabaseClient
           .from('preferences')
           .select(
-            'user_id,theme,email_notifications,product_updates'
+            'user_id,email_notifications,product_updates'
           )
           .eq(
             'user_id',
@@ -2517,9 +2008,6 @@
       if (data) {
 
         preferenceData = {
-          theme:
-            data.theme || 'system',
-
           email_notifications:
             Boolean(
               data.email_notifications
@@ -2536,9 +2024,6 @@
         const defaults = {
           user_id:
             currentUser.id,
-
-          theme:
-            getSavedTheme(),
 
           email_notifications:
             true,
@@ -2561,9 +2046,6 @@
         }
 
         preferenceData = {
-          theme:
-            defaults.theme,
-
           email_notifications:
             true,
 
@@ -2590,9 +2072,6 @@
             {
               user_id:
                 currentUser.id,
-
-              theme:
-                preferenceData.theme,
 
               email_notifications:
                 preferenceData.email_notifications,
@@ -2944,10 +2423,6 @@
 
         currentUser = user;
 
-        /*
-         * Load account-specific information.
-         * The global theme is restored from Supabase.
-         */
         await loadProfile();
 
         await loadPreferences();
