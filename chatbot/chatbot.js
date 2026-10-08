@@ -9,15 +9,17 @@
    - Conversation UI
    - Supabase authenticated-user awareness
    - Secure backend communication
-   - Groq responses through /api/chatbot
+   - Backend AI responses through /api/chatbot
 
    IMPORTANT:
    Never put the Groq API key in this file.
+   Never put the Gemini API key in this file.
    Never put the Supabase service-role key in this file.
    ========================================================= */
 
 (() => {
   'use strict';
+
 
   /* =========================================================
      CONFIGURATION
@@ -27,6 +29,14 @@
     API_ENDPOINT: '/api/chatbot',
 
     MAX_INPUT_LENGTH: 4000,
+
+    /*
+     Frontend request timeout.
+
+     This prevents the chatbot UI from appearing frozen
+     indefinitely if the backend/provider does not respond.
+    */
+    REQUEST_TIMEOUT: 8500,
 
     STORAGE_KEYS: {
       conversationId: 'alphex_chat_conversation_id'
@@ -40,16 +50,27 @@
      DOM REFERENCES
      ========================================================= */
 
-  const chatbot = document.getElementById('alphex-chatbot');
+  const chatbot =
+    document.getElementById('alphex-chatbot');
 
   if (!chatbot) {
-    console.warn('[Alphex Chatbot] Root element not found.');
+    console.warn(
+      '[Alphex Chatbot] Root element not found.'
+    );
+
     return;
   }
 
-  const toggleButton = document.getElementById('alphex-chat-toggle');
-  const chatWindow = document.getElementById('alphex-chat-window');
-  const closeButton = document.getElementById('chat-close');
+
+  const toggleButton =
+    document.getElementById('alphex-chat-toggle');
+
+  const chatWindow =
+    document.getElementById('alphex-chat-window');
+
+  const closeButton =
+    document.getElementById('chat-close');
+
   const newConversationButton =
     document.getElementById('chat-new-conversation');
 
@@ -80,9 +101,6 @@
   const continueConversationButton =
     document.getElementById('chat-continue-conversation');
 
-  const suggestionButtons =
-    document.querySelectorAll('[data-chat-prompt]');
-
 
   /* =========================================================
      STATE
@@ -91,10 +109,14 @@
   const state = {
     isOpen: false,
     isSending: false,
+
     currentUser: null,
     currentProfile: null,
+
     conversationId: null,
+
     messages: [],
+
     hasExistingConversation: false
   };
 
@@ -102,11 +124,9 @@
   /* =========================================================
      SUPABASE
      ---------------------------------------------------------
-     IMPORTANT:
-     This is the PUBLIC publishable key.
-     It is safe for browser-side Supabase client usage.
+     This is the browser-safe publishable key.
 
-     NEVER put the Supabase service-role/secret key here.
+     NEVER place the Supabase service-role/secret key here.
      ========================================================= */
 
   const SUPABASE_URL =
@@ -119,10 +139,12 @@
 
 
   function initializeSupabase() {
+
     if (
       typeof window.supabase === 'undefined' ||
       typeof window.supabase.createClient !== 'function'
     ) {
+
       console.warn(
         '[Alphex Chatbot] Supabase client is not loaded.'
       );
@@ -130,12 +152,16 @@
       return null;
     }
 
+
     try {
+
       return window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
       );
+
     } catch (error) {
+
       console.error(
         '[Alphex Chatbot] Supabase initialization failed:',
         error
@@ -146,7 +172,8 @@
   }
 
 
-  supabaseClient = initializeSupabase();
+  supabaseClient =
+    initializeSupabase();
 
 
   /* =========================================================
@@ -154,6 +181,7 @@
      ========================================================= */
 
   async function initialize() {
+
     bindEvents();
 
     loadStoredConversation();
@@ -166,7 +194,9 @@
 
     renderReturningUserState();
 
-    console.log('[Alphex Chatbot] Initialized.');
+    console.log(
+      '[Alphex Chatbot] Initialized.'
+    );
   }
 
 
@@ -176,27 +206,43 @@
 
   function bindEvents() {
 
-    /* Open chatbot */
+
+    /* -------------------------------------------------------
+       OPEN CHATBOT
+       ------------------------------------------------------- */
 
     if (toggleButton) {
-      toggleButton.addEventListener('click', () => {
-        openChat();
-      });
+
+      toggleButton.addEventListener(
+        'click',
+        () => {
+          openChat();
+        }
+      );
     }
 
 
-    /* Close chatbot */
+    /* -------------------------------------------------------
+       CLOSE CHATBOT
+       ------------------------------------------------------- */
 
     if (closeButton) {
-      closeButton.addEventListener('click', () => {
-        closeChat();
-      });
+
+      closeButton.addEventListener(
+        'click',
+        () => {
+          closeChat();
+        }
+      );
     }
 
 
-    /* New conversation */
+    /* -------------------------------------------------------
+       NEW CONVERSATION
+       ------------------------------------------------------- */
 
     if (newConversationButton) {
+
       newConversationButton.addEventListener(
         'click',
         () => {
@@ -206,24 +252,36 @@
     }
 
 
-    /* Continue previous conversation */
+    /* -------------------------------------------------------
+       CONTINUE PREVIOUS CONVERSATION
+       ------------------------------------------------------- */
 
     if (continueConversationButton) {
+
       continueConversationButton.addEventListener(
         'click',
         async () => {
+
+          if (state.isSending) {
+            return;
+          }
+
           await continuePreviousConversation();
         }
       );
     }
 
 
-    /* Chat form */
+    /* -------------------------------------------------------
+       CHAT FORM
+       ------------------------------------------------------- */
 
     if (chatForm) {
+
       chatForm.addEventListener(
         'submit',
         async (event) => {
+
           event.preventDefault();
 
           await handleSendMessage();
@@ -232,15 +290,21 @@
     }
 
 
-    /* Textarea */
+    /* -------------------------------------------------------
+       TEXTAREA
+       ------------------------------------------------------- */
 
     if (chatInput) {
+
 
       chatInput.addEventListener(
         'input',
         () => {
+
           enforceInputLimit();
+
           autoResizeInput();
+
           updateSendButton();
         }
       );
@@ -260,6 +324,7 @@
             !event.shiftKey &&
             !event.isComposing
           ) {
+
             event.preventDefault();
 
             await handleSendMessage();
@@ -269,36 +334,89 @@
     }
 
 
-    /* Suggested prompts */
+    /* =======================================================
+       SUGGESTED PROMPTS
+       -------------------------------------------------------
+       IMPORTANT:
 
-    suggestionButtons.forEach((button) => {
+       The HTML uses:
 
-      button.addEventListener(
-        'click',
-        async () => {
+       data-prompt="..."
 
-          const prompt =
-            button.getAttribute('data-chat-prompt');
+       NOT:
 
-          if (!prompt) {
-            return;
-          }
+       data-chat-prompt="..."
 
-          if (chatInput) {
-            chatInput.value = prompt;
+       Event delegation is used so the buttons continue to
+       work even if the welcome UI is injected/re-rendered.
+       ======================================================= */
 
-            autoResizeInput();
-            updateSendButton();
+    document.addEventListener(
+      'click',
+      async (event) => {
 
-            await handleSendMessage();
-          }
+        const button =
+          event.target.closest(
+            '.chat-suggestion'
+          );
+
+
+        if (!button) {
+          return;
         }
-      );
-
-    });
 
 
-    /* Escape closes chatbot */
+        const prompt =
+          button.getAttribute(
+            'data-prompt'
+          );
+
+
+        if (!prompt) {
+
+          console.warn(
+            '[Alphex Chatbot] Suggestion button has no data-prompt.'
+          );
+
+          return;
+        }
+
+
+        event.preventDefault();
+
+
+        if (state.isSending) {
+          return;
+        }
+
+
+        if (!chatInput) {
+          return;
+        }
+
+
+        /*
+         Put the selected question into the input
+         and send it immediately.
+        */
+
+        chatInput.value =
+          prompt;
+
+
+        autoResizeInput();
+
+        updateSendButton();
+
+
+        await handleSendMessage();
+      }
+    );
+
+
+    /* -------------------------------------------------------
+       ESCAPE CLOSES CHATBOT
+       ------------------------------------------------------- */
 
     document.addEventListener(
       'keydown',
@@ -308,19 +426,22 @@
           event.key === 'Escape' &&
           state.isOpen
         ) {
+
           closeChat();
         }
-
       }
     );
 
 
-    /* Supabase authentication changes */
+    /* -------------------------------------------------------
+       SUPABASE AUTHENTICATION CHANGES
+       ------------------------------------------------------- */
 
     if (
       supabaseClient &&
       supabaseClient.auth &&
-      typeof supabaseClient.auth.onAuthStateChange === 'function'
+      typeof supabaseClient.auth.onAuthStateChange ===
+        'function'
     ) {
 
       supabaseClient.auth.onAuthStateChange(
@@ -329,11 +450,17 @@
           state.currentUser =
             session?.user || null;
 
+
           if (state.currentUser) {
+
             await loadUserProfile();
+
           } else {
-            state.currentProfile = null;
+
+            state.currentProfile =
+              null;
           }
+
 
           renderReturningUserState();
         }
@@ -352,32 +479,41 @@
       return;
     }
 
-    state.isOpen = true;
+
+    state.isOpen =
+      true;
+
 
     chatbot.setAttribute(
       'data-chatbot-state',
       'open'
     );
 
+
     chatWindow.setAttribute(
       'aria-hidden',
       'false'
     );
 
+
     if (toggleButton) {
+
       toggleButton.setAttribute(
         'aria-expanded',
         'true'
       );
     }
 
+
     document.body.classList.add(
       'alphex-chatbot-open'
     );
 
+
     setTimeout(() => {
 
       if (chatInput) {
+
         chatInput.focus();
       }
 
@@ -391,24 +527,31 @@
       return;
     }
 
-    state.isOpen = false;
+
+    state.isOpen =
+      false;
+
 
     chatbot.setAttribute(
       'data-chatbot-state',
       'closed'
     );
 
+
     chatWindow.setAttribute(
       'aria-hidden',
       'true'
     );
 
+
     if (toggleButton) {
+
       toggleButton.setAttribute(
         'aria-expanded',
         'false'
       );
     }
+
 
     document.body.classList.remove(
       'alphex-chatbot-open'
@@ -426,10 +569,12 @@
       return;
     }
 
+
     if (
       chatInput.value.length >
       CONFIG.MAX_INPUT_LENGTH
     ) {
+
       chatInput.value =
         chatInput.value.substring(
           0,
@@ -445,9 +590,14 @@
       return;
     }
 
-    chatInput.style.height = 'auto';
 
-    const maxHeight = 180;
+    chatInput.style.height =
+      'auto';
+
+
+    const maxHeight =
+      180;
+
 
     chatInput.style.height =
       Math.min(
@@ -459,12 +609,18 @@
 
   function updateSendButton() {
 
-    if (!chatSend || !chatInput) {
+    if (
+      !chatSend ||
+      !chatInput
+    ) {
+
       return;
     }
 
+
     const hasText =
       chatInput.value.trim().length > 0;
+
 
     chatSend.disabled =
       !hasText ||
@@ -478,41 +634,55 @@
 
   async function handleSendMessage() {
 
-    if (!chatInput || state.isSending) {
+    if (
+      !chatInput ||
+      state.isSending
+    ) {
+
       return;
     }
 
+
     const message =
       chatInput.value.trim();
+
 
     if (!message) {
       return;
     }
 
+
     if (
       message.length >
       CONFIG.MAX_INPUT_LENGTH
     ) {
+
       return;
     }
 
-    state.isSending = true;
+
+    state.isSending =
+      true;
+
 
     updateSendButton();
 
+
     /*
-     Clear input immediately so the interface
-     feels responsive.
+     Clear input immediately.
     */
 
-    chatInput.value = '';
+    chatInput.value =
+      '';
+
 
     autoResizeInput();
+
     updateSendButton();
 
 
     /*
-     Hide welcome UI after first message.
+     Hide welcome UI.
     */
 
     hideWelcomeState();
@@ -538,14 +708,18 @@
     try {
 
       const response =
-        await sendToBackend(message);
+        await sendToBackend(
+          message
+        );
+
 
       hideThinking();
 
 
       if (
         response &&
-        typeof response.message === 'string'
+        typeof response.message ===
+          'string'
       ) {
 
         addMessage(
@@ -554,15 +728,20 @@
         );
 
 
-        if (response.conversation_id) {
+        if (
+          response.conversation_id
+        ) {
 
           state.conversationId =
             response.conversation_id;
 
+
           state.hasExistingConversation =
             true;
 
+
           saveStoredConversation();
+
 
           renderReturningUserState();
         }
@@ -582,7 +761,9 @@
         error
       );
 
+
       hideThinking();
+
 
       addMessage(
         'assistant',
@@ -591,11 +772,15 @@
 
     } finally {
 
-      state.isSending = false;
+      state.isSending =
+        false;
+
 
       updateSendButton();
 
+
       if (chatInput) {
+
         chatInput.focus();
       }
     }
@@ -606,34 +791,33 @@
      SECURE BACKEND REQUEST
      ========================================================= */
 
-  async function sendToBackend(message) {
+  async function sendToBackend(
+    message
+  ) {
 
     /*
-     IMPORTANT:
+     Get the current Supabase session.
 
-     No Groq API key is used here.
+     The access token is used only for authentication.
 
-     No Supabase service-role/secret key is used here.
-
-     The browser sends the user's Supabase access token
-     to the secure backend.
-
-     The backend will:
-        - verify the access token
-        - identify the authenticated user
-        - load profile
-        - load memories
-        - load conversation
-        - load Alphex knowledge
-        - call Groq
-        - save the response
-        - return the answer
+     The backend is responsible for identifying
+     the user and authorizing access.
     */
-
 
     const session =
       await getCurrentSession();
 
+
+    /*
+     IMPORTANT:
+
+     Do NOT send user IDs or emails as trusted
+     authorization information.
+
+     The backend gets the authenticated user from:
+
+     Authorization: Bearer <access_token>
+    */
 
     const payload = {
 
@@ -643,90 +827,131 @@
         state.conversationId || null,
 
       page: {
-        url: window.location.href,
-        path: window.location.pathname,
-        title: document.title
-      },
 
-      /*
-       This is informational only.
-       The backend MUST identify the user
-       from the Authorization token and must
-       NOT trust this user ID for authorization.
-      */
+        url:
+          window.location.href,
 
-      user: session?.user
-        ? {
-            id: session.user.id,
-            email: session.user.email || null
-          }
-        : null
+        path:
+          window.location.pathname,
+
+        title:
+          document.title
+      }
     };
 
-
-    /*
-     Build secure request headers.
-
-     The Supabase access token is temporary
-     authentication information.
-
-     It is NOT the service-role key.
-    */
 
     const headers = {
-      'Content-Type': 'application/json'
+
+      'Content-Type':
+        'application/json'
     };
 
 
-    if (session?.access_token) {
+    if (
+      session &&
+      session.access_token
+    ) {
+
       headers.Authorization =
         `Bearer ${session.access_token}`;
     }
 
 
-    const response =
-      await fetch(
-        CONFIG.API_ENDPOINT,
-        {
-          method: 'POST',
+    /*
+     AbortController prevents a request from hanging
+     forever in the browser.
+    */
 
-          headers,
+    const controller =
+      new AbortController();
 
-          body:
-            JSON.stringify(payload)
-        }
+
+    const timeoutId =
+      setTimeout(
+        () => {
+          controller.abort();
+        },
+        CONFIG.REQUEST_TIMEOUT
       );
 
 
-    if (!response.ok) {
+    try {
 
-      let errorMessage =
-        'Chat request failed.';
+      const response =
+        await fetch(
+          CONFIG.API_ENDPOINT,
+          {
+            method: 'POST',
 
-      try {
+            headers,
 
-        const errorData =
-          await response.json();
+            body:
+              JSON.stringify(payload),
 
-        if (
-          errorData &&
-          errorData.error
-        ) {
-          errorMessage =
-            errorData.error;
+            signal:
+              controller.signal
+          }
+        );
+
+
+      if (!response.ok) {
+
+        let errorMessage =
+          'Chat request failed.';
+
+
+        try {
+
+          const errorData =
+            await response.json();
+
+
+          if (
+            errorData &&
+            errorData.error
+          ) {
+
+            errorMessage =
+              errorData.error;
+          }
+
+        } catch {
+          /*
+           Ignore invalid error response.
+          */
         }
 
-      } catch {
-        /* Ignore invalid error response */
+
+        throw new Error(
+          errorMessage
+        );
       }
 
-      throw new Error(
-        errorMessage
+
+      return await response.json();
+
+    } catch (error) {
+
+      if (
+        error &&
+        error.name ===
+          'AbortError'
+      ) {
+
+        throw new Error(
+          'The request took too long.'
+        );
+      }
+
+
+      throw error;
+
+    } finally {
+
+      clearTimeout(
+        timeoutId
       );
     }
-
-
-    return await response.json();
   }
 
 
@@ -745,23 +970,33 @@
 
 
     const messageElement =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
+
 
     messageElement.className =
       `chat-message chat-message-${role}`;
 
 
     const bubble =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
+
 
     bubble.className =
       'chat-message-bubble';
 
 
-    if (role === 'assistant') {
+    if (
+      role === 'assistant'
+    ) {
 
       bubble.innerHTML =
-        renderMarkdown(content);
+        renderMarkdown(
+          content
+        );
 
     } else {
 
@@ -773,6 +1008,7 @@
     messageElement.appendChild(
       bubble
     );
+
 
     messageList.appendChild(
       messageElement
@@ -796,11 +1032,11 @@
      MARKDOWN
      ---------------------------------------------------------
      Lightweight renderer.
-     We intentionally avoid loading a third-party
-     markdown library at this stage.
      ========================================================= */
 
-  function renderMarkdown(text) {
+  function renderMarkdown(
+    text
+  ) {
 
     if (!text) {
       return '';
@@ -808,7 +1044,9 @@
 
 
     let safe =
-      escapeHTML(text);
+      escapeHTML(
+        text
+      );
 
 
     /*
@@ -880,8 +1118,8 @@
 
 
     /*
-     Convert consecutive list items
-     */
+     Convert consecutive list items.
+    */
 
     safe =
       safe.replace(
@@ -900,11 +1138,13 @@
         '<h4>$1</h4>'
       );
 
+
     safe =
       safe.replace(
         /^##\s+(.+)$/gm,
         '<h3>$1</h3>'
       );
+
 
     safe =
       safe.replace(
@@ -923,6 +1163,7 @@
         '</p><p>'
       );
 
+
     safe =
       safe.replace(
         /\n/g,
@@ -934,13 +1175,19 @@
   }
 
 
-  function escapeHTML(value) {
+  function escapeHTML(
+    value
+  ) {
 
     const div =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
+
 
     div.textContent =
       value;
+
 
     return div.innerHTML;
   }
@@ -956,8 +1203,10 @@
       return;
     }
 
+
     thinkingIndicator.hidden =
       false;
+
 
     scrollMessagesToBottom();
   }
@@ -968,6 +1217,7 @@
     if (!thinkingIndicator) {
       return;
     }
+
 
     thinkingIndicator.hidden =
       true;
@@ -980,11 +1230,11 @@
       return;
     }
 
+
     requestAnimationFrame(() => {
 
       messageList.scrollTop =
         messageList.scrollHeight;
-
     });
   }
 
@@ -999,6 +1249,7 @@
       return;
     }
 
+
     welcomeState.hidden =
       true;
   }
@@ -1009,6 +1260,7 @@
     if (!welcomeState) {
       return;
     }
+
 
     welcomeState.hidden =
       false;
@@ -1025,6 +1277,7 @@
       !returningUser ||
       !userNameElement
     ) {
+
       return;
     }
 
@@ -1046,11 +1299,6 @@
       name;
 
 
-    /*
-     Only show this state if we have
-     evidence that a previous conversation exists.
-    */
-
     returningUser.hidden =
       !state.hasExistingConversation;
   }
@@ -1062,6 +1310,7 @@
       state.currentProfile &&
       state.currentProfile.full_name
     ) {
+
       return state.currentProfile.full_name;
     }
 
@@ -1075,12 +1324,18 @@
         state.currentUser.user_metadata;
 
 
-      if (metadata.full_name) {
+      if (
+        metadata.full_name
+      ) {
+
         return metadata.full_name;
       }
 
 
-      if (metadata.name) {
+      if (
+        metadata.name
+      ) {
+
         return metadata.name;
       }
     }
@@ -1093,6 +1348,7 @@
 
       const email =
         state.currentUser.email;
+
 
       return email.split('@')[0];
     }
@@ -1124,6 +1380,7 @@
 
 
       if (state.currentUser) {
+
         await loadUserProfile();
       }
 
@@ -1143,6 +1400,7 @@
       !supabaseClient ||
       !supabaseClient.auth
     ) {
+
       return null;
     }
 
@@ -1169,6 +1427,7 @@
       !supabaseClient ||
       !state.currentUser
     ) {
+
       return;
     }
 
@@ -1206,6 +1465,7 @@
         error
       );
 
+
       state.currentProfile =
         null;
     }
@@ -1230,6 +1490,7 @@
 
         state.conversationId =
           storedId;
+
 
         state.hasExistingConversation =
           true;
@@ -1269,14 +1530,18 @@
   }
 
 
+  /* =========================================================
+     CONTINUE PREVIOUS CONVERSATION
+     ========================================================= */
+
   async function continuePreviousConversation() {
-
-    hideWelcomeState();
-
 
     if (!state.conversationId) {
       return;
     }
+
+
+    hideWelcomeState();
 
 
     try {
@@ -1291,7 +1556,11 @@
       };
 
 
-      if (session?.access_token) {
+      if (
+        session &&
+        session.access_token
+      ) {
+
         headers.Authorization =
           `Bearer ${session.access_token}`;
       }
@@ -1311,6 +1580,7 @@
 
 
       if (!response.ok) {
+
         throw new Error(
           'Unable to load previous conversation.'
         );
@@ -1322,12 +1592,16 @@
 
 
       if (
-        Array.isArray(data.messages)
+        Array.isArray(
+          data.messages
+        )
       ) {
 
         clearRenderedMessages();
 
-        state.messages = [];
+
+        state.messages =
+          [];
 
 
         data.messages.forEach(
@@ -1343,7 +1617,6 @@
                 message.content
               );
             }
-
           }
         );
       }
@@ -1354,6 +1627,7 @@
         '[Alphex Chatbot] Previous conversation could not be loaded:',
         error
       );
+
 
       /*
        Do not show a scary error to the visitor.
@@ -1372,8 +1646,10 @@
     state.conversationId =
       null;
 
+
     state.messages =
       [];
+
 
     state.hasExistingConversation =
       false;
@@ -1392,20 +1668,27 @@
 
     clearRenderedMessages();
 
+
     hideThinking();
 
+
     showWelcomeState();
+
 
     renderReturningUserState();
 
 
     if (chatInput) {
 
-      chatInput.value = '';
+      chatInput.value =
+        '';
+
 
       autoResizeInput();
 
+
       updateSendButton();
+
 
       chatInput.focus();
     }
@@ -1418,7 +1701,9 @@
       return;
     }
 
-    messageList.innerHTML = '';
+
+    messageList.innerHTML =
+      '';
   }
 
 
@@ -1437,24 +1722,27 @@
 
   /* =========================================================
      PUBLIC API
-     ---------------------------------------------------------
-     Useful later if other Alphex pages need to control
-     the chatbot.
      ========================================================= */
 
   window.AlphexChatbot = {
 
     open() {
+
       openChat();
     },
 
+
     close() {
+
       closeChat();
     },
 
+
     newConversation() {
+
       startNewConversation();
     },
+
 
     send(message) {
 
@@ -1462,19 +1750,32 @@
         return;
       }
 
+
       chatInput.value =
-        String(message || '');
+        String(
+          message || ''
+        );
+
+
+      enforceInputLimit();
+
+      autoResizeInput();
 
       updateSendButton();
+
 
       return handleSendMessage();
     },
 
+
     getUser() {
+
       return state.currentUser;
     },
 
+
     getConversationId() {
+
       return state.conversationId;
     }
   };
