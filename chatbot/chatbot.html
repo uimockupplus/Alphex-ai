@@ -15,10 +15,6 @@
 
   <title>Alphex AI Assistant</title>
 
-  <!--
-    Alphex AI uses the same fonts as the main website.
-    The chatbot CSS will handle the visual styling.
-  -->
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -26,7 +22,7 @@
 
   <link
     rel="preconnect"
-    href="https://fonts.gstatic.com"
+    href="https://fonts.googleapis.com"
     crossorigin
   />
 
@@ -41,7 +37,7 @@
 <body>
 
   <!-- =====================================================
-       ALPHEX AI CHATBOT
+       ALPHEX AI MINIBOT
        ===================================================== -->
 
   <div
@@ -58,20 +54,24 @@
       id="alphex-chat-toggle"
       class="chat-toggle"
       type="button"
-      aria-label="Open Alphex AI assistant"
+      aria-label="Open Alphex AI Minibot"
       aria-expanded="false"
       aria-controls="alphex-chat-window"
     >
 
       <span
-        class="chat-toggle-icon"
+        class="chat-toggle-logo"
         aria-hidden="true"
       >
-        ✦
+        <img
+          src="/assets/alphex-wolf.svg"
+          alt=""
+          class="alphex-wolf-logo"
+        />
       </span>
 
       <span class="chat-toggle-label">
-        Alphex AI
+        Alphex Minibot
       </span>
 
     </button>
@@ -84,7 +84,7 @@
     <section
       id="alphex-chat-window"
       class="chat-window"
-      aria-label="Alphex AI Assistant"
+      aria-label="Alphex AI Minibot"
       aria-hidden="true"
     >
 
@@ -100,13 +100,17 @@
             class="chat-brand-mark"
             aria-hidden="true"
           >
-            ✦
+            <img
+              src="/assets/alphex-wolf.svg"
+              alt=""
+              class="alphex-wolf-logo"
+            />
           </div>
 
           <div class="chat-brand-copy">
 
             <div class="chat-brand-name">
-              Alphex AI
+              Alphex Minibot
             </div>
 
             <div class="chat-brand-status">
@@ -134,7 +138,7 @@
             id="chat-close"
             class="chat-header-button"
             type="button"
-            aria-label="Close Alphex AI assistant"
+            aria-label="Close Alphex AI Minibot"
             title="Close"
           >
             ×
@@ -169,7 +173,11 @@
             class="chat-welcome-mark"
             aria-hidden="true"
           >
-            ✦
+            <img
+              src="/assets/alphex-wolf.svg"
+              alt=""
+              class="alphex-wolf-logo"
+            />
           </div>
 
           <h1 class="chat-welcome-title">
@@ -200,7 +208,10 @@
                 What does Alphex AI do?
               </span>
 
-              <span class="chat-suggestion-arrow">
+              <span
+                class="chat-suggestion-arrow"
+                aria-hidden="true"
+              >
                 →
               </span>
             </button>
@@ -215,7 +226,10 @@
                 Explore our AI products
               </span>
 
-              <span class="chat-suggestion-arrow">
+              <span
+                class="chat-suggestion-arrow"
+                aria-hidden="true"
+              >
                 →
               </span>
             </button>
@@ -230,7 +244,10 @@
                 How can you help my business?
               </span>
 
-              <span class="chat-suggestion-arrow">
+              <span
+                class="chat-suggestion-arrow"
+                aria-hidden="true"
+              >
                 →
               </span>
             </button>
@@ -245,7 +262,10 @@
                 Discuss a project
               </span>
 
-              <span class="chat-suggestion-arrow">
+              <span
+                class="chat-suggestion-arrow"
+                aria-hidden="true"
+              >
                 →
               </span>
             </button>
@@ -280,7 +300,10 @@
             type="button"
           >
             Continue previous conversation
-            <span aria-hidden="true">→</span>
+
+            <span aria-hidden="true">
+              →
+            </span>
           </button>
 
         </div>
@@ -294,7 +317,19 @@
           id="chat-message-list"
           class="chat-message-list"
         >
-          <!-- Messages will be inserted by chatbot.js -->
+          <!--
+            Messages are inserted by chatbot.js.
+
+            Assistant messages should use:
+
+            .chat-message.assistant
+              .chat-message-avatar
+                .alphex-wolf-logo
+              .chat-message-content
+
+            This makes the Alphex wolf appear beside
+            every assistant response.
+          -->
         </div>
 
 
@@ -306,11 +341,18 @@
           id="chat-thinking"
           class="chat-thinking"
           hidden
-          aria-label="Alphex AI is thinking"
+          aria-label="Alphex Minibot is thinking"
         >
 
-          <div class="chat-thinking-mark">
-            ✦
+          <div
+            class="chat-thinking-mark"
+            aria-hidden="true"
+          >
+            <img
+              src="/assets/alphex-wolf.svg"
+              alt=""
+              class="alphex-wolf-logo"
+            />
           </div>
 
           <div class="chat-thinking-dots">
@@ -388,8 +430,11 @@
 
 
   <!--
-    chatbot.js will be loaded by the website integration.
-    Do not add API keys or Supabase credentials here.
+    chatbot.js is loaded by the website integration.
+
+    IMPORTANT:
+    No API keys, Groq credentials, Gemini credentials,
+    or Supabase secrets belong in this file.
   -->
 
 </body>
