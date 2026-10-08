@@ -104,16 +104,22 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 
 /* =========================================================
    FLOATING TOGGLE
+   Text LEFT — Wolf RIGHT
    ========================================================= */
 
 .chat-toggle{
   pointer-events:auto;
 
   display:flex;
+  flex-direction:row;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-end;
 
-  gap:9px;
+  gap:10px;
+
+  width:auto;
+  min-width:0;
+  height:58px;
 
   padding:0;
 
@@ -126,89 +132,26 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 
   cursor:pointer;
 
-  transition:
-    transform .22s ease;
-}
-
-
-/* =========================================================
-   ROUND WOLF BUTTON
-   ========================================================= */
-
-.chat-toggle-logo{
-  position:relative;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  flex:0 0 auto;
-
-  width:56px;
-  height:56px;
-
-  border:1px solid var(--chat-border-strong);
-
-  border-radius:50%;
-
-  background:var(--chat-surface);
-
-  box-shadow:
-    0 12px 32px rgba(20,20,30,.14);
-
-  overflow:hidden;
-
-  transition:
-    transform .22s ease,
-    box-shadow .22s ease,
-    border-color .22s ease,
-    background .22s ease;
-}
-
-
-/* =========================================================
-   WOLF LOGO
-   ========================================================= */
-
-.alphex-wolf-logo{
-  display:block;
-
-  width:100%;
-  height:100%;
-
-  max-width:100%;
-  max-height:100%;
-
-  object-fit:contain;
-
-  object-position:center;
-
-  user-select:none;
-
-  -webkit-user-drag:none;
-}
-
-
-/*
-   The floating wolf gets a little breathing room
-   so the logo does not touch the circular edge.
-*/
-
-.chat-toggle-logo .alphex-wolf-logo{
-  width:72%;
-  height:72%;
+  transition:transform .22s ease;
 }
 
 
 /* =========================================================
    TOGGLE LABEL
+   Animated appearance/disappearance
    ========================================================= */
 
 .chat-toggle-label{
   display:flex;
   align-items:center;
 
+  flex:0 0 auto;
+
+  width:140px;
+  max-width:140px;
   min-height:34px;
+
+  box-sizing:border-box;
 
   padding:
     0
@@ -225,15 +168,168 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 
   color:var(--chat-text);
 
-  font-size:11px;
+  font-family:"DM Mono",monospace;
+
+  font-size:10px;
   font-weight:500;
 
+  letter-spacing:.01em;
+
   white-space:nowrap;
+
+  overflow:hidden;
+
+  opacity:0;
+
+  transform:translateX(8px);
+
+  animation:
+    alphex-minibot-label
+    5.5s
+    ease-in-out
+    infinite;
 
   transition:
     color .18s ease,
     border-color .18s ease,
     background .18s ease;
+}
+
+
+/* =========================================================
+   LABEL ANIMATION
+   ========================================================= */
+
+@keyframes alphex-minibot-label{
+
+  0%{
+    width:0;
+    max-width:0;
+    padding-left:0;
+    padding-right:0;
+
+    opacity:0;
+
+    transform:translateX(8px);
+  }
+
+  12%{
+    width:140px;
+    max-width:140px;
+    padding-left:11px;
+    padding-right:11px;
+
+    opacity:1;
+
+    transform:translateX(0);
+  }
+
+  55%{
+    width:140px;
+    max-width:140px;
+    padding-left:11px;
+    padding-right:11px;
+
+    opacity:1;
+
+    transform:translateX(0);
+  }
+
+  68%{
+    width:0;
+    max-width:0;
+    padding-left:0;
+    padding-right:0;
+
+    opacity:0;
+
+    transform:translateX(8px);
+  }
+
+  100%{
+    width:0;
+    max-width:0;
+    padding-left:0;
+    padding-right:0;
+
+    opacity:0;
+
+    transform:translateX(8px);
+  }
+}
+
+
+/* =========================================================
+   ROUND WOLF BUTTON
+   ========================================================= */
+
+.chat-toggle-logo{
+  position:relative;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  flex:0 0 56px !important;
+
+  width:56px !important;
+  height:56px !important;
+
+  min-width:56px !important;
+  min-height:56px !important;
+
+  max-width:56px !important;
+  max-height:56px !important;
+
+  box-sizing:border-box;
+
+  padding:0 !important;
+
+  border:1px solid var(--chat-border-strong);
+
+  border-radius:50% !important;
+
+  background:var(--chat-surface);
+
+  box-shadow:
+    0 12px 32px rgba(20,20,30,.14);
+
+  overflow:hidden !important;
+
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease,
+    background .22s ease;
+}
+
+
+/* =========================================================
+   WOLF LOGO
+   ========================================================= */
+
+.alphex-wolf-logo{
+  display:block !important;
+
+  width:72% !important;
+  height:72% !important;
+
+  min-width:0 !important;
+  min-height:0 !important;
+
+  max-width:72% !important;
+  max-height:72% !important;
+
+  object-fit:contain !important;
+
+  object-position:center !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  user-select:none;
+
+  -webkit-user-drag:none;
 }
 
 
@@ -251,7 +347,7 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
   box-shadow:
     0 16px 38px rgba(20,20,30,.18);
 
-  transform:scale(1.03);
+  transform:scale(1.04);
 }
 
 .chat-toggle:hover .chat-toggle-label{
@@ -402,8 +498,8 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 }
 
 .chat-brand-mark .alphex-wolf-logo{
-  width:72%;
-  height:72%;
+  width:72% !important;
+  height:72% !important;
 }
 
 
@@ -566,8 +662,8 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 }
 
 .chat-welcome-mark .alphex-wolf-logo{
-  width:70%;
-  height:70%;
+  width:70% !important;
+  height:70% !important;
 }
 
 .chat-welcome-title{
@@ -839,12 +935,6 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
   gap:11px;
 }
 
-
-/*
-   Circular Alphex wolf avatar beside every
-   assistant response.
-*/
-
 .chat-message-assistant .chat-message-mark{
   flex:0 0 auto;
 
@@ -867,10 +957,9 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 }
 
 .chat-message-assistant .chat-message-mark .alphex-wolf-logo{
-  width:72%;
-  height:72%;
+  width:72% !important;
+  height:72% !important;
 }
-
 
 .chat-message-assistant .chat-message-content{
   max-width:min(86%,560px);
@@ -992,11 +1081,6 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
   padding-top:2px;
 }
 
-
-/*
-   Circular wolf loading avatar.
-*/
-
 .chat-thinking-mark{
   display:flex;
   align-items:center;
@@ -1017,10 +1101,9 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
 }
 
 .chat-thinking-mark .alphex-wolf-logo{
-  width:72%;
-  height:72%;
+  width:72% !important;
+  height:72% !important;
 }
-
 
 .chat-thinking-dots{
   display:flex;
@@ -1286,13 +1369,35 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
     bottom:16px;
   }
 
-  .chat-toggle-logo{
-    width:52px;
-    height:52px;
+  /*
+     Keep the animated label on mobile.
+     It is narrower so it does not cover the page.
+  */
+
+  .chat-toggle{
+    height:54px;
+
+    gap:8px;
   }
 
   .chat-toggle-label{
-    display:none;
+    width:120px;
+    max-width:120px;
+
+    font-size:9px;
+  }
+
+  .chat-toggle-logo{
+    flex-basis:52px !important;
+
+    width:52px !important;
+    height:52px !important;
+
+    min-width:52px !important;
+    min-height:52px !important;
+
+    max-width:52px !important;
+    max-height:52px !important;
   }
 
   .chat-window{
@@ -1366,9 +1471,28 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
     bottom:12px;
   }
 
+  .chat-toggle{
+    gap:7px;
+  }
+
+  .chat-toggle-label{
+    width:108px;
+    max-width:108px;
+
+    font-size:8.5px;
+  }
+
   .chat-toggle-logo{
-    width:50px;
-    height:50px;
+    flex-basis:50px !important;
+
+    width:50px !important;
+    height:50px !important;
+
+    min-width:50px !important;
+    min-height:50px !important;
+
+    max-width:50px !important;
+    max-height:50px !important;
   }
 
   .chat-window{
@@ -1438,6 +1562,20 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
     transition:none;
   }
 
+  .chat-toggle-label{
+    animation:none;
+
+    width:140px;
+    max-width:140px;
+
+    padding-left:11px;
+    padding-right:11px;
+
+    opacity:1;
+
+    transform:none;
+  }
+
   .chat-message{
     animation:none;
   }
@@ -1446,52 +1584,4 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
     animation:none;
   }
 
-}
-/* =========================================================
-   ALPHEX WOLF LOGO — SIZE SAFETY FIX
-   Prevent global image rules from stretching the wolf
-   ========================================================= */
-
-.alphex-chatbot .chat-toggle-logo {
-  width: 56px !important;
-  height: 56px !important;
-  min-width: 56px !important;
-  min-height: 56px !important;
-  max-width: 56px !important;
-  max-height: 56px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.alphex-chatbot .chat-toggle-logo img.alphex-wolf-logo {
-  width: 72% !important;
-  height: 72% !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  max-width: 72% !important;
-  max-height: 72% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Header wolf */
-.alphex-chatbot .chat-brand-mark img.alphex-wolf-logo,
-.alphex-chatbot .chat-message-mark img.alphex-wolf-logo,
-.alphex-chatbot .chat-thinking-mark img.alphex-wolf-logo {
-  width: 72% !important;
-  height: 72% !important;
-  max-width: 72% !important;
-  max-height: 72% !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  object-fit: contain !important;
-  display: block !important;
-  margin: 0 !important;
 }
