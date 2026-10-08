@@ -17,20 +17,59 @@
 
 
   /* =======================================================
+     SUPABASE CLIENT
+     ======================================================= */
+
+  let supabaseClient = null;
+
+  function getSupabaseClient() {
+
+    if (!window.supabase) {
+      console.error(
+        'Alphex AI: Supabase library was not loaded.'
+      );
+      return null;
+    }
+
+    /*
+     * Reuse an existing shared client if one exists.
+     * This prevents different pages/scripts from
+     * accidentally creating competing clients.
+     */
+
+    if (window.alphexSupabase) {
+      return window.alphexSupabase;
+    }
+
+    window.alphexSupabase =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+    return window.alphexSupabase;
+  }
+
+
+  /* =======================================================
      LOAD SHARED COMPONENT
      ======================================================= */
 
   async function loadComponent(selector, file) {
-    const container = document.querySelector(selector);
+
+    const container =
+      document.querySelector(selector);
 
     if (!container) {
       return false;
     }
 
     try {
-      const response = await fetch(file, {
-        cache: 'no-cache'
-      });
+
+      const response =
+        await fetch(file, {
+          cache: 'no-cache'
+        });
 
       if (!response.ok) {
         throw new Error(
@@ -38,11 +77,13 @@
         );
       }
 
-      container.innerHTML = await response.text();
+      container.innerHTML =
+        await response.text();
 
       return true;
 
     } catch (error) {
+
       console.error(
         `Alphex AI component loading error (${file}):`,
         error
@@ -69,7 +110,7 @@
 
 
   /* =======================================================
-     INITIALIZE EVERYTHING AFTER COMPONENTS EXIST
+     INITIALIZE EVERYTHING
      ======================================================= */
 
   function initializeSite() {
@@ -151,7 +192,6 @@
         } else {
           openMenu();
         }
-
       }
     );
 
@@ -206,7 +246,6 @@
         return null;
 
       }
-
     }
 
 
@@ -221,12 +260,9 @@
 
       } catch (error) {
 
-        /*
-         * Theme still works for this visit.
-         */
+        /* Theme still works for this visit. */
 
       }
-
     }
 
 
@@ -312,26 +348,17 @@
 
 
   /* =======================================================
-     SUPABASE AUTHENTICATION
+     AUTHENTICATION
      ======================================================= */
 
   function initializeAuthentication() {
 
-    if (!window.supabase) {
+    supabaseClient =
+      getSupabaseClient();
 
-      console.error(
-        'Alphex AI: Supabase library was not loaded.'
-      );
-
+    if (!supabaseClient) {
       return;
     }
-
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
 
 
     /* =====================================================
@@ -456,53 +483,41 @@
 
 
       if (loginNavButton) {
-
         loginNavButton.style.display =
           'inline-flex';
-
       }
 
 
       if (authProfile) {
-
         authProfile.style.display =
           'none';
-
       }
 
 
       if (mobileLoginLink) {
-
         mobileLoginLink.style.display =
           'flex';
-
       }
 
 
       if (mobileProfileLink) {
-
         mobileProfileLink.style.display =
           'none';
-
       }
 
 
       if (profileMenu) {
-
         profileMenu.classList.remove(
           'open'
         );
-
       }
 
 
       if (profileButton) {
-
         profileButton.setAttribute(
           'aria-expanded',
           'false'
         );
-
       }
     }
 
@@ -527,65 +542,51 @@
 
 
       if (loginNavButton) {
-
         loginNavButton.style.display =
           'none';
-
       }
 
 
       if (authProfile) {
-
         authProfile.style.display =
           'inline-flex';
-
       }
 
 
       if (profileInitial) {
-
         profileInitial.textContent =
           initial;
-
       }
 
 
       if (profileName) {
-
         profileName.textContent =
           name;
-
       }
 
 
       if (profileEmail) {
-
         profileEmail.textContent =
           user.email || 'Signed in';
-
       }
 
 
       if (mobileLoginLink) {
-
         mobileLoginLink.style.display =
           'none';
-
       }
 
 
       if (mobileProfileLink) {
-
         mobileProfileLink.style.display =
           'flex';
-
       }
     }
 
 
     /* =====================================================
        CURRENT SESSION
-       ===================================================== */
+     ===================================================== */
 
     async function updateAuthenticationUI() {
 
@@ -612,14 +613,11 @@
 
 
         const session =
-          data
-            ? data.session
-            : null;
+          data?.session || null;
 
 
         if (
-          session &&
-          session.user
+          session?.user
         ) {
 
           showLoggedInNavigation(
@@ -659,8 +657,7 @@
 
 
         if (
-          session &&
-          session.user
+          session?.user
         ) {
 
           showLoggedInNavigation(
@@ -672,7 +669,6 @@
           showLoggedOutNavigation();
 
         }
-
       }
     );
 
@@ -709,7 +705,6 @@
             'aria-expanded',
             String(!isOpen)
           );
-
         }
       );
     }
@@ -742,7 +737,6 @@
               'aria-expanded',
               'false'
             );
-
           }
         }
       }
@@ -761,7 +755,6 @@
 
           profileSignout.disabled =
             true;
-
 
           profileSignout.textContent =
             'Signing out...';
@@ -786,10 +779,8 @@
               profileSignout.disabled =
                 false;
 
-
               profileSignout.textContent =
                 'Sign out';
-
 
               return;
             }
@@ -800,7 +791,6 @@
               profileMenu.classList.remove(
                 'open'
               );
-
             }
 
 
@@ -822,12 +812,9 @@
             profileSignout.disabled =
               false;
 
-
             profileSignout.textContent =
               'Sign out';
-
           }
-
         }
       );
     }
@@ -866,7 +853,6 @@
               'aria-expanded',
               String(isOpen)
             );
-
           }
 
 
@@ -878,15 +864,14 @@
             window.alphexCloseMobileMenu();
 
           }
-
         }
       );
     }
 
 
     /* =====================================================
-       INITIAL AUTH CHECK
-       ===================================================== */
+       INITIAL SESSION CHECK
+     ===================================================== */
 
     updateAuthenticationUI();
   }
@@ -946,12 +931,9 @@
                 window.alphexCloseMobileMenu();
 
               }
-
             }
-
           }
         );
-
       });
   }
 
@@ -1000,7 +982,6 @@
             '--my',
             y.toFixed(3)
           );
-
         }
       );
 
@@ -1019,10 +1000,8 @@
             '--my',
             '0'
           );
-
         }
       );
-
     });
   }
 
