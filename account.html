@@ -6,35 +6,89 @@
 
   <meta
     name="description"
-    content="Manage your Alphex AI account, profile, preferences, and security."
+    content="Manage your Alphex AI account, profile, preferences, security, and workspace."
   />
 
   <title>Account — Alphex AI</title>
 
-  <!-- Fonts -->
+  <!-- Existing Alphex fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Global styles -->
+  <!-- Existing global styles -->
   <link rel="stylesheet" href="site.css" />
   <link rel="stylesheet" href="nav.css" />
 
   <style>
-    /*
-      Account-page-only layout.
-      Existing Alphex UI, fonts, colors and components remain unchanged.
-    */
+    /* =========================================================
+       ALPHEX AI — ACCOUNT PAGE
+       Page-specific styles only.
+       Does not modify site.css or nav.css.
+       ========================================================= */
+
+    :root {
+      --account-bg: #f7f7f5;
+      --account-surface: rgba(255,255,255,.72);
+      --account-surface-solid: #ffffff;
+      --account-border: rgba(15,18,25,.09);
+      --account-text: #101211;
+      --account-muted: #666b73;
+      --account-soft: #f0f0ed;
+      --account-input: #ffffff;
+      --account-shadow: 0 18px 50px rgba(16,18,17,.06);
+      --account-danger: #c53d4d;
+      --account-success: #2b8a68;
+    }
+
+    html[data-account-theme="dark"] {
+      --account-bg: #0e1019;
+      --account-surface: rgba(23,27,38,.92);
+      --account-surface-solid: #171b26;
+      --account-border: rgba(255,255,255,.10);
+      --account-text: #f3f4f7;
+      --account-muted: #a5aab5;
+      --account-soft: #202431;
+      --account-input: #141722;
+      --account-shadow: 0 18px 50px rgba(0,0,0,.28);
+    }
+
+    html[data-account-theme="light"] {
+      --account-bg: #f7f7f5;
+      --account-surface: rgba(255,255,255,.72);
+      --account-surface-solid: #ffffff;
+      --account-border: rgba(15,18,25,.09);
+      --account-text: #101211;
+      --account-muted: #666b73;
+      --account-soft: #f0f0ed;
+      --account-input: #ffffff;
+      --account-shadow: 0 18px 50px rgba(16,18,17,.06);
+    }
+
+    html[data-account-theme="dark"] body {
+      background: var(--account-bg) !important;
+      color: var(--account-text);
+    }
+
+    html[data-account-theme="light"] body {
+      background: var(--account-bg) !important;
+      color: var(--account-text);
+    }
+
+    /* ---------- Page ---------- */
 
     .account-page {
-      min-height: calc(100vh - 80px);
-      padding: 72px 24px 100px;
+      min-height: calc(100vh - 72px);
+      padding: 64px 24px 100px;
+      background: var(--account-bg);
+      color: var(--account-text);
+      transition:
+        background-color .25s ease,
+        color .25s ease;
     }
 
     .account-container {
@@ -43,277 +97,679 @@
     }
 
     .account-header {
-      margin-bottom: 48px;
+      margin-bottom: 42px;
     }
 
-    .account-header h1 {
-      margin: 10px 0 12px;
-      font-size: clamp(38px, 5vw, 58px);
-      line-height: 1;
-      letter-spacing: -0.045em;
-      font-weight: 300;
-    }
-
-    .account-header p {
-      max-width: 560px;
-      margin: 0;
-      color: var(--muted, #777);
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .account-sections {
-      display: grid;
-      gap: 18px;
-    }
-
-    .account-card {
-      border: 1px solid rgba(14, 16, 25, 0.12);
-      background: rgba(255, 255, 255, 0.55);
-      border-radius: 18px;
-      padding: 30px;
-    }
-
-    .account-card-label {
-      margin-bottom: 24px;
+    .account-eyebrow {
+      margin: 0 0 10px;
       font-family: "DM Mono", monospace;
       font-size: 11px;
-      letter-spacing: 0.08em;
+      line-height: 1.4;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: #777;
+      color: var(--account-muted);
     }
 
-    .profile-top {
+    .account-title {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.05;
+      font-weight: 300 !important;
+      letter-spacing: -.035em;
+      color: var(--account-text);
+    }
+
+    .account-description {
+      max-width: 620px;
+      margin: 14px 0 0;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--account-muted);
+    }
+
+    /* ---------- Sections ---------- */
+
+    .account-section {
+      margin-bottom: 18px;
+      padding: 28px;
+      border: 1px solid var(--account-border);
+      border-radius: 18px;
+      background: var(--account-surface);
+      box-shadow: var(--account-shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition:
+        background-color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .account-section-header {
       display: flex;
-      align-items: center;
-      gap: 18px;
-      padding-bottom: 28px;
-      margin-bottom: 28px;
-      border-bottom: 1px solid rgba(14, 16, 25, 0.09);
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 26px;
+    }
+
+    .account-section-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 400;
+      color: var(--account-text);
+    }
+
+    .account-section-description {
+      margin: 6px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--account-muted);
+    }
+
+    /* ---------- Buttons ---------- */
+
+    .account-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 1;
+      border-radius: 9px;
+      padding: 11px 15px;
+      cursor: pointer;
+      transition:
+        background-color .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        opacity .18s ease,
+        transform .18s ease;
+    }
+
+    .account-btn:active {
+      transform: translateY(1px);
+    }
+
+    .account-btn:disabled {
+      cursor: default;
+      opacity: .45;
+      transform: none;
+    }
+
+    .account-btn-primary {
+      color: #ffffff;
+      background: #7057ff;
+      border-color: #7057ff;
+    }
+
+    .account-btn-primary:hover:not(:disabled) {
+      background: #6249ef;
+      border-color: #6249ef;
+    }
+
+    .account-btn-secondary {
+      color: var(--account-text);
+      background: transparent;
+      border-color: var(--account-border);
+    }
+
+    .account-btn-secondary:hover:not(:disabled) {
+      background: var(--account-soft);
+    }
+
+    .account-btn-danger {
+      color: var(--account-danger);
+      background: transparent;
+      border-color: rgba(197,61,77,.25);
+    }
+
+    .account-btn-danger:hover:not(:disabled) {
+      background: rgba(197,61,77,.08);
+      border-color: rgba(197,61,77,.4);
+    }
+
+    /* ---------- Profile ---------- */
+
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    .profile-avatar-column {
+      display: flex;
+      justify-content: center;
     }
 
     .profile-avatar {
-      width: 58px;
-      height: 58px;
-      flex: 0 0 58px;
+      width: 82px;
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 50%;
-      display: grid;
-      place-items: center;
       background: #7057ff;
-      color: #fff;
-      font-family: "DM Mono", monospace;
-      font-size: 17px;
+      color: #ffffff;
+      font-size: 27px;
+      font-weight: 400;
+      user-select: none;
     }
 
-    .profile-name {
-      font-size: 18px;
-      line-height: 1.3;
-      margin-bottom: 4px;
+    .profile-fields {
+      min-width: 0;
     }
 
-    .profile-email {
-      font-size: 13px;
-      color: #777;
-    }
-
-    .account-fields {
+    .profile-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
     }
 
     .account-field {
-      display: grid;
-      gap: 8px;
+      min-width: 0;
     }
 
     .account-field.full {
       grid-column: 1 / -1;
     }
 
-    .account-field label {
+    .account-label {
+      display: block;
+      margin-bottom: 8px;
       font-family: "DM Mono", monospace;
-      font-size: 11px;
-      letter-spacing: 0.04em;
+      font-size: 10px;
+      line-height: 1.4;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      color: #777;
+      color: var(--account-muted);
     }
 
-    .account-field input {
+    .account-value,
+    .account-input {
       width: 100%;
+      min-height: 42px;
       box-sizing: border-box;
-      border: 1px solid rgba(14, 16, 25, 0.14);
-      border-radius: 10px;
-      padding: 13px 14px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .account-value {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      color: var(--account-text);
       background: transparent;
-      color: inherit;
-      font: inherit;
+      border: 1px solid transparent;
+      overflow-wrap: anywhere;
+    }
+
+    .account-input {
+      padding: 10px 12px;
+      color: var(--account-text);
+      background: var(--account-input);
+      border: 1px solid var(--account-border);
       outline: none;
-      transition: border-color 0.2s ease;
+      transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background-color .25s ease,
+        color .25s ease;
     }
 
-    .account-field input:focus {
-      border-color: #7057ff;
+    .account-input:focus {
+      border-color: rgba(112,87,255,.65);
+      box-shadow: 0 0 0 3px rgba(112,87,255,.10);
     }
 
-    .account-field input[readonly] {
-      opacity: 0.65;
-      cursor: default;
+    .account-input:disabled {
+      cursor: not-allowed;
+      opacity: .68;
     }
 
-    .account-actions {
+    .account-input::placeholder {
+      color: var(--account-muted);
+      opacity: .7;
+    }
+
+    .profile-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 9px;
       margin-top: 24px;
     }
 
-    .account-button {
-      appearance: none;
-      border: 1px solid rgba(14, 16, 25, 0.14);
-      border-radius: 999px;
-      padding: 11px 17px;
-      background: transparent;
-      color: inherit;
-      font: inherit;
-      font-size: 13px;
-      cursor: pointer;
-    }
+    /* ---------- Preferences ---------- */
 
-    .account-button.primary {
-      border-color: #7057ff;
-      background: #7057ff;
-      color: #fff;
-    }
-
-    .account-button:hover {
-      opacity: 0.88;
-    }
-
-    .setting-row {
+    .preference-list {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 18px 0;
-      border-top: 1px solid rgba(14, 16, 25, 0.09);
+      flex-direction: column;
     }
 
-    .setting-row:first-of-type {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .setting-row:last-of-type {
-      padding-bottom: 0;
-    }
-
-    .setting-title {
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    .setting-description {
-      color: #777;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .setting-value {
-      flex-shrink: 0;
-      font-family: "DM Mono", monospace;
-      font-size: 11px;
-      color: #7057ff;
-    }
-
-    .security-link {
-      color: inherit;
-      text-decoration: none;
-      font-size: 13px;
-      border-bottom: 1px solid rgba(14, 16, 25, 0.25);
-      padding-bottom: 2px;
-    }
-
-    .danger-card {
-      border-color: rgba(180, 55, 55, 0.2);
-    }
-
-    .danger-card .account-card-label {
-      color: #a34d4d;
-    }
-
-    .danger-action {
+    .preference-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding-top: 4px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--account-border);
     }
 
-    .danger-action + .danger-action {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(14, 16, 25, 0.09);
+    .preference-row:first-child {
+      padding-top: 0;
     }
 
-    .danger-title {
-      font-size: 14px;
-      margin-bottom: 4px;
+    .preference-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
     }
 
-    .danger-description {
-      color: #777;
+    .preference-copy {
+      min-width: 0;
+    }
+
+    .preference-name {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--account-text);
+    }
+
+    .preference-description {
+      margin: 5px 0 0;
       font-size: 12px;
-      line-height: 1.5;
+      line-height: 1.55;
+      color: var(--account-muted);
     }
 
-    .danger-button {
-      flex-shrink: 0;
+    /* ---------- Appearance ---------- */
+
+    .theme-options {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px;
+      border-radius: 10px;
+      background: var(--account-soft);
+      border: 1px solid var(--account-border);
+    }
+
+    .theme-option {
       appearance: none;
-      border: 1px solid rgba(163, 77, 77, 0.35);
-      border-radius: 999px;
-      padding: 10px 15px;
+      border: 0;
+      border-radius: 7px;
+      padding: 8px 11px;
       background: transparent;
-      color: #a34d4d;
-      font: inherit;
-      font-size: 12px;
+      color: var(--account-muted);
+      font-family: inherit;
+      font-size: 11px;
       cursor: pointer;
+      transition:
+        background-color .18s ease,
+        color .18s ease,
+        box-shadow .18s ease;
     }
+
+    .theme-option:hover {
+      color: var(--account-text);
+    }
+
+    .theme-option.active {
+      color: var(--account-text);
+      background: var(--account-surface-solid);
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    html[data-account-theme="dark"] .theme-option.active {
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    /* ---------- Toggle ---------- */
+
+    .switch {
+      position: relative;
+      width: 42px;
+      height: 24px;
+      flex: 0 0 auto;
+    }
+
+    .switch input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: var(--account-soft);
+      border: 1px solid var(--account-border);
+      cursor: pointer;
+      transition:
+        background-color .18s ease,
+        border-color .18s ease;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 2px;
+      left: 2px;
+      border-radius: 50%;
+      background: var(--account-muted);
+      transition:
+        transform .18s ease,
+        background-color .18s ease;
+    }
+
+    .switch input:checked + .switch-track {
+      background: #7057ff;
+      border-color: #7057ff;
+    }
+
+    .switch input:checked + .switch-track::after {
+      transform: translateX(18px);
+      background: #ffffff;
+    }
+
+    .switch input:focus-visible + .switch-track {
+      box-shadow: 0 0 0 3px rgba(112,87,255,.14);
+    }
+
+    /* ---------- Status ---------- */
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--account-text);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--account-success);
+      box-shadow: 0 0 0 4px rgba(43,138,104,.10);
+    }
+
+    .status-mono {
+      margin-left: auto;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .05em;
+      color: var(--account-success);
+    }
+
+    /* ---------- Workspace ---------- */
+
+    .workspace-info {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .workspace-name {
+      margin: 0;
+      font-size: 14px;
+      color: var(--account-text);
+    }
+
+    .workspace-role {
+      margin: 5px 0 0;
+      font-size: 12px;
+      color: var(--account-muted);
+    }
+
+    .workspace-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border: 1px solid var(--account-border);
+      border-radius: 8px;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      color: var(--account-muted);
+      background: var(--account-soft);
+    }
+
+    /* ---------- Account actions ---------- */
+
+    .account-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-top: 8px;
+    }
+
+    .account-actions-copy {
+      min-width: 0;
+    }
+
+    .account-actions-title {
+      margin: 0;
+      font-size: 13px;
+      color: var(--account-text);
+    }
+
+    .account-actions-description {
+      margin: 5px 0 0;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--account-muted);
+    }
+
+    /* ---------- Message ---------- */
 
     .account-message {
-      display: none;
-      margin-top: 16px;
-      font-family: "DM Mono", monospace;
-      font-size: 11px;
-      color: #7057ff;
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 1000;
+      max-width: min(380px, calc(100vw - 44px));
+      padding: 13px 15px;
+      border: 1px solid var(--account-border);
+      border-radius: 11px;
+      color: var(--account-text);
+      background: var(--account-surface-solid);
+      box-shadow: 0 16px 40px rgba(0,0,0,.14);
+      font-size: 12px;
+      line-height: 1.5;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition:
+        opacity .2s ease,
+        transform .2s ease;
     }
 
-    @media (max-width: 700px) {
+    .account-message.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .account-message.success {
+      border-color: rgba(43,138,104,.25);
+    }
+
+    .account-message.error {
+      border-color: rgba(197,61,77,.3);
+    }
+
+    /* ---------- Loading ---------- */
+
+    .account-loading {
+      padding: 40px 0;
+      text-align: center;
+      color: var(--account-muted);
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .04em;
+    }
+
+    /* ---------- Modal ---------- */
+
+    .account-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(5,7,12,.58);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .account-modal.open {
+      display: flex;
+    }
+
+    .account-modal-card {
+      width: min(460px, 100%);
+      padding: 26px;
+      border: 1px solid var(--account-border);
+      border-radius: 16px;
+      background: var(--account-surface-solid);
+      color: var(--account-text);
+      box-shadow: 0 28px 80px rgba(0,0,0,.28);
+    }
+
+    .account-modal-title {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--account-text);
+    }
+
+    .account-modal-description {
+      margin: 9px 0 0;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--account-muted);
+    }
+
+    .account-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .password-fields {
+      margin-top: 22px;
+    }
+
+    .password-fields .account-field + .account-field {
+      margin-top: 16px;
+    }
+
+    /* ---------- Mobile ---------- */
+
+    @media (max-width: 720px) {
       .account-page {
-        padding: 48px 18px 72px;
+        padding: 42px 18px 80px;
       }
 
-      .account-card {
-        padding: 22px;
+      .account-section {
+        padding: 21px;
         border-radius: 15px;
       }
 
-      .account-fields {
+      .account-section-header {
+        align-items: flex-start;
+      }
+
+      .profile-layout {
         grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .profile-avatar-column {
+        justify-content: flex-start;
+      }
+
+      .profile-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .account-field.full {
         grid-column: auto;
       }
 
-      .setting-row,
-      .danger-action {
+      .preference-row {
+        align-items: flex-start;
+      }
+
+      .preference-row .theme-options {
+        flex: 0 0 auto;
+      }
+
+      .workspace-info {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+
+      .workspace-badge {
+        justify-self: start;
+      }
+
+      .account-actions {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .account-actions {
-        justify-content: flex-start;
+      .account-actions .account-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .account-section-header {
+        flex-direction: column;
+      }
+
+      .theme-options {
+        width: 100%;
+      }
+
+      .theme-option {
+        flex: 1;
+      }
+
+      .profile-actions {
+        flex-direction: column;
+      }
+
+      .profile-actions .account-btn {
+        width: 100%;
+      }
+
+      .account-modal-card {
+        padding: 21px;
+      }
+
+      .account-modal-actions {
+        flex-direction: column;
+      }
+
+      .account-modal-actions .account-btn {
+        width: 100%;
       }
     }
   </style>
@@ -321,273 +777,450 @@
 
 <body>
 
-  <!-- Navigation -->
+  <!-- Existing shared navigation -->
   <div id="site-nav"></div>
 
   <main class="account-page">
     <div class="account-container">
 
       <header class="account-header">
-        <div class="section-label">Account</div>
-        <h1>Your account.</h1>
-        <p>
-          Manage your profile, preferences, workspace, and account security.
+        <p class="account-eyebrow">Account</p>
+        <h1 class="account-title">Your account</h1>
+        <p class="account-description">
+          Manage your profile, preferences, security, and workspace settings.
         </p>
       </header>
 
-      <div class="account-sections">
+      <!-- Loading -->
+      <div id="account-loading" class="account-loading">
+        Loading account...
+      </div>
 
-        <!-- PROFILE -->
-        <section class="account-card">
+      <div id="account-content" style="display:none;">
 
-          <div class="account-card-label">
-            01 / Profile
-          </div>
+        <!-- =====================================================
+             PROFILE
+             ===================================================== -->
 
-          <div class="profile-top">
-            <div class="profile-avatar" id="profile-avatar">
-              U
-            </div>
+        <section class="account-section">
 
+          <div class="account-section-header">
             <div>
-              <div class="profile-name" id="profile-name">
-                Loading...
-              </div>
-
-              <div class="profile-email" id="profile-email">
-                Loading...
-              </div>
-            </div>
-          </div>
-
-          <div class="account-fields">
-
-            <div class="account-field">
-              <label for="full-name">Full name</label>
-              <input
-                id="full-name"
-                type="text"
-                placeholder="Your name"
-              />
+              <h2 class="account-section-title">Profile</h2>
+              <p class="account-section-description">
+                Your personal information and workspace identity.
+              </p>
             </div>
 
-            <div class="account-field">
-              <label for="role">Role</label>
-              <input
-                id="role"
-                type="text"
-                placeholder="Your role"
-              />
-            </div>
-
-            <div class="account-field full">
-              <label for="company">Company</label>
-              <input
-                id="company"
-                type="text"
-                placeholder="Company or organization"
-              />
-            </div>
-
-            <div class="account-field full">
-              <label for="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                readonly
-              />
-            </div>
-
-          </div>
-
-          <div class="account-actions">
             <button
-              class="account-button primary"
-              id="save-profile"
               type="button"
+              id="edit-profile-btn"
+              class="account-btn account-btn-secondary"
             >
-              Save changes
+              Edit
             </button>
           </div>
 
-          <div
-            class="account-message"
-            id="profile-message"
-          ></div>
+          <div class="profile-layout">
 
+            <div class="profile-avatar-column">
+              <div
+                id="profile-avatar"
+                class="profile-avatar"
+                aria-label="Profile avatar"
+              >
+                U
+              </div>
+            </div>
+
+            <div class="profile-fields">
+
+              <div class="profile-grid">
+
+                <div class="account-field full">
+                  <label
+                    class="account-label"
+                    for="profile-full-name"
+                  >
+                    Full name
+                  </label>
+
+                  <div
+                    id="profile-full-name-value"
+                    class="account-value"
+                  >
+                    —
+                  </div>
+
+                  <input
+                    id="profile-full-name"
+                    class="account-input"
+                    type="text"
+                    autocomplete="name"
+                    maxlength="120"
+                    style="display:none;"
+                  />
+                </div>
+
+                <div class="account-field">
+                  <label class="account-label">
+                    Email
+                  </label>
+
+                  <div
+                    id="profile-email-value"
+                    class="account-value"
+                  >
+                    —
+                  </div>
+                </div>
+
+                <div class="account-field">
+                  <label
+                    class="account-label"
+                    for="profile-company"
+                  >
+                    Company
+                  </label>
+
+                  <div
+                    id="profile-company-value"
+                    class="account-value"
+                  >
+                    —
+                  </div>
+
+                  <input
+                    id="profile-company"
+                    class="account-input"
+                    type="text"
+                    autocomplete="organization"
+                    maxlength="120"
+                    style="display:none;"
+                  />
+                </div>
+
+                <div class="account-field full">
+                  <label
+                    class="account-label"
+                    for="profile-role"
+                  >
+                    Role
+                  </label>
+
+                  <div
+                    id="profile-role-value"
+                    class="account-value"
+                  >
+                    —
+                  </div>
+
+                  <input
+                    id="profile-role"
+                    class="account-input"
+                    type="text"
+                    autocomplete="organization-title"
+                    maxlength="120"
+                    style="display:none;"
+                  />
+                </div>
+
+              </div>
+
+              <div
+                id="profile-actions"
+                class="profile-actions"
+                style="display:none;"
+              >
+                <button
+                  type="button"
+                  id="cancel-profile-btn"
+                  class="account-btn account-btn-secondary"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  id="save-profile-btn"
+                  class="account-btn account-btn-primary"
+                  disabled
+                >
+                  Save changes
+                </button>
+              </div>
+
+            </div>
+          </div>
         </section>
 
+        <!-- =====================================================
+             PREFERENCES
+             ===================================================== -->
 
-        <!-- PREFERENCES -->
-        <section class="account-card">
+        <section class="account-section">
 
-          <div class="account-card-label">
-            02 / Preferences
+          <div class="account-section-header">
+            <div>
+              <h2 class="account-section-title">Preferences</h2>
+              <p class="account-section-description">
+                Control how Alphex AI behaves for your account.
+              </p>
+            </div>
           </div>
 
-          <div class="setting-row">
-            <div>
-              <div class="setting-title">Appearance</div>
-              <div class="setting-description">
-                Choose how Alphex AI looks on your device.
+          <div class="preference-list">
+
+            <!-- Appearance -->
+
+            <div class="preference-row">
+
+              <div class="preference-copy">
+                <p class="preference-name">Appearance</p>
+                <p class="preference-description">
+                  Choose how Alphex AI looks on your device.
+                </p>
+              </div>
+
+              <div
+                class="theme-options"
+                role="group"
+                aria-label="Appearance"
+              >
+
+                <button
+                  type="button"
+                  class="theme-option"
+                  data-theme-choice="light"
+                >
+                  Light
+                </button>
+
+                <button
+                  type="button"
+                  class="theme-option"
+                  data-theme-choice="dark"
+                >
+                  Dark
+                </button>
+
+                <button
+                  type="button"
+                  class="theme-option"
+                  data-theme-choice="system"
+                >
+                  System
+                </button>
+
               </div>
             </div>
 
-            <div class="setting-value" id="appearance-value">
-              SYSTEM
-            </div>
-          </div>
+            <!-- Email notifications -->
 
-          <div class="setting-row">
-            <div>
-              <div class="setting-title">Email notifications</div>
-              <div class="setting-description">
-                Receive important account and product notifications.
+            <div class="preference-row">
+
+              <div class="preference-copy">
+                <p class="preference-name">
+                  Email notifications
+                </p>
+
+                <p class="preference-description">
+                  Receive important account and service notifications.
+                </p>
               </div>
+
+              <label class="switch">
+                <input
+                  id="email-notifications-toggle"
+                  type="checkbox"
+                />
+
+                <span class="switch-track"></span>
+              </label>
+
             </div>
 
-            <div class="setting-value">
-              ON
-            </div>
-          </div>
+            <!-- Product updates -->
 
-          <div class="setting-row">
-            <div>
-              <div class="setting-title">Product updates</div>
-              <div class="setting-description">
-                Receive occasional updates about Alphex AI products.
+            <div class="preference-row">
+
+              <div class="preference-copy">
+                <p class="preference-name">
+                  Product updates
+                </p>
+
+                <p class="preference-description">
+                  Receive occasional updates about Alphex AI products.
+                </p>
               </div>
+
+              <label class="switch">
+                <input
+                  id="product-updates-toggle"
+                  type="checkbox"
+                />
+
+                <span class="switch-track"></span>
+              </label>
+
             </div>
 
-            <div class="setting-value">
-              ON
-            </div>
           </div>
-
         </section>
 
+        <!-- =====================================================
+             SECURITY
+             ===================================================== -->
 
-        <!-- SECURITY -->
-        <section class="account-card">
+        <section class="account-section">
 
-          <div class="account-card-label">
-            03 / Security
-          </div>
-
-          <div class="setting-row">
+          <div class="account-section-header">
             <div>
-              <div class="setting-title">Password</div>
-              <div class="setting-description">
-                Change the password associated with your account.
-              </div>
-            </div>
-
-            <a
-              class="security-link"
-              href="javascript:void(0)"
-              id="change-password"
-            >
-              Change
-            </a>
-          </div>
-
-          <div class="setting-row">
-            <div>
-              <div class="setting-title">Authentication</div>
-              <div class="setting-description">
-                Your account is secured through Alphex authentication.
-              </div>
-            </div>
-
-            <div class="setting-value">
-              ACTIVE
+              <h2 class="account-section-title">Security</h2>
+              <p class="account-section-description">
+                Manage your authentication and password.
+              </p>
             </div>
           </div>
 
+          <div class="preference-list">
+
+            <div class="preference-row">
+
+              <div class="preference-copy">
+                <p class="preference-name">
+                  Authentication
+                </p>
+
+                <p class="preference-description">
+                  Your account is authenticated through Supabase.
+                </p>
+              </div>
+
+              <div class="status-line">
+                <span class="status-dot"></span>
+                <span>Active</span>
+                <span class="status-mono">SECURE</span>
+              </div>
+
+            </div>
+
+            <div class="preference-row">
+
+              <div class="preference-copy">
+                <p class="preference-name">
+                  Password
+                </p>
+
+                <p class="preference-description">
+                  Change your account password.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                id="change-password-btn"
+                class="account-btn account-btn-secondary"
+              >
+                Change password
+              </button>
+
+            </div>
+
+          </div>
         </section>
 
+        <!-- =====================================================
+             WORKSPACE
+             ===================================================== -->
 
-        <!-- WORKSPACE -->
-        <section class="account-card">
+        <section class="account-section">
 
-          <div class="account-card-label">
-            04 / Workspace
-          </div>
-
-          <div class="setting-row">
+          <div class="account-section-header">
             <div>
-              <div class="setting-title">Workspace</div>
-              <div class="setting-description">
-                Your personal Alphex workspace.
-              </div>
-            </div>
-
-            <div class="setting-value">
-              PERSONAL
+              <h2 class="account-section-title">Workspace</h2>
+              <p class="account-section-description">
+                Your current Alphex AI workspace.
+              </p>
             </div>
           </div>
 
-          <div class="setting-row">
+          <div class="workspace-info">
+
             <div>
-              <div class="setting-title">Role</div>
-              <div class="setting-description">
-                Your current workspace permission.
-              </div>
+              <p class="workspace-name">
+                Personal workspace
+              </p>
+
+              <p class="workspace-role">
+                You are the owner of this workspace.
+              </p>
             </div>
 
-            <div class="setting-value">
+            <span class="workspace-badge">
               OWNER
-            </div>
-          </div>
+            </span>
 
+          </div>
         </section>
 
+        <!-- =====================================================
+             ACCOUNT ACTIONS
+             ===================================================== -->
 
-        <!-- DANGER ZONE -->
-        <section class="account-card danger-card">
+        <section class="account-section">
 
-          <div class="account-card-label">
-            05 / Account
-          </div>
+          <div class="account-actions">
 
-          <div class="danger-action">
+            <div class="account-actions-copy">
 
-            <div>
-              <div class="danger-title">
+              <p class="account-actions-title">
                 Sign out
-              </div>
+              </p>
 
-              <div class="danger-description">
-                Sign out of your current Alphex AI session.
-              </div>
+              <p class="account-actions-description">
+                Sign out of your Alphex AI account on this device.
+              </p>
+
             </div>
 
             <button
-              class="danger-button"
-              id="sign-out"
               type="button"
+              id="sign-out-btn"
+              class="account-btn account-btn-secondary"
             >
               Sign out
             </button>
 
           </div>
 
-          <div class="danger-action">
+        </section>
 
-            <div>
-              <div class="danger-title">
+        <!-- =====================================================
+             DELETE ACCOUNT
+             ===================================================== -->
+
+        <section class="account-section">
+
+          <div class="account-actions">
+
+            <div class="account-actions-copy">
+
+              <p class="account-actions-title">
                 Delete account
-              </div>
+              </p>
 
-              <div class="danger-description">
-                Permanently remove your Alphex AI account.
-              </div>
+              <p class="account-actions-description">
+                Permanently deleting an authenticated Supabase user
+                requires a secure server-side operation.
+              </p>
+
             </div>
 
             <button
-              class="danger-button"
-              id="delete-account"
               type="button"
+              id="delete-account-btn"
+              class="account-btn account-btn-danger"
             >
               Delete account
             </button>
@@ -597,53 +1230,178 @@
         </section>
 
       </div>
-
     </div>
   </main>
 
-  <!-- Global site scripts -->
-  <script src="site.js"></script>
+  <!-- =========================================================
+       MESSAGE
+       ========================================================= -->
 
-  <!-- Navigation loader + account logic -->
+  <div
+    id="account-message"
+    class="account-message"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+  <!-- =========================================================
+       PASSWORD MODAL
+       ========================================================= -->
+
+  <div
+    id="password-modal"
+    class="account-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="password-modal-title"
+  >
+
+    <div class="account-modal-card">
+
+      <h2
+        id="password-modal-title"
+        class="account-modal-title"
+      >
+        Change password
+      </h2>
+
+      <p class="account-modal-description">
+        Enter a new password for your Alphex AI account.
+      </p>
+
+      <div class="password-fields">
+
+        <div class="account-field">
+
+          <label
+            class="account-label"
+            for="new-password"
+          >
+            New password
+          </label>
+
+          <input
+            id="new-password"
+            class="account-input"
+            type="password"
+            autocomplete="new-password"
+            minlength="8"
+            placeholder="At least 8 characters"
+          />
+
+        </div>
+
+        <div class="account-field">
+
+          <label
+            class="account-label"
+            for="confirm-password"
+          >
+            Confirm password
+          </label>
+
+          <input
+            id="confirm-password"
+            class="account-input"
+            type="password"
+            autocomplete="new-password"
+            minlength="8"
+            placeholder="Repeat your new password"
+          />
+
+        </div>
+
+      </div>
+
+      <div class="account-modal-actions">
+
+        <button
+          type="button"
+          id="cancel-password-btn"
+          class="account-btn account-btn-secondary"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          id="save-password-btn"
+          class="account-btn account-btn-primary"
+        >
+          Update password
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================
+       DELETE MODAL
+       ========================================================= -->
+
+  <div
+    id="delete-modal"
+    class="account-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="delete-modal-title"
+  >
+
+    <div class="account-modal-card">
+
+      <h2
+        id="delete-modal-title"
+        class="account-modal-title"
+      >
+        Delete account
+      </h2>
+
+      <p class="account-modal-description">
+        Account deletion must be performed through a secure
+        server-side Supabase function. This frontend will not
+        expose privileged credentials or attempt an unsafe deletion.
+      </p>
+
+      <div class="account-modal-actions">
+
+        <button
+          type="button"
+          id="cancel-delete-btn"
+          class="account-btn account-btn-secondary"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          id="confirm-delete-btn"
+          class="account-btn account-btn-danger"
+        >
+          I understand
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SUPABASE
+       ========================================================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    /*
-     * Load shared navigation
-     */
-    fetch("nav.html")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Navigation could not be loaded.");
-        }
+    /* =========================================================
+       ALPHEX AI — ACCOUNT LOGIC
+       ========================================================= */
 
-        return response.text();
-      })
-      .then(html => {
-        const nav = document.getElementById("site-nav");
-
-        if (nav) {
-          nav.innerHTML = html;
-        }
-
-        /*
-         * Allow shared navigation JS in site.js
-         * to initialize after nav.html is inserted.
-         */
-        document.dispatchEvent(
-          new CustomEvent("alphex:nav-loaded")
-        );
-      })
-      .catch(error => {
-        console.error("Alphex navigation error:", error);
-      });
-  </script>
-
-  <!-- Supabase account logic -->
-  <script>
     const SUPABASE_URL =
-      "https://nxqxhakjbtdzreimpkdz.supabase.co";
+      'https://nxqxhakjbtdzreimpkdz.supabase.co';
 
     const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR";
+      'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
 
     const supabaseClient =
       window.supabase.createClient(
@@ -651,301 +1409,1197 @@
         SUPABASE_PUBLISHABLE_KEY
       );
 
+    let currentUser = null;
 
-    /*
-     * Helpers
-     */
+    let profileData = {
+      full_name: '',
+      company: '',
+      role: '',
+      avatar_url: ''
+    };
 
-    function getInitial(name) {
-      if (!name) return "U";
+    let preferenceData = {
+      theme: 'system',
+      email_notifications: true,
+      product_updates: true
+    };
 
-      return name
-        .trim()
-        .charAt(0)
-        .toUpperCase();
+    let originalProfile = {
+      full_name: '',
+      company: '',
+      role: ''
+    };
+
+    let editingProfile = false;
+
+    let messageTimer = null;
+
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
+
+    const loadingElement =
+      document.getElementById('account-loading');
+
+    const contentElement =
+      document.getElementById('account-content');
+
+    const avatarElement =
+      document.getElementById('profile-avatar');
+
+    const fullNameValue =
+      document.getElementById('profile-full-name-value');
+
+    const emailValue =
+      document.getElementById('profile-email-value');
+
+    const companyValue =
+      document.getElementById('profile-company-value');
+
+    const roleValue =
+      document.getElementById('profile-role-value');
+
+    const fullNameInput =
+      document.getElementById('profile-full-name');
+
+    const companyInput =
+      document.getElementById('profile-company');
+
+    const roleInput =
+      document.getElementById('profile-role');
+
+    const editProfileButton =
+      document.getElementById('edit-profile-btn');
+
+    const profileActions =
+      document.getElementById('profile-actions');
+
+    const cancelProfileButton =
+      document.getElementById('cancel-profile-btn');
+
+    const saveProfileButton =
+      document.getElementById('save-profile-btn');
+
+    const emailNotificationsToggle =
+      document.getElementById('email-notifications-toggle');
+
+    const productUpdatesToggle =
+      document.getElementById('product-updates-toggle');
+
+    const messageElement =
+      document.getElementById('account-message');
+
+    const passwordModal =
+      document.getElementById('password-modal');
+
+    const deleteModal =
+      document.getElementById('delete-modal');
+
+    /* =========================================================
+       MESSAGE
+       ========================================================= */
+
+    function showMessage(message, type = 'success') {
+
+      clearTimeout(messageTimer);
+
+      messageElement.textContent = message;
+
+      messageElement.className =
+        'account-message show ' + type;
+
+      messageTimer = setTimeout(() => {
+        messageElement.className = 'account-message';
+      }, 3200);
     }
 
+    /* =========================================================
+       THEME
+       ========================================================= */
 
-    function showMessage(message) {
-      const element =
-        document.getElementById("profile-message");
+    function getSystemTheme() {
 
-      if (!element) return;
-
-      element.textContent = message;
-      element.style.display = "block";
-
-      setTimeout(() => {
-        element.style.display = "none";
-      }, 3000);
+      return window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches
+        ? 'dark'
+        : 'light';
     }
 
+    function resolveTheme(theme) {
 
-    /*
-     * Load authenticated user
-     */
+      if (theme === 'dark') {
+        return 'dark';
+      }
 
-    async function loadAccount() {
+      if (theme === 'light') {
+        return 'light';
+      }
 
-      const {
-        data: {
-          user
-        },
-        error
-      } = await supabaseClient.auth.getUser();
+      return getSystemTheme();
+    }
 
+    function applyAccountTheme(theme) {
 
-      if (error || !user) {
-        window.location.href = "login.html";
+      const resolvedTheme =
+        resolveTheme(theme);
+
+      document.documentElement.setAttribute(
+        'data-account-theme',
+        resolvedTheme
+      );
+
+      document.documentElement.setAttribute(
+        'data-theme',
+        resolvedTheme
+      );
+
+      updateThemeButtons(theme);
+
+      /*
+       * Keep the shared site theme synchronized
+       * when the existing global CSS uses data-theme.
+       */
+      try {
+        localStorage.setItem(
+          'alphex-theme',
+          theme
+        );
+      } catch (error) {
+        /* Ignore storage errors */
+      }
+    }
+
+    function updateThemeButtons(theme) {
+
+      document
+        .querySelectorAll('[data-theme-choice]')
+        .forEach(button => {
+
+          const active =
+            button.dataset.themeChoice === theme;
+
+          button.classList.toggle(
+            'active',
+            active
+          );
+
+          button.setAttribute(
+            'aria-pressed',
+            active ? 'true' : 'false'
+          );
+        });
+    }
+
+    async function saveThemePreference(theme) {
+
+      if (!currentUser) {
         return;
       }
 
+      preferenceData.theme = theme;
 
-      const metadata =
-        user.user_metadata || {};
-
-
-      const name =
-        metadata.full_name ||
-        metadata.name ||
-        "";
-
-
-      const role =
-        metadata.role ||
-        "";
-
-
-      const company =
-        metadata.company ||
-        "";
-
-
-      document.getElementById("profile-name")
-        .textContent =
-        name || "Alphex user";
-
-
-      document.getElementById("profile-email")
-        .textContent =
-        user.email || "";
-
-
-      document.getElementById("profile-avatar")
-        .textContent =
-        getInitial(name || user.email);
-
-
-      document.getElementById("full-name")
-        .value =
-        name;
-
-
-      document.getElementById("role")
-        .value =
-        role;
-
-
-      document.getElementById("company")
-        .value =
-        company;
-
-
-      document.getElementById("email")
-        .value =
-        user.email || "";
-    }
-
-
-    /*
-     * Save profile
-     */
-
-    document
-      .getElementById("save-profile")
-      .addEventListener("click", async () => {
-
-        const name =
-          document.getElementById("full-name")
-            .value
-            .trim();
-
-        const role =
-          document.getElementById("role")
-            .value
-            .trim();
-
-        const company =
-          document.getElementById("company")
-            .value
-            .trim();
-
-
-        const button =
-          document.getElementById("save-profile");
-
-
-        button.disabled = true;
-        button.textContent = "Saving...";
-
-
-        const {
-          error
-        } =
-          await supabaseClient.auth.updateUser({
-            data: {
-              full_name: name,
-              role: role,
-              company: company
-            }
-          });
-
-
-        button.disabled = false;
-        button.textContent = "Save changes";
-
-
-        if (error) {
-          showMessage(error.message);
-          return;
-        }
-
-
-        document.getElementById("profile-name")
-          .textContent =
-          name || "Alphex user";
-
-
-        document.getElementById("profile-avatar")
-          .textContent =
-          getInitial(name || "U");
-
-
-        showMessage("Profile saved.");
-      });
-
-
-    /*
-     * Password
-     */
-
-    document
-      .getElementById("change-password")
-      .addEventListener("click", async event => {
-
-        event.preventDefault();
-
-        const email =
-          document.getElementById("email").value;
-
-
-        if (!email) return;
-
-
-        const {
-          error
-        } =
-          await supabaseClient.auth.resetPasswordForEmail(
-            email,
+      const { error } =
+        await supabaseClient
+          .from('preferences')
+          .upsert(
             {
-              redirectTo:
-                `${window.location.origin}/reset-password.html`
+              user_id: currentUser.id,
+              theme: theme,
+              email_notifications:
+                preferenceData.email_notifications,
+              product_updates:
+                preferenceData.product_updates
+            },
+            {
+              onConflict: 'user_id'
             }
           );
 
-
-        if (error) {
-          showMessage(error.message);
-          return;
-        }
-
+      if (error) {
+        console.error(
+          'Theme preference error:',
+          error
+        );
 
         showMessage(
-          "Password reset instructions sent to your email."
+          'Theme changed locally, but could not be saved.',
+          'error'
+        );
+      }
+    }
+
+    document
+      .querySelectorAll('[data-theme-choice]')
+      .forEach(button => {
+
+        button.addEventListener(
+          'click',
+          async () => {
+
+            const theme =
+              button.dataset.themeChoice;
+
+            /*
+             * Immediate visual change.
+             */
+            applyAccountTheme(theme);
+
+            /*
+             * Persist to Supabase.
+             */
+            await saveThemePreference(theme);
+          }
         );
       });
 
+    const systemThemeMedia =
+      window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      );
 
-    /*
-     * Sign out
-     */
+    systemThemeMedia.addEventListener(
+      'change',
+      () => {
 
-    document
-      .getElementById("sign-out")
-      .addEventListener("click", async () => {
+        if (
+          preferenceData.theme === 'system'
+        ) {
+          applyAccountTheme('system');
+        }
+      }
+    );
 
-        const {
+    /* =========================================================
+       PROFILE
+       ========================================================= */
+
+    function getInitials(name) {
+
+      const cleanName =
+        String(name || '').trim();
+
+      if (!cleanName) {
+        return 'U';
+      }
+
+      const parts =
+        cleanName.split(/\s+/).filter(Boolean);
+
+      if (parts.length === 1) {
+        return parts[0]
+          .substring(0, 1)
+          .toUpperCase();
+      }
+
+      return (
+        parts[0].substring(0, 1) +
+        parts[parts.length - 1]
+          .substring(0, 1)
+      ).toUpperCase();
+    }
+
+    function renderProfile() {
+
+      const name =
+        profileData.full_name ||
+        currentUser?.user_metadata?.full_name ||
+        currentUser?.email?.split('@')[0] ||
+        'User';
+
+      const company =
+        profileData.company || '—';
+
+      const role =
+        profileData.role || '—';
+
+      fullNameValue.textContent = name;
+
+      emailValue.textContent =
+        currentUser?.email || '—';
+
+      companyValue.textContent =
+        company;
+
+      roleValue.textContent =
+        role;
+
+      fullNameInput.value =
+        profileData.full_name || '';
+
+      companyInput.value =
+        profileData.company || '';
+
+      roleInput.value =
+        profileData.role || '';
+
+      avatarElement.textContent =
+        getInitials(name);
+    }
+
+    function setProfileEditing(editing) {
+
+      editingProfile = editing;
+
+      if (editing) {
+
+        fullNameValue.style.display =
+          'none';
+
+        companyValue.style.display =
+          'none';
+
+        roleValue.style.display =
+          'none';
+
+        fullNameInput.style.display =
+          'block';
+
+        companyInput.style.display =
+          'block';
+
+        roleInput.style.display =
+          'block';
+
+        editProfileButton.style.display =
+          'none';
+
+        profileActions.style.display =
+          'flex';
+
+        updateSaveState();
+
+        fullNameInput.focus();
+
+      } else {
+
+        fullNameValue.style.display =
+          'flex';
+
+        companyValue.style.display =
+          'flex';
+
+        roleValue.style.display =
+          'flex';
+
+        fullNameInput.style.display =
+          'none';
+
+        companyInput.style.display =
+          'none';
+
+        roleInput.style.display =
+          'none';
+
+        editProfileButton.style.display =
+          'inline-flex';
+
+        profileActions.style.display =
+          'none';
+
+        saveProfileButton.disabled =
+          true;
+      }
+    }
+
+    function getEditedProfile() {
+
+      return {
+        full_name:
+          fullNameInput.value.trim(),
+
+        company:
+          companyInput.value.trim(),
+
+        role:
+          roleInput.value.trim()
+      };
+    }
+
+    function hasProfileChanges() {
+
+      const edited =
+        getEditedProfile();
+
+      return (
+        edited.full_name !==
+          (originalProfile.full_name || '') ||
+
+        edited.company !==
+          (originalProfile.company || '') ||
+
+        edited.role !==
+          (originalProfile.role || '')
+      );
+    }
+
+    function updateSaveState() {
+
+      if (!editingProfile) {
+        return;
+      }
+
+      saveProfileButton.disabled =
+        !hasProfileChanges();
+    }
+
+    async function loadProfile() {
+
+      const { data, error } =
+        await supabaseClient
+          .from('profiles')
+          .select(
+            'user_id, full_name, company, role, avatar_url'
+          )
+          .eq(
+            'user_id',
+            currentUser.id
+          )
+          .maybeSingle();
+
+      if (error) {
+        console.error(
+          'Profile load error:',
           error
-        } =
-          await supabaseClient.auth.signOut();
+        );
 
+        throw error;
+      }
 
-        if (error) {
-          showMessage(error.message);
-          return;
+      if (data) {
+
+        profileData = {
+          full_name:
+            data.full_name || '',
+
+          company:
+            data.company || '',
+
+          role:
+            data.role || '',
+
+          avatar_url:
+            data.avatar_url || ''
+        };
+
+      } else {
+
+        const initialName =
+          currentUser.user_metadata?.full_name ||
+          currentUser.user_metadata?.name ||
+          '';
+
+        const initialProfile = {
+          user_id:
+            currentUser.id,
+
+          full_name:
+            initialName,
+
+          company: '',
+          role: '',
+          avatar_url: ''
+        };
+
+        const { error: insertError } =
+          await supabaseClient
+            .from('profiles')
+            .insert(initialProfile);
+
+        if (insertError) {
+          console.error(
+            'Profile insert error:',
+            insertError
+          );
+
+          throw insertError;
         }
 
+        profileData = {
+          full_name:
+            initialProfile.full_name,
 
-        window.location.href = "login.html";
-      });
+          company: '',
+          role: '',
+          avatar_url: ''
+        };
+      }
 
+      originalProfile = {
+        full_name:
+          profileData.full_name || '',
 
-    /*
-     * Delete account
-     *
-     * This intentionally does NOT perform an account deletion yet.
-     * Supabase account deletion should be handled through a
-     * secure server-side / Edge Function flow rather than exposing
-     * privileged deletion logic in the browser.
-     */
+        company:
+          profileData.company || '',
 
-    document
-      .getElementById("delete-account")
-      .addEventListener("click", () => {
+        role:
+          profileData.role || ''
+      };
 
-        alert(
-          "Account deletion is not available yet. Please contact Alphex AI support."
+      renderProfile();
+    }
+
+    async function saveProfile() {
+
+      if (!currentUser) {
+        return;
+      }
+
+      if (!hasProfileChanges()) {
+        return;
+      }
+
+      saveProfileButton.disabled = true;
+
+      const edited =
+        getEditedProfile();
+
+      const { error } =
+        await supabaseClient
+          .from('profiles')
+          .upsert(
+            {
+              user_id:
+                currentUser.id,
+
+              full_name:
+                edited.full_name,
+
+              company:
+                edited.company,
+
+              role:
+                edited.role,
+
+              avatar_url:
+                profileData.avatar_url || ''
+            },
+            {
+              onConflict: 'user_id'
+            }
+          );
+
+      if (error) {
+
+        console.error(
+          'Profile save error:',
+          error
         );
-      });
 
+        saveProfileButton.disabled =
+          false;
 
-    /*
-     * Appearance indicator
-     */
-
-    function updateAppearanceLabel() {
-
-      const label =
-        document.getElementById("appearance-value");
-
-      if (!label) return;
-
-
-      const saved =
-        localStorage.getItem("alphex-theme");
-
-
-      if (saved) {
-        label.textContent =
-          saved.toUpperCase();
+        showMessage(
+          'Could not save your profile.',
+          'error'
+        );
 
         return;
       }
 
+      profileData.full_name =
+        edited.full_name;
 
-      label.textContent =
-        "SYSTEM";
+      profileData.company =
+        edited.company;
+
+      profileData.role =
+        edited.role;
+
+      originalProfile = {
+        full_name:
+          edited.full_name,
+
+        company:
+          edited.company,
+
+        role:
+          edited.role
+      };
+
+      renderProfile();
+
+      setProfileEditing(false);
+
+      showMessage(
+        'Profile changes saved.'
+      );
+
+      /*
+       * Update the auth user's display metadata
+       * when possible so the shared navigation
+       * can use the same name.
+       */
+      try {
+
+        await supabaseClient.auth.updateUser({
+          data: {
+            full_name:
+              edited.full_name,
+
+            name:
+              edited.full_name
+          }
+        });
+
+      } catch (metadataError) {
+
+        console.warn(
+          'Could not update auth metadata:',
+          metadataError
+        );
+      }
     }
 
+    editProfileButton.addEventListener(
+      'click',
+      () => {
+        setProfileEditing(true);
+      }
+    );
+
+    cancelProfileButton.addEventListener(
+      'click',
+      () => {
+
+        fullNameInput.value =
+          originalProfile.full_name || '';
+
+        companyInput.value =
+          originalProfile.company || '';
+
+        roleInput.value =
+          originalProfile.role || '';
+
+        setProfileEditing(false);
+      }
+    );
+
+    [
+      fullNameInput,
+      companyInput,
+      roleInput
+    ].forEach(input => {
+
+      input.addEventListener(
+        'input',
+        updateSaveState
+      );
+    });
+
+    saveProfileButton.addEventListener(
+      'click',
+      saveProfile
+    );
+
+    /* =========================================================
+       PREFERENCES
+       ========================================================= */
+
+    function renderPreferences() {
+
+      applyAccountTheme(
+        preferenceData.theme || 'system'
+      );
+
+      emailNotificationsToggle.checked =
+        Boolean(
+          preferenceData.email_notifications
+        );
+
+      productUpdatesToggle.checked =
+        Boolean(
+          preferenceData.product_updates
+        );
+    }
+
+    async function loadPreferences() {
+
+      const { data, error } =
+        await supabaseClient
+          .from('preferences')
+          .select(
+            'user_id, theme, email_notifications, product_updates'
+          )
+          .eq(
+            'user_id',
+            currentUser.id
+          )
+          .maybeSingle();
+
+      if (error) {
+
+        console.error(
+          'Preferences load error:',
+          error
+        );
+
+        throw error;
+      }
+
+      if (data) {
+
+        preferenceData = {
+          theme:
+            data.theme || 'system',
+
+          email_notifications:
+            Boolean(
+              data.email_notifications
+            ),
+
+          product_updates:
+            Boolean(
+              data.product_updates
+            )
+        };
+
+      } else {
+
+        const defaults = {
+          user_id:
+            currentUser.id,
+
+          theme: 'system',
+
+          email_notifications: true,
+
+          product_updates: true
+        };
+
+        const { error: insertError } =
+          await supabaseClient
+            .from('preferences')
+            .insert(defaults);
+
+        if (insertError) {
+
+          console.error(
+            'Preferences insert error:',
+            insertError
+          );
+
+          throw insertError;
+        }
+
+        preferenceData = {
+          theme: 'system',
+          email_notifications: true,
+          product_updates: true
+        };
+      }
+
+      renderPreferences();
+    }
+
+    async function savePreferences() {
+
+      if (!currentUser) {
+        return;
+      }
+
+      const { error } =
+        await supabaseClient
+          .from('preferences')
+          .upsert(
+            {
+              user_id:
+                currentUser.id,
+
+              theme:
+                preferenceData.theme,
+
+              email_notifications:
+                preferenceData.email_notifications,
+
+              product_updates:
+                preferenceData.product_updates
+            },
+            {
+              onConflict: 'user_id'
+            }
+          );
+
+      if (error) {
+
+        console.error(
+          'Preferences save error:',
+          error
+        );
+
+        showMessage(
+          'Could not save your preference.',
+          'error'
+        );
+
+        return false;
+      }
+
+      return true;
+    }
+
+    emailNotificationsToggle.addEventListener(
+      'change',
+      async () => {
+
+        preferenceData.email_notifications =
+          emailNotificationsToggle.checked;
+
+        await savePreferences();
+      }
+    );
+
+    productUpdatesToggle.addEventListener(
+      'change',
+      async () => {
+
+        preferenceData.product_updates =
+          productUpdatesToggle.checked;
+
+        await savePreferences();
+      }
+    );
+
+    /* =========================================================
+       PASSWORD
+       ========================================================= */
+
+    function openPasswordModal() {
+
+      document
+        .getElementById('new-password')
+        .value = '';
+
+      document
+        .getElementById('confirm-password')
+        .value = '';
+
+      passwordModal.classList.add('open');
+
+      setTimeout(() => {
+
+        document
+          .getElementById('new-password')
+          .focus();
+
+      }, 50);
+    }
+
+    function closePasswordModal() {
+
+      passwordModal.classList.remove(
+        'open'
+      );
+    }
+
+    async function changePassword() {
+
+      const newPassword =
+        document
+          .getElementById('new-password')
+          .value;
+
+      const confirmPassword =
+        document
+          .getElementById('confirm-password')
+          .value;
+
+      if (newPassword.length < 8) {
+
+        showMessage(
+          'Password must contain at least 8 characters.',
+          'error'
+        );
+
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+
+        showMessage(
+          'Passwords do not match.',
+          'error'
+        );
+
+        return;
+      }
+
+      const button =
+        document.getElementById(
+          'save-password-btn'
+        );
+
+      button.disabled = true;
+
+      const { error } =
+        await supabaseClient.auth.updateUser({
+          password: newPassword
+        });
+
+      button.disabled = false;
+
+      if (error) {
+
+        console.error(
+          'Password update error:',
+          error
+        );
+
+        showMessage(
+          error.message ||
+          'Could not update your password.',
+          'error'
+        );
+
+        return;
+      }
+
+      closePasswordModal();
+
+      showMessage(
+        'Password updated successfully.'
+      );
+    }
+
+    document
+      .getElementById('change-password-btn')
+      .addEventListener(
+        'click',
+        openPasswordModal
+      );
+
+    document
+      .getElementById('cancel-password-btn')
+      .addEventListener(
+        'click',
+        closePasswordModal
+      );
+
+    document
+      .getElementById('save-password-btn')
+      .addEventListener(
+        'click',
+        changePassword
+      );
+
+    /* =========================================================
+       DELETE ACCOUNT
+       ========================================================= */
+
+    function openDeleteModal() {
+
+      deleteModal.classList.add(
+        'open'
+      );
+    }
+
+    function closeDeleteModal() {
+
+      deleteModal.classList.remove(
+        'open'
+      );
+    }
+
+    document
+      .getElementById('delete-account-btn')
+      .addEventListener(
+        'click',
+        openDeleteModal
+      );
+
+    document
+      .getElementById('cancel-delete-btn')
+      .addEventListener(
+        'click',
+        closeDeleteModal
+      );
+
+    document
+      .getElementById('confirm-delete-btn')
+      .addEventListener(
+        'click',
+        () => {
+
+          closeDeleteModal();
+
+          showMessage(
+            'Account deletion requires a secure server-side Supabase function. No account was deleted.',
+            'error'
+          );
+        }
+      );
+
+    /* =========================================================
+       SIGN OUT
+       ========================================================= */
+
+    document
+      .getElementById('sign-out-btn')
+      .addEventListener(
+        'click',
+        async () => {
+
+          const button =
+            document.getElementById(
+              'sign-out-btn'
+            );
+
+          button.disabled = true;
+
+          const { error } =
+            await supabaseClient.auth.signOut();
+
+          if (error) {
+
+            console.error(
+              'Sign out error:',
+              error
+            );
+
+            button.disabled = false;
+
+            showMessage(
+              'Could not sign out.',
+              'error'
+            );
+
+            return;
+          }
+
+          window.location.href =
+            'index.html';
+        }
+      );
+
+    /* =========================================================
+       MODAL OUTSIDE CLICK
+       ========================================================= */
+
+    passwordModal.addEventListener(
+      'click',
+      event => {
+
+        if (
+          event.target ===
+          passwordModal
+        ) {
+          closePasswordModal();
+        }
+      }
+    );
+
+    deleteModal.addEventListener(
+      'click',
+      event => {
+
+        if (
+          event.target ===
+          deleteModal
+        ) {
+          closeDeleteModal();
+        }
+      }
+    );
+
+    /* =========================================================
+       ESCAPE KEY
+       ========================================================= */
+
+    document.addEventListener(
+      'keydown',
+      event => {
+
+        if (event.key !== 'Escape') {
+          return;
+        }
+
+        closePasswordModal();
+        closeDeleteModal();
+
+        if (editingProfile) {
+          setProfileEditing(false);
+        }
+      }
+    );
+
+    /* =========================================================
+       INITIALIZATION
+       ========================================================= */
+
+    async function initializeAccount() {
+
+      try {
+
+        const {
+          data: {
+            user
+          }
+        } =
+          await supabaseClient.auth.getUser();
+
+        if (!user) {
+
+          window.location.href =
+            'login.html';
+
+          return;
+        }
+
+        currentUser = user;
+
+        await loadProfile();
+
+        await loadPreferences();
+
+        loadingElement.style.display =
+          'none';
+
+        contentElement.style.display =
+          'block';
+
+      } catch (error) {
+
+        console.error(
+          'Account initialization error:',
+          error
+        );
+
+        loadingElement.textContent =
+          'Unable to load your account. Please refresh and try again.';
+
+        showMessage(
+          'Unable to load account information.',
+          'error'
+        );
+      }
+    }
+
+    supabaseClient.auth.onAuthStateChange(
+      (event, session) => {
+
+        if (
+          event === 'SIGNED_OUT' ||
+          !session
+        ) {
+
+          window.location.href =
+            'login.html';
+        }
+      }
+    );
 
     /*
-     * Initialize
+     * Apply a temporary system theme immediately
+     * so the page does not flash the wrong mode
+     * before Supabase preferences are loaded.
      */
+    applyAccountTheme('system');
 
-    loadAccount();
-    updateAppearanceLabel();
-
+    initializeAccount();
   </script>
+
+  <!-- Existing shared site JavaScript -->
+  <script src="site.js"></script>
 
 </body>
 </html>
