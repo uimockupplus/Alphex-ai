@@ -1787,5 +1787,30 @@ updateAuthenticationUI();
   );
 })();
 </script>
+   <!-- Alphex AI Chatbot -->
+<div id="alphex-chatbot-root"></div>
+
+<link rel="stylesheet" href="chatbot/chatbot.css">
+
+<script>
+(async function () {
+  try {
+    const response = await fetch('chatbot/chatbot.html');
+    if (!response.ok) return;
+
+    const html = await response.text();
+    document
+      .getElementById('alphex-chatbot-root')
+      .innerHTML = html;
+
+    const script = document.createElement('script');
+    script.src = 'chatbot/chatbot.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  } catch (error) {
+    console.error('Alphex chatbot failed to load:', error);
+  }
+})();
+</script>
 </body>
 </html>
