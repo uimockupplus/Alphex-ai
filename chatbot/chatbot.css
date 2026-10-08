@@ -1447,3 +1447,51 @@ body[data-alphex-theme="dark"] #alphex-chatbot{
   }
 
 }
+/* =========================================================
+   ALPHEX WOLF LOGO — SIZE SAFETY FIX
+   Prevent global image rules from stretching the wolf
+   ========================================================= */
+
+.alphex-chatbot .chat-toggle-logo {
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  max-width: 56px !important;
+  max-height: 56px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.alphex-chatbot .chat-toggle-logo img.alphex-wolf-logo {
+  width: 72% !important;
+  height: 72% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 72% !important;
+  max-height: 72% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Header wolf */
+.alphex-chatbot .chat-brand-mark img.alphex-wolf-logo,
+.alphex-chatbot .chat-message-mark img.alphex-wolf-logo,
+.alphex-chatbot .chat-thinking-mark img.alphex-wolf-logo {
+  width: 72% !important;
+  height: 72% !important;
+  max-width: 72% !important;
+  max-height: 72% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 !important;
+}
