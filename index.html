@@ -602,6 +602,54 @@ body.dark-theme .trust-panel li:before{color:#8df0df}
 @media(max-width:800px){.info-section{padding:72px 0}.info-grid,.outcomes-grid,.architecture-grid,.system-list,.why-grid,.industry-grid{grid-template-columns:1fr 1fr}.trust-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.info-section{padding:62px 0}.info-grid,.outcomes-grid,.architecture-grid,.system-list,.why-grid,.industry-grid{grid-template-columns:1fr}.info-card{padding:21px}.architecture-step{min-height:155px}.trust-panel{padding:22px}.trust-panel ul{grid-template-columns:1fr}.outcome{padding:18px 12px}}
 
+
+/* Neutral white theme for core explainer and pricing sections. */
+.outcomes-section,.architecture-section,.trust-section,.pricing{background:var(--paper);color:var(--ink)}
+.outcomes-grid{border-color:var(--border)}
+.outcome{border-color:var(--border)}
+.outcome b{color:var(--accent-dark)}
+.architecture-section .section-copy{color:#595955}
+.architecture-section .section-label{color:var(--accent-dark)}
+.architecture-step{background:var(--white);border-color:var(--border)}
+.architecture-step .mono{color:var(--accent-dark)}
+.architecture-step h3{color:var(--ink)}
+.architecture-step p{color:#595955}
+.system-item{background:var(--white);border-color:var(--border)}
+.system-item b{color:var(--accent-dark)}
+.system-item p{color:#595955}
+.trust-panel{background:var(--white);border-color:var(--border)}
+.trust-panel h3{color:var(--ink)}
+.trust-panel li{color:#424541}
+.trust-panel li:before{color:#246d69}
+.trust-note{color:#595955}
+/* Keep dark mode deliberately dark, but use neutral surfaces rather than colored bands. */
+body.dark-theme .outcomes-section,body.dark-theme .architecture-section,body.dark-theme .trust-section,body.dark-theme .pricing{background:var(--paper);color:var(--ink)}
+body.dark-theme .outcomes-grid,body.dark-theme .outcome{border-color:var(--border)}
+body.dark-theme .outcome b{color:#bfb5ff}
+body.dark-theme .architecture-section .section-copy{color:#c2c5d5}
+body.dark-theme .architecture-section .section-label{color:#bfb5ff}
+body.dark-theme .architecture-step,body.dark-theme .system-item{background:#171a28;border-color:var(--border)}
+body.dark-theme .architecture-step h3,body.dark-theme .system-item p{color:var(--ink)}
+body.dark-theme .architecture-step p{color:#d0d2de}
+body.dark-theme .architecture-step .mono,body.dark-theme .system-item b{color:#bfb5ff}
+body.dark-theme .trust-panel{background:#171a28;border-color:var(--border)}
+body.dark-theme .trust-panel h3{color:var(--ink)}
+body.dark-theme .trust-panel li,body.dark-theme .trust-note{color:#d0d2de}
+body.dark-theme .trust-panel li:before{color:#8df0df}
+
+
+/* Industry section contrast in dark mode. */
+body.dark-theme .industry-section{background:var(--paper)}
+body.dark-theme .industry-section .section-title{color:var(--ink)}
+body.dark-theme .industry-section .section-label{color:#bfb5ff}
+body.dark-theme .industry-section .section-copy{color:#c2c5d5}
+body.dark-theme .industry-section .industry-item{background:#171a28;border-color:var(--border)}
+body.dark-theme .industry-section .industry-item h3{color:var(--ink)}
+body.dark-theme .industry-section .industry-item p,body.dark-theme .industry-section .industry-work{color:#d0d2de}
+body.dark-theme .industry-section .industry-type{color:#bfb5ff}
+body.dark-theme .industry-section .industry-work{border-color:var(--border)}
+body.dark-theme .industry-section .industry-work b{color:#f5f4ff}
+
 </style>
 </head>
 <body>
