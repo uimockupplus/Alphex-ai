@@ -14,21 +14,41 @@
  *      - Gemini 3.7 Flash
  *      - Gemini 3.6 Flash
  *
+ * Architecture:
+ *   User message
+ *        ↓
+ *   Deterministic Alphex knowledge router
+ *        ↓
+ *   Verified Alphex answer?
+ *        ├── YES → return immediately
+ *        │
+ *        └── NO
+ *             ↓
+ *        Groq model pool
+ *             ↓
+ *        Gemini model pool
+ *             ↓
+ *        conversational/general AI answer
+ *
  * Important:
  *   - Alphex facts come from ./alphex-knowledge.js
- *   - High-confidence business questions are routed through
- *     deterministic knowledge handlers first.
- *   - LLMs handle conversational/general AI questions.
+ *   - High-confidence business questions are handled
+ *     deterministically before calling an LLM.
+ *   - LLMs handle general AI and conversational questions.
  *   - Provider failures are hidden from the user.
- *   - Supabase persistence failures never break a successful
- *     AI response.
+ *   - Supabase persistence failures never break a successful answer.
  */
+
+/* =========================================================
+   KNOWLEDGE IMPORT
+   ========================================================= */
 
 import {
   getAlphexKnowledge,
   getAlphexKnowledgeText,
   getAlphexChatbotRules
 } from './alphex-knowledge.js';
+
 
 /* =========================================================
    CONFIGURATION
@@ -45,6 +65,10 @@ const DEFAULT_GEMINI_MODELS = [
   'gemini-3.6-flash'
 ];
 
+/*
+ * Keep the total backend provider time bounded.
+ * Deterministic answers do not use this budget.
+ */
 const TOTAL_PROVIDER_BUDGET_MS = 7800;
 
 const GROQ_TIMEOUT_MS = 2200;
@@ -58,6 +82,11 @@ const MAX_MESSAGE_LENGTH = 4000;
 const MAX_OUTPUT_TOKENS = 650;
 
 const TEMPERATURE = 0.55;
+
+
+/* =========================================================
+   ENVIRONMENT
+   ========================================================= */
 
 const SUPABASE_URL =
   process.env.SUPABASE_URL ||
@@ -76,28 +105,39 @@ const GEMINI_API_KEY =
   process.env.GEMINI_API_KEY ||
   '';
 
-const configuredGroqModels = parseModelList(
-  process.env.GROQ_MODELS
-);
 
-const configuredGeminiModels = parseModelList(
-  process.env.GEMINI_MODELS
-);
+/* =========================================================
+   MODEL POOLS
+   ========================================================= */
+
+const configuredGroqModels =
+  parseModelList(
+    process.env.GROQ_MODELS
+  );
+
+const configuredGeminiModels =
+  parseModelList(
+    process.env.GEMINI_MODELS
+  );
 
 const GROQ_MODELS =
   configuredGroqModels.length > 0
     ? configuredGroqModels
     : process.env.GROQ_MODEL
-      ? [process.env.GROQ_MODEL, ...DEFAULT_GROQ_MODELS]
-          .filter((model, index, arr) => arr.indexOf(model) === index)
+      ? uniqueModels([
+          process.env.GROQ_MODEL,
+          ...DEFAULT_GROQ_MODELS
+        ])
       : DEFAULT_GROQ_MODELS;
 
 const GEMINI_MODELS =
   configuredGeminiModels.length > 0
     ? configuredGeminiModels
     : process.env.GEMINI_MODEL
-      ? [process.env.GEMINI_MODEL, ...DEFAULT_GEMINI_MODELS]
-          .filter((model, index, arr) => arr.indexOf(model) === index)
+      ? uniqueModels([
+          process.env.GEMINI_MODEL,
+          ...DEFAULT_GEMINI_MODELS
+        ])
       : DEFAULT_GEMINI_MODELS;
 
 
@@ -123,7 +163,8 @@ export default async function handler(req, res) {
   try {
     const body = req.body || {};
 
-    const message = normalizeMessage(body.message);
+    const message =
+      normalizeMessage(body.message);
 
     if (!message) {
       return res.status(400).json({
@@ -131,9 +172,13 @@ export default async function handler(req, res) {
       });
     }
 
-    if (message.length > MAX_MESSAGE_LENGTH) {
+    if (
+      message.length >
+      MAX_MESSAGE_LENGTH
+    ) {
       return res.status(400).json({
-        error: `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`
+        error:
+          `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`
       });
     }
 
@@ -152,25 +197,37 @@ export default async function handler(req, res) {
         ? req.headers.authorization
         : '';
 
-    const accessToken = extractBearerToken(authorization);
+    const accessToken =
+      extractBearerToken(
+        authorization
+      );
 
-    const knowledge = getAlphexKnowledge();
+    const knowledge =
+      getAlphexKnowledge();
 
-    /* -------------------------------------------------------
-       Authentication / user context
-       ------------------------------------------------------- */
+
+    /* =====================================================
+       AUTHENTICATION / USER CONTEXT
+       ===================================================== */
 
     let currentUser = null;
     let currentProfile = null;
 
-    if (accessToken && isSupabaseConfigured()) {
+    if (
+      accessToken &&
+      isSupabaseConfigured()
+    ) {
       try {
-        currentUser = await getSupabaseUser(accessToken);
+        currentUser =
+          await getSupabaseUser(
+            accessToken
+          );
 
         if (currentUser?.id) {
-          currentProfile = await getSupabaseProfile(
-            currentUser.id
-          );
+          currentProfile =
+            await getSupabaseProfile(
+              currentUser.id
+            );
         }
       } catch (error) {
         console.warn(
@@ -180,9 +237,10 @@ export default async function handler(req, res) {
       }
     }
 
-    /* -------------------------------------------------------
-       Load conversation history
-       ------------------------------------------------------- */
+
+    /* =====================================================
+       LOAD CONVERSATION HISTORY
+       ===================================================== */
 
     let history = [];
 
@@ -192,14 +250,17 @@ export default async function handler(req, res) {
       isSupabaseConfigured()
     ) {
       try {
-        history = await loadConversationHistory(
-          conversationId,
-          currentUser.id
-        );
+        history =
+          await loadConversationHistory(
+            conversationId,
+            currentUser.id
+          );
       } catch (error) {
         /*
-         * Missing conversation_messages table is deliberately
-         * treated as non-fatal.
+         * This is intentionally non-fatal.
+         *
+         * If conversation_messages does not exist yet,
+         * the chatbot must still work.
          */
         console.warn(
           '[Alphex Chatbot] History lookup failed:',
@@ -208,9 +269,25 @@ export default async function handler(req, res) {
       }
     }
 
-    /* -------------------------------------------------------
-       Deterministic Alphex knowledge routing
-       ------------------------------------------------------- */
+
+    /* =====================================================
+       DETERMINISTIC ALPHEX KNOWLEDGE ROUTING
+       ===================================================== */
+
+    /*
+     * IMPORTANT:
+     *
+     * This happens BEFORE Groq/Gemini.
+     *
+     * Therefore questions such as:
+     *
+     *   "what are the pricing"
+     *   "how much does it cost"
+     *   "what are your plans"
+     *   "is there any negotiation"
+     *
+     * do not depend on an LLM remembering the knowledge.
+     */
 
     const deterministicAnswer =
       getDeterministicKnowledgeAnswer(
@@ -219,11 +296,13 @@ export default async function handler(req, res) {
       );
 
     if (deterministicAnswer) {
-      const responseText = deterministicAnswer.answer;
+      const responseText =
+        deterministicAnswer.answer;
 
       /*
-       * Save the interaction if persistence is available.
-       * Failure here must never prevent the answer.
+       * Persistence is optional.
+       * Never allow persistence failure to break
+       * a deterministic answer.
        */
       if (
         conversationId &&
@@ -233,9 +312,12 @@ export default async function handler(req, res) {
         try {
           await saveConversationMessages({
             conversationId,
-            userId: currentUser.id,
-            userMessage: message,
-            assistantMessage: responseText
+            userId:
+              currentUser.id,
+            userMessage:
+              message,
+            assistantMessage:
+              responseText
           });
         } catch (error) {
           console.warn(
@@ -248,55 +330,84 @@ export default async function handler(req, res) {
       return res.status(200).json({
         success: true,
         answer: responseText,
-        provider: 'alphex-knowledge',
-        model: deterministicAnswer.route,
-        deterministic: true,
-        conversation_id: conversationId || null,
-        elapsed_ms: Date.now() - requestStartedAt
+        provider:
+          'alphex-knowledge',
+        model:
+          deterministicAnswer.route,
+        deterministic:
+          true,
+        conversation_id:
+          conversationId || null,
+        elapsed_ms:
+          Date.now() -
+          requestStartedAt
       });
     }
 
-    /* -------------------------------------------------------
-       Build LLM prompt
-       ------------------------------------------------------- */
 
-    const systemPrompt = buildSystemPrompt({
-      knowledgeText: getAlphexKnowledgeText(),
-      chatbotRules: getAlphexChatbotRules(),
-      currentProfile,
-      page
-    });
+    /* =====================================================
+       BUILD LLM PROMPT
+       ===================================================== */
 
-    const compactHistory = normalizeHistory(history);
+    const systemPrompt =
+      buildSystemPrompt({
+        knowledgeText:
+          getAlphexKnowledgeText(),
+        chatbotRules:
+          getAlphexChatbotRules(),
+        currentProfile,
+        page
+      });
+
+    const compactHistory =
+      normalizeHistory(
+        history
+      );
 
     const messages = [
       {
         role: 'system',
-        content: systemPrompt
+        content:
+          systemPrompt
       },
       ...compactHistory,
       {
         role: 'user',
-        content: message
+        content:
+          message
       }
     ];
 
-    /* -------------------------------------------------------
-       Multi-provider AI generation
-       ------------------------------------------------------- */
 
-    const aiResult = await generateWithProviderPool(
-      messages
-    );
+    /* =====================================================
+       MULTI-PROVIDER AI GENERATION
+       ===================================================== */
+
+    const aiResult =
+      await generateWithProviderPool(
+        messages
+      );
 
     if (!aiResult?.answer) {
       console.error(
         '[Alphex Chatbot] All AI providers failed.',
         {
-          elapsed: Date.now() - requestStartedAt,
-          groqConfigured: Boolean(GROQ_API_KEY),
-          geminiConfigured: Boolean(GEMINI_API_KEY),
-          supabaseConfigured: isSupabaseConfigured()
+          elapsed:
+            Date.now() -
+            requestStartedAt,
+
+          groqConfigured:
+            Boolean(
+              GROQ_API_KEY
+            ),
+
+          geminiConfigured:
+            Boolean(
+              GEMINI_API_KEY
+            ),
+
+          supabaseConfigured:
+            isSupabaseConfigured()
         }
       );
 
@@ -306,13 +417,27 @@ export default async function handler(req, res) {
       });
     }
 
-    const responseText = cleanAssistantResponse(
-      aiResult.answer
-    );
 
-    /* -------------------------------------------------------
-       Persist successful conversation
-       ------------------------------------------------------- */
+    /* =====================================================
+       CLEAN AI RESPONSE
+       ===================================================== */
+
+    const responseText =
+      cleanAssistantResponse(
+        aiResult.answer
+      );
+
+    if (!responseText) {
+      return res.status(503).json({
+        error:
+          'The AI service is temporarily unavailable.'
+      });
+    }
+
+
+    /* =====================================================
+       PERSIST SUCCESSFUL CONVERSATION
+       ===================================================== */
 
     if (
       conversationId &&
@@ -322,9 +447,12 @@ export default async function handler(req, res) {
       try {
         await saveConversationMessages({
           conversationId,
-          userId: currentUser.id,
-          userMessage: message,
-          assistantMessage: responseText
+          userId:
+            currentUser.id,
+          userMessage:
+            message,
+          assistantMessage:
+            responseText
         });
       } catch (error) {
         console.warn(
@@ -334,18 +462,26 @@ export default async function handler(req, res) {
       }
     }
 
-    /* -------------------------------------------------------
-       Final response
-       ------------------------------------------------------- */
+
+    /* =====================================================
+       FINAL RESPONSE
+       ===================================================== */
 
     return res.status(200).json({
       success: true,
-      answer: responseText,
-      provider: aiResult.provider,
-      model: aiResult.model,
-      deterministic: false,
-      conversation_id: conversationId || null,
-      elapsed_ms: Date.now() - requestStartedAt
+      answer:
+        responseText,
+      provider:
+        aiResult.provider,
+      model:
+        aiResult.model,
+      deterministic:
+        false,
+      conversation_id:
+        conversationId || null,
+      elapsed_ms:
+        Date.now() -
+        requestStartedAt
     });
 
   } catch (error) {
@@ -366,81 +502,71 @@ export default async function handler(req, res) {
    DETERMINISTIC KNOWLEDGE ROUTING
    ========================================================= */
 
-/**
- * This is the important new layer.
- *
- * It prevents the LLM from inventing or forgetting core
- * Alphex business facts.
- *
- * The answer is generated from the verified knowledge object.
- */
-
 function getDeterministicKnowledgeAnswer(
   message,
   knowledge
 ) {
-  const text = normalizeForIntent(message);
+  const text =
+    normalizeForIntent(
+      message
+    );
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      PRICING
-     ------------------------------------------------------- */
+     ===================================================== */
+
+  /*
+   * Keep pricing BEFORE generic product/service routes.
+   *
+   * Examples:
+   *   what are the pricing
+   *   what is the pricing
+   *   pricing
+   *   prices
+   *   how much
+   *   how much does it cost
+   *   what does it cost
+   *   what are your plans
+   *   what do you charge
+   *   setup price
+   */
 
   if (
-    matchesAny(text, [
-      'pricing',
-      'price',
-      'prices',
-      'cost',
-      'costs',
-      'how much',
-      'how much does',
-      'how much is',
-      'plans',
-      'plan price',
-      'pricing plans',
-      'what do you charge',
-      'what are your charges',
-      'setup price',
-      'setup cost'
-    ])
+    isPricingIntent(text)
   ) {
     return {
-      route: 'pricing',
-      answer: buildPricingAnswer(knowledge)
+      route:
+        'pricing',
+      answer:
+        buildPricingAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      NEGOTIATION / DISCOUNTS
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
-    matchesAny(text, [
-      'negotiation',
-      'negotiate',
-      'can you negotiate',
-      'can i negotiate',
-      'negotiable',
-      'is it negotiable',
-      'discount',
-      'discounts',
-      'lower price',
-      'cheaper',
-      'reduce the price',
-      'reduce pricing',
-      'flexible pricing',
-      'flexible price'
-    ])
+    isNegotiationIntent(text)
   ) {
     return {
-      route: 'pricing-boundary',
-      answer: buildNegotiationAnswer(knowledge)
+      route:
+        'pricing-boundary',
+      answer:
+        buildNegotiationAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
-     WHAT DOES ALPHEX DO?
-     ------------------------------------------------------- */
+
+  /* =====================================================
+     COMPANY OVERVIEW
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -459,14 +585,19 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'company-overview',
-      answer: buildCompanyOverviewAnswer(knowledge)
+      route:
+        'company-overview',
+      answer:
+        buildCompanyOverviewAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      SOLUTIONS / CAPABILITIES
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -484,21 +615,25 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'solutions',
-      answer: buildSolutionsAnswer(knowledge)
+      route:
+        'solutions',
+      answer:
+        buildSolutionsAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      PRODUCTS
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
       'what products do you have',
       'what are your products',
       'alphex products',
-      'products',
       'list your products',
       'show me your products',
       'what product does alphex have',
@@ -506,14 +641,19 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'products',
-      answer: buildProductsAnswer(knowledge)
+      route:
+        'products',
+      answer:
+        buildProductsAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      EVALLOOP AI
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -528,14 +668,19 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'evalloop-ai',
-      answer: buildEvalLoopAIAnswer(knowledge)
+      route:
+        'evalloop-ai',
+      answer:
+        buildEvalLoopAIAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      EVALLOOP JOBS
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -544,19 +689,25 @@ function getDeterministicKnowledgeAnswer(
       'tell me about evalloop jobs',
       'tell me about eval loop jobs',
       'what does evalloop jobs do',
+      'what does eval loop jobs do',
       'evalloop jobs',
       'eval loop jobs'
     ])
   ) {
     return {
-      route: 'evalloop-jobs',
-      answer: buildEvalLoopJobsAnswer(knowledge)
+      route:
+        'evalloop-jobs',
+      answer:
+        buildEvalLoopJobsAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      LOCATION
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -571,19 +722,25 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'location',
-      answer: buildLocationAnswer(knowledge)
+      route:
+        'location',
+      answer:
+        buildLocationAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      INDUSTRIES
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
       'what industries do you serve',
       'which industries do you serve',
+      'what industries',
       'industries',
       'who do you work with',
       'who is alphex for',
@@ -593,14 +750,19 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'industries',
-      answer: buildIndustriesAnswer(knowledge)
+      route:
+        'industries',
+      answer:
+        buildIndustriesAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
+
+  /* =====================================================
      PROCESS
-     ------------------------------------------------------- */
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -610,18 +772,24 @@ function getDeterministicKnowledgeAnswer(
       'alphex process',
       'project process',
       'how do projects work',
-      'how do you build ai systems'
+      'how do you build ai systems',
+      'how do you build ai'
     ])
   ) {
     return {
-      route: 'process',
-      answer: buildProcessAnswer(knowledge)
+      route:
+        'process',
+      answer:
+        buildProcessAnswer(
+          knowledge
+        )
     };
   }
 
-  /* -------------------------------------------------------
-     HUMAN HANDOFF / CHATBOTS
-     ------------------------------------------------------- */
+
+  /* =====================================================
+     HUMAN HANDOFF
+     ===================================================== */
 
   if (
     matchesAny(text, [
@@ -634,12 +802,113 @@ function getDeterministicKnowledgeAnswer(
     ])
   ) {
     return {
-      route: 'human-handoff',
-      answer: buildHumanHandoffAnswer(knowledge)
+      route:
+        'human-handoff',
+      answer:
+        buildHumanHandoffAnswer(
+          knowledge
+        )
     };
   }
 
+
   return null;
+}
+
+
+/* =========================================================
+   PRICING INTENT
+   ========================================================= */
+
+function isPricingIntent(text) {
+  if (!text) {
+    return false;
+  }
+
+  /*
+   * Direct pricing words.
+   */
+  if (
+    containsAnyWord(text, [
+      'pricing',
+      'price',
+      'prices',
+      'cost',
+      'costs',
+      'charges',
+      'charge'
+    ])
+  ) {
+    return true;
+  }
+
+  /*
+   * Common natural-language pricing questions.
+   */
+  if (
+    matchesAny(text, [
+      'how much',
+      'how much does it cost',
+      'how much does it',
+      'how much is it',
+      'how much is',
+      'what do you charge',
+      'what are your charges',
+      'what are your plans',
+      'what plans do you have',
+      'pricing plans',
+      'plan price',
+      'setup price',
+      'setup cost',
+      'what is the fee',
+      'what are the fees'
+    ])
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+
+/* =========================================================
+   NEGOTIATION INTENT
+   ========================================================= */
+
+function isNegotiationIntent(text) {
+  if (!text) {
+    return false;
+  }
+
+  if (
+    containsAnyWord(text, [
+      'negotiation',
+      'negotiate',
+      'negotiable',
+      'discount',
+      'discounts'
+    ])
+  ) {
+    return true;
+  }
+
+  return matchesAny(text, [
+    'can i negotiate',
+    'can you negotiate',
+    'is it negotiable',
+    'is the price negotiable',
+    'can you lower the price',
+    'can you reduce the price',
+    'can you reduce pricing',
+    'can you give a discount',
+    'do you offer discounts',
+    'is there any discount',
+    'is there any negotiation',
+    'flexible pricing',
+    'flexible price',
+    'lower price',
+    'cheaper'
+  ]);
 }
 
 
@@ -653,16 +922,22 @@ function buildPricingAnswer(knowledge) {
     {};
 
   const plans =
-    Array.isArray(pricing.plans)
+    Array.isArray(
+      pricing.plans
+    )
       ? pricing.plans
       : [];
 
-  if (plans.length === 0) {
-    return (
-      'Alphex AI currently presents starting prices for its main chatbot offerings, ' +
-      'but I don’t have the detailed pricing structure available right now. ' +
-      'For a project-specific quote, please contact Alphex AI.'
-    );
+  if (
+    plans.length === 0
+  ) {
+    return [
+      '**Alphex AI pricing:**',
+      '',
+      'I don’t have the current public pricing structure available right now.',
+      '',
+      'For a project-specific quote, pricing should be scoped with Alphex AI.'
+    ].join('\n');
   }
 
   const lines = [
@@ -672,39 +947,67 @@ function buildPricingAnswer(knowledge) {
 
   for (const plan of plans) {
     const name =
-      plan.name ||
-      plan.title ||
+      plan?.name ||
       'Plan';
 
+    const label =
+      plan?.label
+        ? ` (${plan.label})`
+        : '';
+
     const description =
-      plan.description ||
+      plan?.description ||
       '';
 
     const price =
-      plan.price ||
-      plan.amount ||
-      '';
+      plan?.price ||
+      'Custom scope';
 
     lines.push(
-      `**${name}** — ${price}${description ? ` — ${description}` : ''}`
+      `**${name}${label}** — ${price}`
+    );
+
+    if (description) {
+      lines.push(
+        `  ${description}`
+      );
+    }
+
+    lines.push('');
+  }
+
+  /*
+   * IMPORTANT:
+   *
+   * The knowledge file calls this property
+   * "pricing_boundary", not "boundary".
+   */
+  const boundary =
+    pricing.pricing_boundary ||
+    pricing.boundary ||
+    '';
+
+  if (boundary) {
+    lines.push(
+      boundary
     );
   }
 
-  if (pricing.boundary) {
-    lines.push('');
-    lines.push(pricing.boundary);
-  }
-
-  return lines.join('\n');
+  return lines
+    .join('\n')
+    .trim();
 }
 
 
-function buildNegotiationAnswer(knowledge) {
+function buildNegotiationAnswer(
+  knowledge
+) {
   const pricing =
     knowledge?.pricing ||
     {};
 
   const boundary =
+    pricing.pricing_boundary ||
     pricing.boundary ||
     'Final pricing depends on project scope and requirements.';
 
@@ -718,7 +1021,9 @@ function buildNegotiationAnswer(knowledge) {
 }
 
 
-function buildCompanyOverviewAnswer(knowledge) {
+function buildCompanyOverviewAnswer(
+  knowledge
+) {
   const company =
     knowledge?.company ||
     {};
@@ -732,56 +1037,96 @@ function buildCompanyOverviewAnswer(knowledge) {
     company.positioning ||
     '';
 
-  const model =
-    company.business_model ||
-    '';
-
   return [
     `**${name}** is ${description}`,
-    model ? `\nIts primary business model is ${model}.` : ''
-  ]
-    .filter(Boolean)
-    .join('\n');
-}
-
-
-function buildSolutionsAnswer(knowledge) {
-  const solutions =
-    knowledge?.solutions ||
-    {};
-
-  const items =
-    extractStringArray(solutions);
-
-  if (items.length === 0) {
-    return 'Alphex AI builds client-focused AI solutions tailored to business requirements.';
-  }
-
-  return [
-    '**Alphex AI builds:**',
     '',
-    ...items.map(item => `- ${item}`)
+    'Its primary focus is building AI solutions around client requirements, workflows, knowledge, tools, and desired outcomes.'
   ].join('\n');
 }
 
 
-function buildProductsAnswer(knowledge) {
+function buildSolutionsAnswer(
+  knowledge
+) {
+  const solutions =
+    knowledge?.solutions ||
+    {};
+
+  const entries =
+    Object.values(
+      solutions
+    ).filter(
+      value =>
+        value &&
+        typeof value === 'object' &&
+        !Array.isArray(value)
+    );
+
+  if (
+    entries.length === 0
+  ) {
+    return [
+      '**Alphex AI builds:**',
+      '',
+      '- Conversational chatbots',
+      '- Knowledge systems',
+      '- RAG solutions',
+      '- AI agents',
+      '- Custom AI workflows'
+    ].join('\n');
+  }
+
+  const lines = [
+    '**Alphex AI builds:**',
+    ''
+  ];
+
+  for (const solution of entries) {
+    const name =
+      solution.name ||
+      '';
+
+    const description =
+      solution.description ||
+      '';
+
+    if (name) {
+      lines.push(
+        `**${name}**${description ? ` — ${description}` : ''}`
+      );
+    }
+  }
+
+  return lines.join('\n');
+}
+
+
+function buildProductsAnswer(
+  knowledge
+) {
   const products =
     knowledge?.products ||
     {};
 
-  const entries = Object.entries(products)
-    .filter(([key, value]) => {
-      return (
+  const entries =
+    Object.values(
+      products
+    ).filter(
+      value =>
         value &&
         typeof value === 'object' &&
-        !Array.isArray(value) &&
-        !/boundary/i.test(key)
-      );
-    });
+        !Array.isArray(value)
+    );
 
-  if (entries.length === 0) {
-    return 'Alphex AI currently builds products including EvalLoop AI and EvalLoop Jobs.';
+  if (
+    entries.length === 0
+  ) {
+    return [
+      '**Alphex AI products:**',
+      '',
+      '**EvalLoop AI** — AI evaluation and quality platform.',
+      '**EvalLoop Jobs** — AI opportunity discovery platform.'
+    ].join('\n');
   }
 
   const lines = [
@@ -789,7 +1134,7 @@ function buildProductsAnswer(knowledge) {
     ''
   ];
 
-  for (const [, product] of entries) {
+  for (const product of entries) {
     const name =
       product.name ||
       product.title ||
@@ -811,26 +1156,18 @@ function buildProductsAnswer(knowledge) {
 }
 
 
-function buildEvalLoopAIAnswer(knowledge) {
-  const products =
-    knowledge?.products ||
-    {};
-
+function buildEvalLoopAIAnswer(
+  knowledge
+) {
   const product =
-    findObjectByName(
-      products,
-      [
-        'EvalLoop AI',
-        'EL·AI',
-        'EL-AI'
-      ]
-    );
+    knowledge?.products?.evalLoopAI;
 
   if (!product) {
-    return (
-      '**EvalLoop AI** is Alphex AI’s AI evaluation and quality platform, ' +
-      'designed to evaluate AI responses, models, multimodal outputs, safety, grounding, and overall AI quality.'
-    );
+    return [
+      '**EvalLoop AI** is Alphex AI’s AI evaluation and quality platform.',
+      '',
+      'It focuses on evaluating AI responses, models, multimodal outputs, safety, grounding, and overall AI quality.'
+    ].join('\n');
   }
 
   const name =
@@ -839,47 +1176,46 @@ function buildEvalLoopAIAnswer(knowledge) {
 
   const description =
     product.description ||
-    product.positioning ||
     '';
 
-  const tags =
-    extractStringArray(
-      product.tags ||
-      product.capabilities ||
-      []
-    );
+  const focus =
+    Array.isArray(
+      product.focus
+    )
+      ? product.focus
+      : [];
 
-  return [
-    `**${name}** is ${description}`,
-    tags.length
-      ? `\nKey areas include ${joinNatural(tags)}.`
-      : ''
-  ]
-    .filter(Boolean)
-    .join('\n');
+  const lines = [
+    `**${name}** is ${description}`
+  ];
+
+  if (
+    focus.length > 0
+  ) {
+    lines.push(
+      '',
+      `Key areas include ${joinNatural(focus)}.`
+    );
+  }
+
+  return lines.join('\n');
 }
 
 
-function buildEvalLoopJobsAnswer(knowledge) {
-  const products =
-    knowledge?.products ||
-    {};
-
+function buildEvalLoopJobsAnswer(
+  knowledge
+) {
   const product =
-    findObjectByName(
-      products,
-      [
-        'EvalLoop Jobs',
-        'EL·J',
-        'EL-J'
-      ]
-    );
+    knowledge?.products?.evalLoopJobs;
 
   if (!product) {
-    return (
-      '**EvalLoop Jobs** is an independent AI opportunity discovery platform for ' +
-      'AI evaluation, LLM, data annotation, AI training, GenAI, prompt engineering, and related opportunities.'
-    );
+    return [
+      '**EvalLoop Jobs** is an independent AI opportunity discovery platform.',
+      '',
+      'It covers AI evaluation, LLM, data annotation, AI training, GenAI, prompt engineering, and related opportunities.',
+      '',
+      'It is not the employer or hiring company for listed opportunities.'
+    ].join('\n');
   }
 
   const name =
@@ -888,69 +1224,93 @@ function buildEvalLoopJobsAnswer(knowledge) {
 
   const description =
     product.description ||
-    product.positioning ||
     '';
 
   return [
     `**${name}** is ${description}`,
     '',
-    'It is an independent curated directory, not an employer. Applications are made through the original hiring company, platform, provider, or contributor network.'
+    product.important_disclaimer ||
+      'It is an independent curated opportunity discovery platform, not an employer.',
+    '',
+    product.application_process ||
+      'Applications are made through the original hiring company, hiring platform, project provider, or contributor network.'
   ].join('\n');
 }
 
 
-function buildLocationAnswer(knowledge) {
-  const company =
-    knowledge?.company ||
-    {};
-
+function buildLocationAnswer(
+  knowledge
+) {
   const location =
-    company.location ||
-    company.base ||
-    company.headquarters ||
+    knowledge?.company?.location ||
     'Hyderabad, India';
 
   return `Alphex AI is based in **${location}**.`;
 }
 
 
-function buildIndustriesAnswer(knowledge) {
+function buildIndustriesAnswer(
+  knowledge
+) {
   const industries =
-    knowledge?.industries ||
-    knowledge?.example_industries ||
-    [];
+    Array.isArray(
+      knowledge?.industries
+    )
+      ? knowledge.industries
+      : [];
 
-  const items =
-    extractStringArray(industries);
-
-  if (items.length === 0) {
-    return (
-      'Alphex AI can build AI systems for different business contexts, ' +
-      'with solutions tailored to the client and industry requirements.'
-    );
+  if (
+    industries.length === 0
+  ) {
+    return [
+      'Alphex AI can build AI systems for different business contexts, with solutions tailored to client and industry requirements.'
+    ].join('\n');
   }
 
-  return [
+  const lines = [
     '**Example industries where Alphex AI can help:**',
+    ''
+  ];
+
+  for (const industry of industries) {
+    const name =
+      industry?.name ||
+      '';
+
+    const positioning =
+      industry?.positioning ||
+      '';
+
+    if (name) {
+      lines.push(
+        `- **${name}**${positioning ? ` — ${positioning}` : ''}`
+      );
+    }
+  }
+
+  lines.push(
     '',
-    ...items.map(item => `- ${item}`),
-    '',
-    'These are example applications, not claims of existing customers or certified deployments.'
-  ].join('\n');
+    knowledge.industry_boundary ||
+      'These are example industry applications, not claims of existing customers or certified deployments.'
+  );
+
+  return lines.join('\n');
 }
 
 
-function buildProcessAnswer(knowledge) {
-  const process =
-    knowledge?.process ||
-    knowledge?.delivery_process ||
-    knowledge?.delivery ||
-    {};
+function buildProcessAnswer(
+  knowledge
+) {
+  const stages =
+    Array.isArray(
+      knowledge?.process?.stages
+    )
+      ? knowledge.process.stages
+      : [];
 
-  const items =
-    extractStringArray(process);
-
-  if (items.length === 0) {
+  if (
+    stages.length === 0
+  ) {
     return [
       '**Alphex AI process:**',
       '',
@@ -960,22 +1320,43 @@ function buildProcessAnswer(knowledge) {
     ].join('\n');
   }
 
-  return [
+  const lines = [
     '**Alphex AI process:**',
-    '',
-    ...items.map((item, index) =>
-      `${index + 1}. ${item}`
-    )
-  ].join('\n');
+    ''
+  ];
+
+  for (
+    let index = 0;
+    index < stages.length;
+    index++
+  ) {
+    const stage =
+      stages[index];
+
+    const number =
+      stage?.number ||
+      String(index + 1);
+
+    const name =
+      stage?.name ||
+      '';
+
+    const description =
+      stage?.description ||
+      '';
+
+    lines.push(
+      `${number}. **${name}**${description ? ` — ${description}` : ''}`
+    );
+  }
+
+  return lines.join('\n');
 }
 
 
-function buildHumanHandoffAnswer(knowledge) {
-  const trust =
-    knowledge?.trust_security ||
-    knowledge?.quality ||
-    {};
-
+function buildHumanHandoffAnswer(
+  knowledge
+) {
   return [
     'Yes. Alphex AI’s chatbot solutions can include **human handoff** when the workflow requires it.',
     '',
@@ -997,7 +1378,9 @@ function buildSystemPrompt({
   const profileText =
     currentProfile
       ? JSON.stringify(
-          sanitizeProfile(currentProfile),
+          sanitizeProfile(
+            currentProfile
+          ),
           null,
           2
         )
@@ -1006,29 +1389,29 @@ function buildSystemPrompt({
   return `
 You are Alphex Minibot, the conversational AI assistant for Alphex AI.
 
-Your job is to be naturally conversational while remaining strictly grounded in verified Alphex AI knowledge.
+Be naturally conversational like a modern AI assistant while remaining strictly accurate about Alphex AI.
 
-IMPORTANT KNOWLEDGE RULES:
+KNOWLEDGE RULES:
 
-1. Alphex-specific facts must come from the supplied Alphex knowledge.
+1. Alphex-specific facts must come from the supplied verified knowledge.
 2. Never invent Alphex customers, employees, partnerships, certifications, statistics, offices, integrations, guarantees, timelines, contracts, discounts, or capabilities.
-3. If an Alphex-specific fact is not present in the knowledge, say that you do not have that information.
-4. Do not turn general industry examples into claims that Alphex already has those customers or deployments.
+3. If an Alphex-specific fact is not present, say that the information is not currently available.
+4. Never turn example industries into claims about existing customers or deployments.
 5. Public pricing is starting pricing only.
-6. Do not invent final quotes, discounts, SLAs, delivery dates, contract terms, or hidden fees.
-7. General AI questions may be answered naturally using your general knowledge.
-8. Alphex knowledge should constrain Alphex facts, but it should NOT constrain your conversational ability.
-9. Understand greetings, typos, slang, short questions, follow-ups, pronouns, incomplete sentences, and casual conversation.
-10. Use conversation context when resolving references such as "it", "they", "that", or "the first product".
+6. Never invent final quotes, discounts, SLAs, delivery dates, contracts, or hidden fees.
+7. General AI and general knowledge questions may be answered naturally.
+8. Do not artificially connect unrelated questions to Alphex AI.
+9. Understand greetings, typos, slang, incomplete sentences, short questions, and follow-ups.
+10. Use conversation history to resolve references such as "it", "they", "that", "your company", or "the product".
 11. Do not repeatedly introduce yourself.
 12. Do not repeatedly say "How can I help?"
-13. Do not say "I don't have pricing" when pricing is present in the supplied knowledge.
-14. Do not tell the user to check the website for information that is already available in the supplied knowledge.
-15. Be concise when the question is simple and detailed when the question requires detail.
-16. Do not use unnecessary corporate jargon.
-17. Do not say "As an AI" unless genuinely necessary.
+13. Do not claim that you lack pricing if pricing is present in the supplied knowledge.
+14. Be concise for simple questions and detailed when useful.
+15. Avoid unnecessary corporate jargon.
+16. Do not say "As an AI" unless genuinely necessary.
+17. Do not fabricate an answer merely because the user expects an immediate answer.
 
-CONVERSATION STYLE:
+CONVERSATIONAL STYLE:
 
 - Friendly
 - Intelligent
@@ -1054,10 +1437,11 @@ CURRENT PAGE:
 
 ${page || 'Unknown'}
 
-Remember:
-For Alphex-specific questions, facts must remain grounded.
+FINAL RULE:
+
+For Alphex-specific questions, stay grounded in verified knowledge.
 For general questions, answer naturally.
-For mixed questions, answer both parts.
+For mixed questions, answer both parts when appropriate.
 `;
 }
 
@@ -1066,64 +1450,85 @@ For mixed questions, answer both parts.
    PROVIDER POOL
    ========================================================= */
 
-async function generateWithProviderPool(messages) {
-  const startedAt = Date.now();
+async function generateWithProviderPool(
+  messages
+) {
+  const startedAt =
+    Date.now();
 
   const attempts = [];
 
-  /* -------------------------------------------------------
-     Groq models
-     ------------------------------------------------------- */
+
+  /* =====================================================
+     GROQ
+     ===================================================== */
 
   if (GROQ_API_KEY) {
-    for (const model of GROQ_MODELS) {
+    for (
+      const model of GROQ_MODELS
+    ) {
       const elapsed =
-        Date.now() - startedAt;
+        Date.now() -
+        startedAt;
 
       if (
-        elapsed >= TOTAL_PROVIDER_BUDGET_MS
+        elapsed >=
+        TOTAL_PROVIDER_BUDGET_MS
       ) {
         break;
       }
 
       try {
         const remaining =
-          TOTAL_PROVIDER_BUDGET_MS - elapsed;
+          TOTAL_PROVIDER_BUDGET_MS -
+          elapsed;
 
         const timeoutMs =
           Math.min(
             GROQ_TIMEOUT_MS,
-            Math.max(500, remaining)
+            Math.max(
+              500,
+              remaining
+            )
           );
 
         const result =
           await callGroq({
-            apiKey: GROQ_API_KEY,
+            apiKey:
+              GROQ_API_KEY,
             model,
             messages,
             timeoutMs
           });
 
-        if (result?.answer) {
+        if (
+          result?.answer
+        ) {
           console.info(
             '[Alphex Chatbot] Groq success:',
             {
               model,
-              elapsed: Date.now() - startedAt
+              elapsed:
+                Date.now() -
+                startedAt
             }
           );
 
           return {
-            provider: 'groq',
+            provider:
+              'groq',
             model,
-            answer: result.answer
+            answer:
+              result.answer
           };
         }
       } catch (error) {
         attempts.push({
-          provider: 'groq',
+          provider:
+            'groq',
           model,
-          error: safeError(error)
+          error:
+            safeError(error)
         });
 
         console.warn(
@@ -1134,59 +1539,77 @@ async function generateWithProviderPool(messages) {
     }
   }
 
-  /* -------------------------------------------------------
-     Gemini models
-     ------------------------------------------------------- */
+
+  /* =====================================================
+     GEMINI
+     ===================================================== */
 
   if (GEMINI_API_KEY) {
-    for (const model of GEMINI_MODELS) {
+    for (
+      const model of GEMINI_MODELS
+    ) {
       const elapsed =
-        Date.now() - startedAt;
+        Date.now() -
+        startedAt;
 
       if (
-        elapsed >= TOTAL_PROVIDER_BUDGET_MS
+        elapsed >=
+        TOTAL_PROVIDER_BUDGET_MS
       ) {
         break;
       }
 
       try {
         const remaining =
-          TOTAL_PROVIDER_BUDGET_MS - elapsed;
+          TOTAL_PROVIDER_BUDGET_MS -
+          elapsed;
 
         const timeoutMs =
           Math.min(
             GEMINI_TIMEOUT_MS,
-            Math.max(500, remaining)
+            Math.max(
+              500,
+              remaining
+            )
           );
 
         const result =
           await callGemini({
-            apiKey: GEMINI_API_KEY,
+            apiKey:
+              GEMINI_API_KEY,
             model,
             messages,
             timeoutMs
           });
 
-        if (result?.answer) {
+        if (
+          result?.answer
+        ) {
           console.info(
             '[Alphex Chatbot] Gemini success:',
             {
               model,
-              elapsed: Date.now() - startedAt
+              elapsed:
+                Date.now() -
+                startedAt
             }
           );
 
           return {
-            provider: 'gemini',
+            provider:
+              'gemini',
             model,
-            answer: result.answer
+            answer:
+              result.answer
           };
         }
       } catch (error) {
         attempts.push({
-          provider: 'gemini',
+          provider:
+            'gemini',
           model,
-          error: safeError(error)
+          error:
+            safeError(error)
         });
 
         console.warn(
@@ -1197,10 +1620,17 @@ async function generateWithProviderPool(messages) {
     }
   }
 
+
+  /* =====================================================
+     ALL FAILED
+     ===================================================== */
+
   console.error(
     '[Alphex Chatbot] Provider pool exhausted:',
     {
-      elapsed: Date.now() - startedAt,
+      elapsed:
+        Date.now() -
+        startedAt,
       attempts
     }
   );
@@ -1224,7 +1654,8 @@ async function callGroq({
 
   const timer =
     setTimeout(
-      () => controller.abort(),
+      () =>
+        controller.abort(),
       timeoutMs
     );
 
@@ -1233,18 +1664,29 @@ async function callGroq({
       await fetch(
         'https://api.groq.com/openai/v1/chat/completions',
         {
-          method: 'POST',
+          method:
+            'POST',
+
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey}`
+            'Content-Type':
+              'application/json',
+
+            Authorization:
+              `Bearer ${apiKey}`
           },
-          body: JSON.stringify({
-            model,
-            messages,
-            temperature: TEMPERATURE,
-            max_tokens: MAX_OUTPUT_TOKENS
-          }),
-          signal: controller.signal
+
+          body:
+            JSON.stringify({
+              model,
+              messages,
+              temperature:
+                TEMPERATURE,
+              max_tokens:
+                MAX_OUTPUT_TOKENS
+            }),
+
+          signal:
+            controller.signal
         }
       );
 
@@ -1254,16 +1696,15 @@ async function callGroq({
     let data = null;
 
     try {
-      data = JSON.parse(raw);
+      data =
+        JSON.parse(raw);
     } catch {
       data = null;
     }
 
     if (!response.ok) {
       throw new Error(
-        `Groq HTTP ${response.status}: ${
-          raw.slice(0, 1000)
-        }`
+        `Groq HTTP ${response.status}: ${raw.slice(0, 1000)}`
       );
     }
 
@@ -1280,12 +1721,14 @@ async function callGroq({
     }
 
     return {
-      answer: answer.trim()
+      answer:
+        answer.trim()
     };
 
   } catch (error) {
     if (
-      error?.name === 'AbortError'
+      error?.name ===
+      'AbortError'
     ) {
       throw new Error(
         `Groq timeout after ${timeoutMs}ms`
@@ -1295,7 +1738,9 @@ async function callGroq({
     throw error;
 
   } finally {
-    clearTimeout(timer);
+    clearTimeout(
+      timer
+    );
   }
 }
 
@@ -1315,7 +1760,8 @@ async function callGemini({
 
   const timer =
     setTimeout(
-      () => controller.abort(),
+      () =>
+        controller.abort(),
       timeoutMs
     );
 
@@ -1324,24 +1770,33 @@ async function callGemini({
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
     const contents =
-      convertMessagesToGemini(messages);
+      convertMessagesToGemini(
+        messages
+      );
 
     const systemInstruction =
-      extractSystemInstruction(messages);
+      extractSystemInstruction(
+        messages
+      );
 
     const body = {
       contents,
       generationConfig: {
-        temperature: TEMPERATURE,
-        maxOutputTokens: MAX_OUTPUT_TOKENS
+        temperature:
+          TEMPERATURE,
+        maxOutputTokens:
+          MAX_OUTPUT_TOKENS
       }
     };
 
-    if (systemInstruction) {
+    if (
+      systemInstruction
+    ) {
       body.systemInstruction = {
         parts: [
           {
-            text: systemInstruction
+            text:
+              systemInstruction
           }
         ]
       };
@@ -1351,12 +1806,19 @@ async function callGemini({
       await fetch(
         url,
         {
-          method: 'POST',
+          method:
+            'POST',
+
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type':
+              'application/json'
           },
-          body: JSON.stringify(body),
-          signal: controller.signal
+
+          body:
+            JSON.stringify(body),
+
+          signal:
+            controller.signal
         }
       );
 
@@ -1366,21 +1828,22 @@ async function callGemini({
     let data = null;
 
     try {
-      data = JSON.parse(raw);
+      data =
+        JSON.parse(raw);
     } catch {
       data = null;
     }
 
     if (!response.ok) {
       throw new Error(
-        `Gemini HTTP ${response.status}: ${
-          raw.slice(0, 1000)
-        }`
+        `Gemini HTTP ${response.status}: ${raw.slice(0, 1000)}`
       );
     }
 
     const answer =
-      extractGeminiText(data);
+      extractGeminiText(
+        data
+      );
 
     if (
       typeof answer !== 'string' ||
@@ -1392,12 +1855,14 @@ async function callGemini({
     }
 
     return {
-      answer: answer.trim()
+      answer:
+        answer.trim()
     };
 
   } catch (error) {
     if (
-      error?.name === 'AbortError'
+      error?.name ===
+      'AbortError'
     ) {
       throw new Error(
         `Gemini timeout after ${timeoutMs}ms`
@@ -1407,7 +1872,9 @@ async function callGemini({
     throw error;
 
   } finally {
-    clearTimeout(timer);
+    clearTimeout(
+      timer
+    );
   }
 }
 
@@ -1416,49 +1883,72 @@ async function callGemini({
    GEMINI MESSAGE CONVERSION
    ========================================================= */
 
-function convertMessagesToGemini(messages) {
+function convertMessagesToGemini(
+  messages
+) {
   return messages
     .filter(
       message =>
-        message.role !== 'system'
+        message.role !==
+        'system'
     )
-    .map(message => ({
-      role:
-        message.role === 'assistant'
-          ? 'model'
-          : 'user',
-      parts: [
-        {
-          text: String(
-            message.content || ''
-          )
-        }
-      ]
-    }));
+    .map(
+      message => ({
+        role:
+          message.role ===
+          'assistant'
+            ? 'model'
+            : 'user',
+
+        parts: [
+          {
+            text:
+              String(
+                message.content ||
+                ''
+              )
+          }
+        ]
+      })
+    );
 }
 
 
-function extractSystemInstruction(messages) {
+function extractSystemInstruction(
+  messages
+) {
   const systemMessage =
     messages.find(
       message =>
-        message.role === 'system'
+        message.role ===
+        'system'
     );
 
-  return systemMessage?.content || '';
+  return (
+    systemMessage?.content ||
+    ''
+  );
 }
 
 
-function extractGeminiText(data) {
+function extractGeminiText(
+  data
+) {
   const parts =
-    data?.candidates?.[0]?.content?.parts;
+    data?.candidates?.[0]
+      ?.content?.parts;
 
-  if (!Array.isArray(parts)) {
+  if (
+    !Array.isArray(parts)
+  ) {
     return '';
   }
 
   return parts
-    .map(part => part?.text || '')
+    .map(
+      part =>
+        part?.text || ''
+    )
     .join('')
     .trim();
 }
@@ -1476,7 +1966,9 @@ function isSupabaseConfigured() {
 }
 
 
-async function getSupabaseUser(accessToken) {
+async function getSupabaseUser(
+  accessToken
+) {
   const response =
     await fetch(
       `${SUPABASE_URL}/auth/v1/user`,
@@ -1484,6 +1976,7 @@ async function getSupabaseUser(accessToken) {
         headers: {
           Authorization:
             `Bearer ${accessToken}`,
+
           apikey:
             SUPABASE_SERVICE_ROLE_KEY
         }
@@ -1500,7 +1993,9 @@ async function getSupabaseUser(accessToken) {
 }
 
 
-async function getSupabaseProfile(userId) {
+async function getSupabaseProfile(
+  userId
+) {
   const response =
     await fetch(
       `${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(userId)}&select=*`,
@@ -1508,6 +2003,7 @@ async function getSupabaseProfile(userId) {
         headers: {
           Authorization:
             `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+
           apikey:
             SUPABASE_SERVICE_ROLE_KEY
         }
@@ -1546,6 +2042,7 @@ async function loadConversationHistory(
         headers: {
           Authorization:
             `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+
           apikey:
             SUPABASE_SERVICE_ROLE_KEY
         }
@@ -1580,20 +2077,27 @@ async function saveConversationMessages({
     {
       conversation_id:
         conversationId,
+
       user_id:
         userId,
+
       role:
         'user',
+
       content:
         userMessage
     },
+
     {
       conversation_id:
         conversationId,
+
       user_id:
         userId,
+
       role:
         'assistant',
+
       content:
         assistantMessage
     }
@@ -1603,17 +2107,23 @@ async function saveConversationMessages({
     await fetch(
       `${SUPABASE_URL}/rest/v1/conversation_messages`,
       {
-        method: 'POST',
+        method:
+          'POST',
+
         headers: {
           'Content-Type':
             'application/json',
+
           Authorization:
             `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+
           apikey:
             SUPABASE_SERVICE_ROLE_KEY,
+
           Prefer:
             'return=minimal'
         },
+
         body:
           JSON.stringify(rows)
       }
@@ -1631,47 +2141,65 @@ async function saveConversationMessages({
 
 
 /* =========================================================
-   HISTORY / PROFILE HELPERS
+   HISTORY / PROFILE
    ========================================================= */
 
-function normalizeHistory(history) {
-  if (!Array.isArray(history)) {
+function normalizeHistory(
+  history
+) {
+  if (
+    !Array.isArray(history)
+  ) {
     return [];
   }
 
   return history
-    .slice(-MAX_HISTORY_MESSAGES)
+    .slice(
+      -MAX_HISTORY_MESSAGES
+    )
     .map(item => {
       const role =
-        item?.role === 'assistant'
+        item?.role ===
+        'assistant'
           ? 'assistant'
-          : item?.role === 'system'
+          : item?.role ===
+              'system'
             ? 'system'
             : 'user';
 
       const content =
         String(
-          item?.content || ''
+          item?.content ||
+          ''
         ).trim();
 
       return {
         role,
         content:
           content.length > 1800
-            ? content.slice(0, 1800) +
-              '…'
+            ? content.slice(
+                0,
+                1800
+              ) + '…'
             : content
       };
     })
     .filter(
       item =>
-        item.content.length > 0
+        item.content.length >
+        0
     );
 }
 
 
-function sanitizeProfile(profile) {
-  if (!profile || typeof profile !== 'object') {
+function sanitizeProfile(
+  profile
+) {
+  if (
+    !profile ||
+    typeof profile !==
+      'object'
+  ) {
     return null;
   }
 
@@ -1685,12 +2213,18 @@ function sanitizeProfile(profile) {
     'role'
   ];
 
-  for (const key of allowedKeys) {
+  for (
+    const key of allowedKeys
+  ) {
     if (
-      typeof profile[key] === 'string'
+      typeof profile[key] ===
+      'string'
     ) {
       safe[key] =
-        profile[key].slice(0, 300);
+        profile[key].slice(
+          0,
+          300
+        );
     }
   }
 
@@ -1702,164 +2236,202 @@ function sanitizeProfile(profile) {
    GENERAL HELPERS
    ========================================================= */
 
-function parseModelList(value) {
+function parseModelList(
+  value
+) {
   if (
-    typeof value !== 'string' ||
+    typeof value !==
+      'string' ||
     !value.trim()
   ) {
     return [];
   }
 
-  return value
-    .split(',')
-    .map(model => model.trim())
-    .filter(Boolean);
-}
-
-
-function normalizeMessage(message) {
-  if (
-    typeof message !== 'string'
-  ) {
-    return '';
-  }
-
-  return message
-    .replace(/\u0000/g, '')
-    .trim();
-}
-
-
-function normalizeForIntent(message) {
-  return message
-    .toLowerCase()
-    .replace(/[?!.,;:()[\]{}'"`]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-
-function matchesAny(text, patterns) {
-  return patterns.some(pattern => {
-    const normalizedPattern =
-      normalizeForIntent(pattern);
-
-    return (
-      text === normalizedPattern ||
-      text.includes(normalizedPattern)
-    );
-  });
-}
-
-
-function extractStringArray(value) {
-  if (Array.isArray(value)) {
-    return value
-      .filter(
-        item =>
-          typeof item === 'string'
-      )
+  return uniqueModels(
+    value
+      .split(',')
       .map(
-        item => item.trim()
+        model =>
+          model.trim()
       )
-      .filter(Boolean);
-  }
-
-  if (
-    typeof value === 'object' &&
-    value !== null
-  ) {
-    const values = [];
-
-    for (const item of Object.values(value)) {
-      if (typeof item === 'string') {
-        values.push(
-          item.trim()
-        );
-      } else if (Array.isArray(item)) {
-        values.push(
-          ...extractStringArray(item)
-        );
-      }
-    }
-
-    return values.filter(Boolean);
-  }
-
-  return [];
+      .filter(Boolean)
+  );
 }
 
 
-function findObjectByName(
-  collection,
-  names
+function uniqueModels(
+  models
+) {
+  return [
+    ...new Set(
+      models.filter(
+        model =>
+          typeof model ===
+            'string' &&
+          model.trim()
+      )
+    )
+  ];
+}
+
+
+function normalizeMessage(
+  message
 ) {
   if (
-    !collection ||
-    typeof collection !== 'object'
+    typeof message !==
+    'string'
   ) {
-    return null;
-  }
-
-  const normalizedNames =
-    names.map(
-      name =>
-        normalizeForIntent(name)
-    );
-
-  for (const value of Object.values(collection)) {
-    if (
-      !value ||
-      typeof value !== 'object' ||
-      Array.isArray(value)
-    ) {
-      continue;
-    }
-
-    const candidate =
-      normalizeForIntent(
-        value.name ||
-        value.title ||
-        ''
-      );
-
-    if (
-      normalizedNames.includes(
-        candidate
-      )
-    ) {
-      return value;
-    }
-  }
-
-  return null;
-}
-
-
-function joinNatural(items) {
-  if (items.length === 0) {
     return '';
   }
 
-  if (items.length === 1) {
+  return message
+    .replace(
+      /\u0000/g,
+      ''
+    )
+    .trim();
+}
+
+
+function normalizeForIntent(
+  message
+) {
+  return String(
+    message || ''
+  )
+    .toLowerCase()
+    .replace(
+      /[?!.,;:()[\]{}'"`]/g,
+      ' '
+    )
+    .replace(
+      /\s+/g,
+      ' '
+    )
+    .trim();
+}
+
+
+function matchesAny(
+  text,
+  patterns
+) {
+  return patterns.some(
+    pattern => {
+      const normalizedPattern =
+        normalizeForIntent(
+          pattern
+        );
+
+      return (
+        text ===
+          normalizedPattern ||
+        text.includes(
+          normalizedPattern
+        )
+      );
+    }
+  );
+}
+
+
+function containsAnyWord(
+  text,
+  words
+) {
+  return words.some(
+    word => {
+      const normalized =
+        normalizeForIntent(
+          word
+        );
+
+      if (!normalized) {
+        return false;
+      }
+
+      /*
+       * For multi-word expressions,
+       * substring matching is appropriate.
+       */
+      if (
+        normalized.includes(' ')
+      ) {
+        return text.includes(
+          normalized
+        );
+      }
+
+      /*
+       * Word-boundary matching prevents
+       * accidental matches such as:
+       *
+       * "prices" → "price"
+       */
+      const pattern =
+        new RegExp(
+          `(^|\\s)${escapeRegExp(normalized)}($|\\s)`,
+          'i'
+        );
+
+      return pattern.test(
+        text
+      );
+    }
+  );
+}
+
+
+function escapeRegExp(
+  value
+) {
+  return String(value)
+    .replace(
+      /[.*+?^${}()|[\]\\]/g,
+      '\\$&'
+    );
+}
+
+
+function joinNatural(
+  items
+) {
+  if (
+    items.length === 0
+  ) {
+    return '';
+  }
+
+  if (
+    items.length === 1
+  ) {
     return items[0];
   }
 
-  if (items.length === 2) {
+  if (
+    items.length === 2
+  ) {
     return `${items[0]} and ${items[1]}`;
   }
 
   return (
-    items.slice(0, -1).join(', ') +
+    items
+      .slice(0, -1)
+      .join(', ') +
     `, and ${items[items.length - 1]}`
   );
 }
 
 
-function extractBearerToken(authorization) {
+function extractBearerToken(
+  authorization
+) {
   if (
     !authorization ||
-    !authorization.startsWith('Bearer ')
+    !authorization.startsWith(
+      'Bearer '
+    )
   ) {
     return null;
   }
@@ -1870,9 +2442,12 @@ function extractBearerToken(authorization) {
 }
 
 
-function cleanAssistantResponse(text) {
+function cleanAssistantResponse(
+  text
+) {
   if (
-    typeof text !== 'string'
+    typeof text !==
+    'string'
   ) {
     return '';
   }
@@ -1891,25 +2466,36 @@ function cleanAssistantResponse(text) {
 }
 
 
-function safeError(error) {
+function safeError(
+  error
+) {
   if (!error) {
     return 'Unknown error';
   }
 
   if (
-    typeof error === 'string'
+    typeof error ===
+    'string'
   ) {
-    return error.slice(0, 1000);
+    return error.slice(
+      0,
+      1000
+    );
   }
 
   return (
     error.message ||
     String(error)
-  ).slice(0, 1000);
+  ).slice(
+    0,
+    1000
+  );
 }
 
 
-function setCorsHeaders(res) {
+function setCorsHeaders(
+  res
+) {
   res.setHeader(
     'Access-Control-Allow-Origin',
     '*'
