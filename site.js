@@ -1,339 +1,536 @@
 /* =========================================================
-   ALPHEX AI — SHARED SITE JAVASCRIPT
+   ALPHEX AI — SHARED SITE SYSTEM
+   Navigation + Theme + Authentication + Interactions
    ========================================================= */
-
 (() => {
   'use strict';
-
-  /* =======================================================
+  /* =========================================================
      CONFIGURATION
-     ======================================================= */
-
+     ========================================================= */
   const SUPABASE_URL =
     'https://nxqxhakjbtdzreimpkdz.supabase.co';
-
   const SUPABASE_PUBLISHABLE_KEY =
     'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
-
-
-  /* =======================================================
-     SUPABASE CLIENT
-     ======================================================= */
-
   let supabaseClient = null;
-
+  /* =========================================================
+     SUPABASE
+     ========================================================= */
   function getSupabaseClient() {
-
     if (!window.supabase) {
-      console.error(
-        'Alphex AI: Supabase library was not loaded.'
-      );
       return null;
     }
-
     /*
-     * Reuse an existing shared client if one exists.
-     * This prevents different pages/scripts from
-     * accidentally creating competing clients.
+     * Reuse the same client if another Alphex script
+     * has already created one.
      */
-
     if (window.alphexSupabase) {
-      return window.alphexSupabase;
+      supabaseClient = window.alphexSupabase;
+      return supabaseClient;
     }
-
-    window.alphexSupabase =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
-
-    return window.alphexSupabase;
+    supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+    window.alphexSupabase = supabaseClient;
+    return supabaseClient;
   }
-
-
-  /* =======================================================
-     LOAD SHARED COMPONENT
-     ======================================================= */
-
+  function loadSupabase() {
+    return new Promise((resolve, reject) => {
+      if (window.supabase) {
+        resolve();
+        return;
+      }
+      const existing =
+        document.querySelector(
+          'script[data-alphex-supabase]'
+        );
+      if (existing) {
+        existing.addEventListener('load', resolve, {
+          once: true
+        });
+        existing.addEventListener('error', reject, {
+          once: true
+        });
+        return;
+      }
+      const script =
+        document.createElement('script');
+      script.src =
+        'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+      script.async = true;
+      script.dataset.alphexSupabase = 'true';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  /* =========================================================
+     SHARED COMPONENTS
+     ========================================================= */
   async function loadComponent(selector, file) {
-
     const container =
       document.querySelector(selector);
-
     if (!container) {
       return false;
     }
-
     try {
-
       const response =
         await fetch(file, {
-          cache: 'no-cache'
+          cache: 'no-store'
         });
-
       if (!response.ok) {
         throw new Error(
           `Failed to load ${file}: ${response.status}`
         );
       }
-
       container.innerHTML =
         await response.text();
-
       return true;
-
     } catch (error) {
-
       console.error(
-        `Alphex AI component loading error (${file}):`,
+        `Alphex AI: failed to load ${file}`,
         error
       );
-
       return false;
     }
   }
-
-
-  /* =======================================================
-     LOAD NAV + FOOTER
-     ======================================================= */
-
   async function loadSharedComponents() {
-
-    await Promise.all([
-      loadComponent('#site-nav', 'nav.html'),
-      loadComponent('#site-footer', 'footer.html')
-    ]);
-
-    initializeSite();
+    await loadComponent(
+      '#site-nav',
+      '/nav.html'
+    );
+    await loadComponent(
+      '#site-footer',
+      '/footer.html'
+    );
   }
-
-
-  /* =======================================================
-     INITIALIZE EVERYTHING
-     ======================================================= */
-
-  function initializeSite() {
-
-    initializeNavigation();
-
-    initializeTheme();
-
-    initializeAuthentication();
-
-    initializeAnchorScrolling();
-
-    initializeReactiveAnimations();
+  /* =========================================================
+     AUTH ELEMENTS
+     ========================================================= */
+  function getAuthElements() {
+    return {
+      loginNavButton:
+        document.getElementById(
+          'loginNavButton'
+        ),
+      authProfile:
+        document.getElementById(
+          'authProfile'
+        ),
+      profileButton:
+        document.getElementById(
+          'profileButton'
+        ),
+      profileMenu:
+        document.getElementById(
+          'profileMenu'
+        ),
+      profileInitial:
+        document.getElementById(
+          'profileInitial'
+        ),
+      profileName:
+        document.getElementById(
+          'profileName'
+        ),
+      profileEmail:
+        document.getElementById(
+          'profileEmail'
+        ),
+      profileSignout:
+        document.getElementById(
+          'profileSignout'
+        ),
+      mobileLoginLink:
+        document.getElementById(
+          'mobileLoginLink'
+        ),
+      mobileProfileLink:
+        document.getElementById(
+          'mobileProfileLink'
+        )
+    };
   }
-
-
-  /* =======================================================
-     NAVIGATION
-     ======================================================= */
-
-  function initializeNavigation() {
-
-    const menuButton =
-      document.querySelector('.mobile-menu');
-
-    const mobilePanel =
-      document.querySelector('.mobile-panel');
-
-    if (!menuButton || !mobilePanel) {
+  /* =========================================================
+     USER DISPLAY
+     ========================================================= */
+  function getUserDisplayName(user) {
+    if (!user) {
+      return 'Alphex AI';
+    }
+    const metadata =
+      user.user_metadata || {};
+    const fullName =
+      metadata.full_name ||
+      metadata.name ||
+      '';
+    if (
+      typeof fullName === 'string' &&
+      fullName.trim()
+    ) {
+      return fullName.trim();
+    }
+    if (user.email) {
+      return user.email.split('@')[0];
+    }
+    return 'Alphex AI';
+  }
+  function getProfileInitial(name) {
+    if (!name) {
+      return 'A';
+    }
+    return (
+      name
+        .trim()
+        .charAt(0)
+        .toUpperCase() || 'A'
+    );
+  }
+  /* =========================================================
+     LOGGED OUT
+     ========================================================= */
+  function showLoggedOutNavigation() {
+    const elements =
+      getAuthElements();
+    document.body.classList.remove(
+      'authenticated'
+    );
+    if (elements.loginNavButton) {
+      elements.loginNavButton.style.display =
+        'inline-flex';
+    }
+    if (elements.authProfile) {
+      elements.authProfile.style.display =
+        'none';
+    }
+    if (elements.mobileLoginLink) {
+      elements.mobileLoginLink.style.display =
+        'flex';
+    }
+    if (elements.mobileProfileLink) {
+      elements.mobileProfileLink.style.display =
+        'none';
+    }
+    if (elements.profileMenu) {
+      elements.profileMenu.classList.remove(
+        'open'
+      );
+    }
+    if (elements.profileButton) {
+      elements.profileButton.setAttribute(
+        'aria-expanded',
+        'false'
+      );
+    }
+  }
+  /* =========================================================
+     LOGGED IN
+     ========================================================= */
+  function showLoggedInNavigation(user) {
+    if (!user) {
+      showLoggedOutNavigation();
       return;
     }
-
-
-    function closeMenu() {
-
-      menuButton.classList.remove('open');
-
-      menuButton.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-
-      mobilePanel.classList.remove('open');
-
-      mobilePanel.setAttribute(
-        'aria-hidden',
-        'true'
-      );
+    const elements =
+      getAuthElements();
+    document.body.classList.add(
+      'authenticated'
+    );
+    const name =
+      getUserDisplayName(user);
+    const initial =
+      getProfileInitial(name);
+    if (elements.loginNavButton) {
+      elements.loginNavButton.style.display =
+        'none';
     }
-
-
-    function openMenu() {
-
-      menuButton.classList.add('open');
-
-      menuButton.setAttribute(
-        'aria-expanded',
-        'true'
-      );
-
-      mobilePanel.classList.add('open');
-
-      mobilePanel.setAttribute(
-        'aria-hidden',
-        'false'
-      );
+    if (elements.authProfile) {
+      elements.authProfile.style.display =
+        'inline-flex';
     }
-
-
-    menuButton.addEventListener(
-      'click',
-      () => {
-
-        const isOpen =
-          mobilePanel.classList.contains('open');
-
-        if (isOpen) {
-          closeMenu();
+    if (elements.profileInitial) {
+      elements.profileInitial.textContent =
+        initial;
+    }
+    if (elements.profileName) {
+      elements.profileName.textContent =
+        name;
+    }
+    if (elements.profileEmail) {
+      elements.profileEmail.textContent =
+        user.email || 'Signed in';
+    }
+    if (elements.mobileLoginLink) {
+      elements.mobileLoginLink.style.display =
+        'none';
+    }
+    if (elements.mobileProfileLink) {
+      elements.mobileProfileLink.style.display =
+        'flex';
+    }
+  }
+  /* =========================================================
+     SESSION CHECK
+     ========================================================= */
+  async function updateAuthenticationUI() {
+    const client =
+      getSupabaseClient();
+    if (!client) {
+      console.error(
+        'Alphex AI: Supabase client unavailable.'
+      );
+      showLoggedOutNavigation();
+      return;
+    }
+    try {
+      const {
+        data,
+        error
+      } = await client.auth.getSession();
+      if (error) {
+        console.error(
+          'Alphex AI: session error',
+          error
+        );
+        showLoggedOutNavigation();
+        return;
+      }
+      const session =
+        data?.session || null;
+      if (
+        session &&
+        session.user
+      ) {
+        showLoggedInNavigation(
+          session.user
+        );
+      } else {
+        showLoggedOutNavigation();
+      }
+    } catch (error) {
+      console.error(
+        'Alphex AI: authentication error',
+        error
+      );
+      showLoggedOutNavigation();
+    }
+  }
+  /* =========================================================
+     AUTH EVENTS
+     ========================================================= */
+  function initializeAuthentication() {
+    const client =
+      getSupabaseClient();
+    if (!client) {
+      return;
+    }
+    /*
+     * Check the existing session first.
+     */
+    updateAuthenticationUI();
+    /*
+     * Keep every page synchronized with
+     * login, logout, token refresh, etc.
+     */
+    client.auth.onAuthStateChange(
+      (_event, session) => {
+        if (
+          session &&
+          session.user
+        ) {
+          showLoggedInNavigation(
+            session.user
+          );
         } else {
-          openMenu();
+          showLoggedOutNavigation();
         }
       }
     );
-
-
-    mobilePanel
-      .querySelectorAll('a')
-      .forEach(link => {
-
-        link.addEventListener(
-          'click',
-          closeMenu
-        );
-
-      });
-
-
-    window.alphexCloseMobileMenu =
-      closeMenu;
   }
-
-
-  /* =======================================================
+  /* =========================================================
+     PROFILE MENU
+     ========================================================= */
+  function initializeProfileMenu() {
+    const elements =
+      getAuthElements();
+    if (
+      !elements.profileButton ||
+      !elements.profileMenu
+    ) {
+      return;
+    }
+    elements.profileButton.addEventListener(
+      'click',
+      event => {
+        event.stopPropagation();
+        const isOpen =
+          elements.profileMenu.classList.contains(
+            'open'
+          );
+        elements.profileMenu.classList.toggle(
+          'open',
+          !isOpen
+        );
+        elements.profileButton.setAttribute(
+          'aria-expanded',
+          String(!isOpen)
+        );
+      }
+    );
+    document.addEventListener(
+      'click',
+      event => {
+        if (
+          elements.authProfile &&
+          !elements.authProfile.contains(
+            event.target
+          )
+        ) {
+          elements.profileMenu.classList.remove(
+            'open'
+          );
+          elements.profileButton.setAttribute(
+            'aria-expanded',
+            'false'
+          );
+        }
+      }
+    );
+    if (elements.profileSignout) {
+      elements.profileSignout.addEventListener(
+        'click',
+        async () => {
+          const client =
+            getSupabaseClient();
+          if (!client) {
+            return;
+          }
+          elements.profileSignout.disabled =
+            true;
+          elements.profileSignout.textContent =
+            'Signing out...';
+          try {
+            const {
+              error
+            } =
+              await client.auth.signOut();
+            if (error) {
+              throw error;
+            }
+            window.location.replace(
+              '/index.html'
+            );
+          } catch (error) {
+            console.error(
+              'Alphex AI: sign out error',
+              error
+            );
+            elements.profileSignout.disabled =
+              false;
+            elements.profileSignout.textContent =
+              'Sign out';
+          }
+        }
+      );
+    }
+    if (elements.mobileProfileLink) {
+      elements.mobileProfileLink.addEventListener(
+        'click',
+        event => {
+          event.preventDefault();
+          if (
+            elements.profileMenu
+          ) {
+            elements.profileMenu.classList.toggle(
+              'open'
+            );
+          }
+          closeMobileMenu();
+        }
+      );
+    }
+  }
+  /* =========================================================
      THEME
-     ======================================================= */
-
+     ========================================================= */
   function initializeTheme() {
-
     const root =
       document.documentElement;
-
     const body =
       document.body;
-
     const themeToggle =
-      document.querySelector('.theme-toggle');
-
+      document.querySelector(
+        '.theme-toggle'
+      );
     if (!themeToggle) {
       return;
     }
-
-
-    function getSavedTheme() {
-
+    const getSavedTheme = () => {
       try {
-
         return window.localStorage.getItem(
           'alphex-theme'
         );
-
-      } catch (error) {
-
+      } catch (_error) {
         return null;
-
       }
-    }
-
-
-    function saveTheme(theme) {
-
+    };
+    const saveTheme = theme => {
       try {
-
         window.localStorage.setItem(
           'alphex-theme',
           theme
         );
-
-      } catch (error) {
-
+      } catch (_error) {
         /* Theme still works for this visit. */
-
       }
-    }
-
-
-    function setTheme(theme) {
-
+    };
+    const setTheme = theme => {
       const dark =
         theme === 'dark';
-
       body.classList.toggle(
         'dark-theme',
         dark
       );
-
       root.classList.toggle(
         'dark-theme',
         dark
       );
-
-
       themeToggle.setAttribute(
         'aria-pressed',
         String(dark)
       );
-
-
       themeToggle.setAttribute(
         'aria-label',
         dark
           ? 'Switch to light mode'
           : 'Switch to dark mode'
       );
-
-
       const icon =
         themeToggle.querySelector(
           '.theme-icon'
         );
-
       const label =
         themeToggle.querySelector(
           '.theme-label'
         );
-
-
       if (icon) {
         icon.textContent =
           dark ? '☀' : '☾';
       }
-
-
       if (label) {
         label.textContent =
           dark ? 'Light' : 'Dark';
       }
-
-
       saveTheme(
         dark ? 'dark' : 'light'
       );
-    }
-
-
+    };
     setTheme(
       getSavedTheme() || 'light'
     );
-
-
     themeToggle.addEventListener(
       'click',
       () => {
-
         setTheme(
           body.classList.contains(
             'dark-theme'
@@ -341,661 +538,157 @@
             ? 'light'
             : 'dark'
         );
-
       }
     );
   }
-
-
-  /* =======================================================
-     AUTHENTICATION
-     ======================================================= */
-
-  function initializeAuthentication() {
-
-    supabaseClient =
-      getSupabaseClient();
-
-    if (!supabaseClient) {
+  /* =========================================================
+     MOBILE NAVIGATION
+     ========================================================= */
+  let closeMobileMenu = () => {};
+  function initializeMobileNavigation() {
+    const menuButton =
+      document.querySelector(
+        '.mobile-menu'
+      );
+    const mobilePanel =
+      document.querySelector(
+        '.mobile-panel'
+      );
+    if (
+      !menuButton ||
+      !mobilePanel
+    ) {
       return;
     }
-
-
-    /* =====================================================
-       NAV ELEMENTS
-       ===================================================== */
-
-    const loginNavButton =
-      document.getElementById(
-        'loginNavButton'
+    closeMobileMenu = () => {
+      menuButton.classList.remove(
+        'open'
       );
-
-    const authProfile =
-      document.getElementById(
-        'authProfile'
+      menuButton.setAttribute(
+        'aria-expanded',
+        'false'
       );
-
-    const profileButton =
-      document.getElementById(
-        'profileButton'
+      mobilePanel.classList.remove(
+        'open'
       );
-
-    const profileMenu =
-      document.getElementById(
-        'profileMenu'
+      mobilePanel.setAttribute(
+        'aria-hidden',
+        'true'
       );
-
-    const profileInitial =
-      document.getElementById(
-        'profileInitial'
-      );
-
-    const profileName =
-      document.getElementById(
-        'profileName'
-      );
-
-    const profileEmail =
-      document.getElementById(
-        'profileEmail'
-      );
-
-    const profileSignout =
-      document.getElementById(
-        'profileSignout'
-      );
-
-    const mobileLoginLink =
-      document.getElementById(
-        'mobileLoginLink'
-      );
-
-    const mobileProfileLink =
-      document.getElementById(
-        'mobileProfileLink'
-      );
-
-
-    /* =====================================================
-       USER DISPLAY NAME
-       ===================================================== */
-
-    function getUserDisplayName(user) {
-
-      if (!user) {
-        return 'Alphex AI';
-      }
-
-
-      const metadata =
-        user.user_metadata || {};
-
-
-      const fullName =
-        metadata.full_name ||
-        metadata.name ||
-        '';
-
-
-      if (fullName.trim()) {
-        return fullName.trim();
-      }
-
-
-      if (user.email) {
-        return user.email.split('@')[0];
-      }
-
-
-      return 'Alphex AI';
-    }
-
-
-    /* =====================================================
-       PROFILE INITIAL
-       ===================================================== */
-
-    function getProfileInitial(name) {
-
-      if (!name) {
-        return 'A';
-      }
-
-
-      return (
-        name
-          .trim()
-          .charAt(0)
-          .toUpperCase() || 'A'
-      );
-    }
-
-
-    /* =====================================================
-       LOGGED OUT
-       ===================================================== */
-
-    function showLoggedOutNavigation() {
-
-      document.body.classList.remove(
-        'authenticated'
-      );
-
-
-      if (loginNavButton) {
-        loginNavButton.style.display =
-          'inline-flex';
-      }
-
-
-      if (authProfile) {
-        authProfile.style.display =
-          'none';
-      }
-
-
-      if (mobileLoginLink) {
-        mobileLoginLink.style.display =
-          'flex';
-      }
-
-
-      if (mobileProfileLink) {
-        mobileProfileLink.style.display =
-          'none';
-      }
-
-
-      if (profileMenu) {
-        profileMenu.classList.remove(
-          'open'
-        );
-      }
-
-
-      if (profileButton) {
-        profileButton.setAttribute(
-          'aria-expanded',
-          'false'
-        );
-      }
-    }
-
-
-    /* =====================================================
-       LOGGED IN
-       ===================================================== */
-
-    function showLoggedInNavigation(user) {
-
-      document.body.classList.add(
-        'authenticated'
-      );
-
-
-      const name =
-        getUserDisplayName(user);
-
-
-      const initial =
-        getProfileInitial(name);
-
-
-      if (loginNavButton) {
-        loginNavButton.style.display =
-          'none';
-      }
-
-
-      if (authProfile) {
-        authProfile.style.display =
-          'inline-flex';
-      }
-
-
-      if (profileInitial) {
-        profileInitial.textContent =
-          initial;
-      }
-
-
-      if (profileName) {
-        profileName.textContent =
-          name;
-      }
-
-
-      if (profileEmail) {
-        profileEmail.textContent =
-          user.email || 'Signed in';
-      }
-
-
-      if (mobileLoginLink) {
-        mobileLoginLink.style.display =
-          'none';
-      }
-
-
-      if (mobileProfileLink) {
-        mobileProfileLink.style.display =
-          'flex';
-      }
-    }
-
-
-    /* =====================================================
-       CURRENT SESSION
-     ===================================================== */
-
-    async function updateAuthenticationUI() {
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.getSession();
-
-
-        if (error) {
-
-          console.error(
-            'Alphex AI auth session error:',
-            error
-          );
-
-          showLoggedOutNavigation();
-
-          return;
-        }
-
-
-        const session =
-          data?.session || null;
-
-
-        if (
-          session?.user
-        ) {
-
-          showLoggedInNavigation(
-            session.user
-          );
-
-        } else {
-
-          showLoggedOutNavigation();
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          'Alphex AI authentication error:',
-          error
-        );
-
-        showLoggedOutNavigation();
-
-      }
-    }
-
-
-    /* =====================================================
-       AUTH STATE LISTENER
-       ===================================================== */
-
-    supabaseClient.auth.onAuthStateChange(
-      (event, session) => {
-
-        console.log(
-          'Alphex AI auth event:',
-          event
-        );
-
-
-        if (
-          session?.user
-        ) {
-
-          showLoggedInNavigation(
-            session.user
-          );
-
-        } else {
-
-          showLoggedOutNavigation();
-
-        }
-      }
-    );
-
-
-    /* =====================================================
-       PROFILE MENU
-       ===================================================== */
-
-    if (
-      profileButton &&
-      profileMenu
-    ) {
-
-      profileButton.addEventListener(
-        'click',
-        event => {
-
-          event.stopPropagation();
-
-
-          const isOpen =
-            profileMenu.classList.contains(
-              'open'
-            );
-
-
-          profileMenu.classList.toggle(
-            'open',
-            !isOpen
-          );
-
-
-          profileButton.setAttribute(
-            'aria-expanded',
-            String(!isOpen)
-          );
-        }
-      );
-    }
-
-
-    /* =====================================================
-       CLOSE PROFILE MENU
-       ===================================================== */
-
-    document.addEventListener(
+    };
+    menuButton.addEventListener(
       'click',
-      event => {
-
-        if (
-          authProfile &&
-          profileMenu &&
-          !authProfile.contains(
-            event.target
-          )
-        ) {
-
-          profileMenu.classList.remove(
+      () => {
+        const open =
+          !mobilePanel.classList.contains(
             'open'
           );
-
-
-          if (profileButton) {
-
-            profileButton.setAttribute(
-              'aria-expanded',
-              'false'
-            );
-          }
-        }
+        menuButton.classList.toggle(
+          'open',
+          open
+        );
+        menuButton.setAttribute(
+          'aria-expanded',
+          String(open)
+        );
+        mobilePanel.classList.toggle(
+          'open',
+          open
+        );
+        mobilePanel.setAttribute(
+          'aria-hidden',
+          String(!open)
+        );
       }
     );
-
-
-    /* =====================================================
-       SIGN OUT
-       ===================================================== */
-
-    if (profileSignout) {
-
-      profileSignout.addEventListener(
-        'click',
-        async () => {
-
-          profileSignout.disabled =
-            true;
-
-          profileSignout.textContent =
-            'Signing out...';
-
-
-          try {
-
-            const {
-              error
-            } =
-              await supabaseClient.auth.signOut();
-
-
-            if (error) {
-
-              console.error(
-                'Alphex AI sign out error:',
-                error
-              );
-
-
-              profileSignout.disabled =
-                false;
-
-              profileSignout.textContent =
-                'Sign out';
-
-              return;
-            }
-
-
-            if (profileMenu) {
-
-              profileMenu.classList.remove(
-                'open'
-              );
-            }
-
-
-            showLoggedOutNavigation();
-
-
-            window.location.replace(
-              'index.html'
-            );
-
-          } catch (error) {
-
-            console.error(
-              'Alphex AI sign out error:',
-              error
-            );
-
-
-            profileSignout.disabled =
-              false;
-
-            profileSignout.textContent =
-              'Sign out';
-          }
-        }
-      );
-    }
-
-
-    /* =====================================================
-       MOBILE PROFILE
-       ===================================================== */
-
-    if (mobileProfileLink) {
-
-      mobileProfileLink.addEventListener(
-        'click',
-        event => {
-
-          event.preventDefault();
-
-
-          if (
-            profileMenu &&
-            profileButton
-          ) {
-
-            profileMenu.classList.toggle(
-              'open'
-            );
-
-
-            const isOpen =
-              profileMenu.classList.contains(
-                'open'
-              );
-
-
-            profileButton.setAttribute(
-              'aria-expanded',
-              String(isOpen)
-            );
-          }
-
-
-          if (
-            typeof window.alphexCloseMobileMenu ===
-            'function'
-          ) {
-
-            window.alphexCloseMobileMenu();
-
-          }
-        }
-      );
-    }
-
-
-    /* =====================================================
-       INITIAL SESSION CHECK
-     ===================================================== */
-
-    updateAuthenticationUI();
+    mobilePanel
+      .querySelectorAll('a')
+      .forEach(link => {
+        link.addEventListener(
+          'click',
+          closeMobileMenu
+        );
+      });
   }
-
-
-  /* =======================================================
-     SMOOTH ANCHOR SCROLLING
-     ======================================================= */
-
-  function initializeAnchorScrolling() {
-
+  /* =========================================================
+     ANCHOR NAVIGATION
+     ========================================================= */
+  function initializeAnchorNavigation() {
     document
       .querySelectorAll(
         'a[href^="#"]'
       )
-      .forEach(anchor => {
-
-        anchor.addEventListener(
+      .forEach(link => {
+        link.addEventListener(
           'click',
           event => {
-
             const target =
-              anchor.getAttribute(
+              link.getAttribute(
                 'href'
               );
-
-
             if (
               !target ||
               target === '#'
             ) {
               return;
             }
-
-
             const element =
               document.querySelector(
                 target
               );
-
-
-            if (element) {
-
-              event.preventDefault();
-
-
-              element.scrollIntoView({
-                behavior: 'smooth'
-              });
-
-
-              if (
-                typeof window.alphexCloseMobileMenu ===
-                'function'
-              ) {
-
-                window.alphexCloseMobileMenu();
-
-              }
+            if (!element) {
+              return;
             }
+            event.preventDefault();
+            element.scrollIntoView({
+              behavior: 'smooth'
+            });
+            closeMobileMenu();
           }
         );
       });
   }
-
-
-  /* =======================================================
-     HERO / VISUAL POINTER ANIMATION
-     ======================================================= */
-
-  function initializeReactiveAnimations() {
-
+  /* =========================================================
+     REACTIVE VISUALS
+     ========================================================= */
+  function initializeReactiveVisuals() {
     const reactive =
       document.querySelectorAll(
         '.hero-stage,.feature-visual'
       );
-
-
     reactive.forEach(panel => {
-
       panel.addEventListener(
         'pointermove',
         event => {
-
           const rect =
             panel.getBoundingClientRect();
-
-
           const x =
-            (event.clientX - rect.left) /
+            (event.clientX -
+              rect.left) /
               rect.width -
             0.5;
-
-
           const y =
-            (event.clientY - rect.top) /
+            (event.clientY -
+              rect.top) /
               rect.height -
             0.5;
-
-
           panel.style.setProperty(
             '--mx',
             x.toFixed(3)
           );
-
-
           panel.style.setProperty(
             '--my',
             y.toFixed(3)
           );
         }
       );
-
-
       panel.addEventListener(
         'pointerleave',
         () => {
-
           panel.style.setProperty(
             '--mx',
             '0'
           );
-
-
           panel.style.setProperty(
             '--my',
             '0'
@@ -1004,26 +697,45 @@
       );
     });
   }
-
-
-  /* =======================================================
-     START
-     ======================================================= */
-
+  /* =========================================================
+     STARTUP
+     ========================================================= */
+  async function start() {
+    /*
+     * Load Supabase first.
+     */
+    try {
+      await loadSupabase();
+    } catch (error) {
+      console.error(
+        'Alphex AI: unable to load Supabase',
+        error
+      );
+    }
+    /*
+     * Load shared navigation/footer.
+     */
+    await loadSharedComponents();
+    /*
+     * The navbar now exists in the DOM.
+     * Authentication MUST start after this point.
+     */
+    initializeAuthentication();
+    initializeProfileMenu();
+    initializeTheme();
+    initializeMobileNavigation();
+    initializeAnchorNavigation();
+    initializeReactiveVisuals();
+  }
   if (
-    document.readyState ===
-    'loading'
+    document.readyState === 'loading'
   ) {
-
     document.addEventListener(
       'DOMContentLoaded',
-      loadSharedComponents
+      start,
+      { once: true }
     );
-
   } else {
-
-    loadSharedComponents();
-
+    start();
   }
-
 })();
