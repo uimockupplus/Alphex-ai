@@ -540,6 +540,62 @@ body.dark-theme .profile-signout:hover{
     display:flex!important;
   }
 }
+
+/* Added service-definition sections — intentionally reuse the existing visual system. */
+.info-section{padding:100px 0}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+.info-card{padding:25px;border:1px solid var(--border);border-radius:20px;background:rgba(255,255,255,.48)}
+.info-card .mono{display:block;margin-bottom:26px;color:var(--accent-dark)}
+.info-card h3{font-size:23px;line-height:1.08;letter-spacing:-.055em;margin:0 0 10px}
+.info-card p{font-size:14px;line-height:1.6;color:#595955;margin:0}
+.outcomes-section{background:#eeecff}
+.outcomes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border-top:1px solid #d4d0eb}
+.outcome{padding:22px 20px;border-bottom:1px solid #d4d0eb}
+.outcome b{font:11px var(--mono);color:var(--accent-dark)}
+.outcome h3{font-size:19px;letter-spacing:-.04em;margin:20px 0 7px}
+.outcome p{font-size:13px;color:#595955;margin:0;max-width:290px}
+.architecture-section{background:#111;color:#fff}
+.architecture-section .section-copy,.architecture-section .section-label{color:#d5d4df}
+.architecture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:46px}
+.architecture-step{min-height:190px;border:1px solid #56545f;border-radius:18px;padding:23px;background:rgba(255,255,255,.04)}
+.architecture-step .mono{color:#8df0df}
+.architecture-step h3{font-size:24px;letter-spacing:-.06em;margin:31px 0 8px}
+.architecture-step p{font-size:13px;color:#e0dfe8;margin:0;max-width:260px}
+.system-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.system-item{padding:18px 20px;border:1px solid #56545f;border-radius:15px}
+.system-item b{font:10px var(--mono);color:#d2caff;text-transform:uppercase;letter-spacing:.06em}
+.system-item p{font-size:13px;color:#e0dfe8;margin:8px 0 0}
+.why-section{background:var(--paper)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px}
+.why-card{padding:22px;border-top:1px solid var(--border)}
+.why-card b{font:10px var(--mono);color:var(--accent-dark)}
+.why-card h3{font-size:20px;letter-spacing:-.05em;margin:20px 0 7px}
+.why-card p{font-size:13px;color:#595955;line-height:1.55;margin:0}
+.trust-section{background:#e6f8f4}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px}
+.trust-panel{padding:27px;border:1px solid rgba(16,16,16,.12);border-radius:19px;background:rgba(255,255,255,.52)}
+.trust-panel h3{font-size:23px;letter-spacing:-.05em;margin:0 0 17px}
+.trust-panel ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.trust-panel li{font-size:13px;color:#424541;line-height:1.45;padding-left:18px;position:relative}
+.trust-panel li:before{content:'✓';position:absolute;left:0;color:#246d69}
+.trust-note{margin:17px 0 0;font-size:12px;color:#595955;line-height:1.55}
+.industry-section{background:#f7f7f5}
+.industry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:38px}
+.industry-item{padding:19px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.55)}
+.industry-item h3{font-size:16px;letter-spacing:-.03em;margin:0 0 6px}
+.industry-item p{font-size:12px;color:#595955;line-height:1.5;margin:0}
+body.dark-theme .info-card,body.dark-theme .why-card,body.dark-theme .industry-item{background:rgba(255,255,255,.03);border-color:var(--border)}
+body.dark-theme .info-card p,body.dark-theme .outcome p,body.dark-theme .why-card p,body.dark-theme .industry-item p{color:#c0c3d2}
+body.dark-theme .outcomes-section{background:#19172c}
+body.dark-theme .outcomes-grid,body.dark-theme .outcome{border-color:var(--border)}
+body.dark-theme .outcome b,body.dark-theme .info-card .mono,body.dark-theme .why-card b{color:#bfb5ff}
+body.dark-theme .trust-section{background:#142525}
+body.dark-theme .trust-panel{background:rgba(255,255,255,.04);border-color:var(--border)}
+body.dark-theme .trust-panel li,body.dark-theme .trust-note{color:#c0c3d2}
+body.dark-theme .trust-panel li:before{color:#8df0df}
+@media(max-width:800px){.info-section{padding:72px 0}.info-grid,.outcomes-grid,.architecture-grid,.system-list,.why-grid,.industry-grid{grid-template-columns:1fr 1fr}.trust-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.info-section{padding:62px 0}.info-grid,.outcomes-grid,.architecture-grid,.system-list,.why-grid,.industry-grid{grid-template-columns:1fr}.info-card{padding:21px}.architecture-step{min-height:155px}.trust-panel{padding:22px}.trust-panel ul{grid-template-columns:1fr}.outcome{padding:18px 12px}}
+
 </style>
 </head>
 <body>
@@ -608,11 +664,13 @@ body.dark-theme .profile-signout:hover{
     </div>
   </div>
 </header>
-
 <div class="mobile-panel" aria-hidden="true">
   <div class="mobile-panel-inner">
-    <a href="/capabilities.html">Capabilities</a>
-    <a href="/products.html">Products</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#use-cases">Use cases</a>
+    <a href="#platform">Platform</a>
+    <a href="#industries">Industries</a>
+    <a href="#products">Products</a>
     <a href="/process.html">Process</a>
     <a href="pricing.html">Pricing</a>
     <a href="#faq">FAQ</a>
@@ -636,14 +694,11 @@ body.dark-theme .profile-signout:hover{
     </a>
   </div>
 </div>
-
 <main id="top">
-
 <div class="announcement">
   Alphex AI is building products for a better AI ecosystem.
   <a href="/products.html">Explore what we build →</a>
 </div>
-
 <div class="ticker" aria-label="Alphex AI principles">
   <div class="ticker-track">
     <span>RELIABLE BY DESIGN</span><b>✦</b>
@@ -656,7 +711,6 @@ body.dark-theme .profile-signout:hover{
     <span>BUILT FOR REAL WORK</span><b>✦</b>
   </div>
 </div>
-
 <section class="hero shell">
   <div class="hero-kicker">AI systems for real work</div>
   <h1>
@@ -707,7 +761,6 @@ body.dark-theme .profile-signout:hover{
     </div>
   </div>
 </section>
-
 <section class="section shell" id="capabilities">
   <div class="intro">
     <div>
@@ -720,7 +773,6 @@ body.dark-theme .profile-signout:hover{
       Give it a job, provide the right context, and let it carry the work forward. Alphex makes AI useful inside the tools and processes your business already relies on.
     </p>
   </div>
-
   <div class="feature-stack">
     <article class="feature">
       <div class="feature-content">
@@ -743,7 +795,6 @@ body.dark-theme .profile-signout:hover{
         <div class="visual-core"></div>
       </div>
     </article>
-
     <article class="feature">
       <div class="feature-content">
         <div>
@@ -771,7 +822,6 @@ body.dark-theme .profile-signout:hover{
         </div>
       </div>
     </article>
-
     <article class="feature">
       <div class="feature-content">
         <div>
@@ -794,459 +844,56 @@ body.dark-theme .profile-signout:hover{
       </div>
     </article>
   </div>
-
   <div class="numbered" id="process">
     <div class="numbered-item">
       <b>01</b>
       <h4>Discover</h4>
-      <p>We understand your users, workflows, data, tools, risks, and desired outcomes.</p>
+      <p>We learn the questions, tools, and content that shape your work.</p>
     </div>
     <div class="numbered-item">
       <b>02</b>
-      <h4>Design</h4>
-      <p>We define the system, knowledge, tools, boundaries, and human handoff.</p>
+      <h4>Build + test</h4>
+      <p>We tune the system, then probe it with real edge cases before launch.</p>
     </div>
     <div class="numbered-item">
       <b>03</b>
-      <h4>Build</h4>
-      <p>We develop the AI system around the workflow and information it needs.</p>
-    </div>
-    <div class="numbered-item">
-      <b>04</b>
-      <h4>Test</h4>
-      <p>We test prompts, edge cases, failure modes, safety, and expected behavior.</p>
-    </div>
-    <div class="numbered-item">
-      <b>05</b>
-      <h4>Launch</h4>
-      <p>We deploy the system with the required integrations and operating boundaries.</p>
-    </div>
-    <div class="numbered-item">
-      <b>06</b>
-      <h4>Improve</h4>
-      <p>We review performance, evaluate failures, and continuously refine the system.</p>
+      <h4>Launch + improve</h4>
+      <p>We review conversations and keep making the assistant better.</p>
     </div>
   </div>
 </section>
-
-<section class="section shell" id="use-cases">
-  <div class="intro">
-    <div>
-      <div class="section-label">02 / Use cases</div>
-      <h2 class="section-title">
-        AI for every part of your workflow.
-      </h2>
-    </div>
-    <p class="section-copy">
-      Alphex AI connects intelligent systems to the work your people already do — helping customers, teams, and operations move faster without losing control.
-    </p>
-  </div>
-
-  <div class="feature-stack">
-    <article class="feature">
-      <div class="feature-content">
-        <div>
-          <div class="section-label">For customers</div>
-          <h3>Better answers. Faster service.</h3>
-          <p>
-            AI assistants can answer common questions, capture information, qualify requests, and hand conversations to your team when human judgment matters.
-          </p>
-        </div>
-      </div>
-      <div class="feature-visual">
-        <div class="visual-lines"></div>
-        <div class="visual-orbit"></div>
-        <div class="visual-core"></div>
-      </div>
-    </article>
-
-    <article class="feature">
-      <div class="feature-content">
-        <div>
-          <div class="section-label">For teams</div>
-          <h3>Put your knowledge to work.</h3>
-          <p>
-            Give teams instant access to the information and context they need to understand conversations, summarize work, and make better decisions.
-          </p>
-        </div>
-      </div>
-      <div class="feature-visual">
-        <div class="visual-window">
-          <div class="bar"></div>
-          <div class="line"></div>
-          <div class="line short"></div>
-          <div class="line"></div>
-          <span class="tag">team knowledge</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="feature">
-      <div class="feature-content">
-        <div>
-          <div class="section-label">For operations</div>
-          <h3>Turn repetitive work into workflows.</h3>
-          <p>
-            Connect AI to tools and APIs so routine actions can happen automatically, with defined boundaries and human escalation when required.
-          </p>
-        </div>
-      </div>
-      <div class="feature-visual">
-        <div class="visual-lines"></div>
-        <div class="visual-orbit"></div>
-        <div class="visual-core"></div>
-      </div>
-    </article>
+<section class="info-section shell" id="use-cases">
+  <div class="intro"><div><div class="section-label">02 / Where it helps</div><h2 class="section-title">AI for the work your team does every day.</h2></div><p class="section-copy">Start with a clear workflow, then give an assistant the knowledge and tools to support it—from customer conversations to internal operations.</p></div>
+  <div class="info-grid">
+    <article class="info-card"><span class="mono">01 / CUSTOMERS</span><h3>Help people get answers</h3><p>Handle common support questions, answer FAQs from approved content, capture useful lead details, and route service requests to the right person.</p></article>
+    <article class="info-card"><span class="mono">02 / TEAMS</span><h3>Make knowledge easier to use</h3><p>Search internal guidance, support research, help employees find policies, and surface relevant information for better-informed decisions.</p></article>
+    <article class="info-card"><span class="mono">03 / OPERATIONS</span><h3>Move routine work forward</h3><p>Support appointment workflows, update records, and coordinate approved actions across connected tools—with confirmation and handoff where appropriate.</p></article>
   </div>
 </section>
-
-<section class="section shell">
-  <div class="intro">
-    <div>
-      <div class="section-label">03 / Business outcomes</div>
-      <h2 class="section-title">
-        AI should improve the way your business works.
-      </h2>
-    </div>
-    <p class="section-copy">
-      The goal is not simply to add AI. It is to remove friction, improve the quality of work, and give your team more capacity for the work that needs people.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01</b>
-      <h4>Reduce repetitive work</h4>
-      <p>Automate recurring questions, tasks, and workflows that consume valuable team time.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02</b>
-      <h4>Respond faster</h4>
-      <p>Give customers and teams useful answers without waiting for every request to reach a person.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03</b>
-      <h4>Improve consistency</h4>
-      <p>Use defined knowledge, instructions, and workflows to make important interactions more consistent.</p>
-    </div>
-    <div class="numbered-item">
-      <b>04</b>
-      <h4>Make knowledge accessible</h4>
-      <p>Turn scattered information into something your people and AI systems can actually use.</p>
-    </div>
-    <div class="numbered-item">
-      <b>05</b>
-      <h4>Scale operations</h4>
-      <p>Handle more work without making every increase in volume dependent on additional manual effort.</p>
-    </div>
-    <div class="numbered-item">
-      <b>06</b>
-      <h4>Keep humans in control</h4>
-      <p>Define where AI can act independently and where people should review, decide, or take over.</p>
-    </div>
-  </div>
+<section class="info-section outcomes-section" id="outcomes"><div class="shell"><div class="intro"><div><div class="section-label">03 / Business outcomes</div><h2 class="section-title">Make everyday work work better.</h2></div><p class="section-copy">The goal isn’t AI for its own sake. It’s a more useful, consistent way to handle the work that takes your team’s time.</p></div>
+  <div class="outcomes-grid">
+    <article class="outcome"><b>01</b><h3>Reduce repetitive work</h3><p>Let systems support recurring questions and predictable steps.</p></article><article class="outcome"><b>02</b><h3>Respond faster</h3><p>Make relevant answers available when customers and teams need them.</p></article><article class="outcome"><b>03</b><h3>Improve consistency</h3><p>Use shared, approved guidance across common interactions.</p></article><article class="outcome"><b>04</b><h3>Make knowledge accessible</h3><p>Bring useful information closer to the point of work.</p></article><article class="outcome"><b>05</b><h3>Scale thoughtfully</h3><p>Support more routine work without losing sight of quality.</p></article><article class="outcome"><b>06</b><h3>Keep people in control</h3><p>Define where automation stops and a person takes over.</p></article>
+  </div></div>
 </section>
-
-<section class="section shell">
-  <div class="intro">
-    <div>
-      <div class="section-label">04 / Platform architecture</div>
-      <h2 class="section-title">
-        One platform. Three layers.
-      </h2>
-    </div>
-    <p class="section-copy">
-      Alphex connects the information an AI system needs, the actions it can take, and the evaluation layer that helps improve it over time.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01 / UNDERSTAND</b>
-      <h4>Knowledge + context</h4>
-      <p>Connect the information, instructions, history, and context the system needs to understand the work.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02 / ACT</b>
-      <h4>Assistants + agents</h4>
-      <p>Let AI answer, reason, retrieve information, and perform defined actions across your workflows.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03 / IMPROVE</b>
-      <h4>Evaluation + monitoring</h4>
-      <p>Measure behavior, identify failures, and use real interactions to continuously improve the system.</p>
-    </div>
-  </div>
-
-  <div class="band-card" style="margin-top:70px;">
-    <div class="log">ALPHEX AI / CONTINUOUS LOOP</div>
-    <div class="checks">
-      <div class="check-row">
-        <i>→</i>
-        <span>Your data → AI system</span>
-      </div>
-      <div class="check-row">
-        <i>→</i>
-        <span>AI system → Real interaction</span>
-      </div>
-      <div class="check-row">
-        <i>→</i>
-        <span>Real interaction → Evaluation</span>
-      </div>
-      <div class="check-row">
-        <i>→</i>
-        <span>Evaluation → Improvement</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section shell">
-  <div class="intro">
-    <div>
-      <div class="section-label">05 / How the system works</div>
-      <h2 class="section-title">
-        From AI capability to working system.
-      </h2>
-    </div>
-    <p class="section-copy">
-      A useful AI system is more than a model. Alphex combines the components around the model that make it useful inside a real business.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01</b>
-      <h4>Knowledge</h4>
-      <p>Approved information, documents, policies, and business context.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02</b>
-      <h4>Reasoning</h4>
-      <p>Instructions and model behavior designed around the task.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03</b>
-      <h4>Actions</h4>
-      <p>Tools, APIs, and integrations that allow the system to do useful work.</p>
-    </div>
-    <div class="numbered-item">
-      <b>04</b>
-      <h4>Guardrails</h4>
-      <p>Boundaries that define what the system should and should not do.</p>
-    </div>
-    <div class="numbered-item">
-      <b>05</b>
-      <h4>Evaluation</h4>
-      <p>Tests and measurements that show whether the system is behaving as intended.</p>
-    </div>
-    <div class="numbered-item">
-      <b>06</b>
-      <h4>Improvement</h4>
-      <p>Continuous refinement based on failures, feedback, and real-world performance.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section shell">
-  <div class="intro">
-    <div>
-      <div class="section-label">06 / Why Alphex</div>
-      <h2 class="section-title">
-        Reliable by design.
-      </h2>
-    </div>
-    <p class="section-copy">
-      We focus on the system around the model — the context, workflows, boundaries, evaluation, and human involvement that determine whether AI is actually useful.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01</b>
-      <h4>Outcome driven</h4>
-      <p>We start with the work that needs to improve, not the model that happens to be available.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02</b>
-      <h4>Grounded in your context</h4>
-      <p>Systems are designed around the information, workflows, and constraints of the business.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03</b>
-      <h4>Purpose-built</h4>
-      <p>We build around specific jobs and workflows instead of forcing every problem into one generic assistant.</p>
-    </div>
-    <div class="numbered-item">
-      <b>04</b>
-      <h4>Tested before launch</h4>
-      <p>Important behaviors and failure cases are tested before the system reaches real users.</p>
-    </div>
-    <div class="numbered-item">
-      <b>05</b>
-      <h4>Human when it matters</h4>
-      <p>AI should know when a request needs human judgment, escalation, or accountability.</p>
-    </div>
-    <div class="numbered-item">
-      <b>06</b>
-      <h4>Built to improve</h4>
-      <p>Real interactions become feedback that helps the system get better over time.</p>
-    </div>
-  </div>
-</section>
-
-<section class="band">
-  <div class="shell band-inner">
-    <div>
-      <div class="section-label">
-        07 / Trust
-      </div>
-      <h2>
-        Trust starts with how we build.
-      </h2>
-      <p>
-        AI systems should be understandable, testable, and bounded. If the system doesn't know, it shouldn't pretend to know.
-      </p>
-    </div>
-
-    <div class="band-card">
-      <div class="log">
-        ALPHEX / TRUST_PRINCIPLES
-      </div>
-      <div class="checks">
-        <div class="check-row">
-          <i>✓</i>
-          <span>Clear system boundaries</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Grounded knowledge</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Real-world testing</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Defined escalation paths</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Human oversight</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Continuous evaluation</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Observable system behavior</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section shell">
-  <div class="intro">
-    <div>
-      <div class="section-label">08 / Security & responsible AI</div>
-      <h2 class="section-title">
-        Built with control in mind.
-      </h2>
-    </div>
-    <p class="section-copy">
-      Responsible deployment starts with knowing what an AI system can access, what it can do, and when a person should remain in the loop.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01</b>
-      <h4>Data control</h4>
-      <p>Define the information an AI system needs and the boundaries around that information.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02</b>
-      <h4>Access control</h4>
-      <p>Keep system capabilities and connected workflows within clearly defined permissions.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03</b>
-      <h4>Grounded responses</h4>
-      <p>Use approved context and sources to reduce unsupported answers and make limitations visible.</p>
-    </div>
-    <div class="numbered-item">
-      <b>04</b>
-      <h4>Human oversight</h4>
-      <p>Keep people involved where judgment, exceptions, or accountability matter.</p>
-    </div>
-    <div class="numbered-item">
-      <b>05</b>
-      <h4>Auditability</h4>
-      <p>Design systems so important interactions, actions, and evaluation results can be reviewed.</p>
-    </div>
-    <div class="numbered-item">
-      <b>06</b>
-      <h4>Evaluation</h4>
-      <p>Continuously check whether system behavior remains aligned with the intended outcome.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section shell">
-  <div class="intro">
-    <div>
-      <div class="section-label">09 / Industry solutions</div>
-      <h2 class="section-title">
-        Built for knowledge-heavy, workflow-driven businesses.
-      </h2>
-    </div>
-    <p class="section-copy">
-      Alphex is designed for businesses where information, customer interactions, and repeatable workflows create meaningful opportunities for practical AI.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01</b>
-      <h4>Financial services</h4>
-      <p>Customer questions, knowledge access, workflow support, and controlled automation.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02</b>
-      <h4>Healthcare</h4>
-      <p>Knowledge-heavy workflows where careful boundaries and human oversight matter.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03</b>
-      <h4>SaaS & technology</h4>
-      <p>Product support, internal knowledge, customer operations, and technical workflows.</p>
-    </div>
-    <div class="numbered-item">
-      <b>04</b>
-      <h4>Professional services</h4>
-      <p>Research, knowledge retrieval, client support, and repeatable operational work.</p>
-    </div>
-    <div class="numbered-item">
-      <b>05</b>
-      <h4>E-commerce & consumer</h4>
-      <p>Customer support, product knowledge, lead handling, and operational automation.</p>
-    </div>
-    <div class="numbered-item">
-      <b>06</b>
-      <h4>Growing businesses</h4>
-      <p>Practical AI systems that increase capacity without unnecessary complexity.</p>
-    </div>
-  </div>
-</section>
-
+<section class="info-section architecture-section" id="platform"><div class="shell"><div class="intro"><div><div class="section-label">04 / Platform architecture</div><h2 class="section-title">One system. Three connected layers.</h2></div><p class="section-copy">Alphex brings business context, AI experiences, and quality improvement into one practical delivery approach.</p></div>
+  <div class="architecture-grid"><article class="architecture-step"><span class="mono">01 — UNDERSTAND</span><h3>Knowledge + context</h3><p>Relevant business information, instructions, and workflow context.</p></article><article class="architecture-step"><span class="mono">02 — ACT</span><h3>Assistants + agents</h3><p>Conversational experiences and bounded task execution for real workflows.</p></article><article class="architecture-step"><span class="mono">03 — IMPROVE</span><h3>Evaluation + monitoring</h3><p>Test behavior, review outcomes, and use findings to guide improvements.</p></article></div>
+  <div class="system-list" aria-label="How the platform works"><article class="system-item"><b>Knowledge</b><p>Your business information and approved sources.</p></article><article class="system-item"><b>Reasoning</b><p>Models and instructions configured for the task.</p></article><article class="system-item"><b>Actions</b><p>Tools, APIs, and integrations used within scope.</p></article><article class="system-item"><b>Guardrails</b><p>Boundaries, validation, and escalation paths.</p></article><article class="system-item"><b>Evaluation</b><p>Quality checks for expected and edge-case behavior.</p></article><article class="system-item"><b>Improvement</b><p>Review and optimization informed by observed results.</p></article></div>
+</div></section>
+<section class="info-section why-section" id="why-alphex"><div class="shell"><div class="intro"><div><div class="section-label">05 / Why Alphex</div><h2 class="section-title">Reliable by design. Useful by purpose.</h2></div><p class="section-copy">We focus on building systems around your context and workflows—not adding AI just to say it’s there.</p></div>
+  <div class="why-grid"><article class="why-card"><b>01</b><h3>Outcome driven</h3><p>Begin with the work to improve and define what a useful result looks like.</p></article><article class="why-card"><b>02</b><h3>Grounded in your context</h3><p>Shape responses around your approved information and business rules.</p></article><article class="why-card"><b>03</b><h3>Purpose-built</h3><p>Fit the system to a real task, its users, and the tools already in place.</p></article><article class="why-card"><b>04</b><h3>Tested before launch</h3><p>Check expected behavior, uncertainty, and meaningful edge cases.</p></article><article class="why-card"><b>05</b><h3>Human when it matters</h3><p>Make escalation and human review part of the workflow where needed.</p></article><article class="why-card"><b>06</b><h3>Built to improve</h3><p>Use evaluation and feedback to identify what to refine over time.</p></article></div>
+</div></section>
+<section class="info-section trust-section" id="trust"><div class="shell"><div class="intro"><div><div class="section-label">06 / Trust, security + responsible AI</div><h2 class="section-title">Trust starts with how the system is built.</h2></div><p class="section-copy">We design for visibility and control from the start. Specific security controls and data handling are agreed for each project and deployment.</p></div>
+  <div class="trust-grid"><article class="trust-panel"><h3>Designed for oversight</h3><ul><li>Clear system boundaries</li><li>Grounded, approved knowledge</li><li>Defined escalation paths</li><li>Human oversight where needed</li><li>Observable system behavior</li><li>Ongoing evaluation</li></ul></article><article class="trust-panel"><h3>Security considerations</h3><ul><li>Data handling scoped to the project</li><li>Access designed around the use case</li><li>Responsible deployment planning</li><li>Validation before consequential actions</li><li>Privacy requirements discussed early</li><li>Controls documented with the client</li></ul><p class="trust-note">We do not claim certifications or universal security guarantees here. Controls, hosting, retention, and access requirements should be confirmed for the specific implementation.</p></article></div>
+</div></section>
+<section class="info-section industry-section" id="industries"><div class="shell"><div class="intro"><div><div class="section-label">07 / Industry solutions</div><h2 class="section-title">Built for knowledge-heavy, workflow-driven work.</h2></div><p class="section-copy">These are areas where the patterns can fit—not claims of existing customers. The right solution depends on your data, process, and requirements.</p></div>
+  <div class="industry-grid"><article class="industry-item"><h3>Financial services</h3><p>Support internal knowledge access and routine service queries with carefully scoped workflows.</p></article><article class="industry-item"><h3>Healthcare</h3><p>Help teams navigate approved administrative information, with appropriate human review.</p></article><article class="industry-item"><h3>SaaS + technology</h3><p>Answer product questions, support onboarding, and assist internal teams.</p></article><article class="industry-item"><h3>Professional services</h3><p>Surface internal expertise, standard guidance, and repeatable process steps.</p></article><article class="industry-item"><h3>E-commerce</h3><p>Support product FAQs, order-related questions, and service-request routing.</p></article><article class="industry-item"><h3>Growing businesses</h3><p>Make shared knowledge and routine workflows easier to manage as teams grow.</p></article></div>
+</div></section>
 <section class="section products-section" id="products">
   <div class="shell">
     <div class="intro">
       <div>
         <div class="section-label">
-          12 / What we build
+          02 / What we build
         </div>
         <h2 class="section-title">
           Products for a better AI ecosystem.
@@ -1256,7 +903,6 @@ body.dark-theme .profile-signout:hover{
         Alphex AI builds focused products that help make artificial intelligence more reliable, measurable, and accessible.
       </p>
     </div>
-
     <div class="products-grid">
       <article class="product-card ai">
         <div class="product-top">
@@ -1267,7 +913,6 @@ body.dark-theme .profile-signout:hover{
             EL·AI
           </div>
         </div>
-
         <div>
           <h3>
             EvalLoop AI
@@ -1283,7 +928,6 @@ body.dark-theme .profile-signout:hover{
             <span>MULTIMODAL</span>
           </div>
         </div>
-
         <div class="product-bottom">
           <span class="product-status">
             AI QUALITY / EVALUATION PLATFORM
@@ -1293,7 +937,6 @@ body.dark-theme .profile-signout:hover{
           </a>
         </div>
       </article>
-
       <article class="product-card jobs">
         <div class="product-top">
           <span class="product-number">
@@ -1303,7 +946,6 @@ body.dark-theme .profile-signout:hover{
             EL·J
           </div>
         </div>
-
         <div>
           <h3>
             EvalLoop Jobs
@@ -1319,7 +961,6 @@ body.dark-theme .profile-signout:hover{
             <span>OPPORTUNITIES</span>
           </div>
         </div>
-
         <div class="product-bottom">
           <span class="product-status">
             AI OPPORTUNITY DISCOVERY
@@ -1332,66 +973,23 @@ body.dark-theme .profile-signout:hover{
     </div>
   </div>
 </section>
-
-<section class="section shell" id="ecosystem">
-  <div class="intro">
-    <div>
-      <div class="section-label">13 / Alphex ecosystem</div>
-      <h2 class="section-title">
-        Build. Evaluate. Discover.
-      </h2>
-    </div>
-    <p class="section-copy">
-      Alphex AI is building an ecosystem around practical AI — from creating AI systems to evaluating their quality and helping people discover opportunities across the industry.
-    </p>
-  </div>
-
-  <div class="numbered">
-    <div class="numbered-item">
-      <b>01 / BUILD</b>
-      <h4>Alphex AI</h4>
-      <p>
-        AI systems, assistants, knowledge systems, and agents designed for real-world work.
-      </p>
-    </div>
-
-    <div class="numbered-item">
-      <b>02 / EVALUATE</b>
-      <h4>EvalLoop AI</h4>
-      <p>
-        Evaluation and quality infrastructure for understanding and improving AI systems.
-      </p>
-    </div>
-
-    <div class="numbered-item">
-      <b>03 / DISCOVER</b>
-      <h4>EvalLoop Jobs</h4>
-      <p>
-        Independent discovery of opportunities across the AI evaluation, training, annotation, and related ecosystem.
-      </p>
-    </div>
-  </div>
-</section>
-
 <section class="band">
   <div class="shell band-inner">
     <div>
       <div class="section-label">
-        11 / Quality bar
+        03 / Quality bar
       </div>
       <h2>
-        AI systems with a quality bar.
+        Reliable by design.
       </h2>
       <p>
-        AI systems should have a quality bar before they reach real users — and a process for improving after launch. We test the important behaviors, evaluate edge cases, and define when humans should take over.
+        Most AI demos look smart. We care about what happens on the edge cases, when the answer matters, and when the right thing is to say “I’m not sure.”
       </p>
     </div>
-
     <div class="band-card">
       <div class="log">
         SAMPLE / QUALITY_CHECK.LOG
       </div>
-
       <div class="checks">
         <div class="check-row">
           <i>✓</i>
@@ -1399,34 +997,28 @@ body.dark-theme .profile-signout:hover{
         </div>
         <div class="check-row">
           <i>✓</i>
-          <span>Tested against realistic inputs</span>
+          <span>Tested against risky edge cases</span>
         </div>
         <div class="check-row">
           <i>✓</i>
-          <span>Evaluated across important quality dimensions</span>
+          <span>Human handoff when uncertain</span>
         </div>
         <div class="check-row">
           <i>✓</i>
-          <span>Checked against risky edge cases</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Human escalation defined</span>
+          <span>Reviewed after launch</span>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <section class="section pricing" id="pricing">
   <div class="shell">
     <div class="section-label">
-      14 / Simple plans
+      04 / Simple plans
     </div>
     <h2 class="section-title">
       Start small.<br />Grow with confidence.
     </h2>
-
     <div class="pricing-grid">
       <article class="price-card">
         <div class="section-label">
@@ -1445,7 +1037,6 @@ body.dark-theme .profile-signout:hover{
           Talk to us <span>↗</span>
         </a>
       </article>
-
       <article class="price-card featured">
         <div class="section-label">
           Growth / Popular
@@ -1463,7 +1054,6 @@ body.dark-theme .profile-signout:hover{
           Talk to us <span>↗</span>
         </a>
       </article>
-
       <article class="price-card">
         <div class="section-label">
           Custom
@@ -1484,17 +1074,15 @@ body.dark-theme .profile-signout:hover{
     </div>
   </div>
 </section>
-
 <section class="section shell faq-grid" id="faq">
   <div>
     <div class="section-label">
-      15 / FAQ
+      05 / FAQ
     </div>
     <h2 class="section-title">
       Good questions deserve clear answers.
     </h2>
   </div>
-
   <div class="faq-list">
     <details open>
       <summary>
@@ -1504,7 +1092,6 @@ body.dark-theme .profile-signout:hover{
         We keep answers grounded in approved sources, test risky replies, and hand off when confidence is low. We make the limits visible.
       </p>
     </details>
-
     <details>
       <summary>
         Can it work with our existing tools?
@@ -1513,7 +1100,6 @@ body.dark-theme .profile-signout:hover{
         Usually. We start with the systems your team already uses and scope the integrations around the workflows that matter.
       </p>
     </details>
-
     <details>
       <summary>
         How long does a first version take?
@@ -1522,73 +1108,33 @@ body.dark-theme .profile-signout:hover{
         A focused FAQ assistant can be ready in a few weeks. Timeline depends on your content and the number of channels.
       </p>
     </details>
-
     <details>
       <summary>
         Who is Alphex for?
       </summary>
       <p>
-        Businesses with repetitive customer questions, knowledge-heavy workflows, and a real need for dependable automation.
-      </p>
-    </details>
-
-    <details>
-      <summary>
-        What makes Alphex different from a typical AI chatbot agency?
-      </summary>
-      <p>
-        We build the complete AI system around the model — including knowledge, workflows, actions, guardrails, evaluation, and continuous improvement — rather than treating the chatbot as the entire product.
-      </p>
-    </details>
-
-    <details>
-      <summary>
-        Can Alphex build custom AI agents?
-      </summary>
-      <p>
-        Yes. We can design agents around specific workflows, tools, APIs, and operating boundaries, with human escalation where required.
-      </p>
-    </details>
-
-    <details>
-      <summary>
-        How do you evaluate an AI system?
-      </summary>
-      <p>
-        We evaluate the behaviors that matter to the use case, including factuality, instruction following, relevance, completeness, safety, grounding, and overall task performance.
-      </p>
-    </details>
-
-    <details>
-      <summary>
-        Does Alphex replace human teams?
-      </summary>
-      <p>
-        No. The goal is to let AI handle useful repeatable work while people remain responsible for judgment, exceptions, decisions, and accountability.
+        Small and mid-sized businesses with repetitive customer questions and a real need for dependable automation.
       </p>
     </details>
   </div>
 </section>
-
 <section class="cta">
   <div class="shell">
     <div class="section-label">
-      16 / Start here
+      06 / Start here
     </div>
     <h2>
-      Build AI<br />you can rely on.
+      Let’s build<br />your assistant.
     </h2>
     <p>
-      Tell us what you want to improve. We’ll help you identify where AI can create real value and what it takes to build it responsibly.
+      Tell us what your customers ask. We’ll show you what a reliable answer could look like.
     </p>
     <a class="pill" href="/contact.html">
       Start a conversation <span>↗</span>
     </a>
   </div>
 </section>
-
 </main>
-
 <footer class="footer-pro">
   <div class="shell">
     <div class="footer-top">
@@ -1603,7 +1149,6 @@ body.dark-theme .profile-signout:hover{
           Book a demo <span>↗</span>
         </a>
       </div>
-
       <div class="footer-columns">
         <div class="footer-group">
           <h4>Overview</h4>
@@ -1613,20 +1158,17 @@ body.dark-theme .profile-signout:hover{
           <a href="/process.html">Process</a>
           <a href="/pricing.html">Pricing</a>
         </div>
-
         <div class="footer-group">
           <h4>Products</h4>
           <a href="https://evalloop-ai.vercel.app/">EvalLoop AI</a>
           <a href="https://evalloopjobs.vercel.app">EvalLoop Jobs</a>
           <a href="/documentation.html">Documentation</a>
         </div>
-
         <div class="footer-group">
           <h4>Company</h4>
           <a href="/about.html">About</a>
           <a href="/contact.html">Contact</a>
         </div>
-
         <div class="footer-group">
           <h4>Legal</h4>
           <a href="/privacy.html">Privacy Policy</a>
@@ -1635,7 +1177,6 @@ body.dark-theme .profile-signout:hover{
         </div>
       </div>
     </div>
-
     <div class="footer-bottom">
       <span>
         AI systems with a quality bar.
@@ -1646,7 +1187,6 @@ body.dark-theme .profile-signout:hover{
     </div>
   </div>
 </footer>
-
 <script>
 /* =========================================================
    ALPHEX AI — SUPABASE AUTHENTICATION
@@ -1660,7 +1200,6 @@ const supabaseClient =
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
-
 /* =========================================================
    AUTH NAVIGATION
    ========================================================= */
@@ -1684,7 +1223,6 @@ const mobileLoginLink =
   document.getElementById('mobileLoginLink');
 const mobileProfileLink =
   document.getElementById('mobileProfileLink');
-
 /* =========================================================
    GET USER DISPLAY NAME
    ========================================================= */
@@ -1692,26 +1230,20 @@ function getUserDisplayName(user){
   if(!user){
     return 'Alphex AI';
   }
-
   const metadata =
     user.user_metadata || {};
-
   const fullName =
     metadata.full_name ||
     metadata.name ||
     '';
-
   if(fullName.trim()){
     return fullName.trim();
   }
-
   if(user.email){
     return user.email.split('@')[0];
   }
-
   return 'Alphex AI';
 }
-
 /* =========================================================
    GET PROFILE INITIAL
    ========================================================= */
@@ -1719,39 +1251,31 @@ function getProfileInitial(name){
   if(!name){
     return 'A';
   }
-
   return name
     .trim()
     .charAt(0)
     .toUpperCase() || 'A';
 }
-
 /* =========================================================
    SHOW LOGGED-OUT NAVIGATION
    ========================================================= */
 function showLoggedOutNavigation(){
   document.body.classList.remove('authenticated');
-
   if(loginNavButton){
     loginNavButton.style.display = 'inline-flex';
   }
-
   if(authProfile){
     authProfile.style.display = 'none';
   }
-
   if(mobileLoginLink){
     mobileLoginLink.style.display = 'flex';
   }
-
   if(mobileProfileLink){
     mobileProfileLink.style.display = 'none';
   }
-
   if(profileMenu){
     profileMenu.classList.remove('open');
   }
-
   if(profileButton){
     profileButton.setAttribute(
       'aria-expanded',
@@ -1759,49 +1283,38 @@ function showLoggedOutNavigation(){
     );
   }
 }
-
 /* =========================================================
    SHOW LOGGED-IN NAVIGATION
    ========================================================= */
 function showLoggedInNavigation(user){
   document.body.classList.add('authenticated');
-
   const name =
     getUserDisplayName(user);
-
   const initial =
     getProfileInitial(name);
-
   if(loginNavButton){
     loginNavButton.style.display = 'none';
   }
-
   if(authProfile){
     authProfile.style.display = 'inline-flex';
   }
-
   if(profileInitial){
     profileInitial.textContent = initial;
   }
-
   if(profileName){
     profileName.textContent = name;
   }
-
   if(profileEmail){
     profileEmail.textContent =
       user.email || 'Signed in';
   }
-
   if(mobileLoginLink){
     mobileLoginLink.style.display = 'none';
   }
-
   if(mobileProfileLink){
     mobileProfileLink.style.display = 'flex';
   }
 }
-
 /* =========================================================
    CHECK CURRENT SESSION
    ========================================================= */
@@ -1811,20 +1324,16 @@ async function updateAuthenticationUI(){
       data,
       error
     } = await supabaseClient.auth.getSession();
-
     if(error){
       console.error(
         'Alphex AI auth session error:',
         error
       );
-
       showLoggedOutNavigation();
       return;
     }
-
     const session =
       data ? data.session : null;
-
     if(session && session.user){
       showLoggedInNavigation(
         session.user
@@ -1837,11 +1346,9 @@ async function updateAuthenticationUI(){
       'Alphex AI authentication error:',
       error
     );
-
     showLoggedOutNavigation();
   }
 }
-
 /* =========================================================
    AUTH STATE LISTENER
    ========================================================= */
@@ -1851,7 +1358,6 @@ supabaseClient.auth.onAuthStateChange(
       'Alphex AI auth event:',
       event
     );
-
     if(session && session.user){
       showLoggedInNavigation(
         session.user
@@ -1861,7 +1367,6 @@ supabaseClient.auth.onAuthStateChange(
     }
   }
 );
-
 /* =========================================================
    PROFILE MENU
    ========================================================= */
@@ -1870,15 +1375,12 @@ if(profileButton){
     'click',
     event => {
       event.stopPropagation();
-
       const isOpen =
         profileMenu.classList.contains('open');
-
       profileMenu.classList.toggle(
         'open',
         !isOpen
       );
-
       profileButton.setAttribute(
         'aria-expanded',
         String(!isOpen)
@@ -1886,7 +1388,6 @@ if(profileButton){
     }
   );
 }
-
 /* =========================================================
    CLOSE PROFILE MENU WHEN CLICKING OUTSIDE
    ========================================================= */
@@ -1901,7 +1402,6 @@ document.addEventListener(
       profileMenu.classList.remove(
         'open'
       );
-
       if(profileButton){
         profileButton.setAttribute(
           'aria-expanded',
@@ -1911,7 +1411,6 @@ document.addEventListener(
     }
   }
 );
-
 /* =========================================================
    SIGN OUT
    ========================================================= */
@@ -1922,32 +1421,25 @@ if(profileSignout){
       profileSignout.disabled = true;
       profileSignout.textContent =
         'Signing out...';
-
       try{
         const {
           error
         } =
           await supabaseClient.auth.signOut();
-
         if(error){
           console.error(
             'Alphex AI sign out error:',
             error
           );
-
           profileSignout.disabled = false;
           profileSignout.textContent =
             'Sign out';
-
           return;
         }
-
         profileMenu.classList.remove(
           'open'
         );
-
         showLoggedOutNavigation();
-
         window.location.replace(
           'index.html'
         );
@@ -1956,7 +1448,6 @@ if(profileSignout){
           'Alphex AI sign out error:',
           error
         );
-
         profileSignout.disabled = false;
         profileSignout.textContent =
           'Sign out';
@@ -1964,7 +1455,6 @@ if(profileSignout){
     }
   );
 }
-
 /* =========================================================
    MOBILE PROFILE LINK
    ========================================================= */
@@ -1973,39 +1463,31 @@ if(mobileProfileLink){
     'click',
     event => {
       event.preventDefault();
-
       if(authProfile){
         profileMenu.classList.toggle(
           'open'
         );
       }
-
       closeMenu();
     }
   );
 }
-
 /* =========================================================
    INITIAL AUTH CHECK
    ========================================================= */
 updateAuthenticationUI();
-
 /* =========================================================
    THEME + NAVIGATION + ANIMATIONS
    ========================================================= */
 (()=>{
   const root=document.documentElement,
         body=document.body;
-
   const themeToggle =
     document.querySelector('.theme-toggle');
-
   const menuButton =
     document.querySelector('.mobile-menu');
-
   const mobilePanel =
     document.querySelector('.mobile-panel');
-
   const getSavedTheme=()=>{
     try{
       return window.localStorage.getItem(
@@ -2015,7 +1497,6 @@ updateAuthenticationUI();
       return null;
     }
   };
-
   const saveTheme=theme=>{
     try{
       window.localStorage.setItem(
@@ -2026,52 +1507,42 @@ updateAuthenticationUI();
       /* Theme still works for this visit. */
     }
   };
-
   const setTheme=theme=>{
     const dark =
       theme === 'dark';
-
     body.classList.toggle(
       'dark-theme',
       dark
     );
-
     root.classList.toggle(
       'dark-theme',
       dark
     );
-
     themeToggle.setAttribute(
       'aria-pressed',
       String(dark)
     );
-
     themeToggle.setAttribute(
       'aria-label',
       dark
         ? 'Switch to light mode'
         : 'Switch to dark mode'
     );
-
     themeToggle
       .querySelector('.theme-icon')
       .textContent =
         dark ? '☀' : '☾';
-
     themeToggle
       .querySelector('.theme-label')
       .textContent =
         dark ? 'Light' : 'Dark';
-
     saveTheme(
       dark ? 'dark' : 'light'
     );
   };
-
   setTheme(
     getSavedTheme() || 'light'
   );
-
   themeToggle.addEventListener(
     'click',
     ()=>{
@@ -2084,27 +1555,22 @@ updateAuthenticationUI();
       );
     }
   );
-
   const closeMenu=()=>{
     menuButton.classList.remove(
       'open'
     );
-
     menuButton.setAttribute(
       'aria-expanded',
       'false'
     );
-
     mobilePanel.classList.remove(
       'open'
     );
-
     mobilePanel.setAttribute(
       'aria-hidden',
       'true'
     );
   };
-
   menuButton.addEventListener(
     'click',
     ()=>{
@@ -2112,29 +1578,24 @@ updateAuthenticationUI();
         !mobilePanel.classList.contains(
           'open'
         );
-
       menuButton.classList.toggle(
         'open',
         open
       );
-
       menuButton.setAttribute(
         'aria-expanded',
         String(open)
       );
-
       mobilePanel.classList.toggle(
         'open',
         open
       );
-
       mobilePanel.setAttribute(
         'aria-hidden',
         String(!open)
       );
     }
   );
-
   mobilePanel
     .querySelectorAll('a')
     .forEach(
@@ -2144,7 +1605,6 @@ updateAuthenticationUI();
           closeMenu
         )
     );
-
   document
     .querySelectorAll(
       'a[href^="#"]'
@@ -2158,37 +1618,30 @@ updateAuthenticationUI();
               a.getAttribute(
                 'href'
               );
-
             if(
               !target ||
               target === '#'
             ){
               return;
             }
-
             const el =
               document.querySelector(
                 target
               );
-
             if(el){
               e.preventDefault();
-
               el.scrollIntoView({
                 behavior:'smooth'
               });
-
               closeMenu();
             }
           }
         )
     );
-
   const reactive =
     document.querySelectorAll(
       '.hero-stage,.feature-visual'
     );
-
   reactive.forEach(
     panel => {
       panel.addEventListener(
@@ -2196,29 +1649,24 @@ updateAuthenticationUI();
         event => {
           const r =
             panel.getBoundingClientRect();
-
           const x =
             (event.clientX-r.left) /
               r.width -
             .5;
-
           const y =
             (event.clientY-r.top) /
               r.height -
             .5;
-
           panel.style.setProperty(
             '--mx',
             x.toFixed(3)
           );
-
           panel.style.setProperty(
             '--my',
             y.toFixed(3)
           );
         }
       );
-
       panel.addEventListener(
         'pointerleave',
         ()=>{
@@ -2226,7 +1674,6 @@ updateAuthenticationUI();
             '--mx',
             '0'
           );
-
           panel.style.setProperty(
             '--my',
             '0'
