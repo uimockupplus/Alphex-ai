@@ -1,1603 +1,3610 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Alphex AI builds evaluation products, quality systems, and better opportunities for the AI ecosystem." />
-<title>Alphex AI — AI that works alongside your team</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--paper:#f7f7f5;--white:#fff;--ink:#101010;--soft:#e9e9e5;--muted:#74746f;--mono:'DM Mono',monospace;--sans:'Inter',Arial,sans-serif}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
-.shell{width:min(1240px,calc(100% - 64px));margin:auto}
-.topbar{position:sticky;top:0;z-index:100;background:rgba(247,247,245,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(16,16,16,.08)}
-.nav{height:76px;display:flex;align-items:center;justify-content:space-between}
-.wordmark{font-size:22px;font-weight:500;letter-spacing:-.09em;text-decoration:none;color:var(--ink)}
-.nav-links{display:flex;gap:26px;margin-left:100px}
-.nav-links a{color:var(--ink);text-decoration:none;font-size:13px}
-.nav-links a:hover{opacity:.55}
-.nav-actions{display:flex;align-items:center;gap:11px}
-.pill{display:inline-flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;border-radius:999px;border:1px solid var(--ink);padding:11px 17px;color:var(--ink);font-size:12px;font-weight:500;transition:transform .2s,background .2s,color .2s}
-.pill:hover{transform:translateY(-2px)}
-.pill.dark{background:var(--ink);color:var(--white)}
-.pill.dark:hover{background:#383838}
-.pill.light{border-color:#d4d4d0}
-.mobile-menu{display:none;background:none;border:0;font-size:22px}
-.announcement{padding:12px 0;border-bottom:1px solid rgba(16,16,16,.1);font-size:12px;text-align:center}
-.announcement a{text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
-.hero{padding:104px 0 88px;text-align:center}
-.hero-kicker{font:11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-h1{max-width:1040px;margin:20px auto 26px;font-size:clamp(58px,9vw,128px);line-height:.91;letter-spacing:-.095em;font-weight:400}
-h1 span{display:block}
-.hero-copy{max-width:550px;margin:0 auto;color:#4f4f4b;font-size:17px}
-.hero-actions{display:flex;justify-content:center;gap:10px;margin-top:31px}
-.hero-stage{width:100%;height:520px;margin-top:78px;position:relative;overflow:hidden;border-radius:28px;background:#111;box-shadow:0 24px 80px rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center}
-.hero-stage:before{content:'';position:absolute;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,#f4f4ef 0 7%,#bcbcb7 11%,#5c5c58 27%,#1d1d1c 60%,#111 72%);opacity:.95}
-.hero-stage:after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 0 40%,rgba(255,255,255,.16) 48%,transparent 56%);transform:translateX(-100%);animation:scan 7s ease-in-out infinite}
-.stage-ui{position:relative;z-index:1;width:min(760px,78%);height:360px;border:1px solid rgba(255,255,255,.25);border-radius:18px;background:rgba(20,20,20,.77);backdrop-filter:blur(12px);padding:20px;text-align:left;color:#f4f4f0;box-shadow:0 30px 80px rgba(0,0,0,.35)}
-.stage-top{display:flex;justify-content:space-between;align-items:center;color:#a7a7a3;font:11px var(--mono);padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.14)}
-.stage-dot{width:7px;height:7px;border-radius:50%;background:#fff;margin-right:auto;margin-left:12px}
-.stage-body{display:grid;grid-template-columns:1fr 1.3fr;gap:18px;height:calc(100% - 39px);padding-top:18px}
-.stage-side{border-right:1px solid rgba(255,255,255,.13);padding-right:18px}
-.stage-side p{color:#959591;font:10px var(--mono);margin:0 0 15px}
-.stage-side div{padding:12px 11px;border-radius:8px;color:#aaa;font-size:12px}
-.stage-side div.active{background:#f2f2ee;color:#111}
-.chat{display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
-.bubble{max-width:80%;padding:12px 14px;border-radius:12px;background:#292927;color:#deded9;font-size:12px}
-.bubble.user{align-self:flex-end;background:#f1f1ed;color:#111}
-.chat-input{margin-top:auto;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:11px 13px;color:#777;font:10px var(--mono)}
-.section{padding:118px 0}
-.intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.section-label{font:11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.section-title{font-size:clamp(42px,5vw,72px);line-height:.98;letter-spacing:-.085em;margin:15px 0 0;font-weight:500}
-.section-copy{max-width:430px;color:#595955;font-size:17px;line-height:1.55;margin-top:4px}
-.feature-stack{margin-top:74px;display:grid;gap:18px}
-.feature{display:grid;grid-template-columns:1fr 1fr;min-height:430px;border-radius:25px;overflow:hidden;background:var(--white)}
-.feature:nth-child(even){background:#e8e8e3}
-.feature-content{padding:42px;display:flex;flex-direction:column;justify-content:space-between}
-.feature h3{font-size:38px;line-height:1.02;letter-spacing:-.07em;margin:14px 0 16px;max-width:360px}
-.feature p{max-width:360px;color:#595955;font-size:15px}
-.feature-visual{position:relative;min-height:360px;background:#111;overflow:hidden}
-.feature:nth-child(even) .feature-visual{order:-1;background:#d8d8d3}
-.visual-lines{position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.8%,rgba(255,255,255,.18) 50%,transparent 50.2%),linear-gradient(transparent 49.8%,rgba(255,255,255,.18) 50%,transparent 50.2%);background-size:70px 70px;opacity:.55}
-.visual-orbit{position:absolute;inset:18% 12%;border:1px solid rgba(255,255,255,.35);border-radius:50%;transform:rotate(30deg)}
-.visual-orbit:before,.visual-orbit:after{content:'';position:absolute;border:1px solid rgba(255,255,255,.24);border-radius:50%;inset:12%;transform:rotate(60deg)}
-.visual-orbit:after{inset:24%;transform:rotate(-65deg)}
-.visual-core{position:absolute;left:50%;top:50%;width:90px;height:90px;transform:translate(-50%,-50%);border-radius:50%;background:#f0f0eb;box-shadow:0 0 75px rgba(255,255,255,.45)}
-.visual-window{position:absolute;left:12%;right:12%;top:18%;bottom:18%;border:1px solid rgba(16,16,16,.25);border-radius:14px;background:rgba(247,247,245,.66);padding:17px}
-.visual-window .bar{width:42%;height:9px;border-radius:99px;background:#111;margin-bottom:17px}
-.visual-window .line{height:8px;width:80%;background:#888;border-radius:99px;margin:10px 0}
-.visual-window .line.short{width:54%}
-.visual-window .tag{display:inline-block;margin-top:12px;padding:7px 10px;border-radius:99px;background:#111;color:#fff;font:10px var(--mono)}
-.numbered{margin-top:70px;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #cfcfca}
-.numbered-item{padding:24px 22px 0;border-left:1px solid #cfcfca;min-height:190px}
-.numbered-item:last-child{border-right:1px solid #cfcfca}
-.numbered-item b{font:11px var(--mono);font-weight:400}
-.numbered-item h4{margin:45px 0 8px;font-size:21px;letter-spacing:-.04em}
-.numbered-item p{font-size:13px;color:var(--muted);max-width:240px}
-.band{background:#111;color:#fff;padding:110px 0}
-.band-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px}
-.band .section-label{color:#a9a9a3}
-.band h2{font-size:clamp(46px,6vw,88px);line-height:.94;letter-spacing:-.09em;margin:16px 0}
-.band p{color:#aaa;font-size:16px;max-width:430px}
-.band-card{border:1px solid #373735;border-radius:20px;padding:25px;min-height:310px;display:flex;flex-direction:column;justify-content:space-between}
-.band-card .log{font:11px var(--mono);color:#9e9e98}
-.checks{display:grid;gap:14px}
-.check-row{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid #333}
-.check-row i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;border:1px solid #777;border-radius:50%;font-size:11px}
-.check-row span{font-size:14px}
-.pricing{background:#e8e8e3}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:60px}
-.price-card{background:#f7f7f5;border-radius:21px;padding:28px;min-height:360px;display:flex;flex-direction:column}
-.price-card.featured{background:#111;color:#fff}
-.price-card h3{font-size:27px;letter-spacing:-.06em;margin:70px 0 10px}
-.price-card p{font-size:14px;color:var(--muted);max-width:230px}
-.price-card.featured p{color:#aaa}
-.price-amount{margin-top:auto;font-size:29px;letter-spacing:-.06em}
-.price-amount small{font:11px var(--mono);color:var(--muted)}
-.price-card .pill{align-self:flex-start;margin-top:20px}
-.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:100px}
-.faq-list{border-top:1px solid #cfcfca}
-.faq-list details{padding:20px 0;border-bottom:1px solid #cfcfca}
-.faq-list summary{cursor:pointer;list-style:none;font-size:17px;font-weight:500}
-.faq-list summary::-webkit-details-marker{display:none}
-.faq-list summary:after{content:'+';float:right;font-size:23px;font-weight:300}
-.faq-list details[open] summary:after{content:'−'}
-.faq-list p{color:#656560;font-size:14px;max-width:570px;margin:14px 0 0}
-.cta{text-align:center;padding:130px 0 145px;background:#111;color:#fff}
-.cta h2{font-size:clamp(60px,9vw,128px);line-height:.88;letter-spacing:-.1em;margin:17px auto 30px;max-width:970px}
-.cta p{max-width:410px;color:#aaa;margin:0 auto 30px}
-.cta .pill{background:#fff;color:#111;border-color:#fff}
-.footer{padding:26px 0;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #d4d4d0;font-size:12px}
-.footer span{color:var(--muted)}
-.mono{font:10px var(--mono);color:var(--muted)}
-@keyframes scan{0%,20%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
-@media(max-width:800px){
-.shell{width:min(100% - 36px,620px)}
-.nav-links{display:none}
-.nav-actions .pill.light{display:none}
-.mobile-menu{display:block}
-.hero{padding-top:72px}
-.hero-stage{height:410px;margin-top:55px;border-radius:20px}
-.stage-ui{width:88%;height:285px}
-.stage-body{grid-template-columns:1fr}
-.stage-side{display:none}
-.intro,.band-inner,.faq-grid{display:block}
-.section{padding:78px 0}
-.section-copy{margin-top:25px}
-.feature{grid-template-columns:1fr}
-.feature-visual{min-height:300px;order:-1!important}
-.feature-content{min-height:330px;padding:28px}
-.feature h3{font-size:34px}
-.numbered,.pricing-grid{grid-template-columns:1fr}
-.numbered-item{border-right:1px solid #cfcfca}
-.numbered-item h4{margin-top:30px}
-.pricing-grid{gap:12px}
-.price-card{min-height:300px}
-.band{padding:80px 0}
-.band-card{margin-top:42px}
-.faq-list{margin-top:44px}
-.footer{gap:10px;flex-wrap:wrap}
-}
-@media(max-width:480px){
-h1{font-size:56px}
-.hero-copy{font-size:15px}
-.hero-actions{flex-direction:column;align-items:center}
-.hero-stage{height:350px}
-.stage-ui{width:91%;height:250px;padding:14px}
-.stage-top{font-size:9px}
-.bubble{font-size:10px}
-.hero{padding-bottom:40px}
-.feature-content{padding:25px}
-.cta{padding:95px 0 105px}
-}
-/* Alphex AI color layer */
-:root{--accent:#7057ff;--accent-dark:#5540d8;--cyan:#35c8c0;--lavender:#eeeaff;--mint:#e6f8f4;--sun:#f6c85f}
-.wordmark{letter-spacing:-.075em}
-.wordmark::after{content:none}
-.section-label,.hero-kicker{color:var(--accent)}
-.announcement a{color:var(--accent-dark)}
-.pill.dark{background:linear-gradient(110deg,var(--accent-dark),var(--accent));border-color:var(--accent-dark)}
-.pill.dark:hover{background:linear-gradient(110deg,#4532bd,var(--accent-dark))}
-.pill.light:hover{border-color:var(--accent);color:var(--accent-dark);background:var(--lavender)}
-.hero-stage{background:linear-gradient(135deg,#1c1836 0%,#111 48%,#103f40 100%)}
-.hero-stage:before{background:radial-gradient(circle at 47% 46%,#f4f0ff 0 6%,#a79bff 11%,#7057ff 25%,#242044 51%,#10191a 72%)}
-.hero-stage:after{background:linear-gradient(120deg,transparent 0 40%,rgba(53,200,192,.26) 48%,transparent 56%)}
-.stage-ui{border-color:rgba(166,156,255,.4)}
-.stage-dot{background:var(--cyan)}
-.bubble.user{background:#e5e0ff}
-.feature:nth-child(1){background:linear-gradient(135deg,#fff 0%,#f1efff 100%)}
-.feature:nth-child(2){background:linear-gradient(135deg,#e7faf6 0%,#fff 100%)}
-.feature:nth-child(3){background:linear-gradient(135deg,#fff8e4 0%,#fff 100%)}
-.feature:nth-child(1) .feature-visual{background:linear-gradient(135deg,#201a49,#7057ff)}
-.feature:nth-child(2) .feature-visual{background:linear-gradient(135deg,#c8f0e8,#35c8c0)}
-.feature:nth-child(3) .feature-visual{background:linear-gradient(135deg,#604a0f,#f6c85f)}
-.visual-core{background:#f6f4ff;box-shadow:0 0 75px rgba(238,234,255,.78)}
-.feature:nth-child(2) .visual-window{background:rgba(245,255,252,.78)}
-.feature:nth-child(2) .visual-window .bar{background:#246d69}
-.feature:nth-child(2) .visual-window .tag{background:#246d69}
-.band{background:linear-gradient(125deg,#14122b,#111 58%,#102b2b)}
-.band-card{border-color:#4a4381;background:rgba(255,255,255,.03)}
-.check-row i{border-color:var(--cyan);color:var(--cyan)}
-.pricing{background:linear-gradient(135deg,#e9e6ff,#e8e8e3 55%,#e2f6f1)}
-.price-card.featured{background:linear-gradient(145deg,#302261,#151522)}
-.price-card.featured .section-label{color:#bfb5ff}
-.cta{background:linear-gradient(120deg,#161131,#111 60%,#103b3a)}
-.cta .section-label{color:#8df0df}
-.cta .pill{color:#201942;border-color:#fff;background:linear-gradient(110deg,#fff,#dffbf5)}
-.hero-stage,.feature-visual{--mx:0;--my:0}
-.stage-ui{transform:translate3d(calc(var(--mx) * 10px),calc(var(--my) * 10px),0) rotateX(calc(var(--my) * -1.5deg)) rotateY(calc(var(--mx) * 1.5deg));transition:transform .18s ease-out}
-.hero-stage:before{transform:translate3d(calc(var(--mx) * -14px),calc(var(--my) * -14px),0);transition:transform .3s ease-out}
-.stage-dot{animation:statusPulse 1.8s ease-in-out infinite}
-.chat .bubble:nth-child(1){animation:messageFloat 4s ease-in-out infinite}
-.chat .bubble:nth-child(2){animation:messageFloat 4s 1s ease-in-out infinite}
-.chat .bubble:nth-child(3){animation:messageFloat 4s 2s ease-in-out infinite}
-.visual-orbit{animation:orbitSpin 14s linear infinite;transform:rotate(calc(30deg + var(--mx) * 8deg)) translate3d(calc(var(--mx) * 8px),calc(var(--my) * 8px),0)}
-.visual-core{animation:corePulse 3.2s ease-in-out infinite;transform:translate(calc(-50% + var(--mx) * 10px),calc(-50% + var(--my) * 10px));transition:transform .2s ease-out}
-.visual-lines{animation:gridDrift 12s linear infinite}
-.feature:hover{box-shadow:0 18px 48px rgba(70,56,165,.12);transition:box-shadow .3s ease}
-.price-card{transition:transform .25s ease,box-shadow .25s ease}
-.price-card:hover{transform:translateY(-7px);box-shadow:0 18px 44px rgba(38,31,91,.13)}
-@keyframes statusPulse{50%{box-shadow:0 0 0 5px rgba(53,200,192,.12)}}
-@keyframes messageFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-@keyframes orbitSpin{to{rotate:360deg}}
-@keyframes corePulse{0%,100%{box-shadow:0 0 75px rgba(238,234,255,.78)}50%{box-shadow:0 0 105px rgba(53,200,192,.42)}}
-@keyframes gridDrift{to{background-position:70px 70px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
-.price-card.featured .pill{background:#fff;color:#201942;border-color:#fff;box-shadow:0 5px 18px rgba(0,0,0,.22)}
-.price-card.featured .pill:hover{background:#dffbf5;border-color:#dffbf5;color:#201942}
-/* Professional footer */
-.footer-pro{padding:72px 0 28px;border-top:1px solid #d4d4d0}
-.footer-top{display:grid;grid-template-columns:1.5fr 2.5fr;gap:80px;padding-bottom:75px}
-.footer-brand p{max-width:240px;color:var(--muted);font-size:13px;line-height:1.6;margin:18px 0}
-.footer-columns{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.footer-group h4{font:10px var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0 0 20px}
-.footer-group a{display:block;color:var(--ink);font-size:13px;text-decoration:none;margin:0 0 13px}
-.footer-group a:hover{color:var(--accent-dark)}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:22px;border-top:1px solid #d4d4d0;color:var(--muted);font-size:11px}
-.footer-bottom .mono{font-size:9px}
-@media(max-width:800px){
-.footer-top{display:block;padding-bottom:48px}
-.footer-columns{grid-template-columns:repeat(2,1fr);gap:35px;margin-top:48px}
-.footer-bottom{display:block}
-.footer-bottom .mono{display:block;margin-top:12px}
-}
-/* Scrolling principles strip */
-.ticker{overflow:hidden;border-bottom:1px solid #d4d4d0;background:#eeecff;color:#4f40bb;white-space:nowrap}
-.ticker-track{display:inline-flex;align-items:center;gap:27px;min-width:max-content;padding:12px 0;font:10px var(--mono);letter-spacing:.1em;animation:tickerMove 32s linear infinite}
-.ticker b{color:#35bfb5;font-size:13px;font-weight:400}
-@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-/* Responsive navigation + theme switcher */
-:root{color-scheme:light;--border:#d4d4d0}
-body{transition:background .35s ease,color .35s ease}
-.theme-toggle{height:39px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:transparent;color:var(--ink);font:11px var(--mono);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
-.theme-toggle:hover{border-color:var(--accent);background:var(--lavender);color:var(--accent-dark)}
-.theme-icon{font:17px var(--sans);line-height:1}
-.mobile-menu{width:40px;height:40px;display:none;position:relative;border:1px solid var(--border);border-radius:50%;background:transparent;cursor:pointer}
-.mobile-menu span{position:absolute;left:11px;width:16px;height:1.5px;background:var(--ink);transition:transform .2s,top .2s}
-.mobile-menu span:first-child{top:15px}
-.mobile-menu span:last-child{top:22px}
-.mobile-menu.open span:first-child{top:19px;transform:rotate(45deg)}
-.mobile-menu.open span:last-child{top:19px;transform:rotate(-45deg)}
-.mobile-panel{display:none;position:fixed;z-index:99;top:76px;left:0;right:0;background:rgba(247,247,245,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 18px 35px rgba(0,0,0,.08)}
-.mobile-panel-inner{width:min(100% - 36px,620px);margin:auto;padding:13px 0 18px}
-.mobile-panel a{display:flex;align-items:center;justify-content:space-between;color:var(--ink);text-decoration:none;font-size:19px;letter-spacing:-.04em;padding:14px 0;border-bottom:1px solid var(--border)}
-.mobile-panel a:last-child{color:var(--accent-dark);border-bottom:0}
-.mobile-panel.open{display:block}
-.dark-theme{color-scheme:dark}
-body.dark-theme{--paper:#0e1019;--white:#171a28;--ink:#f5f4ff;--soft:#262a3b;--muted:#a5a8bd;--border:#34394e;background:var(--paper)}
-body.dark-theme .topbar{background:rgba(14,16,25,.9);border-color:var(--border)}
-body.dark-theme .announcement{border-color:var(--border)}
-body.dark-theme .ticker{background:#201b46;border-color:var(--border);color:#c2baff}
-body.dark-theme .mobile-panel{background:rgba(14,16,25,.97);border-color:var(--border)}
-body.dark-theme .feature{background:#171a28;border:1px solid var(--border)}
-body.dark-theme .feature:nth-child(1),body.dark-theme .feature:nth-child(2),body.dark-theme .feature:nth-child(3){background:linear-gradient(135deg,#171a28,#20243a)}
-body.dark-theme .section-copy,body.dark-theme .feature p{color:#b7bacb}
-body.dark-theme .numbered,body.dark-theme .numbered-item{border-color:var(--border)}
-body.dark-theme .pricing{background:linear-gradient(135deg,#171a35,#191d28)}
-body.dark-theme .price-card{background:#121521;border:1px solid var(--border)}
-body.dark-theme .price-card.featured{background:linear-gradient(145deg,#302261,#151522);border-color:#6656c9}
-body.dark-theme .faq-list,body.dark-theme .faq-list details{border-color:var(--border)}
-body.dark-theme .footer-pro{border-color:var(--border)}
-body.dark-theme .footer-bottom{border-color:var(--border)}
-body.dark-theme .footer-group a{color:var(--ink)}
-body.dark-theme .footer-group a:hover{color:#bfb5ff}
-body.dark-theme .pill.light{border-color:var(--border);color:var(--ink)}
-body.dark-theme .pill.light:hover{background:#242044;border-color:#8172ff;color:#d5d0ff}
-body.dark-theme .theme-toggle:hover{background:#242044;color:#c8c0ff}
-body.dark-theme .mobile-menu span{background:var(--ink)}
-@media(max-width:800px){
-.nav{height:68px}
-.topbar .shell{width:calc(100% - 28px)}
-.nav-links{display:none}
-.nav-actions{gap:7px}
-.contact-link,.header-demo{display:none}
-.theme-toggle{width:40px;height:40px;padding:0;justify-content:center}
-.theme-label{display:none}
-.mobile-menu{display:block}
-.mobile-panel{top:68px}
-.hero{padding:68px 0 50px}
-.hero h1{font-size:clamp(52px,14vw,82px)}
-.hero-copy{max-width:520px}
-.hero-stage{height:430px;margin-top:48px}
-.stage-ui{width:92%;height:300px}
-.feature-content{min-height:300px}
-.footer-pro{padding-top:58px}
-}
-@media(max-width:480px){
-.shell{width:calc(100% - 28px)}
-.announcement{padding:10px 14px;font-size:10px;line-height:1.5}
-.ticker-track{gap:18px;padding:10px 0;font-size:8px}
-.hero{padding-top:56px}
-.hero-kicker{font-size:9px}
-.hero h1{font-size:clamp(48px,15vw,66px);margin-top:15px}
-.hero-copy{font-size:14px;line-height:1.6}
-.hero-actions{width:100%;gap:9px}
-.hero-actions .pill{width:100%;max-width:280px}
-.hero-stage{height:350px;margin-top:38px;border-radius:18px}
-.stage-ui{width:95%;height:245px;padding:13px}
-.stage-top{font-size:8px;padding-bottom:12px}
-.stage-body{padding-top:12px}
-.bubble{max-width:88%;padding:9px 10px;font-size:9px}
-.chat-input{padding:9px;font-size:8px}
-.section{padding:64px 0}
-.section-title{font-size:clamp(40px,12vw,58px)}
-.feature-visual{min-height:240px}
-.feature-content{min-height:300px;padding:23px}
-.feature h3{font-size:31px}
-.numbered-item{min-height:160px;padding:19px 16px 0}
-.band{padding:64px 0}
-.band h2{font-size:50px}
-.band-card{min-height:280px;padding:20px}
-.pricing-grid{gap:10px}
-.price-card{min-height:280px;padding:23px}
-.price-card h3{margin-top:47px;font-size:25px}
-.faq-grid{gap:0}
-.faq-list summary{font-size:15px}
-.footer-columns{gap:27px 16px}
-.footer-group h4{font-size:9px;margin-bottom:15px}
-.footer-group a{font-size:12px;margin-bottom:11px}
-.footer-bottom .mono{font-size:8px;line-height:1.5}
-}
-/* Dark-mode contrast polish */
-body.dark-theme .hero-copy{color:#e1e3f0}
-body.dark-theme .section-copy{color:#c2c5d5}
-body.dark-theme .feature p{color:#c0c3d2}
-body.dark-theme .price-card p{color:#c1c4d1}
-body.dark-theme .price-card.featured p{color:#c7c9d8}
-body.dark-theme .announcement{color:#c6c9d7}
-body.dark-theme .footer-brand p{color:#b9bdce}
-body.dark-theme .footer-bottom{color:#b5b9ca}
-body.dark-theme .hero-kicker,body.dark-theme .section-label{color:#aca0ff}
-body.dark-theme .hero-actions .pill.dark{color:#fff}
-body.dark-theme .hero-actions .pill.dark:hover{color:#fff}
-/* PRODUCTS SECTION */
-.products-section{background:var(--paper)}
-.products-grid{margin-top:60px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.product-card{position:relative;min-height:430px;border-radius:25px;overflow:hidden;padding:42px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(16,16,16,.06);transition:transform .25s ease,box-shadow .25s ease}
-.product-card:hover{transform:translateY(-6px);box-shadow:0 20px 55px rgba(38,31,91,.13)}
-.product-card.ai{background:linear-gradient(135deg,#eeeaff 0%,#fff 70%)}
-.product-card.jobs{background:linear-gradient(135deg,#e6f8f4 0%,#fff 70%)}
-.product-top{display:flex;align-items:center;justify-content:space-between}
-.product-number{font:11px var(--mono);color:var(--muted)}
-.product-mark{width:54px;height:54px;display:grid;place-items:center;border-radius:50%;font:12px var(--mono)}
-.product-card.ai .product-mark{background:#7057ff;color:#fff;box-shadow:0 0 35px rgba(112,87,255,.3)}
-.product-card.jobs .product-mark{background:#35c8c0;color:#102b2b;box-shadow:0 0 35px rgba(53,200,192,.3)}
-.product-card h3{font-size:48px;line-height:.95;letter-spacing:-.08em;margin:0 0 17px}
-.product-card p{max-width:420px;color:#595955;font-size:15px;line-height:1.6;margin:0}
-.product-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
-.product-tags span{padding:7px 10px;border:1px solid rgba(16,16,16,.12);border-radius:999px;font:9px var(--mono);color:#595955;background:rgba(255,255,255,.45)}
-.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:40px}
-.product-status{font:10px var(--mono);color:var(--muted)}
-@media(max-width:800px){.products-grid{grid-template-columns:1fr;gap:14px}.product-card{min-height:390px;padding:30px}.product-card h3{font-size:40px}}
-@media(max-width:480px){.product-card{min-height:350px;padding:24px}.product-card h3{font-size:36px}.product-card p{font-size:14px}.product-bottom{align-items:flex-start;flex-direction:column}}
-body.dark-theme .products-section{background:var(--paper)}
-body.dark-theme .product-card{border-color:var(--border)}
-body.dark-theme .product-card.ai{background:linear-gradient(135deg,#211d3d,#171a28)}
-body.dark-theme .product-card.jobs{background:linear-gradient(135deg,#173332,#171a28)}
-body.dark-theme .product-card p{color:#c0c3d2}
-body.dark-theme .product-tags span{border-color:#3c4155;color:#bfc2d0;background:rgba(255,255,255,.03)}
-.nav-links a{position:relative}
-.nav-links a:after{content:'';position:absolute;left:0;right:100%;bottom:-8px;height:2px;background:var(--accent);transition:right .25s ease}
-.nav-links a:hover:after{right:0}
-.products-section{position:relative;overflow:hidden}
-.products-section:before{content:'';position:absolute;right:-180px;top:80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,255,.13),transparent 68%);pointer-events:none}
-.products-section .shell{position:relative}
-.product-card{isolation:isolate}
-.product-card:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(120deg,rgba(255,255,255,.32),transparent 45%);pointer-events:none}
-.product-mark{font-weight:500}
-.product-tags span{transition:transform .2s ease,background .2s ease}
-.product-tags span:hover{transform:translateY(-2px);background:#fff}
-.product-bottom .pill{white-space:nowrap}
-.footer-group a{transition:color .2s ease,transform .2s ease}
-.footer-group a:hover{transform:translateX(3px)}
-body.dark-theme .products-section:before{background:radial-gradient(circle,rgba(112,87,255,.2),transparent 68%)}
-body.dark-theme .product-card:after{background:linear-gradient(120deg,rgba(255,255,255,.06),transparent 45%)}
-body.dark-theme .product-tags span:hover{background:#242044}
-body.dark-theme .pill.dark,body.dark-theme .pill.dark:hover,body.dark-theme .header-demo,body.dark-theme .header-demo:hover{color:#fff}
-body{font-weight:400}
-h1,h2,h3,h4,.section-title,.wordmark{font-weight:300!important}
-.pill,.nav-links a,.mobile-panel a,.faq-list summary,.product-mark{font-weight:500}
-.hero-copy,.section-copy,.feature p,.band p,.price-card p,.faq-list p,.footer-brand p{font-weight:300}
-.footer-group h4,.section-label,.hero-kicker,.mono,.product-number,.product-status{font-weight:400}
-.product-card.ai,.product-card.jobs{background:#fff;border:1px solid #d4d4d0}
-.product-card.ai .product-mark,.product-card.jobs .product-mark{background:#111;color:#fff;box-shadow:none}
-.product-card .product-tags span{background:#fff;border-color:#c8c8c4;color:#111}
-.product-card .product-tags span:hover{background:#111;color:#fff;border-color:#111}
-.product-card:hover{box-shadow:0 20px 55px rgba(0,0,0,.1)}
-body.dark-theme .product-card.ai,body.dark-theme .product-card.jobs{background:#171717;border-color:#3b3b3b}
-body.dark-theme .product-card.ai .product-mark,body.dark-theme .product-card.jobs .product-mark{background:#fff;color:#111;box-shadow:none}
-body.dark-theme .product-card .product-tags span{background:#171717;border-color:#555;color:#fff}
-body.dark-theme .product-card .product-tags span:hover{background:#fff;color:#111;border-color:#fff}
-body.dark-theme .product-card:hover{box-shadow:0 20px 55px rgba(0,0,0,.45)}
-.product-card.ai,.product-card.jobs{background:rgba(255,255,255,.72);border-color:rgba(16,16,16,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.product-card .product-tags span{background:rgba(255,255,255,.48)}
-body.dark-theme .product-card.ai,body.dark-theme .product-card.jobs{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-body.dark-theme .product-card .product-tags span{background:rgba(255,255,255,.04)}
-/* =========================================================
-   AUTHENTICATED PROFILE NAVIGATION
-   ========================================================= */
-.auth-profile{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-}
-.profile-button{
-  width:42px;
-  height:42px;
-  padding:0;
-  border:1px solid var(--border);
-  border-radius:50%;
-  background:var(--ink);
-  color:var(--paper);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  font:12px var(--mono);
-  transition:transform .2s ease,background .2s ease,border-color .2s ease;
-}
-.profile-button:hover{
-  transform:translateY(-2px);
-  background:var(--accent);
-  border-color:var(--accent);
-  color:#fff;
-}
-.profile-menu{
-  position:absolute;
-  top:52px;
-  right:0;
-  width:250px;
-  padding:14px;
-  background:var(--paper);
-  border:1px solid var(--border);
-  border-radius:18px;
-  box-shadow:0 18px 50px rgba(0,0,0,.12);
-  display:none;
-  z-index:200;
-}
-.profile-menu.open{
-  display:block;
-}
-.profile-user{
-  padding:8px 8px 13px;
-  border-bottom:1px solid var(--border);
-  margin-bottom:8px;
-}
-.profile-name{
-  font-size:13px;
-  font-weight:500;
-  color:var(--ink);
-  margin-bottom:4px;
-  word-break:break-word;
-}
-.profile-email{
-  font:9px var(--mono);
-  color:var(--muted);
-  word-break:break-word;
-}
-.profile-account{
-  display:block;
-  width:100%;
-  padding:10px 8px;
-  border-radius:9px;
-  color:var(--muted);
-  font-size:12px;
-  text-decoration:none;
-  cursor:not-allowed;
-  opacity:.65;
-}
-.profile-account:hover{
-  background:rgba(112,87,255,.06);
-}
-.profile-signout{
-  width:100%;
-  padding:10px 8px;
-  border:0;
-  border-radius:9px;
-  background:transparent;
-  color:var(--ink);
-  text-align:left;
-  font-size:12px;
-  cursor:pointer;
-}
-.profile-signout:hover{
-  background:var(--lavender);
-  color:var(--accent-dark);
-}
-.mobile-auth-link{
-  display:none!important;
-}
-body.dark-theme .profile-menu{
-  background:#141722;
-  border-color:var(--border);
-  box-shadow:0 18px 50px rgba(0,0,0,.45);
-}
-body.dark-theme .profile-user{
-  border-color:var(--border);
-}
-body.dark-theme .profile-name{
-  color:var(--ink);
-}
-body.dark-theme .profile-account{
-  color:var(--muted);
-}
-body.dark-theme .profile-signout{
-  color:var(--ink);
-}
-body.dark-theme .profile-signout:hover{
-  background:#242044;
-  color:#c8c0ff;
-}
-@media(max-width:800px){
-  .profile-button{
-    width:40px;
-    height:40px;
-  }
-  .profile-menu{
-    top:50px;
-    right:-2px;
-    width:235px;
-  }
-  .mobile-auth-link{
-    display:flex!important;
-  }
-  .mobile-auth-link.logged-out{
-    display:flex!important;
-  }
-  .mobile-auth-link.logged-in{
-    display:none!important;
-  }
-  body.authenticated .mobile-auth-link.logged-out{
-    display:none!important;
-  }
-  body.authenticated .mobile-auth-link.logged-in{
-    display:flex!important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Alphex AI builds reliable AI systems for real work, from assistants and knowledge systems to AI agents, evaluation, and workflow automation."
+  >
+
+  <title>Alphex AI — AI that works alongside your team</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* =========================================================
+       ALPHEX AI — EXISTING DESIGN SYSTEM
+       ========================================================= */
+
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --surface-2: #f1f1ef;
+      --text: #111318;
+      --muted: #6d7078;
+      --line: #deded9;
+
+      --accent: #7057ff;
+      --accent-dark: #5540d8;
+      --cyan: #35c8c0;
+      --lavender: #eeeaff;
+      --mint: #e6f8f4;
+      --sun: #f6c85f;
+
+      --dark: #0e1019;
+      --dark-2: #151823;
+      --dark-line: #292d39;
+
+      --radius: 20px;
+      --radius-sm: 14px;
+
+      --max: 1180px;
+      --shadow: 0 18px 50px rgba(20, 20, 30, .07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.dark {
+      --bg: #0e1019;
+      --surface: #151823;
+      --surface-2: #1a1e2a;
+      --text: #f4f4f6;
+      --muted: #a4a7b0;
+      --line: #292d39;
+      --shadow: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 110px 0;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .section-title {
+      max-width: 800px;
+      margin: 0;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -.045em;
+      font-weight: 300 !important;
+    }
+
+    .section-copy {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      margin: 24px 0 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .section-title,
+    .wordmark {
+      font-weight: 300 !important;
+    }
+
+    /* =========================================================
+       TOPBAR
+       ========================================================= */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 247, 245, .88);
+      backdrop-filter: blur(18px);
+    }
+
+    body.dark .topbar {
+      background: rgba(14, 16, 25, .88);
+    }
+
+    .nav {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .wordmark {
+      font-size: 19px;
+      letter-spacing: -.04em;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      margin-left: auto;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 17px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      transition: transform .2s ease, background .2s ease, color .2s ease;
+      cursor: pointer;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+    }
+
+    .pill.light {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .pill.dark {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    body.dark .pill.dark {
+      background: #f4f4f6;
+      color: #0e1019;
+      border-color: #f4f4f6;
+    }
+
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .auth-profile {
+      position: relative;
+    }
+
+    .profile-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .profile-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 51px;
+      min-width: 190px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      z-index: 20;
+    }
+
+    .profile-menu.open {
+      display: block;
+    }
+
+    .profile-menu button,
+    .profile-menu a {
+      width: 100%;
+      display: block;
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      text-align: left;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .profile-menu button:hover,
+    .profile-menu a:hover {
+      background: var(--surface-2);
+    }
+
+    .mobile-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .mobile-panel {
+      display: none;
+      border-top: 1px solid var(--line);
+      padding: 18px 20px 25px;
+    }
+
+    .mobile-panel.open {
+      display: block;
+    }
+
+    .mobile-panel a {
+      display: block;
+      padding: 12px 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* =========================================================
+       ANNOUNCEMENT
+       ========================================================= */
+
+    .announcement {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .announcement a {
+      color: var(--text);
+    }
+
+    /* =========================================================
+       TICKER
+       ========================================================= */
+
+    .ticker {
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+
+    .ticker-item {
+      padding: 14px 28px;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .ticker-item::after {
+      content: "·";
+      margin-left: 56px;
+      color: var(--accent);
+    }
+
+    @keyframes ticker {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+      padding: 100px 0 110px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      align-items: center;
+      gap: 70px;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    .hero-kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(52px, 7vw, 88px);
+      line-height: .98;
+      letter-spacing: -.065em;
+      max-width: 700px;
+    }
+
+    .hero-copy {
+      max-width: 600px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .hero-stage {
+      position: relative;
+      min-height: 510px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .stage-top {
+      height: 55px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+    }
+
+    .stage-brand {
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .stage-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .stage-status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+    }
+
+    .stage-body {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      height: 455px;
+    }
+
+    .stage-sidebar {
+      border-right: 1px solid var(--line);
+      padding: 18px 12px;
+    }
+
+    .stage-side-label {
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+      color: var(--muted);
+      margin: 0 6px 12px;
+      letter-spacing: .08em;
+    }
+
+    .stage-item {
+      padding: 10px 8px;
+      border-radius: 9px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .stage-item.active {
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .chat {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-title {
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .bubble {
+      max-width: 85%;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      font-size: 12px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+
+    .bubble.user {
+      margin-left: auto;
+      background: var(--lavender);
+      border-color: transparent;
+    }
+
+    body.dark .bubble.user {
+      background: #25213c;
+    }
+
+    .bubble.ai {
+      background: var(--surface-2);
+    }
+
+    .chat-input {
+      margin-top: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 13px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       GENERIC GRIDS
+       ========================================================= */
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .feature {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 28px;
+      min-height: 250px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-number {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 55px;
+    }
+
+    .feature h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.025em;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 12px 0 0;
+    }
+
+    /* =========================================================
+       USE CASES
+       ========================================================= */
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .use-case {
+      padding: 30px;
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .use-case-index {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 70px;
+    }
+
+    .use-case h3 {
+      margin: 0;
+      font-size: 23px;
+      letter-spacing: -.025em;
+    }
+
+    .use-case p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       OUTCOMES
+       ========================================================= */
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      margin-top: 50px;
+      border-top: 1px solid var(--line);
+    }
+
+    .outcome {
+      display: grid;
+      grid-template-columns: 45px 1fr;
+      gap: 18px;
+      padding: 25px 15px 25px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .outcome:nth-child(odd) {
+      border-right: 1px solid var(--line);
+      padding-right: 30px;
+    }
+
+    .outcome:nth-child(even) {
+      padding-left: 30px;
+    }
+
+    .outcome-number {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    .outcome h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .outcome p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =========================================================
+       ARCHITECTURE
+       ========================================================= */
+
+    .architecture {
+      background: var(--dark);
+      color: #f5f5f7;
+    }
+
+    .architecture .section-copy {
+      color: #9da2ae;
+    }
+
+    .architecture .section-label {
+      color: #9b8cff;
+    }
+
+    .architecture .section-label::before {
+      background: #9b8cff;
+    }
+
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--dark-line);
+      margin-top: 55px;
+      border: 1px solid var(--dark-line);
+    }
+
+    .architecture-card {
+      background: var(--dark);
+      padding: 32px;
+      min-height: 290px;
+    }
+
+    .architecture-number {
+      font-family: "DM Mono", monospace;
+      color: #9b8cff;
+      font-size: 11px;
+    }
+
+    .architecture-card h3 {
+      margin: 65px 0 12px;
+      font-size: 25px;
+    }
+
+    .architecture-card p {
+      color: #9da2ae;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .architecture-loop {
+      margin-top: 18px;
+      border: 1px solid var(--dark-line);
+      padding: 20px;
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: #b7b9c2;
+      text-align: center;
+      letter-spacing: .02em;
+    }
+
+    /* =========================================================
+       PLATFORM
+       ========================================================= */
+
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .platform-step {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      background: var(--surface);
+      min-height: 230px;
+    }
+
+    .platform-step:nth-child(n+4) {
+      min-height: 200px;
+    }
+
+    .platform-step span {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    .platform-step h3 {
+      margin: 48px 0 10px;
+      font-size: 20px;
+    }
+
+    .platform-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       WHY ALPHEX
+       ========================================================= */
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .why-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .why-card h3 {
+      margin: 0 0 9px;
+      font-size: 20px;
+    }
+
+    .why-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       TRUST
+       ========================================================= */
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: start;
+      margin-top: 55px;
+    }
+
+    .trust-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .trust-item {
+      display: grid;
+      grid-template-columns: 35px 1fr;
+      gap: 15px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .trust-item span {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    .trust-item h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .trust-item p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .principle {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 40px;
+      background: var(--surface);
+    }
+
+    .principle-label {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .principle blockquote {
+      margin: 45px 0 0;
+      font-size: 30px;
+      line-height: 1.2;
+      letter-spacing: -.035em;
+      font-weight: 300;
+    }
+
+    /* =========================================================
+       INDUSTRIES
+       ========================================================= */
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 50px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .industry {
+      background: var(--surface);
+      padding: 28px;
+      min-height: 145px;
+    }
+
+    .industry span {
+      font-family: "DM Mono", monospace;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    .industry h3 {
+      margin: 28px 0 0;
+      font-size: 18px;
+    }
+
+    /* =========================================================
+       PROCESS
+       ========================================================= */
+
+    .process-list {
+      margin-top: 55px;
+      border-top: 1px solid var(--line);
+    }
+
+    .process-row {
+      display: grid;
+      grid-template-columns: 80px 220px 1fr;
+      gap: 25px;
+      align-items: center;
+      padding: 27px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .process-number {
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .process-row h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .process-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       QUALITY BAND
+       ========================================================= */
+
+    .band {
+      background: var(--dark);
+      color: #f5f5f7;
+      padding: 95px 0;
+    }
+
+    .band .section-label {
+      color: #9b8cff;
+    }
+
+    .band .section-label::before {
+      background: #9b8cff;
+    }
+
+    .band .section-copy {
+      color: #9da2ae;
+    }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      margin-top: 55px;
+    }
+
+    .quality-column {
+      border-top: 1px solid var(--dark-line);
+    }
+
+    .quality-column h3 {
+      font-size: 17px;
+      margin: 20px 0;
+    }
+
+    .quality-item {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--dark-line);
+      color: #b8bbc5;
+      font-size: 13px;
+    }
+
+    .quality-item::before {
+      content: "✓";
+      margin-right: 10px;
+      color: #9b8cff;
+    }
+
+    /* =========================================================
+       PRODUCTS
+       ========================================================= */
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .product-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+      background: var(--surface);
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .product-card h3 {
+      font-size: 31px;
+      margin: 70px 0 10px;
+      letter-spacing: -.035em;
+    }
+
+    .product-card p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 500px;
+    }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .product-tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-family: "DM Mono", monospace;
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .product-card .pill {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    /* =========================================================
+       ECOSYSTEM
+       ========================================================= */
+
+    .ecosystem {
+      border-top: 1px solid var(--line);
+    }
+
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .ecosystem-card {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .ecosystem-card h3 {
+      margin: 65px 0 10px;
+      font-size: 22px;
+    }
+
+    .ecosystem-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* =========================================================
+       PRICING
+       ========================================================= */
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 50px;
+    }
+
+    .price-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+      background: var(--surface);
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-card.featured {
+      border-color: var(--accent);
+    }
+
+    .price-label {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .price-card h3 {
+      margin: 50px 0 7px;
+      font-size: 23px;
+    }
+
+    .price {
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
+
+    .price-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .price-card .pill {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    /* =========================================================
+       FAQ
+       ========================================================= */
+
+    .faq-list {
+      margin-top: 50px;
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 0;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .faq-icon {
+      font-size: 20px;
+      color: var(--muted);
+      transition: transform .2s ease;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 50px 24px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    /* =========================================================
+       FINAL CTA
+       ========================================================= */
+
+    .final-cta {
+      padding: 120px 0;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+
+    .final-cta .section-title {
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    .final-cta .section-copy {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .final-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 55px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+      gap: 50px;
+    }
+
+    .footer-brand {
+      max-width: 300px;
+    }
+
+    .footer-brand .wordmark {
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .footer-column h4 {
+      margin: 0 0 15px;
+      font-family: "DM Mono", monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 400 !important;
+    }
+
+    .footer-column a {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 4px 0;
+    }
+
+    .footer-column a:hover {
+      color: var(--text);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 55px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 900px) {
+
+      .nav-links,
+      .nav-actions .contact-link,
+      .nav-actions .header-demo {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .hero-grid,
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stage {
+        min-height: 450px;
+      }
+
+      .feature-grid,
+      .use-case-grid,
+      .architecture-grid,
+      .platform-grid,
+      .industry-grid,
+      .ecosystem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid,
+      .pricing-grid,
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .outcome-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .outcome:nth-child(odd) {
+        border-right: 0;
+        padding-right: 0;
+      }
+
+      .outcome:nth-child(even) {
+        padding-left: 0;
+      }
+
+      .quality-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: min(var(--max), calc(100% - 28px));
+      }
+
+      .section {
+        padding: 75px 0;
+      }
+
+      .hero {
+        padding: 70px 0 80px;
+      }
+
+      .hero h1 {
+        font-size: 53px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .hero-stage {
+        min-height: 420px;
+      }
+
+      .stage-body {
+        grid-template-columns: 110px 1fr;
+      }
+
+      .chat {
+        padding: 18px;
+      }
+
+      .process-row {
+        grid-template-columns: 45px 1fr;
+      }
+
+      .process-row p {
+        grid-column: 2;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
-<body>
-<header class="topbar">
-  <div class="shell nav">
-    <a class="wordmark" href="#top">alphex ai</a>
-    <div class="nav-links">
-      <a href="/capabilities.html">Capabilities</a>
-      <a href="/products.html">Products</a>
-      <a href="/process.html">Process</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <div class="nav-actions">
-      <a class="pill light contact-link" href="/contact.html">
-        Contact
-      </a>
-      <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-        <span class="theme-icon">☾</span>
-        <span class="theme-label">Dark</span>
-      </button>
-      <!-- Logged-out navigation -->
-      <a class="pill dark header-demo" id="loginNavButton" href="login.html">
-        Sign in <span>↗</span>
-      </a>
-      <!-- Logged-in navigation -->
-      <div class="auth-profile" id="authProfile" style="display:none;">
+
+<body id="top">
+
+  <!-- =======================================================
+       NAVIGATION
+       ======================================================= -->
+
+  <header class="topbar">
+    <div class="container nav">
+
+      <a class="wordmark" href="#top">alphex ai</a>
+
+      <nav class="nav-links">
+        <a href="#capabilities">Capabilities</a>
+        <a href="#products">Products</a>
+        <a href="#process">Process</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+
+        <a class="pill light contact-link" href="/contact.html">
+          Contact
+        </a>
+
         <button
-          class="profile-button"
-          id="profileButton"
+          class="theme-toggle"
+          id="themeToggle"
           type="button"
-          aria-label="Open account menu"
-          aria-expanded="false"
+          aria-label="Toggle dark mode"
         >
-          <span id="profileInitial">A</span>
+          ☾
         </button>
-        <div class="profile-menu" id="profileMenu">
-          <div class="profile-user">
-            <div class="profile-name" id="profileName">
-              Alphex AI
-            </div>
-            <div class="profile-email" id="profileEmail">
-              account
-            </div>
-          </div>
-          <a
-            href="#"
-            class="profile-account"
-            aria-disabled="true"
-            onclick="return false;"
-          >
-            Account
-          </a>
+
+        <a
+          class="pill dark header-demo"
+          id="loginNavButton"
+          href="login.html"
+        >
+          Sign in ↗
+        </a>
+
+        <div
+          class="auth-profile"
+          id="authProfile"
+          style="display:none;"
+        >
           <button
-            class="profile-signout"
-            id="profileSignout"
+            class="profile-button"
+            id="profileButton"
             type="button"
           >
-            Sign out
+            U
           </button>
+
+          <div
+            class="profile-menu"
+            id="profileMenu"
+          >
+            <a href="/account.html">Account</a>
+            <button id="signOutButton" type="button">
+              Sign out
+            </button>
+          </div>
         </div>
+
+        <button
+          class="mobile-toggle"
+          id="mobileToggle"
+          type="button"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
       </div>
-      <button class="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span>
-      </button>
+
+    </div>
+
+    <div class="mobile-panel" id="mobilePanel">
+
+      <a href="#capabilities">Capabilities</a>
+      <a href="#products">Products</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+
+      <a
+        id="mobileLoginLink"
+        href="login.html"
+      >
+        Sign in ↗
+      </a>
+
+      <a href="/contact.html">
+        Contact us
+      </a>
+
+    </div>
+  </header>
+
+
+  <!-- =======================================================
+       ANNOUNCEMENT
+       ======================================================= -->
+
+  <div class="announcement">
+    <div class="container">
+      Alphex AI is building products for a better AI ecosystem.
+      <a href="#products">Explore what we build →</a>
     </div>
   </div>
-</header>
-<div class="mobile-panel" aria-hidden="true">
-  <div class="mobile-panel-inner">
-    <a href="/capabilities.html">Capabilities</a>
-    <a href="/products.html">Products</a>
-    <a href="/process.html">Process</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="#faq">FAQ</a>
-    <a
-      class="mobile-auth-link logged-out"
-      id="mobileLoginLink"
-      href="login.html"
+
+
+  <!-- =======================================================
+       TICKER
+       ======================================================= -->
+
+  <div class="ticker">
+    <div class="ticker-track">
+
+      <span class="ticker-item">RELIABLE BY DESIGN</span>
+      <span class="ticker-item">GROUNDED IN YOUR DATA</span>
+      <span class="ticker-item">HUMAN HANDOFF WHEN NEEDED</span>
+      <span class="ticker-item">BUILT FOR REAL WORK</span>
+
+      <span class="ticker-item">RELIABLE BY DESIGN</span>
+      <span class="ticker-item">GROUNDED IN YOUR DATA</span>
+      <span class="ticker-item">HUMAN HANDOFF WHEN NEEDED</span>
+      <span class="ticker-item">BUILT FOR REAL WORK</span>
+
+    </div>
+  </div>
+
+
+  <!-- =======================================================
+       HERO
+       ======================================================= -->
+
+  <main>
+
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div>
+
+          <div class="hero-kicker">
+            AI systems for real work
+          </div>
+
+          <h1>
+            Meet your AI teammate.
+          </h1>
+
+          <p class="hero-copy">
+            Alphex AI builds chatbots, knowledge systems, and AI agents
+            that work with your team, keep context, and know when to
+            hand off.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              class="pill dark"
+              href="/contact.html"
+            >
+              Book a free demo
+            </a>
+
+            <a
+              class="pill light"
+              href="#how-it-works"
+            >
+              See how it works
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="hero-stage">
+
+          <div class="stage-top">
+
+            <div class="stage-brand">
+              ALPHEX AI / WORKSPACE
+            </div>
+
+            <div class="stage-status">
+              ONLINE
+            </div>
+
+          </div>
+
+          <div class="stage-body">
+
+            <aside class="stage-sidebar">
+
+              <div class="stage-side-label">
+                WORKFLOWS
+              </div>
+
+              <div class="stage-item active">
+                Customer support
+              </div>
+
+              <div class="stage-item">
+                Knowledge search
+              </div>
+
+              <div class="stage-item">
+                Lead capture
+              </div>
+
+              <div class="stage-item">
+                Appointments
+              </div>
+
+            </aside>
+
+            <div class="chat">
+
+              <div class="chat-title">
+                AI assistant
+              </div>
+
+              <div class="bubble user">
+                What should I know before I answer this customer?
+              </div>
+
+              <div class="bubble ai">
+                Use the pricing policy and keep the answer concise.
+              </div>
+
+              <div class="bubble user">
+                Got it. What does the policy say?
+              </div>
+
+              <div class="bubble ai">
+                I found the relevant policy and prepared a grounded
+                response. I’ll flag anything uncertain instead of guessing.
+              </div>
+
+              <div class="chat-input">
+                Ask Alphex anything…
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         WHAT WE BUILD
+         ===================================================== -->
+
+    <section
+      class="section"
+      id="capabilities"
     >
-      Sign in <span>↗</span>
-    </a>
-    <a
-      class="mobile-auth-link logged-in"
-      id="mobileProfileLink"
-      href="#"
-      onclick="return false;"
-    >
-      Profile <span>→</span>
-    </a>
-    <a href="/contact.html">
-      Contact us <span>↗</span>
-    </a>
-  </div>
-</div>
-<main id="top">
-<div class="announcement">
-  Alphex AI is building products for a better AI ecosystem.
-  <a href="/products.html">Explore what we build →</a>
-</div>
-<div class="ticker" aria-label="Alphex AI principles">
-  <div class="ticker-track">
-    <span>RELIABLE BY DESIGN</span><b>✦</b>
-    <span>GROUNDED IN YOUR DATA</span><b>✦</b>
-    <span>HUMAN HANDOFF WHEN NEEDED</span><b>✦</b>
-    <span>BUILT FOR REAL WORK</span><b>✦</b>
-    <span>RELIABLE BY DESIGN</span><b>✦</b>
-    <span>GROUNDED IN YOUR DATA</span><b>✦</b>
-    <span>HUMAN HANDOFF WHEN NEEDED</span><b>✦</b>
-    <span>BUILT FOR REAL WORK</span><b>✦</b>
-  </div>
-</div>
-<section class="hero shell">
-  <div class="hero-kicker">AI systems for real work</div>
-  <h1>
-    <span>Meet your</span>
-    <span>AI teammate.</span>
-  </h1>
-  <p class="hero-copy">
-    Alphex AI builds chatbots, knowledge systems, and AI agents that work with your team, keep context, and know when to hand off.
-  </p>
-  <div class="hero-actions">
-    <a class="pill dark" href="mailto:uimockup.plus@gmail.com">
-      Book a free demo <span>↗</span>
-    </a>
-    <a class="pill light" href="/capabilities.html">
-      See how it works <span>↓</span>
-    </a>
-  </div>
-  <div class="hero-stage">
-    <div class="stage-ui">
-      <div class="stage-top">
-        <span>ALPHEX AI / WORKSPACE</span>
-        <i class="stage-dot"></i>
-        <span>online</span>
-      </div>
-      <div class="stage-body">
-        <div class="stage-side">
-          <p>YOUR WORKFLOWS</p>
-          <div class="active">Customer support</div>
-          <div>Knowledge search</div>
-          <div>Lead capture</div>
-          <div>Appointments</div>
-        </div>
-        <div class="chat">
-          <div class="bubble">
-            What should I know before I answer this customer?
-          </div>
-          <div class="bubble user">
-            Use the pricing policy and keep the answer concise.
-          </div>
-          <div class="bubble">
-            Got it. I found the relevant policy and prepared a grounded response. I’ll flag anything uncertain instead of guessing.
-          </div>
-          <div class="chat-input">
-            Ask Alphex anything…
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="section shell" id="capabilities">
-  <div class="intro">
-    <div>
-      <div class="section-label">01 / What it does</div>
-      <h2 class="section-title">
-        Work with AI like you work with a teammate.
-      </h2>
-    </div>
-    <p class="section-copy">
-      Give it a job, provide the right context, and let it carry the work forward. Alphex makes AI useful inside the tools and processes your business already relies on.
-    </p>
-  </div>
-  <div class="feature-stack">
-    <article class="feature">
-      <div class="feature-content">
-        <div>
-          <div class="section-label">Chatbots</div>
-          <h3>
-            Answer customers without losing the human touch.
-          </h3>
-          <p>
-            Handle routine questions, capture leads, and move a conversation to your team when a human is needed.
-          </p>
-        </div>
-        <a class="pill light" href="mailto:uimockup.plus@gmail.com">
-          Explore chatbots <span>↗</span>
-        </a>
-      </div>
-      <div class="feature-visual">
-        <div class="visual-lines"></div>
-        <div class="visual-orbit"></div>
-        <div class="visual-core"></div>
-      </div>
-    </article>
-    <article class="feature">
-      <div class="feature-content">
-        <div>
-          <div class="section-label">Knowledge search</div>
-          <h3>
-            Keep every answer grounded in your own source material.
-          </h3>
-          <p>
-            Connect documents, policies, and product data so your assistant can find the right answer and show its work.
-          </p>
-        </div>
-        <a class="pill light" href="mailto:uimockup.plus">
-          Explore RAG <span>↗</span>
-        </a>
-      </div>
-      <div class="feature-visual">
-        <div class="visual-window">
-          <div class="bar"></div>
-          <div class="line"></div>
-          <div class="line short"></div>
-          <div class="line"></div>
-          <span class="tag">
-            source grounded
-          </span>
-        </div>
-      </div>
-    </article>
-    <article class="feature">
-      <div class="feature-content">
-        <div>
-          <div class="section-label">AI agents</div>
-          <h3>
-            Turn repetitive work into a system that runs.
-          </h3>
-          <p>
-            Book appointments, update records, and coordinate routine tasks across your tools—with clear limits.
-          </p>
-        </div>
-        <a class="pill light" href="mailto:uimockup.plus@gmail.com">
-          Explore agents <span>↗</span>
-        </a>
-      </div>
-      <div class="feature-visual">
-        <div class="visual-lines"></div>
-        <div class="visual-orbit"></div>
-        <div class="visual-core"></div>
-      </div>
-    </article>
-  </div>
-  <div class="numbered" id="process">
-    <div class="numbered-item">
-      <b>01</b>
-      <h4>Discover</h4>
-      <p>We learn the questions, tools, and content that shape your work.</p>
-    </div>
-    <div class="numbered-item">
-      <b>02</b>
-      <h4>Build + test</h4>
-      <p>We tune the system, then probe it with real edge cases before launch.</p>
-    </div>
-    <div class="numbered-item">
-      <b>03</b>
-      <h4>Launch + improve</h4>
-      <p>We review conversations and keep making the assistant better.</p>
-    </div>
-  </div>
-</section>
-<section class="section products-section" id="products">
-  <div class="shell">
-    <div class="intro">
-      <div>
+
+      <div class="container">
+
         <div class="section-label">
-          02 / What we build
+          What we build
         </div>
+
+        <h2 class="section-title">
+          AI systems designed around the way your business works.
+        </h2>
+
+        <p class="section-copy">
+          Alphex combines AI models, your business knowledge, tools,
+          workflows, and quality controls into systems your team can
+          actually use.
+        </p>
+
+        <div class="feature-grid">
+
+          <article class="feature">
+
+            <div class="feature-number">
+              01 / ASSISTANTS
+            </div>
+
+            <h3>
+              AI Assistants
+            </h3>
+
+            <p>
+              Answer questions, support customers, capture information,
+              qualify requests, and hand conversations to your team
+              when human judgment is needed.
+            </p>
+
+          </article>
+
+
+          <article class="feature">
+
+            <div class="feature-number">
+              02 / KNOWLEDGE
+            </div>
+
+            <h3>
+              Knowledge Systems
+            </h3>
+
+            <p>
+              Turn documents, policies, product information, and
+              internal knowledge into useful answers grounded in
+              approved sources.
+            </p>
+
+          </article>
+
+
+          <article class="feature">
+
+            <div class="feature-number">
+              03 / AGENTS
+            </div>
+
+            <h3>
+              AI Agents
+            </h3>
+
+            <p>
+              Connect AI to tools, APIs, and workflows so routine
+              tasks can be completed with clear boundaries and
+              controlled actions.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         USE CASES
+         ===================================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-label">
+          Use cases
+        </div>
+
+        <h2 class="section-title">
+          AI for every part of your workflow.
+        </h2>
+
+        <p class="section-copy">
+          The best AI systems are not isolated chat windows. They
+          connect to the work your customers, teams, and operations
+          already perform.
+        </p>
+
+        <div class="use-case-grid">
+
+          <article class="use-case">
+
+            <div class="use-case-index">
+              01 / CUSTOMERS
+            </div>
+
+            <h3>
+              For Customers
+            </h3>
+
+            <p>
+              Give customers faster answers, useful guidance, lead
+              capture, qualification, and a clear path to a human
+              when the situation requires it.
+            </p>
+
+          </article>
+
+
+          <article class="use-case">
+
+            <div class="use-case-index">
+              02 / TEAMS
+            </div>
+
+            <h3>
+              For Teams
+            </h3>
+
+            <p>
+              Put company knowledge within reach. Help people find
+              information, summarize conversations, prepare responses,
+              and make better-informed decisions.
+            </p>
+
+          </article>
+
+
+          <article class="use-case">
+
+            <div class="use-case-index">
+              03 / OPERATIONS
+            </div>
+
+            <h3>
+              For Operations
+            </h3>
+
+            <p>
+              Turn repetitive workflows into controlled AI-assisted
+              processes connected to the tools and systems your
+              business already uses.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         BUSINESS OUTCOMES
+         ===================================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-label">
+          Business outcomes
+        </div>
+
+        <h2 class="section-title">
+          AI should improve the way your business works.
+        </h2>
+
+        <p class="section-copy">
+          We focus on useful outcomes rather than adding AI for the
+          sake of adding AI.
+        </p>
+
+        <div class="outcome-grid">
+
+          <div class="outcome">
+            <div class="outcome-number">01</div>
+            <div>
+              <h3>Reduce repetitive work</h3>
+              <p>Automate routine questions and predictable workflows.</p>
+            </div>
+          </div>
+
+          <div class="outcome">
+            <div class="outcome-number">02</div>
+            <div>
+              <h3>Respond faster</h3>
+              <p>Give customers and teams useful answers without unnecessary delay.</p>
+            </div>
+          </div>
+
+          <div class="outcome">
+            <div class="outcome-number">03</div>
+            <div>
+              <h3>Improve consistency</h3>
+              <p>Use approved knowledge and defined instructions across interactions.</p>
+            </div>
+          </div>
+
+          <div class="outcome">
+            <div class="outcome-number">04</div>
+            <div>
+              <h3>Make knowledge accessible</h3>
+              <p>Turn scattered business information into something teams can use.</p>
+            </div>
+          </div>
+
+          <div class="outcome">
+            <div class="outcome-number">05</div>
+            <div>
+              <h3>Scale operations</h3>
+              <p>Handle more routine work without simply adding more manual effort.</p>
+            </div>
+          </div>
+
+          <div class="outcome">
+            <div class="outcome-number">06</div>
+            <div>
+              <h3>Keep humans in control</h3>
+              <p>Define where AI acts, where it stops, and when people take over.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         ARCHITECTURE
+         ===================================================== -->
+
+    <section class="section architecture">
+
+      <div class="container">
+
+        <div class="section-label">
+          Platform architecture
+        </div>
+
+        <h2 class="section-title">
+          One platform. Three layers.
+        </h2>
+
+        <p class="section-copy">
+          Alphex connects knowledge, AI actions, and continuous quality
+          improvement into one system.
+        </p>
+
+        <div class="architecture-grid">
+
+          <article class="architecture-card">
+
+            <div class="architecture-number">
+              01 / UNDERSTAND
+            </div>
+
+            <h3>
+              Knowledge + Context
+            </h3>
+
+            <p>
+              Give AI access to the information, rules, policies,
+              products, and context it needs to work correctly.
+            </p>
+
+          </article>
+
+
+          <article class="architecture-card">
+
+            <div class="architecture-number">
+              02 / ACT
+            </div>
+
+            <h3>
+              Assistants + Agents
+            </h3>
+
+            <p>
+              Turn understanding into useful conversations, decisions,
+              workflows, and controlled actions.
+            </p>
+
+          </article>
+
+
+          <article class="architecture-card">
+
+            <div class="architecture-number">
+              03 / IMPROVE
+            </div>
+
+            <h3>
+              Evaluation + Monitoring
+            </h3>
+
+            <p>
+              Measure behavior, identify failures, review quality,
+              and continuously improve the system.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="architecture-loop">
+          YOUR DATA → AI SYSTEM → REAL INTERACTION → EVALUATION → IMPROVEMENT
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         HOW THE PLATFORM WORKS
+         ===================================================== -->
+
+    <section
+      class="section"
+      id="how-it-works"
+    >
+
+      <div class="container">
+
+        <div class="section-label">
+          How it works
+        </div>
+
+        <h2 class="section-title">
+          From AI capability to a working system.
+        </h2>
+
+        <p class="section-copy">
+          A useful AI product needs more than a model. It needs the
+          right knowledge, actions, boundaries, evaluation, and
+          continuous improvement.
+        </p>
+
+        <div class="platform-grid">
+
+          <article class="platform-step">
+            <span>01 / KNOWLEDGE</span>
+            <h3>Approved sources</h3>
+            <p>
+              Connect the system to relevant business information
+              and trusted sources.
+            </p>
+          </article>
+
+          <article class="platform-step">
+            <span>02 / REASONING</span>
+            <h3>Models + instructions</h3>
+            <p>
+              Define how the AI should understand requests and
+              produce useful responses.
+            </p>
+          </article>
+
+          <article class="platform-step">
+            <span>03 / ACTIONS</span>
+            <h3>Tools + APIs</h3>
+            <p>
+              Connect AI to the systems and actions required to
+              complete real work.
+            </p>
+          </article>
+
+          <article class="platform-step">
+            <span>04 / GUARDRAILS</span>
+            <h3>Boundaries</h3>
+            <p>
+              Define what the system can do, what it should avoid,
+              and when it should escalate.
+            </p>
+          </article>
+
+          <article class="platform-step">
+            <span>05 / EVALUATION</span>
+            <h3>Quality measurement</h3>
+            <p>
+              Test important behaviors such as factuality,
+              relevance, instruction following, and safety.
+            </p>
+          </article>
+
+          <article class="platform-step">
+            <span>06 / IMPROVEMENT</span>
+            <h3>Continuous optimization</h3>
+            <p>
+              Learn from real interactions and evaluation results
+              to make the system better over time.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         WHY ALPHEX
+         ===================================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-label">
+          Why Alphex
+        </div>
+
+        <h2 class="section-title">
+          Reliable by design.
+        </h2>
+
+        <p class="section-copy">
+          We believe AI systems should be useful in the real world,
+          not just impressive in a demo.
+        </p>
+
+        <div class="why-grid">
+
+          <article class="why-card">
+            <h3>Outcome driven</h3>
+            <p>
+              Start with the problem and the business outcome, then
+              choose the AI capability that actually helps.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Grounded in your context</h3>
+            <p>
+              Systems are designed around your knowledge, workflows,
+              policies, and operating environment.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Purpose-built</h3>
+            <p>
+              Build the system around the actual workflow instead of
+              forcing the workflow around a generic AI tool.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Tested before launch</h3>
+            <p>
+              Important behaviors, edge cases, failure modes, and
+              safety considerations are part of the build process.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Human when it matters</h3>
+            <p>
+              AI should know when to stop and give the conversation
+              or workflow back to a person.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Built to improve</h3>
+            <p>
+              Real systems need continuous review, evaluation,
+              refinement, and better knowledge over time.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         TRUST
+         ===================================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-label">
+          Trust & credibility
+        </div>
+
+        <h2 class="section-title">
+          Trust starts with how we build.
+        </h2>
+
+        <div class="trust-grid">
+
+          <div class="trust-list">
+
+            <div class="trust-item">
+              <span>01</span>
+              <div>
+                <h3>Clear system boundaries</h3>
+                <p>Define what the AI is responsible for and where it should stop.</p>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <span>02</span>
+              <div>
+                <h3>Grounded knowledge</h3>
+                <p>Use relevant and approved sources instead of relying on unsupported answers.</p>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <span>03</span>
+              <div>
+                <h3>Real-world testing</h3>
+                <p>Test realistic requests, difficult cases, and expected failure modes.</p>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <span>04</span>
+              <div>
+                <h3>Defined escalation</h3>
+                <p>Make human handoff part of the system instead of an afterthought.</p>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <span>05</span>
+              <div>
+                <h3>Continuous evaluation</h3>
+                <p>Measure quality and use failures to guide improvement.</p>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <span>06</span>
+              <div>
+                <h3>Observable behavior</h3>
+                <p>Understand how the system behaves across important workflows.</p>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="principle">
+
+            <div class="principle-label">
+              Our principle
+            </div>
+
+            <blockquote>
+              If the system doesn't know, it shouldn't pretend to know.
+            </blockquote>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SECURITY & RESPONSIBLE AI
+         ===================================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-label">
+          Security & responsible AI
+        </div>
+
+        <h2 class="section-title">
+          Built with control in mind.
+        </h2>
+
+        <p class="section-copy">
+          Responsible AI starts with designing systems that have
+          understandable boundaries, controlled access, grounded
+          behavior, and meaningful human oversight.
+        </p>
+
+        <div class="why-grid">
+
+          <article class="why-card">
+            <h3>Data control</h3>
+            <p>
+              Design systems around the data and information sources
+              that are appropriate for the workflow.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Access control</h3>
+            <p>
+              Consider who can access information, workflows, and
+              AI-powered actions.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Grounded responses</h3>
+            <p>
+              Prefer relevant business context and approved knowledge
+              over unsupported responses.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Human oversight</h3>
+            <p>
+              Keep people involved when decisions or situations
+              require human judgment.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Auditability</h3>
+            <p>
+              Build systems where important behavior can be reviewed
+              and understood.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <h3>Responsible deployment</h3>
+            <p>
+              Introduce AI with appropriate testing, boundaries,
+              monitoring, and ongoing review.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         INDUSTRIES
+         ===================================================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-label">
+          Industries
+        </div>
+
+        <h2 class="section-title">
+          Built for knowledge-heavy, workflow-driven businesses.
+        </h2>
+
+        <p class="section-copy">
+          Alphex is designed for organizations where information,
+          customer interactions, and repeatable workflows are central
+          to the way work gets done.
+        </p>
+
+        <div class="industry-grid">
+
+          <article class="industry">
+            <span>01</span>
+            <h3>Financial Services</h3>
+          </article>
+
+          <article class="industry">
+            <span>02</span>
+            <h3>Healthcare</h3>
+          </article>
+
+          <article class="industry">
+            <span>03</span>
+            <h3>SaaS & Technology</h3>
+          </article>
+
+          <article class="industry">
+            <span>04</span>
+            <h3>Professional Services</h3>
+          </article>
+
+          <article class="industry">
+            <span>05</span>
+            <h3>E-commerce & Consumer</h3>
+          </article>
+
+          <article class="industry">
+            <span>06</span>
+            <h3>Growing Businesses</h3>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PROCESS
+         ===================================================== -->
+
+    <section
+      class="section"
+      id="process"
+    >
+
+      <div class="container">
+
+        <div class="section-label">
+          Our process
+        </div>
+
+        <h2 class="section-title">
+          From first conversation to a working AI system.
+        </h2>
+
+        <p class="section-copy">
+          We move from understanding the problem to building,
+          testing, launching, and continuously improving the system.
+        </p>
+
+        <div class="process-list">
+
+          <div class="process-row">
+            <div class="process-number">01</div>
+            <h3>Discover</h3>
+            <p>
+              Understand users, workflows, data, tools, risks, and
+              the outcome the system needs to achieve.
+            </p>
+          </div>
+
+          <div class="process-row">
+            <div class="process-number">02</div>
+            <h3>Design</h3>
+            <p>
+              Define the AI experience, knowledge sources, tools,
+              boundaries, and human handoff.
+            </p>
+          </div>
+
+          <div class="process-row">
+            <div class="process-number">03</div>
+            <h3>Build</h3>
+            <p>
+              Implement the assistant, knowledge system, agent, or
+              workflow around the agreed requirements.
+            </p>
+          </div>
+
+          <div class="process-row">
+            <div class="process-number">04</div>
+            <h3>Test</h3>
+            <p>
+              Test prompts, edge cases, failure modes, safety,
+              grounding, and real-world behavior.
+            </p>
+          </div>
+
+          <div class="process-row">
+            <div class="process-number">05</div>
+            <h3>Launch</h3>
+            <p>
+              Introduce the system into the intended workflow with
+              the appropriate controls and handoff paths.
+            </p>
+          </div>
+
+          <div class="process-row">
+            <div class="process-number">06</div>
+            <h3>Improve</h3>
+            <p>
+              Review performance, evaluate failures, improve
+              knowledge, and refine the workflow over time.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         QUALITY BAR
+         ===================================================== -->
+
+    <section class="band">
+
+      <div class="container">
+
+        <div class="section-label">
+          Quality bar
+        </div>
+
+        <h2 class="section-title">
+          AI systems with a quality bar.
+        </h2>
+
+        <p class="section-copy">
+          Reliability does not happen after deployment. It is part
+          of how the system is designed, tested, and improved.
+        </p>
+
+        <div class="quality-grid">
+
+          <div class="quality-column">
+
+            <h3>Before launch</h3>
+
+            <div class="quality-item">
+              Grounded in approved sources
+            </div>
+
+            <div class="quality-item">
+              Tested against realistic inputs
+            </div>
+
+            <div class="quality-item">
+              Evaluated across important quality dimensions
+            </div>
+
+            <div class="quality-item">
+              Checked against risky edge cases
+            </div>
+
+            <div class="quality-item">
+              Human escalation defined
+            </div>
+
+          </div>
+
+
+          <div class="quality-column">
+
+            <h3>After launch</h3>
+
+            <div class="quality-item">
+              Monitor performance
+            </div>
+
+            <div class="quality-item">
+              Review failures
+            </div>
+
+            <div class="quality-item">
+              Evaluate interactions
+            </div>
+
+            <div class="quality-item">
+              Improve knowledge
+            </div>
+
+            <div class="quality-item">
+              Refine workflows
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCTS
+         ===================================================== -->
+
+    <section
+      class="section"
+      id="products"
+    >
+
+      <div class="container">
+
+        <div class="section-label">
+          Products
+        </div>
+
         <h2 class="section-title">
           Products for a better AI ecosystem.
         </h2>
+
+        <p class="section-copy">
+          Alphex is building beyond individual AI implementations.
+          Our products extend the ecosystem around building,
+          evaluating, and discovering AI work.
+        </p>
+
+        <div class="products-grid">
+
+          <article class="product-card">
+
+            <div class="product-meta">
+              <span>PRODUCT 01</span>
+              <span>EL·AI</span>
+            </div>
+
+            <h3>
+              EvalLoop AI
+            </h3>
+
+            <p>
+              An AI evaluation and quality platform for testing
+              responses, models, multimodal outputs, safety,
+              grounding, and overall AI quality.
+            </p>
+
+            <div class="product-tags">
+              <span class="product-tag">AI EVALUATION</span>
+              <span class="product-tag">QUALITY</span>
+              <span class="product-tag">SAFETY</span>
+              <span class="product-tag">RAG</span>
+              <span class="product-tag">MULTIMODAL</span>
+            </div>
+
+            <a
+              class="pill light"
+              href="https://evalloop-ai.vercel.app/"
+              target="_blank"
+              rel="noopener"
+            >
+              Explore EvalLoop AI ↗
+            </a>
+
+          </article>
+
+
+          <article class="product-card">
+
+            <div class="product-meta">
+              <span>PRODUCT 02</span>
+              <span>EL·J</span>
+            </div>
+
+            <h3>
+              EvalLoop Jobs
+            </h3>
+
+            <p>
+              An independent opportunity discovery platform covering
+              AI evaluation, LLM work, annotation, AI training,
+              GenAI, prompt engineering, and related opportunities.
+            </p>
+
+            <div class="product-tags">
+              <span class="product-tag">AI</span>
+              <span class="product-tag">LLM</span>
+              <span class="product-tag">EVALUATION</span>
+              <span class="product-tag">AI TRAINING</span>
+              <span class="product-tag">OPPORTUNITIES</span>
+            </div>
+
+            <a
+              class="pill light"
+              href="https://annotatorjobs.vercel.app"
+              target="_blank"
+              rel="noopener"
+            >
+              Explore EvalLoop Jobs ↗
+            </a>
+
+          </article>
+
+        </div>
+
       </div>
-      <p class="section-copy">
-        Alphex AI builds focused products that help make artificial intelligence more reliable, measurable, and accessible.
-      </p>
-    </div>
-    <div class="products-grid">
-      <article class="product-card ai">
-        <div class="product-top">
-          <span class="product-number">
-            PRODUCT / 01
-          </span>
-          <div class="product-mark">
-            EL·AI
-          </div>
+    </section>
+
+
+    <!-- =====================================================
+         ECOSYSTEM
+         ===================================================== -->
+
+    <section class="section ecosystem">
+
+      <div class="container">
+
+        <div class="section-label">
+          Alphex ecosystem
         </div>
-        <div>
-          <h3>
-            EvalLoop AI
-          </h3>
-          <p>
-            An AI evaluation and quality platform built to help evaluate AI responses, models, multimodal outputs, safety, grounding, and overall AI quality.
-          </p>
-          <div class="product-tags">
-            <span>AI EVALUATION</span>
-            <span>QUALITY</span>
-            <span>SAFETY</span>
-            <span>RAG</span>
-            <span>MULTIMODAL</span>
-          </div>
+
+        <h2 class="section-title">
+          Build. Evaluate. Discover.
+        </h2>
+
+        <p class="section-copy">
+          Alphex AI brings together the systems businesses need to
+          build useful AI and the products that help the wider AI
+          ecosystem improve and grow.
+        </p>
+
+        <div class="ecosystem-grid">
+
+          <article class="ecosystem-card">
+
+            <div class="feature-number">
+              BUILD
+            </div>
+
+            <h3>
+              Alphex AI
+            </h3>
+
+            <p>
+              Build AI assistants, knowledge systems, agents, and
+              workflow automation for real business use.
+            </p>
+
+          </article>
+
+
+          <article class="ecosystem-card">
+
+            <div class="feature-number">
+              EVALUATE
+            </div>
+
+            <h3>
+              EvalLoop AI
+            </h3>
+
+            <p>
+              Evaluate AI quality, safety, grounding, model behavior,
+              and multimodal outputs.
+            </p>
+
+          </article>
+
+
+          <article class="ecosystem-card">
+
+            <div class="feature-number">
+              DISCOVER
+            </div>
+
+            <h3>
+              EvalLoop Jobs
+            </h3>
+
+            <p>
+              Discover opportunities across the growing AI evaluation,
+              training, annotation, and AI work ecosystem.
+            </p>
+
+          </article>
+
         </div>
-        <div class="product-bottom">
-          <span class="product-status">
-            AI QUALITY / EVALUATION PLATFORM
-          </span>
-          <a class="pill light" href="#top">
-            Explore EvalLoop AI <span>↗</span>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PRICING
+         ===================================================== -->
+
+    <section
+      class="section"
+      id="pricing"
+    >
+
+      <div class="container">
+
+        <div class="section-label">
+          Pricing
+        </div>
+
+        <h2 class="section-title">
+          Start with what your workflow needs.
+        </h2>
+
+        <p class="section-copy">
+          Our pricing starts with the system you need to build.
+          Larger or more integrated workflows can be scoped around
+          the requirements of your business.
+        </p>
+
+        <div class="pricing-grid">
+
+          <article class="price-card">
+
+            <div class="price-label">
+              STARTER
+            </div>
+
+            <h3>
+              Focused AI system
+            </h3>
+
+            <div class="price">
+              From ₹8k / setup
+            </div>
+
+            <p>
+              For focused assistants and smaller AI workflows.
+            </p>
+
+            <a
+              class="pill light"
+              href="/contact.html"
+            >
+              Discuss your use case
+            </a>
+
+          </article>
+
+
+          <article class="price-card featured">
+
+            <div class="price-label">
+              GROWTH
+            </div>
+
+            <h3>
+              Connected AI workflow
+            </h3>
+
+            <div class="price">
+              From ₹22k / setup
+            </div>
+
+            <p>
+              For systems involving knowledge, workflows,
+              integrations, or more advanced automation.
+            </p>
+
+            <a
+              class="pill dark"
+              href="/contact.html"
+            >
+              Talk to Alphex
+            </a>
+
+          </article>
+
+
+          <article class="price-card">
+
+            <div class="price-label">
+              CUSTOM
+            </div>
+
+            <h3>
+              Purpose-built system
+            </h3>
+
+            <div class="price">
+              Let's scope it
+            </div>
+
+            <p>
+              For larger workflows, custom integrations, and
+              requirements that need a tailored approach.
+            </p>
+
+            <a
+              class="pill light"
+              href="/contact.html"
+            >
+              Contact us
+            </a>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         FAQ
+         ===================================================== -->
+
+    <section
+      class="section"
+      id="faq"
+    >
+
+      <div class="container">
+
+        <div class="section-label">
+          FAQ
+        </div>
+
+        <h2 class="section-title">
+          Questions worth asking before you build with AI.
+        </h2>
+
+        <div class="faq-list">
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+              <span>Will it make things up?</span>
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              AI can make mistakes. Alphex designs systems to reduce
+              unsupported answers through grounding, testing,
+              evaluation, clear boundaries, and human escalation.
+              The goal is not to pretend AI is perfect, but to build
+              systems that handle uncertainty responsibly.
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+              <span>Can it work with our existing tools?</span>
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              Where appropriate, AI systems can connect to existing
+              tools, APIs, knowledge sources, and business workflows.
+              The exact approach depends on the systems involved and
+              the actions the AI needs to perform.
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+              <span>How long does a first version take?</span>
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              Timing depends on the scope, knowledge sources,
+              integrations, workflow complexity, and testing required.
+              We define the first useful version around the actual
+              use case rather than promising a fixed timeline for
+              every project.
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+              <span>Who is Alphex for?</span>
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              Alphex is built for businesses that want to use AI
+              across customer interactions, internal knowledge,
+              operations, and repeatable workflows.
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+              <span>Can a human take over?</span>
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              Yes. Human handoff can be designed into the workflow
+              for situations where the AI reaches a defined boundary,
+              encounters uncertainty, or needs human judgment.
+            </div>
+
+          </div>
+
+
+          <div class="faq-item">
+
+            <button
+              class="faq-question"
+              type="button"
+            >
+              <span>What makes Alphex different from a generic chatbot?</span>
+              <span class="faq-icon">+</span>
+            </button>
+
+            <div class="faq-answer">
+              Alphex focuses on the complete system around AI:
+              knowledge, context, actions, guardrails, evaluation,
+              human handoff, and continuous improvement. The goal is
+              a working business system rather than simply adding a
+              chat interface.
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         FINAL CTA
+         ===================================================== -->
+
+    <section class="final-cta">
+
+      <div class="container">
+
+        <div class="section-label">
+          Start building
+        </div>
+
+        <h2 class="section-title">
+          Build AI you can rely on.
+        </h2>
+
+        <p class="section-copy">
+          Tell us what your team, customers, or operations need to
+          accomplish. We'll help determine where AI can create
+          meaningful value.
+        </p>
+
+        <div class="final-actions">
+
+          <a
+            class="pill dark"
+            href="/contact.html"
+          >
+            Book a free demo
           </a>
-        </div>
-      </article>
-      <article class="product-card jobs">
-        <div class="product-top">
-          <span class="product-number">
-            PRODUCT / 02
-          </span>
-          <div class="product-mark">
-            EL·J
-          </div>
-        </div>
-        <div>
-          <h3>
-            EvalLoop Jobs
-          </h3>
-          <p>
-            An independent opportunity discovery platform connecting people with AI evaluation, LLM, data annotation, AI training, GenAI, prompt engineering, and related opportunities.
-          </p>
-          <div class="product-tags">
-            <span>AI / LLM</span>
-            <span>EVALUATION</span>
-            <span>DATA ANNOTATION</span>
-            <span>AI TRAINING</span>
-            <span>OPPORTUNITIES</span>
-          </div>
-        </div>
-        <div class="product-bottom">
-          <span class="product-status">
-            AI OPPORTUNITY DISCOVERY
-          </span>
-          <a class="pill light" href="https://annotatorjobs.vercel.app">
-            Explore EvalLoop Jobs <span>↗</span>
+
+          <a
+            class="pill light"
+            href="#products"
+          >
+            Explore our products
           </a>
+
         </div>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="band">
-  <div class="shell band-inner">
-    <div>
-      <div class="section-label">
-        03 / Quality bar
+
       </div>
-      <h2>
-        Reliable by design.
-      </h2>
-      <p>
-        Most AI demos look smart. We care about what happens on the edge cases, when the answer matters, and when the right thing is to say “I’m not sure.”
-      </p>
-    </div>
-    <div class="band-card">
-      <div class="log">
-        SAMPLE / QUALITY_CHECK.LOG
-      </div>
-      <div class="checks">
-        <div class="check-row">
-          <i>✓</i>
-          <span>Grounded in approved sources</span>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+
+          <a
+            class="wordmark"
+            href="#top"
+          >
+            alphex ai
+          </a>
+
+          <p>
+            Reliable AI systems for the questions, workflows, and
+            customers that matter.
+          </p>
+
         </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Tested against risky edge cases</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Human handoff when uncertain</span>
-        </div>
-        <div class="check-row">
-          <i>✓</i>
-          <span>Reviewed after launch</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="section pricing" id="pricing">
-  <div class="shell">
-    <div class="section-label">
-      04 / Simple plans
-    </div>
-    <h2 class="section-title">
-      Start small.<br />Grow with confidence.
-    </h2>
-    <div class="pricing-grid">
-      <article class="price-card">
-        <div class="section-label">
-          Starter
-        </div>
-        <h3>
-          Essential answers
-        </h3>
-        <p>
-          One-channel FAQ and lead-capture chatbot.
-        </p>
-        <div class="price-amount">
-          From ₹ 8k <small>/ setup</small>
-        </div>
-        <a class="pill light" href="mailto:uimockup.plus@gmail.com">
-          Talk to us <span>↗</span>
-        </a>
-      </article>
-      <article class="price-card featured">
-        <div class="section-label">
-          Growth / Popular
-        </div>
-        <h3>
-          Grounded support
-        </h3>
-        <p>
-          Chatbot plus RAG search and human handoff.
-        </p>
-        <div class="price-amount">
-          From ₹22k <small>/ setup</small>
-        </div>
-        <a class="pill" href="mailto:uimockup.plus@gmail.com">
-          Talk to us <span>↗</span>
-        </a>
-      </article>
-      <article class="price-card">
-        <div class="section-label">
-          Custom
-        </div>
-        <h3>
-          Work, automated
-        </h3>
-        <p>
-          Agents, integrations, and custom workflows.
-        </p>
-        <div class="price-amount">
-          Let’s talk <small>/ scope</small>
-        </div>
-        <a class="pill light" href="mailto:uimockup.plus@gmail.com">
-          Talk to us <span>↗</span>
-        </a>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="section shell faq-grid" id="faq">
-  <div>
-    <div class="section-label">
-      05 / FAQ
-    </div>
-    <h2 class="section-title">
-      Good questions deserve clear answers.
-    </h2>
-  </div>
-  <div class="faq-list">
-    <details open>
-      <summary>
-        Will it make things up?
-      </summary>
-      <p>
-        We keep answers grounded in approved sources, test risky replies, and hand off when confidence is low. We make the limits visible.
-      </p>
-    </details>
-    <details>
-      <summary>
-        Can it work with our existing tools?
-      </summary>
-      <p>
-        Usually. We start with the systems your team already uses and scope the integrations around the workflows that matter.
-      </p>
-    </details>
-    <details>
-      <summary>
-        How long does a first version take?
-      </summary>
-      <p>
-        A focused FAQ assistant can be ready in a few weeks. Timeline depends on your content and the number of channels.
-      </p>
-    </details>
-    <details>
-      <summary>
-        Who is Alphex for?
-      </summary>
-      <p>
-        Small and mid-sized businesses with repetitive customer questions and a real need for dependable automation.
-      </p>
-    </details>
-  </div>
-</section>
-<section class="cta">
-  <div class="shell">
-    <div class="section-label">
-      06 / Start here
-    </div>
-    <h2>
-      Let’s build<br />your assistant.
-    </h2>
-    <p>
-      Tell us what your customers ask. We’ll show you what a reliable answer could look like.
-    </p>
-    <a class="pill" href="/contact.html">
-      Start a conversation <span>↗</span>
-    </a>
-  </div>
-</section>
-</main>
-<footer class="footer-pro">
-  <div class="shell">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="wordmark" href="#top">
-          alphex ai
-        </a>
-        <p>
-          Reliable AI systems for the questions, workflows, and customers that matter.
-        </p>
-        <a class="pill light" href="mailto:uimockup.plus@gmail.com">
-          Book a demo <span>↗</span>
-        </a>
-      </div>
-      <div class="footer-columns">
-        <div class="footer-group">
-          <h4>Overview</h4>
-          <a href="#top">Home</a>
-          <a href="/capabilities.html">Capabilities</a>
-          <a href="/products.html">Products</a>
-          <a href="/process.html">Process</a>
-          <a href="/pricing.html">Pricing</a>
-        </div>
-        <div class="footer-group">
-          <h4>Products</h4>
-          <a href="https://evalloop-ai.vercel.app/">EvalLoop AI</a>
-          <a href="https://evalloopjobs.vercel.app">EvalLoop Jobs</a>
-          <a href="/documentation.html">Documentation</a>
-        </div>
-        <div class="footer-group">
+
+
+        <div class="footer-column">
+
           <h4>Company</h4>
-          <a href="/about.html">About</a>
-          <a href="/contact.html">Contact</a>
+
+          <a href="#capabilities">
+            Capabilities
+          </a>
+
+          <a href="#process">
+            Process
+          </a>
+
+          <a href="#pricing">
+            Pricing
+          </a>
+
+          <a href="/contact.html">
+            Contact
+          </a>
+
         </div>
-        <div class="footer-group">
-          <h4>Legal</h4>
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-          <a href="/disclaimer.html">Disclaimer</a>
+
+
+        <div class="footer-column">
+
+          <h4>Products</h4>
+
+          <a
+            href="https://evalloop-ai.vercel.app/"
+            target="_blank"
+            rel="noopener"
+          >
+            EvalLoop AI
+          </a>
+
+          <a
+            href="https://annotatorjobs.vercel.app"
+            target="_blank"
+            rel="noopener"
+          >
+            EvalLoop Jobs
+          </a>
+
         </div>
+
+
+        <div class="footer-column">
+
+          <h4>Resources</h4>
+
+          <a href="#faq">
+            FAQ
+          </a>
+
+          <a href="/documentation.html">
+            Documentation
+          </a>
+
+          <a href="/privacy.html">
+            Privacy
+          </a>
+
+          <a href="/terms.html">
+            Terms
+          </a>
+
+        </div>
+
       </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          © 2026 Alphex AI. All rights reserved.
+        </span>
+
+        <span>
+          Build. Evaluate. Discover.
+        </span>
+
+      </div>
+
     </div>
-    <div class="footer-bottom">
-      <span>
-        AI systems with a quality bar.
-      </span>
-      <span class="mono">
-        © 2026 ALPHEX AI / HYDERABAD, INDIA
-      </span>
-    </div>
-  </div>
-</footer>
-<script>
-/* =========================================================
-   ALPHEX AI — SUPABASE AUTHENTICATION
-   ========================================================= */
-const SUPABASE_URL =
-  'https://nxqxhakjbtdzreimpkdz.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY =
-  'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-/* =========================================================
-   AUTH NAVIGATION
-   ========================================================= */
-const loginNavButton =
-  document.getElementById('loginNavButton');
-const authProfile =
-  document.getElementById('authProfile');
-const profileButton =
-  document.getElementById('profileButton');
-const profileMenu =
-  document.getElementById('profileMenu');
-const profileInitial =
-  document.getElementById('profileInitial');
-const profileName =
-  document.getElementById('profileName');
-const profileEmail =
-  document.getElementById('profileEmail');
-const profileSignout =
-  document.getElementById('profileSignout');
-const mobileLoginLink =
-  document.getElementById('mobileLoginLink');
-const mobileProfileLink =
-  document.getElementById('mobileProfileLink');
-/* =========================================================
-   GET USER DISPLAY NAME
-   ========================================================= */
-function getUserDisplayName(user){
-  if(!user){
-    return 'Alphex AI';
-  }
-  const metadata =
-    user.user_metadata || {};
-  const fullName =
-    metadata.full_name ||
-    metadata.name ||
-    '';
-  if(fullName.trim()){
-    return fullName.trim();
-  }
-  if(user.email){
-    return user.email.split('@')[0];
-  }
-  return 'Alphex AI';
-}
-/* =========================================================
-   GET PROFILE INITIAL
-   ========================================================= */
-function getProfileInitial(name){
-  if(!name){
-    return 'A';
-  }
-  return name
-    .trim()
-    .charAt(0)
-    .toUpperCase() || 'A';
-}
-/* =========================================================
-   SHOW LOGGED-OUT NAVIGATION
-   ========================================================= */
-function showLoggedOutNavigation(){
-  document.body.classList.remove('authenticated');
-  if(loginNavButton){
-    loginNavButton.style.display = 'inline-flex';
-  }
-  if(authProfile){
-    authProfile.style.display = 'none';
-  }
-  if(mobileLoginLink){
-    mobileLoginLink.style.display = 'flex';
-  }
-  if(mobileProfileLink){
-    mobileProfileLink.style.display = 'none';
-  }
-  if(profileMenu){
-    profileMenu.classList.remove('open');
-  }
-  if(profileButton){
-    profileButton.setAttribute(
-      'aria-expanded',
-      'false'
-    );
-  }
-}
-/* =========================================================
-   SHOW LOGGED-IN NAVIGATION
-   ========================================================= */
-function showLoggedInNavigation(user){
-  document.body.classList.add('authenticated');
-  const name =
-    getUserDisplayName(user);
-  const initial =
-    getProfileInitial(name);
-  if(loginNavButton){
-    loginNavButton.style.display = 'none';
-  }
-  if(authProfile){
-    authProfile.style.display = 'inline-flex';
-  }
-  if(profileInitial){
-    profileInitial.textContent = initial;
-  }
-  if(profileName){
-    profileName.textContent = name;
-  }
-  if(profileEmail){
-    profileEmail.textContent =
-      user.email || 'Signed in';
-  }
-  if(mobileLoginLink){
-    mobileLoginLink.style.display = 'none';
-  }
-  if(mobileProfileLink){
-    mobileProfileLink.style.display = 'flex';
-  }
-}
-/* =========================================================
-   CHECK CURRENT SESSION
-   ========================================================= */
-async function updateAuthenticationUI(){
-  try{
-    const {
-      data,
-      error
-    } = await supabaseClient.auth.getSession();
-    if(error){
-      console.error(
-        'Alphex AI auth session error:',
-        error
+
+  </footer>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
+
+  <script>
+
+    /* =======================================================
+       SUPABASE
+       ======================================================= */
+
+    const SUPABASE_URL =
+      'https://nxqxhakjbtdzreimpkdz.supabase.co';
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
       );
-      showLoggedOutNavigation();
-      return;
-    }
-    const session =
-      data ? data.session : null;
-    if(session && session.user){
-      showLoggedInNavigation(
-        session.user
-      );
-    }else{
-      showLoggedOutNavigation();
-    }
-  }catch(error){
-    console.error(
-      'Alphex AI authentication error:',
-      error
-    );
-    showLoggedOutNavigation();
-  }
-}
-/* =========================================================
-   AUTH STATE LISTENER
-   ========================================================= */
-supabaseClient.auth.onAuthStateChange(
-  (event, session) => {
-    console.log(
-      'Alphex AI auth event:',
-      event
-    );
-    if(session && session.user){
-      showLoggedInNavigation(
-        session.user
-      );
-    }else{
-      showLoggedOutNavigation();
-    }
-  }
-);
-/* =========================================================
-   PROFILE MENU
-   ========================================================= */
-if(profileButton){
-  profileButton.addEventListener(
-    'click',
-    event => {
-      event.stopPropagation();
-      const isOpen =
-        profileMenu.classList.contains('open');
-      profileMenu.classList.toggle(
-        'open',
-        !isOpen
-      );
-      profileButton.setAttribute(
-        'aria-expanded',
-        String(!isOpen)
-      );
-    }
-  );
-}
-/* =========================================================
-   CLOSE PROFILE MENU WHEN CLICKING OUTSIDE
-   ========================================================= */
-document.addEventListener(
-  'click',
-  event => {
-    if(
-      authProfile &&
-      profileMenu &&
-      !authProfile.contains(event.target)
-    ){
-      profileMenu.classList.remove(
-        'open'
-      );
-      if(profileButton){
-        profileButton.setAttribute(
-          'aria-expanded',
-          'false'
-        );
+
+
+    /* =======================================================
+       AUTH HELPERS
+       ======================================================= */
+
+    function getUserDisplayName(user) {
+
+      if (!user) {
+        return 'User';
       }
+
+      const metadata = user.user_metadata || {};
+
+      return (
+        metadata.full_name ||
+        metadata.name ||
+        metadata.display_name ||
+        user.email?.split('@')[0] ||
+        'User'
+      );
+
     }
-  }
-);
-/* =========================================================
-   SIGN OUT
-   ========================================================= */
-if(profileSignout){
-  profileSignout.addEventListener(
-    'click',
-    async () => {
-      profileSignout.disabled = true;
-      profileSignout.textContent =
-        'Signing out...';
-      try{
+
+
+    function getProfileInitial(user) {
+
+      const name =
+        getUserDisplayName(user);
+
+      return name
+        .trim()
+        .charAt(0)
+        .toUpperCase() || 'U';
+
+    }
+
+
+    function showLoggedOutNavigation() {
+
+      const loginButton =
+        document.getElementById('loginNavButton');
+
+      const authProfile =
+        document.getElementById('authProfile');
+
+      const mobileLoginLink =
+        document.getElementById('mobileLoginLink');
+
+      if (loginButton) {
+        loginButton.style.display = 'inline-flex';
+      }
+
+      if (authProfile) {
+        authProfile.style.display = 'none';
+      }
+
+      if (mobileLoginLink) {
+        mobileLoginLink.textContent = 'Sign in ↗';
+        mobileLoginLink.href = 'login.html';
+      }
+
+    }
+
+
+    function showLoggedInNavigation(user) {
+
+      const loginButton =
+        document.getElementById('loginNavButton');
+
+      const authProfile =
+        document.getElementById('authProfile');
+
+      const profileButton =
+        document.getElementById('profileButton');
+
+      const mobileLoginLink =
+        document.getElementById('mobileLoginLink');
+
+      if (loginButton) {
+        loginButton.style.display = 'none';
+      }
+
+      if (authProfile) {
+        authProfile.style.display = 'block';
+      }
+
+      if (profileButton) {
+        profileButton.textContent =
+          getProfileInitial(user);
+      }
+
+      if (mobileLoginLink) {
+        mobileLoginLink.textContent = 'Profile ↗';
+        mobileLoginLink.href = '/account.html';
+      }
+
+    }
+
+
+    async function updateAuthenticationUI() {
+
+      try {
+
         const {
+          data,
           error
         } =
-          await supabaseClient.auth.signOut();
-        if(error){
-          console.error(
-            'Alphex AI sign out error:',
-            error
-          );
-          profileSignout.disabled = false;
-          profileSignout.textContent =
-            'Sign out';
+          await supabaseClient.auth.getUser();
+
+        if (error || !data?.user) {
+          showLoggedOutNavigation();
           return;
         }
-        profileMenu.classList.remove(
-          'open'
-        );
-        showLoggedOutNavigation();
-        window.location.replace(
-          'index.html'
-        );
-      }catch(error){
+
+        showLoggedInNavigation(data.user);
+
+      } catch (error) {
+
         console.error(
-          'Alphex AI sign out error:',
+          'Authentication UI error:',
           error
         );
-        profileSignout.disabled = false;
-        profileSignout.textContent =
-          'Sign out';
+
+        showLoggedOutNavigation();
+
       }
+
     }
-  );
-}
-/* =========================================================
-   MOBILE PROFILE LINK
-   ========================================================= */
-if(mobileProfileLink){
-  mobileProfileLink.addEventListener(
-    'click',
-    event => {
-      event.preventDefault();
-      if(authProfile){
-        profileMenu.classList.toggle(
-          'open'
-        );
+
+
+    supabaseClient.auth.onAuthStateChange(
+      (_event, session) => {
+
+        if (session?.user) {
+          showLoggedInNavigation(session.user);
+        } else {
+          showLoggedOutNavigation();
+        }
+
       }
-      closeMenu();
+    );
+
+
+    /* =======================================================
+       PROFILE MENU
+       ======================================================= */
+
+    const profileButton =
+      document.getElementById('profileButton');
+
+    const profileMenu =
+      document.getElementById('profileMenu');
+
+    if (profileButton && profileMenu) {
+
+      profileButton.addEventListener(
+        'click',
+        (event) => {
+
+          event.stopPropagation();
+
+          profileMenu.classList.toggle('open');
+
+        }
+      );
+
+      document.addEventListener(
+        'click',
+        () => {
+
+          profileMenu.classList.remove('open');
+
+        }
+      );
+
     }
-  );
-}
-/* =========================================================
-   INITIAL AUTH CHECK
-   ========================================================= */
-updateAuthenticationUI();
-/* =========================================================
-   THEME + NAVIGATION + ANIMATIONS
-   ========================================================= */
-(()=>{
-  const root=document.documentElement,
-        body=document.body;
-  const themeToggle =
-    document.querySelector('.theme-toggle');
-  const menuButton =
-    document.querySelector('.mobile-menu');
-  const mobilePanel =
-    document.querySelector('.mobile-panel');
-  const getSavedTheme=()=>{
-    try{
-      return window.localStorage.getItem(
-        'alphex-theme'
+
+
+    /* =======================================================
+       SIGN OUT
+       ======================================================= */
+
+    const signOutButton =
+      document.getElementById('signOutButton');
+
+    if (signOutButton) {
+
+      signOutButton.addEventListener(
+        'click',
+        async () => {
+
+          try {
+
+            await supabaseClient.auth.signOut();
+
+            window.location.href = '/';
+
+          } catch (error) {
+
+            console.error(
+              'Sign out error:',
+              error
+            );
+
+          }
+
+        }
       );
-    }catch(error){
-      return null;
+
     }
-  };
-  const saveTheme=theme=>{
-    try{
-      window.localStorage.setItem(
-        'alphex-theme',
-        theme
-      );
-    }catch(error){
-      /* Theme still works for this visit. */
+
+
+    /* =======================================================
+       THEME
+       ======================================================= */
+
+    const themeToggle =
+      document.getElementById('themeToggle');
+
+    function updateThemeIcon() {
+
+      if (!themeToggle) {
+        return;
+      }
+
+      themeToggle.textContent =
+        document.body.classList.contains('dark')
+          ? '☀'
+          : '☾';
+
     }
-  };
-  const setTheme=theme=>{
-    const dark =
-      theme === 'dark';
-    body.classList.toggle(
-      'dark-theme',
-      dark
-    );
-    root.classList.toggle(
-      'dark-theme',
-      dark
-    );
-    themeToggle.setAttribute(
-      'aria-pressed',
-      String(dark)
-    );
-    themeToggle.setAttribute(
-      'aria-label',
-      dark
-        ? 'Switch to light mode'
-        : 'Switch to dark mode'
-    );
-    themeToggle
-      .querySelector('.theme-icon')
-      .textContent =
-        dark ? '☀' : '☾';
-    themeToggle
-      .querySelector('.theme-label')
-      .textContent =
-        dark ? 'Light' : 'Dark';
-    saveTheme(
-      dark ? 'dark' : 'light'
-    );
-  };
-  setTheme(
-    getSavedTheme() || 'light'
-  );
-  themeToggle.addEventListener(
-    'click',
-    ()=>{
-      setTheme(
-        body.classList.contains(
-          'dark-theme'
-        )
-          ? 'light'
-          : 'dark'
-      );
+
+
+    const savedTheme =
+      localStorage.getItem('alphex-theme');
+
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
     }
-  );
-  const closeMenu=()=>{
-    menuButton.classList.remove(
-      'open'
-    );
-    menuButton.setAttribute(
-      'aria-expanded',
-      'false'
-    );
-    mobilePanel.classList.remove(
-      'open'
-    );
-    mobilePanel.setAttribute(
-      'aria-hidden',
-      'true'
-    );
-  };
-  menuButton.addEventListener(
-    'click',
-    ()=>{
-      const open =
-        !mobilePanel.classList.contains(
-          'open'
-        );
-      menuButton.classList.toggle(
-        'open',
-        open
+
+    updateThemeIcon();
+
+
+    if (themeToggle) {
+
+      themeToggle.addEventListener(
+        'click',
+        () => {
+
+          document.body.classList.toggle('dark');
+
+          localStorage.setItem(
+            'alphex-theme',
+            document.body.classList.contains('dark')
+              ? 'dark'
+              : 'light'
+          );
+
+          updateThemeIcon();
+
+        }
       );
-      menuButton.setAttribute(
-        'aria-expanded',
-        String(open)
-      );
-      mobilePanel.classList.toggle(
-        'open',
-        open
-      );
-      mobilePanel.setAttribute(
-        'aria-hidden',
-        String(!open)
-      );
+
     }
-  );
-  mobilePanel
-    .querySelectorAll('a')
-    .forEach(
-      a =>
-        a.addEventListener(
+
+
+    /* =======================================================
+       MOBILE MENU
+       ======================================================= */
+
+    const mobileToggle =
+      document.getElementById('mobileToggle');
+
+    const mobilePanel =
+      document.getElementById('mobilePanel');
+
+    if (mobileToggle && mobilePanel) {
+
+      mobileToggle.addEventListener(
+        'click',
+        () => {
+
+          mobilePanel.classList.toggle('open');
+
+        }
+      );
+
+
+      mobilePanel
+        .querySelectorAll('a')
+        .forEach((link) => {
+
+          link.addEventListener(
+            'click',
+            () => {
+
+              mobilePanel.classList.remove('open');
+
+            }
+          );
+
+        });
+
+    }
+
+
+    /* =======================================================
+       FAQ
+       ======================================================= */
+
+    document
+      .querySelectorAll('.faq-question')
+      .forEach((button) => {
+
+        button.addEventListener(
           'click',
-          closeMenu
-        )
-    );
-  document
-    .querySelectorAll(
-      'a[href^="#"]'
-    )
-    .forEach(
-      a =>
-        a.addEventListener(
-          'click',
-          e => {
-            const target =
-              a.getAttribute(
-                'href'
-              );
-            if(
-              !target ||
-              target === '#'
-            ){
+          () => {
+
+            const item =
+              button.closest('.faq-item');
+
+            if (!item) {
               return;
             }
-            const el =
-              document.querySelector(
-                target
-              );
-            if(el){
-              e.preventDefault();
-              el.scrollIntoView({
-                behavior:'smooth'
+
+            const wasOpen =
+              item.classList.contains('open');
+
+            document
+              .querySelectorAll('.faq-item')
+              .forEach((faq) => {
+                faq.classList.remove('open');
               });
-              closeMenu();
+
+            if (!wasOpen) {
+              item.classList.add('open');
             }
+
           }
-        )
-    );
-  const reactive =
-    document.querySelectorAll(
-      '.hero-stage,.feature-visual'
-    );
-  reactive.forEach(
-    panel => {
-      panel.addEventListener(
-        'pointermove',
-        event => {
-          const r =
-            panel.getBoundingClientRect();
-          const x =
-            (event.clientX-r.left) /
-              r.width -
-            .5;
-          const y =
-            (event.clientY-r.top) /
-              r.height -
-            .5;
-          panel.style.setProperty(
-            '--mx',
-            x.toFixed(3)
-          );
-          panel.style.setProperty(
-            '--my',
-            y.toFixed(3)
-          );
-        }
-      );
-      panel.addEventListener(
-        'pointerleave',
-        ()=>{
-          panel.style.setProperty(
-            '--mx',
-            '0'
-          );
-          panel.style.setProperty(
-            '--my',
-            '0'
-          );
-        }
-      );
-    }
-  );
-})();
-</script>
+        );
+
+      });
+
+
+    /* =======================================================
+       SMOOTH INTERNAL LINKS
+       ======================================================= */
+
+    document
+      .querySelectorAll('a[href^="#"]')
+      .forEach((link) => {
+
+        link.addEventListener(
+          'click',
+          (event) => {
+
+            const targetId =
+              link.getAttribute('href');
+
+            if (
+              !targetId ||
+              targetId === '#'
+            ) {
+              return;
+            }
+
+            const target =
+              document.querySelector(targetId);
+
+            if (!target) {
+              return;
+            }
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+
+          }
+        );
+
+      });
+
+
+    /* =======================================================
+       INITIAL AUTH STATE
+       ======================================================= */
+
+    updateAuthenticationUI();
+
+  </script>
+
 </body>
 </html>
