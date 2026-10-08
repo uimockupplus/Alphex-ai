@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Alphex AI conversational assistant."
+  />
+
+  <title>Alphex AI Assistant</title>
+
+  <!--
+    Alphex AI uses the same fonts as the main website.
+    The chatbot CSS will handle the visual styling.
+  -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="chatbot.css" />
+</head>
+
+<body>
+
+  <!-- =====================================================
+       ALPHEX AI CHATBOT
+       ===================================================== -->
+
+  <div
+    id="alphex-chatbot"
+    class="alphex-chatbot"
+    data-chatbot-state="closed"
+  >
+
+    <!-- ===================================================
+         FLOATING CHAT TOGGLE
+         =================================================== -->
+
+    <button
+      id="alphex-chat-toggle"
+      class="chat-toggle"
+      type="button"
+      aria-label="Open Alphex AI assistant"
+      aria-expanded="false"
+      aria-controls="alphex-chat-window"
+    >
+
+      <span
+        class="chat-toggle-icon"
+        aria-hidden="true"
+      >
+        ✦
+      </span>
+
+      <span class="chat-toggle-label">
+        Alphex AI
+      </span>
+
+    </button>
+
+
+    <!-- ===================================================
+         CHAT WINDOW
+         =================================================== -->
+
+    <section
+      id="alphex-chat-window"
+      class="chat-window"
+      aria-label="Alphex AI Assistant"
+      aria-hidden="true"
+    >
+
+      <!-- =================================================
+           CHAT HEADER
+           ================================================= -->
+
+      <header class="chat-header">
+
+        <div class="chat-header-identity">
+
+          <div
+            class="chat-brand-mark"
+            aria-hidden="true"
+          >
+            ✦
+          </div>
+
+          <div class="chat-brand-copy">
+
+            <div class="chat-brand-name">
+              Alphex AI
+            </div>
+
+            <div class="chat-brand-status">
+              AI Assistant
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="chat-header-actions">
+
+          <button
+            id="chat-new-conversation"
+            class="chat-header-button"
+            type="button"
+            aria-label="Start a new conversation"
+            title="New conversation"
+          >
+            +
+          </button>
+
+          <button
+            id="chat-close"
+            class="chat-header-button"
+            type="button"
+            aria-label="Close Alphex AI assistant"
+            title="Close"
+          >
+            ×
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <!-- =================================================
+           CHAT BODY
+           ================================================= -->
+
+      <main
+        id="chat-messages"
+        class="chat-messages"
+        aria-live="polite"
+        aria-label="Conversation"
+      >
+
+        <!-- ===============================================
+             WELCOME STATE
+             =============================================== -->
+
+        <div
+          id="chat-welcome"
+          class="chat-welcome"
+        >
+
+          <div
+            class="chat-welcome-mark"
+            aria-hidden="true"
+          >
+            ✦
+          </div>
+
+          <h1 class="chat-welcome-title">
+            How can I help?
+          </h1>
+
+          <p class="chat-welcome-text">
+            Ask about Alphex AI, our products, capabilities,
+            services, or how we can help your business.
+          </p>
+
+
+          <!-- =============================================
+               SUGGESTED PROMPTS
+               ============================================= -->
+
+          <div
+            class="chat-suggestions"
+            aria-label="Suggested questions"
+          >
+
+            <button
+              class="chat-suggestion"
+              type="button"
+              data-prompt="What does Alphex AI do?"
+            >
+              <span class="chat-suggestion-title">
+                What does Alphex AI do?
+              </span>
+
+              <span class="chat-suggestion-arrow">
+                →
+              </span>
+            </button>
+
+
+            <button
+              class="chat-suggestion"
+              type="button"
+              data-prompt="Tell me about your AI products."
+            >
+              <span class="chat-suggestion-title">
+                Explore our AI products
+              </span>
+
+              <span class="chat-suggestion-arrow">
+                →
+              </span>
+            </button>
+
+
+            <button
+              class="chat-suggestion"
+              type="button"
+              data-prompt="How can Alphex AI help my business?"
+            >
+              <span class="chat-suggestion-title">
+                How can you help my business?
+              </span>
+
+              <span class="chat-suggestion-arrow">
+                →
+              </span>
+            </button>
+
+
+            <button
+              class="chat-suggestion"
+              type="button"
+              data-prompt="I would like to discuss a project with Alphex AI."
+            >
+              <span class="chat-suggestion-title">
+                Discuss a project
+              </span>
+
+              <span class="chat-suggestion-arrow">
+                →
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===============================================
+             RETURNING USER CONTEXT
+             =============================================== -->
+
+        <div
+          id="chat-returning-user"
+          class="chat-returning-user"
+          hidden
+        >
+
+          <div class="chat-returning-user-title">
+            Welcome back<span id="chat-user-name"></span> 👋
+          </div>
+
+          <div class="chat-returning-user-text">
+            We can continue from a previous conversation
+            or start something new.
+          </div>
+
+          <button
+            id="chat-continue-conversation"
+            class="chat-continue-button"
+            type="button"
+          >
+            Continue previous conversation
+            <span aria-hidden="true">→</span>
+          </button>
+
+        </div>
+
+
+        <!-- ===============================================
+             CONVERSATION MESSAGES
+             =============================================== -->
+
+        <div
+          id="chat-message-list"
+          class="chat-message-list"
+        >
+          <!-- Messages will be inserted by chatbot.js -->
+        </div>
+
+
+        <!-- ===============================================
+             TYPING / GENERATION INDICATOR
+             =============================================== -->
+
+        <div
+          id="chat-thinking"
+          class="chat-thinking"
+          hidden
+          aria-label="Alphex AI is thinking"
+        >
+
+          <div class="chat-thinking-mark">
+            ✦
+          </div>
+
+          <div class="chat-thinking-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+        </div>
+
+      </main>
+
+
+      <!-- =================================================
+           CHAT INPUT
+           ================================================= -->
+
+      <footer class="chat-input-area">
+
+        <form
+          id="chat-form"
+          class="chat-form"
+          autocomplete="off"
+        >
+
+          <div class="chat-input-wrapper">
+
+            <textarea
+              id="chat-input"
+              class="chat-input"
+              name="message"
+              rows="1"
+              maxlength="4000"
+              placeholder="Ask Alphex AI anything..."
+              aria-label="Message Alphex AI"
+            ></textarea>
+
+
+            <button
+              id="chat-send"
+              class="chat-send"
+              type="submit"
+              aria-label="Send message"
+              title="Send message"
+              disabled
+            >
+
+              <span
+                class="chat-send-icon"
+                aria-hidden="true"
+              >
+                ↑
+              </span>
+
+            </button>
+
+          </div>
+
+        </form>
+
+
+        <!-- =================================================
+             ASSISTANT DISCLOSURE
+             ================================================= -->
+
+        <div class="chat-disclaimer">
+          Alphex AI can make mistakes. Check important information.
+        </div>
+
+      </footer>
+
+    </section>
+
+  </div>
+
+
+  <!--
+    chatbot.js will be loaded by the website integration.
+    Do not add API keys or Supabase credentials here.
+  -->
+
+</body>
+</html>
