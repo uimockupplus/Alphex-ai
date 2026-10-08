@@ -2,6 +2,7 @@
    ALPHEX AI — SHARED SITE JAVASCRIPT
    ========================================================= */
 (() => {
+  'use strict';
   /* -------------------------------------------------------
      SUPABASE CONFIGURATION
      ------------------------------------------------------- */
@@ -85,18 +86,20 @@
   /* -------------------------------------------------------
      LOAD SHARED COMPONENT
      ------------------------------------------------------- */
-  const loadComponent = async (
+  async function loadComponent(
     selector,
     file
-  ) => {
+  ) {
     const container =
       document.querySelector(selector);
     if (!container) {
-      return;
+      return false;
     }
     try {
       const response =
-        await fetch(file);
+        await fetch(file, {
+          cache: 'no-cache'
+        });
       if (!response.ok) {
         throw new Error(
           `Unable to load ${file}`
@@ -104,17 +107,25 @@
       }
       container.innerHTML =
         await response.text();
+      return true;
     } catch (error) {
       console.error(
         'Alphex component error:',
         error
       );
+      return false;
     }
-  };
+  }
   /* -------------------------------------------------------
      INITIALIZE SITE
      ------------------------------------------------------- */
   async function initializeSite() {
+    /*
+     Load shared components first.
+     This is important because authentication,
+     navigation and theme code depend on elements
+     inside nav.html.
+    */
     await Promise.all([
       loadComponent(
         '#site-nav',
@@ -125,6 +136,7 @@
         'footer.html'
       )
     ]);
+    /* Initialize shared functionality */
     initializeNavigation();
     initializeTheme();
     initializeSupabase();
@@ -144,6 +156,9 @@
     if (!menuButton || !mobilePanel) {
       return;
     }
+    /* ---------------------------------------------------
+       CLOSE MOBILE MENU
+       --------------------------------------------------- */
     const closeMenu = () => {
       menuButton.classList.remove(
         'open'
@@ -160,9 +175,13 @@
         'true'
       );
     };
+    /* ---------------------------------------------------
+       TOGGLE MOBILE MENU
+       --------------------------------------------------- */
     menuButton.addEventListener(
       'click',
-      () => {
+      event => {
+        event.preventDefault();
         const open =
           !mobilePanel.classList.contains(
             'open'
@@ -185,6 +204,9 @@
         );
       }
     );
+    /* ---------------------------------------------------
+       CLOSE MENU AFTER LINK CLICK
+       --------------------------------------------------- */
     mobilePanel
       .querySelectorAll('a')
       .forEach(link => {
@@ -193,6 +215,46 @@
           closeMenu
         );
       });
+    /* ---------------------------------------------------
+       CLOSE MENU WITH ESCAPE
+       --------------------------------------------------- */
+    document.addEventListener(
+      'keydown',
+      event => {
+        if (
+          event.key === 'Escape' &&
+          mobilePanel.classList.contains('open')
+        ) {
+          closeMenu();
+        }
+      }
+    );
+    /* ---------------------------------------------------
+       CLOSE MENU WHEN CLICKING OUTSIDE
+       --------------------------------------------------- */
+    document.addEventListener(
+      'click',
+      event => {
+        if (
+          !mobilePanel.classList.contains('open')
+        ) {
+          return;
+        }
+        if (
+          mobilePanel.contains(event.target) ||
+          menuButton.contains(event.target)
+        ) {
+          return;
+        }
+        closeMenu();
+      }
+    );
+    /*
+     Expose close function so other shared
+     navigation functionality can use it.
+    */
+    window.alphexCloseMobileMenu =
+      closeMenu;
   }
   /* -------------------------------------------------------
      DARK / LIGHT MODE
@@ -209,6 +271,9 @@
       document.body;
     const root =
       document.documentElement;
+    /* ---------------------------------------------------
+       GET SAVED THEME
+       --------------------------------------------------- */
     const getSavedTheme = () => {
       try {
         return localStorage.getItem(
@@ -218,6 +283,9 @@
         return null;
       }
     };
+    /* ---------------------------------------------------
+       SAVE THEME
+       --------------------------------------------------- */
     const saveTheme = theme => {
       try {
         localStorage.setItem(
@@ -228,6 +296,9 @@
         /* Storage may be unavailable. */
       }
     };
+    /* ---------------------------------------------------
+       APPLY THEME
+       --------------------------------------------------- */
     const setTheme = theme => {
       const dark =
         theme === 'dark';
@@ -259,21 +330,33 @@
         );
       if (icon) {
         icon.textContent =
-          dark ? '☀' : '☾';
+          dark
+            ? '☀'
+            : '☾';
       }
       if (label) {
         label.textContent =
-          dark ? 'Light' : 'Dark';
+          dark
+            ? 'Light'
+            : 'Dark';
       }
       saveTheme(
-        dark ? 'dark' : 'light'
+        dark
+          ? 'dark'
+          : 'light'
       );
     };
+    /* ---------------------------------------------------
+       INITIAL THEME
+       --------------------------------------------------- */
     const savedTheme =
       getSavedTheme();
     setTheme(
       savedTheme || 'light'
     );
+    /* ---------------------------------------------------
+       TOGGLE THEME
+       --------------------------------------------------- */
     themeToggle.addEventListener(
       'click',
       () => {
@@ -312,6 +395,13 @@
         error
       );
     }
+    /*
+     Listen for:
+     SIGNED_IN
+     SIGNED_OUT
+     TOKEN_REFRESHED
+     USER_UPDATED
+    */
     supabaseClient.auth.onAuthStateChange(
       (_event, session) => {
         updateAuthUI(
@@ -328,6 +418,10 @@
       document.querySelector(
         '.header-demo'
       );
+    /*
+     The navbar may not contain the auth button
+     on a special page. In that case, simply stop.
+    */
     if (!signInButton) {
       return;
     }
@@ -343,6 +437,7 @@
      LOGGED OUT NAVIGATION
      ------------------------------------------------------- */
   function showLoggedOutNavigation() {
+    removeAccountMenu();
     const button =
       document.querySelector(
         '.header-demo'
@@ -350,7 +445,6 @@
     if (!button) {
       return;
     }
-    removeAccountMenu();
     button.className =
       'pill dark header-demo';
     button.href =
@@ -369,6 +463,25 @@
     );
     button.innerHTML =
       'Sign in <span>↗</span>';
+    /*
+     Mobile authentication state.
+    */
+    const mobileLoginLink =
+      document.querySelector(
+        '#mobileLoginLink'
+      );
+    const mobileProfileLink =
+      document.querySelector(
+        '#mobileProfileLink'
+      );
+    if (mobileLoginLink) {
+      mobileLoginLink.style.display =
+        '';
+    }
+    if (mobileProfileLink) {
+      mobileProfileLink.style.display =
+        'none';
+    }
   }
   /* -------------------------------------------------------
      LOGGED IN NAVIGATION
@@ -400,6 +513,10 @@
         .charAt(0)
         .toUpperCase() ||
       'A';
+    /*
+     Convert the Sign in button into
+     the circular profile button.
+    */
     button.className =
       'profile-button header-demo';
     button.href =
@@ -432,6 +549,27 @@
       fullName,
       email
     );
+    /*
+     Mobile authentication state.
+    */
+    const mobileLoginLink =
+      document.querySelector(
+        '#mobileLoginLink'
+      );
+    const mobileProfileLink =
+      document.querySelector(
+        '#mobileProfileLink'
+      );
+    if (mobileLoginLink) {
+      mobileLoginLink.style.display =
+        'none';
+    }
+    if (mobileProfileLink) {
+      mobileProfileLink.style.display =
+        '';
+      mobileProfileLink.textContent =
+        'Workspace →';
+    }
   }
   /* -------------------------------------------------------
      CREATE ACCOUNT MENU
@@ -448,6 +586,10 @@
       );
     wrapper.className =
       'account-menu-wrapper';
+    /*
+     Insert wrapper exactly where the
+     original Sign in button existed.
+    */
     profileButton.parentNode.insertBefore(
       wrapper,
       profileButton
@@ -469,46 +611,49 @@
       'aria-hidden',
       'true'
     );
-    menu.innerHTML = `
-      <div class="account-menu-user">
-        <div class="account-menu-avatar">
-          ${escapeHtml(
-            fullName
-              .trim()
-              .charAt(0)
-              .toUpperCase()
-          )}
+    menu.innerHTML =
+      `
+        <div class="account-menu-user">
+          <div class="account-menu-avatar">
+            ${escapeHtml(
+              fullName
+                .trim()
+                .charAt(0)
+                .toUpperCase()
+            )}
+          </div>
+          <div class="account-menu-details">
+            <strong>
+              ${escapeHtml(fullName)}
+            </strong>
+            <span>
+              ${escapeHtml(email)}
+            </span>
+          </div>
         </div>
-        <div class="account-menu-details">
-          <strong>
-            ${escapeHtml(fullName)}
-          </strong>
-          <span>
-            ${escapeHtml(email)}
-          </span>
-        </div>
-      </div>
-      <div class="account-menu-divider"></div>
-      <a
-        href="#"
-        class="account-menu-item account-link-disabled"
-        role="menuitem"
-        aria-disabled="true"
-      >
-        <span>Account</span>
-        <span>→</span>
-      </a>
-      <div class="account-menu-divider"></div>
-      <button
-        type="button"
-        class="account-menu-signout"
-      >
-        Sign out
-      </button>
-    `;
+        <div class="account-menu-divider"></div>
+        <a
+          href="workspace.html"
+          class="account-menu-item"
+          role="menuitem"
+        >
+          <span>Workspace</span>
+          <span>→</span>
+        </a>
+        <div class="account-menu-divider"></div>
+        <button
+          type="button"
+          class="account-menu-signout"
+        >
+          Sign out
+        </button>
+      `;
     wrapper.appendChild(
       menu
     );
+    /* ---------------------------------------------------
+       PROFILE BUTTON
+       --------------------------------------------------- */
     profileButton.addEventListener(
       'click',
       event => {
@@ -533,18 +678,30 @@
         }
       }
     );
-    const accountLink =
+    /* ---------------------------------------------------
+       WORKSPACE LINK
+       --------------------------------------------------- */
+    const workspaceLink =
       menu.querySelector(
-        '.account-link-disabled'
+        'a[href="workspace.html"]'
       );
-    if (accountLink) {
-      accountLink.addEventListener(
+    if (workspaceLink) {
+      workspaceLink.addEventListener(
         'click',
-        event => {
-          event.preventDefault();
+        () => {
+          closeAllAccountMenus();
+          if (
+            typeof window.alphexCloseMobileMenu ===
+            'function'
+          ) {
+            window.alphexCloseMobileMenu();
+          }
         }
       );
     }
+    /* ---------------------------------------------------
+       SIGN OUT
+       --------------------------------------------------- */
     const signOutButton =
       menu.querySelector(
         '.account-menu-signout'
@@ -555,10 +712,27 @@
         handleSignOut
       );
     }
-    document.addEventListener(
-      'click',
-      handleOutsideAccountClick
-    );
+    /*
+     Mobile Workspace link from nav.html.
+    */
+    const mobileProfileLink =
+      document.querySelector(
+        '#mobileProfileLink'
+      );
+    if (mobileProfileLink) {
+      mobileProfileLink.onclick =
+        event => {
+          event.preventDefault();
+          if (
+            typeof window.alphexCloseMobileMenu ===
+            'function'
+          ) {
+            window.alphexCloseMobileMenu();
+          }
+          window.location.href =
+            'workspace.html';
+        };
+    }
   }
   /* -------------------------------------------------------
      OUTSIDE ACCOUNT MENU CLICK
@@ -628,6 +802,10 @@
           wrapper.querySelector(
             '.profile-button'
           );
+        /*
+         Restore the profile button to
+         .nav-actions before removing wrapper.
+        */
         if (button) {
           const navActions =
             document.querySelector(
@@ -651,6 +829,16 @@
       return;
     }
     try {
+      const signOutButton =
+        document.querySelector(
+          '.account-menu-signout'
+        );
+      if (signOutButton) {
+        signOutButton.disabled =
+          true;
+        signOutButton.textContent =
+          'Signing out…';
+      }
       const {
         error
       } =
@@ -665,6 +853,16 @@
         'Alphex sign out error:',
         error
       );
+      const signOutButton =
+        document.querySelector(
+          '.account-menu-signout'
+        );
+      if (signOutButton) {
+        signOutButton.disabled =
+          false;
+        signOutButton.textContent =
+          'Sign out';
+      }
       alert(
         'Unable to sign out. Please try again.'
       );
@@ -713,8 +911,11 @@
       );
     style.id =
       'alphex-profile-styles';
-    style.textContent = `
-      /* PROFILE BUTTON */
+    style.textContent =
+      `
+      /* ================================================
+         PROFILE BUTTON
+         ================================================ */
       .profile-button {
         width: 40px;
         height: 40px;
@@ -752,12 +953,17 @@
         line-height: 1;
         color: #fff;
       }
-      /* ACCOUNT MENU WRAPPER */
+      /* ================================================
+         ACCOUNT MENU WRAPPER
+         ================================================ */
       .account-menu-wrapper {
         position: relative;
         display: inline-flex;
+        align-items: center;
       }
-      /* ACCOUNT MENU */
+      /* ================================================
+         ACCOUNT MENU
+         ================================================ */
       .account-menu {
         position: absolute;
         top:
@@ -784,7 +990,7 @@
           opacity .18s ease,
           visibility .18s ease,
           transform .18s ease;
-        z-index: 200;
+        z-index: 2000;
       }
       .account-menu-wrapper.open
       .account-menu {
@@ -794,7 +1000,9 @@
           translateY(0)
           scale(1);
       }
-      /* USER INFORMATION */
+      /* ================================================
+         USER INFORMATION
+         ================================================ */
       .account-menu-user {
         display: flex;
         align-items: center;
@@ -839,14 +1047,18 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      /* DIVIDER */
+      /* ================================================
+         DIVIDER
+         ================================================ */
       .account-menu-divider {
         height: 1px;
         margin: 5px 0;
         background:
           var(--border);
       }
-      /* ACCOUNT LINK */
+      /* ================================================
+         ACCOUNT MENU ITEM
+         ================================================ */
       .account-menu-item {
         display: flex;
         align-items: center;
@@ -860,12 +1072,19 @@
         text-decoration: none;
         font-size: 12px;
         font-weight: 500;
+        transition:
+          background .18s ease,
+          color .18s ease;
       }
-      .account-link-disabled {
-        opacity: .5;
-        cursor: default;
+      .account-menu-item:hover {
+        background:
+          var(--lavender);
+        color:
+          var(--accent-dark);
       }
-      /* SIGN OUT */
+      /* ================================================
+         SIGN OUT
+         ================================================ */
       .account-menu-signout {
         display: flex;
         align-items: center;
@@ -877,6 +1096,8 @@
           transparent;
         color:
           var(--ink);
+        font-family:
+          var(--sans);
         font-size: 12px;
         font-weight: 500;
         text-align: left;
@@ -891,7 +1112,43 @@
         color:
           #b42318;
       }
-      /* DARK MODE */
+      .account-menu-signout:disabled {
+        opacity: .55;
+        cursor: wait;
+      }
+      /* ================================================
+         DARK MODE
+         ================================================ */
+      body.dark-theme
+      .account-menu {
+        background:
+          #171817;
+        border-color:
+          #343634;
+        box-shadow:
+          0 18px 50px
+          rgba(0,0,0,.35);
+      }
+      body.dark-theme
+      .account-menu-details strong {
+        color:
+          #f4f4f1;
+      }
+      body.dark-theme
+      .account-menu-details span {
+        color:
+          #999b96;
+      }
+      body.dark-theme
+      .account-menu-divider {
+        background:
+          #343634;
+      }
+      body.dark-theme
+      .account-menu-item {
+        color:
+          #f4f4f1;
+      }
       body.dark-theme
       .account-menu-item:hover {
         background:
@@ -907,13 +1164,20 @@
           #c8c0ff;
       }
       body.dark-theme
+      .account-menu-signout {
+        color:
+          #f4f4f1;
+      }
+      body.dark-theme
       .account-menu-signout:hover {
         background:
           #321f24;
         color:
           #ffb4b4;
       }
-      /* MOBILE */
+      /* ================================================
+         MOBILE
+         ================================================ */
       @media(max-width:800px) {
         .account-menu {
           position: fixed;
@@ -942,5 +1206,46 @@
   /* -------------------------------------------------------
      START ALPHEX AI
      ------------------------------------------------------- */
-  initializeSite();
+  if (
+    document.readyState === 'loading'
+  ) {
+    document.addEventListener(
+      'DOMContentLoaded',
+      initializeSite,
+      { once: true }
+    );
+  } else {
+    initializeSite();
+  }
 })();
+
+What this version fixes
+
+* nav.html loads before authentication logic runs.
+* Supabase can load from the page or automatically from the CDN.
+* Logged out → Sign in ↗
+* Logged in → circular profile initial
+* Profile click → Account menu
+* Account menu → Workspace + Sign out
+* Sign out → returns to index.html
+* Mobile menu works independently.
+* Mobile authenticated state → Workspace
+* Theme toggle still works with localStorage.
+* Escape closes the mobile menu.
+* Clicking outside closes the mobile menu.
+* Clicking outside closes the account menu.
+* No landing-page content is changed.
+* No inline landing-page sections are touched.
+
+Important: your pages should have these containers:
+
+<div id="site-nav"></div>
+<!-- your existing page content -->
+<div id="site-footer"></div>
+
+And site.js should be loaded after the Supabase CDN if you already include it:
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="site.js"></script>
+
+The code also works if you remove that Supabase CDN line because site.js can load it itself.
