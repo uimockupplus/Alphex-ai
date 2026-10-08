@@ -1,19 +1,17 @@
 <header class="topbar">
   <div class="shell nav">
-
     <a class="wordmark" href="index.html">alphex ai</a>
 
     <div class="nav-links">
-      <a href="capabilities.html">Capabilities</a>
-      <a href="products.html">Products</a>
-      <a href="process.html">Process</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="/capabilities.html">Capabilities</a>
+      <a href="/products.html">Products</a>
+      <a href="/process.html">Process</a>
+      <a href="/pricing.html">Pricing</a>
       <a href="index.html#faq">FAQ</a>
     </div>
 
     <div class="nav-actions">
-
-      <a class="pill light contact-link" href="contact.html">
+      <a class="pill light contact-link" href="/contact.html">
         Contact
       </a>
 
@@ -48,37 +46,28 @@
           type="button"
           aria-label="Open account menu"
           aria-expanded="false"
-          aria-haspopup="true"
         >
           <span id="profileInitial">A</span>
         </button>
 
-        <div
-          class="profile-menu"
-          id="profileMenu"
-          aria-hidden="true"
-        >
+        <div class="profile-menu" id="profileMenu">
           <div class="profile-user">
-            <div
-              class="profile-name"
-              id="profileName"
-            >
+            <div class="profile-name" id="profileName">
               Alphex AI
             </div>
 
-            <div
-              class="profile-email"
-              id="profileEmail"
-            >
+            <div class="profile-email" id="profileEmail">
               account
             </div>
           </div>
 
           <a
-            href="workspace.html"
+            href="#"
             class="profile-account"
+            aria-disabled="true"
+            onclick="return false;"
           >
-            Workspace
+            Account
           </a>
 
           <button
@@ -91,38 +80,43 @@
         </div>
       </div>
 
-      <!-- Mobile -->
       <button
         class="mobile-menu"
         type="button"
         aria-label="Open navigation"
         aria-expanded="false"
-        aria-controls="mobilePanel"
       >
         <span></span>
         <span></span>
       </button>
-
     </div>
   </div>
 </header>
 
-<div
-  class="mobile-panel"
-  id="mobilePanel"
-  aria-hidden="true"
->
+<div class="mobile-panel" aria-hidden="true">
   <div class="mobile-panel-inner">
 
-    <a href="capabilities.html">
+    <a href="index.html#capabilities">
       Capabilities
     </a>
 
-    <a href="products.html">
+    <a href="index.html#use-cases">
+      Use cases
+    </a>
+
+    <a href="index.html#platform">
+      Platform
+    </a>
+
+    <a href="index.html#industries">
+      Industries
+    </a>
+
+    <a href="index.html#products">
       Products
     </a>
 
-    <a href="process.html">
+    <a href="/process.html">
       Process
     </a>
 
@@ -134,7 +128,6 @@
       FAQ
     </a>
 
-    <!-- Logged out -->
     <a
       class="mobile-auth-link logged-out"
       id="mobileLoginLink"
@@ -143,17 +136,15 @@
       Sign in <span>↗</span>
     </a>
 
-    <!-- Logged in -->
     <a
       class="mobile-auth-link logged-in"
       id="mobileProfileLink"
-      href="workspace.html"
-      style="display:none;"
+      href="#"
     >
-      Workspace <span>→</span>
+      Profile <span>→</span>
     </a>
 
-    <a href="contact.html">
+    <a href="/contact.html">
       Contact us <span>↗</span>
     </a>
 
