@@ -1,0 +1,24 @@
+{
+  "name": "alphex-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "site.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uimockupplus/Alphex-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/uimockupplus/Alphex-ai/issues"
+  },
+  "homepage": "https://github.com/uimockupplus/Alphex-ai#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.3"
+  }
+}
