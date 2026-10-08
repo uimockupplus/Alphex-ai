@@ -1070,11 +1070,6 @@ body{
   overflow-x:hidden;
 }
 
-*,
-*::before,
-*::after{
-  max-width:100%;
-}
 
 img,
 svg,
