@@ -580,12 +580,18 @@ body.dark-theme .profile-signout:hover{
 .trust-panel li:before{content:'✓';position:absolute;left:0;color:#246d69}
 .trust-note{margin:17px 0 0;font-size:12px;color:#595955;line-height:1.55}
 .industry-section{background:#f7f7f5}
-.industry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:38px}
-.industry-item{padding:19px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.55)}
-.industry-item h3{font-size:16px;letter-spacing:-.03em;margin:0 0 6px}
-.industry-item p{font-size:12px;color:#595955;line-height:1.5;margin:0}
+.industry-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:42px}
+.industry-item{padding:25px;border:1px solid var(--border);border-radius:18px;background:rgba(255,255,255,.55)}
+.industry-item .industry-type{display:block;font:10px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:17px}
+.industry-item h3{font-size:23px;letter-spacing:-.055em;line-height:1.08;margin:0 0 9px}
+.industry-item p{font-size:14px;color:#595955;line-height:1.58;margin:0}
+.industry-item .industry-work{margin-top:15px;padding-top:13px;border-top:1px solid var(--border);font-size:12px;line-height:1.55;color:#595955}
+.industry-item .industry-work b{font:10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}
 body.dark-theme .info-card,body.dark-theme .why-card,body.dark-theme .industry-item{background:rgba(255,255,255,.03);border-color:var(--border)}
-body.dark-theme .info-card p,body.dark-theme .outcome p,body.dark-theme .why-card p,body.dark-theme .industry-item p{color:#c0c3d2}
+body.dark-theme .info-card p,body.dark-theme .outcome p,body.dark-theme .why-card p,body.dark-theme .industry-item p,body.dark-theme .industry-item .industry-work{color:#c0c3d2}
+body.dark-theme .industry-item .industry-type{color:#bfb5ff}
+body.dark-theme .industry-item .industry-work{border-color:var(--border)}
+body.dark-theme .industry-item .industry-work b{color:#f5f4ff}
 body.dark-theme .outcomes-section{background:#19172c}
 body.dark-theme .outcomes-grid,body.dark-theme .outcome{border-color:var(--border)}
 body.dark-theme .outcome b,body.dark-theme .info-card .mono,body.dark-theme .why-card b{color:#bfb5ff}
@@ -885,9 +891,55 @@ body.dark-theme .trust-panel li:before{color:#8df0df}
 <section class="info-section trust-section" id="trust"><div class="shell"><div class="intro"><div><div class="section-label">06 / Trust, security + responsible AI</div><h2 class="section-title">Trust starts with how the system is built.</h2></div><p class="section-copy">We design for visibility and control from the start. Specific security controls and data handling are agreed for each project and deployment.</p></div>
   <div class="trust-grid"><article class="trust-panel"><h3>Designed for oversight</h3><ul><li>Clear system boundaries</li><li>Grounded, approved knowledge</li><li>Defined escalation paths</li><li>Human oversight where needed</li><li>Observable system behavior</li><li>Ongoing evaluation</li></ul></article><article class="trust-panel"><h3>Security considerations</h3><ul><li>Data handling scoped to the project</li><li>Access designed around the use case</li><li>Responsible deployment planning</li><li>Validation before consequential actions</li><li>Privacy requirements discussed early</li><li>Controls documented with the client</li></ul><p class="trust-note">We do not claim certifications or universal security guarantees here. Controls, hosting, retention, and access requirements should be confirmed for the specific implementation.</p></article></div>
 </div></section>
-<section class="info-section industry-section" id="industries"><div class="shell"><div class="intro"><div><div class="section-label">07 / Industry solutions</div><h2 class="section-title">Built for knowledge-heavy, workflow-driven work.</h2></div><p class="section-copy">These are areas where the patterns can fit—not claims of existing customers. The right solution depends on your data, process, and requirements.</p></div>
-  <div class="industry-grid"><article class="industry-item"><h3>Financial services</h3><p>Support internal knowledge access and routine service queries with carefully scoped workflows.</p></article><article class="industry-item"><h3>Healthcare</h3><p>Help teams navigate approved administrative information, with appropriate human review.</p></article><article class="industry-item"><h3>SaaS + technology</h3><p>Answer product questions, support onboarding, and assist internal teams.</p></article><article class="industry-item"><h3>Professional services</h3><p>Surface internal expertise, standard guidance, and repeatable process steps.</p></article><article class="industry-item"><h3>E-commerce</h3><p>Support product FAQs, order-related questions, and service-request routing.</p></article><article class="industry-item"><h3>Growing businesses</h3><p>Make shared knowledge and routine workflows easier to manage as teams grow.</p></article></div>
-</div></section>
+<section class="info-section industry-section" id="industries">
+  <div class="shell">
+    <div class="intro">
+      <div>
+        <div class="section-label">07 / Industry solutions</div>
+        <h2 class="section-title">AI shaped around the work of your industry.</h2>
+      </div>
+      <p class="section-copy">Different industries have different knowledge, customer needs, and operating rules. Alphex starts with those realities, then scopes assistants and workflows to fit. These are example applications—not claims of existing customers or pre-built certified solutions.</p>
+    </div>
+    <div class="industry-grid">
+      <article class="industry-item">
+        <span class="industry-type">Knowledge + service workflows</span>
+        <h3>Financial services</h3>
+        <p>Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p>
+        <div class="industry-work"><b>Example applications</b><br />Internal policy and product knowledge assistants; routine customer FAQ responses; service-request intake and routing. Advice, eligibility decisions, and other consequential actions stay with authorized people.</div>
+      </article>
+      <article class="industry-item">
+        <span class="industry-type">Administrative support</span>
+        <h3>Healthcare</h3>
+        <p>Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters.</p>
+        <div class="industry-work"><b>Example applications</b><br />Appointment and service FAQs; staff access to internal procedures; administrative request routing. Clinical guidance and patient-care decisions require qualified human oversight.</div>
+      </article>
+      <article class="industry-item">
+        <span class="industry-type">Product + customer experience</span>
+        <h3>SaaS + technology</h3>
+        <p>Connect product documentation and support knowledge so customers and employees can get useful, consistent answers.</p>
+        <div class="industry-work"><b>Example applications</b><br />Documentation-grounded support assistants; onboarding and feature guidance; ticket summarization and triage; internal engineering or sales knowledge search.</div>
+      </article>
+      <article class="industry-item">
+        <span class="industry-type">Expertise + repeatable delivery</span>
+        <h3>Professional services</h3>
+        <p>Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop.</p>
+        <div class="industry-work"><b>Example applications</b><br />Search across approved methods and project materials; research and document drafting support; proposal knowledge retrieval; workflow checklists and handoffs.</div>
+      </article>
+      <article class="industry-item">
+        <span class="industry-type">Commerce + customer operations</span>
+        <h3>E-commerce</h3>
+        <p>Support shoppers and service teams with product knowledge and routine order-related information across the customer journey.</p>
+        <div class="industry-work"><b>Example applications</b><br />Product and policy FAQs; order, delivery, and return information; service-request capture; routing exceptions to a person rather than guessing or promising an outcome.</div>
+      </article>
+      <article class="industry-item">
+        <span class="industry-type">Cross-team operations</span>
+        <h3>Growing businesses</h3>
+        <p>Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows.</p>
+        <div class="industry-work"><b>Example applications</b><br />A shared internal knowledge assistant; lead and customer inquiry handling; repeatable onboarding and operations workflows; lightweight integrations with existing tools.</div>
+      </article>
+    </div>
+  </div>
+</section>
 <section class="section products-section" id="products">
   <div class="shell">
     <div class="intro">
