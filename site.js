@@ -739,3 +739,24 @@
     start();
   }
 })();
+/* Alphex AI Chatbot Loader */
+(async function () {
+  try {
+    const root = document.getElementById("alphex-chatbot-root");
+    if (!root) return;
+
+    const response = await fetch("/chatbot/chatbot.html");
+    if (!response.ok) {
+      throw new Error("Failed to load chatbot HTML");
+    }
+
+    root.innerHTML = await response.text();
+
+    const script = document.createElement("script");
+    script.src = "/chatbot/chatbot.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  } catch (error) {
+    console.error("[Alphex Chatbot] Failed to load:", error);
+  }
+})();
