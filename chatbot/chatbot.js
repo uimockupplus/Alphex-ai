@@ -1,81 +1,41 @@
 /* =========================================================
    ALPHEX AI — CHATBOT CONTROLLER
-   ---------------------------------------------------------
-   Frontend responsibilities:
-   - Open / close chatbot
-   - User interaction
-   - Message rendering
-   - Suggested prompts
-   - Conversation UI
-   - Supabase authenticated-user awareness
-   - Secure backend communication
-   - Backend AI responses through /api/chatbot
    ========================================================= */
 (() => {
   'use strict';
-  /* =========================================================
-     CONFIGURATION
-     ========================================================= */
+
   const CONFIG = {
     API_ENDPOINT: '/api/chatbot',
     MAX_INPUT_LENGTH: 4000,
-    /*
-     Frontend request timeout.
-     This prevents the chatbot UI from appearing frozen
-     indefinitely if the backend/provider does not respond.
-    */
-    REQUEST_TIMEOUT: 8500,
-    STORAGE_KEYS: {
-      conversationId: 'alphex_chat_conversation_id'
-    },
+    REQUEST_TIMEOUT: 24000,
+    STORAGE_KEY: 'alphex_chat_conversation_id',
     FALLBACK_USER_NAME: 'there'
   };
-  /* =========================================================
-     DOM REFERENCES
-     ========================================================= */
-  const chatbot =
-    document.getElementById('alphex-chatbot');
+
+  const chatbot = document.getElementById('alphex-chatbot');
+
   if (!chatbot) {
-    console.warn(
-      '[Alphex Chatbot] Root element not found.'
-    );
+    console.warn('[Alphex Chatbot] Root element not found.');
     return;
   }
-  const toggleButton =
-    document.getElementById('alphex-chat-toggle');
-  const chatWindow =
-    document.getElementById('alphex-chat-window');
-  const closeButton =
-    document.getElementById('chat-close');
-  const newConversationButton =
-    document.getElementById('chat-new-conversation');
-  /*
-   IMPORTANT:
-   #chat-messages is the actual scrolling container.
-  */
-  const chatMessages =
-    document.getElementById('chat-messages');
-  const messageList =
-    document.getElementById('chat-message-list');
-  const chatForm =
-    document.getElementById('chat-form');
-  const chatInput =
-    document.getElementById('chat-input');
-  const chatSend =
-    document.getElementById('chat-send');
-  const thinkingIndicator =
-    document.getElementById('chat-thinking');
-  const welcomeState =
-    document.getElementById('chat-welcome');
-  const returningUser =
-    document.getElementById('chat-returning-user');
-  const userNameElement =
-    document.getElementById('chat-user-name');
-  const continueConversationButton =
-    document.getElementById('chat-continue-conversation');
-  /* =========================================================
-     STATE
-     ========================================================= */
+
+  const $ = id => document.getElementById(id);
+
+  const toggleButton = $('alphex-chat-toggle');
+  const chatWindow = $('alphex-chat-window');
+  const closeButton = $('chat-close');
+  const newConversationButton = $('chat-new-conversation');
+  const chatMessages = $('chat-messages');
+  const messageList = $('chat-message-list');
+  const chatForm = $('chat-form');
+  const chatInput = $('chat-input');
+  const chatSend = $('chat-send');
+  const thinkingIndicator = $('chat-thinking');
+  const welcomeState = $('chat-welcome');
+  const returningUser = $('chat-returning-user');
+  const userNameElement = $('chat-user-name');
+  const continueButton = $('chat-continue-conversation');
+
   const state = {
     isOpen: false,
     isSending: false,
@@ -85,27 +45,26 @@
     messages: [],
     hasExistingConversation: false
   };
-  /* =========================================================
-     SUPABASE
-     ---------------------------------------------------------
-     This is the browser-safe publishable key.
-     NEVER place the Supabase service-role/secret key here.
-     ========================================================= */
+
   const SUPABASE_URL =
     'https://nxqxhakjbtdzreimpkdz.supabase.co';
+
   const SUPABASE_PUBLISHABLE_KEY =
     'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
+
   let supabaseClient = null;
+
   function initializeSupabase() {
     if (
-      typeof window.supabase === 'undefined' ||
+      !window.supabase ||
       typeof window.supabase.createClient !== 'function'
     ) {
       console.warn(
-        '[Alphex Chatbot] Supabase client is not loaded.'
+        '[Alphex Chatbot] Supabase browser client is not loaded.'
       );
       return null;
     }
+
     try {
       return window.supabase.createClient(
         SUPABASE_URL,
@@ -119,1179 +78,760 @@
       return null;
     }
   }
-  supabaseClient =
-    initializeSupabase();
-  /* =========================================================
-     INITIALIZATION
-     ========================================================= */
+
+  supabaseClient = initializeSupabase();
+
   async function initialize() {
     bindEvents();
     loadStoredConversation();
     updateSendButton();
     autoResizeInput();
+
     await loadAuthenticatedUser();
+
     renderReturningUserState();
-    console.log(
-      '[Alphex Chatbot] Initialized.'
-    );
+
+    console.log('[Alphex Chatbot] Initialized.');
   }
-  /* =========================================================
-     EVENT LISTENERS
-     ========================================================= */
+
   function bindEvents() {
-    /* -------------------------------------------------------
-       OPEN CHATBOT
-       ------------------------------------------------------- */
-    if (toggleButton) {
-      toggleButton.addEventListener(
-        'click',
-        () => {
-          openChat();
-        }
-      );
-    }
-    /* -------------------------------------------------------
-       CLOSE CHATBOT
-       ------------------------------------------------------- */
-    if (closeButton) {
-      closeButton.addEventListener(
-        'click',
-        () => {
-          closeChat();
-        }
-      );
-    }
-    /* -------------------------------------------------------
-       NEW CONVERSATION
-       ------------------------------------------------------- */
-    if (newConversationButton) {
-      newConversationButton.addEventListener(
-        'click',
-        () => {
-          startNewConversation();
-        }
-      );
-    }
-    /* -------------------------------------------------------
-       CONTINUE PREVIOUS CONVERSATION
-       ------------------------------------------------------- */
-    if (continueConversationButton) {
-      continueConversationButton.addEventListener(
-        'click',
-        async () => {
-          if (state.isSending) {
-            return;
-          }
+    toggleButton?.addEventListener('click', openChat);
+    closeButton?.addEventListener('click', closeChat);
+
+    newConversationButton?.addEventListener(
+      'click',
+      startNewConversation
+    );
+
+    continueButton?.addEventListener(
+      'click',
+      async () => {
+        if (!state.isSending) {
           await continuePreviousConversation();
         }
-      );
-    }
-    /* -------------------------------------------------------
-       CHAT FORM
-       ------------------------------------------------------- */
-    if (chatForm) {
-      chatForm.addEventListener(
-        'submit',
-        async (event) => {
-          event.preventDefault();
-          await handleSendMessage();
-        }
-      );
-    }
-    /* -------------------------------------------------------
-       TEXTAREA
-       ------------------------------------------------------- */
-    if (chatInput) {
-      chatInput.addEventListener(
-        'input',
-        () => {
-          enforceInputLimit();
-          autoResizeInput();
-          updateSendButton();
-        }
-      );
-      chatInput.addEventListener(
-        'keydown',
-        async (event) => {
-          /*
-           Enter = send
-           Shift + Enter = new line
-          */
-          if (
-            event.key === 'Enter' &&
-            !event.shiftKey &&
-            !event.isComposing
-          ) {
-            event.preventDefault();
-            await handleSendMessage();
-          }
-        }
-      );
-    }
-    /* =======================================================
-       SUGGESTED PROMPTS
-       -------------------------------------------------------
-       HTML uses:
-       data-prompt="..."
-       Event delegation keeps the buttons working even if
-       the welcome UI is dynamically changed/re-rendered.
-       ======================================================= */
-    document.addEventListener(
-      'click',
-      async (event) => {
-        const button =
-          event.target.closest(
-            '.chat-suggestion'
-          );
-        if (!button) {
-          return;
-        }
-        const prompt =
-          button.getAttribute(
-            'data-prompt'
-          );
-        if (!prompt) {
-          console.warn(
-            '[Alphex Chatbot] Suggestion button has no data-prompt.'
-          );
-          return;
-        }
+      }
+    );
+
+    chatForm?.addEventListener('submit', async event => {
+      event.preventDefault();
+      await handleSendMessage();
+    });
+
+    chatInput?.addEventListener('input', () => {
+      enforceInputLimit();
+      autoResizeInput();
+      updateSendButton();
+    });
+
+    chatInput?.addEventListener('keydown', async event => {
+      if (
+        event.key === 'Enter' &&
+        !event.shiftKey &&
+        !event.isComposing
+      ) {
         event.preventDefault();
-        if (state.isSending) {
-          return;
-        }
-        if (!chatInput) {
-          return;
-        }
-        /*
-         Put the selected question into the input
-         and send it immediately.
-        */
-        chatInput.value =
-          prompt;
-        autoResizeInput();
-        updateSendButton();
         await handleSendMessage();
       }
-    );
-    /* -------------------------------------------------------
-       ESCAPE CLOSES CHATBOT
-       ------------------------------------------------------- */
-    document.addEventListener(
-      'keydown',
-      (event) => {
-        if (
-          event.key === 'Escape' &&
-          state.isOpen
-        ) {
-          closeChat();
-        }
+    });
+
+    document.addEventListener('click', async event => {
+      const button = event.target.closest('.chat-suggestion');
+
+      if (!button || !chatInput || state.isSending) {
+        return;
       }
-    );
-    /* -------------------------------------------------------
-       SUPABASE AUTHENTICATION CHANGES
-       ------------------------------------------------------- */
-    if (
-      supabaseClient &&
-      supabaseClient.auth &&
-      typeof supabaseClient.auth.onAuthStateChange ===
-        'function'
-    ) {
+
+      const prompt = button.getAttribute('data-prompt');
+
+      if (!prompt) {
+        return;
+      }
+
+      event.preventDefault();
+
+      chatInput.value = prompt;
+      autoResizeInput();
+      updateSendButton();
+
+      await handleSendMessage();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && state.isOpen) {
+        closeChat();
+      }
+    });
+
+    if (supabaseClient?.auth?.onAuthStateChange) {
       supabaseClient.auth.onAuthStateChange(
         async (_event, session) => {
-          state.currentUser =
-            session?.user || null;
+          state.currentUser = session?.user || null;
+          state.currentProfile = null;
+
           if (state.currentUser) {
             await loadUserProfile();
-          } else {
-            state.currentProfile =
-              null;
           }
+
           renderReturningUserState();
         }
       );
     }
   }
-  /* =========================================================
-     CHAT WINDOW
-     ========================================================= */
+
   function openChat() {
     if (!chatWindow) {
       return;
     }
-    state.isOpen =
-      true;
-    chatbot.setAttribute(
-      'data-chatbot-state',
-      'open'
-    );
-    chatWindow.setAttribute(
-      'aria-hidden',
-      'false'
-    );
-    if (toggleButton) {
-      toggleButton.setAttribute(
-        'aria-expanded',
-        'true'
-      );
-    }
-    document.body.classList.add(
-      'alphex-chatbot-open'
-    );
-    /*
-     Give the browser time to render the opened
-     chat window before calculating its scroll height.
-    */
+
+    state.isOpen = true;
+
+    chatbot.setAttribute('data-chatbot-state', 'open');
+    chatWindow.setAttribute('aria-hidden', 'false');
+    toggleButton?.setAttribute('aria-expanded', 'true');
+
+    document.body.classList.add('alphex-chatbot-open');
+
     setTimeout(() => {
-      scrollMessagesToBottom(true);
+      scrollMessagesToBottom();
+
       if (chatInput) {
         chatInput.focus();
       }
     }, 120);
   }
+
   function closeChat() {
     if (!chatWindow) {
       return;
     }
-    state.isOpen =
-      false;
-    chatbot.setAttribute(
-      'data-chatbot-state',
-      'closed'
-    );
-    chatWindow.setAttribute(
-      'aria-hidden',
-      'true'
-    );
-    if (toggleButton) {
-      toggleButton.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-    }
-    document.body.classList.remove(
-      'alphex-chatbot-open'
-    );
+
+    state.isOpen = false;
+
+    chatbot.setAttribute('data-chatbot-state', 'closed');
+    chatWindow.setAttribute('aria-hidden', 'true');
+    toggleButton?.setAttribute('aria-expanded', 'false');
+
+    document.body.classList.remove('alphex-chatbot-open');
   }
-  /* =========================================================
-     INPUT
-     ========================================================= */
+
   function enforceInputLimit() {
     if (!chatInput) {
       return;
     }
-    if (
-      chatInput.value.length >
-      CONFIG.MAX_INPUT_LENGTH
-    ) {
-      chatInput.value =
-        chatInput.value.substring(
-          0,
-          CONFIG.MAX_INPUT_LENGTH
-        );
+
+    if (chatInput.value.length > CONFIG.MAX_INPUT_LENGTH) {
+      chatInput.value = chatInput.value.slice(
+        0,
+        CONFIG.MAX_INPUT_LENGTH
+      );
     }
   }
+
   function autoResizeInput() {
     if (!chatInput) {
       return;
     }
+
+    chatInput.style.height = 'auto';
+
     chatInput.style.height =
-      'auto';
-    const maxHeight =
-      180;
-    chatInput.style.height =
-      Math.min(
-        chatInput.scrollHeight,
-        maxHeight
-      ) + 'px';
+      Math.min(chatInput.scrollHeight, 180) + 'px';
   }
+
   function updateSendButton() {
-    if (
-      !chatSend ||
-      !chatInput
-    ) {
+    if (!chatSend || !chatInput) {
       return;
     }
-    const hasText =
-      chatInput.value.trim().length > 0;
+
     chatSend.disabled =
-      !hasText ||
+      !chatInput.value.trim() ||
       state.isSending;
   }
-  /* =========================================================
-     MESSAGE SENDING
-     ========================================================= */
+
   async function handleSendMessage() {
-    if (
-      !chatInput ||
-      state.isSending
-    ) {
+    if (!chatInput || state.isSending) {
       return;
     }
-    const message =
-      chatInput.value.trim();
+
+    const message = chatInput.value.trim();
+
     if (!message) {
       return;
     }
-    if (
-      message.length >
-      CONFIG.MAX_INPUT_LENGTH
-    ) {
+
+    if (message.length > CONFIG.MAX_INPUT_LENGTH) {
       return;
     }
-    state.isSending =
-      true;
+
+    state.isSending = true;
     updateSendButton();
-    /*
-     Clear input immediately.
-    */
-    chatInput.value =
-      '';
+
+    chatInput.value = '';
     autoResizeInput();
     updateSendButton();
-    /*
-     Hide welcome UI.
-    */
+
     hideWelcomeState();
-    /*
-     Render user's message immediately.
-    */
-    addMessage(
-      'user',
-      message
-    );
-    /*
-     Show thinking indicator.
-    */
+
+    addMessage('user', message);
     showThinking();
+
     try {
-      const response =
-        await sendToBackend(
-          message
-        );
+      const response = await sendToBackend(message);
+
       hideThinking();
-      if (
-        response &&
-        typeof response.message ===
-          'string'
-      ) {
-        addMessage(
-          'assistant',
-          response.message
-        );
-        if (
-          response.conversation_id
-        ) {
-          state.conversationId =
-            response.conversation_id;
-          state.hasExistingConversation =
-            true;
-          saveStoredConversation();
-          renderReturningUserState();
-        }
-      } else {
-        addMessage(
-          'assistant',
-          getFallbackErrorMessage()
+
+      /*
+       The API returns both `message` and `answer`.
+       Accept either to remain compatible with older API versions.
+      */
+      const answer =
+        typeof response?.message === 'string'
+          ? response.message
+          : typeof response?.answer === 'string'
+            ? response.answer
+            : '';
+
+      if (!answer.trim()) {
+        throw new Error(
+          'The server returned an empty answer.'
         );
       }
+
+      addMessage('assistant', answer);
+
+      if (response.conversation_id) {
+        state.conversationId = response.conversation_id;
+        state.hasExistingConversation = true;
+        saveStoredConversation();
+        renderReturningUserState();
+      }
     } catch (error) {
-      console.error(
-        '[Alphex Chatbot] Message error:',
-        error
-      );
+      console.error('[Alphex Chatbot] Message error:', error);
+
       hideThinking();
+
       addMessage(
         'assistant',
-        getFallbackErrorMessage(error)
+        getErrorMessage(error)
       );
     } finally {
-      state.isSending =
-        false;
+      state.isSending = false;
       updateSendButton();
+
       if (chatInput) {
         chatInput.focus();
       }
     }
   }
-  /* =========================================================
-     SECURE BACKEND REQUEST
-     ========================================================= */
-  async function sendToBackend(
-    message
-  ) {
-    /*
-     Get the current Supabase session.
-     The access token is used only for authentication.
-     The backend is responsible for identifying
-     the user and authorizing access.
-    */
-    const session =
-      await getCurrentSession();
-    /*
-     Do NOT send user IDs or emails as trusted
-     authorization information.
-     The backend gets the authenticated user from:
-     Authorization: Bearer <access_token>
-    */
+
+  async function sendToBackend(message) {
+    const session = await getCurrentSession();
+
     const payload = {
       message,
-      conversation_id:
-        state.conversationId || null,
+      conversation_id: state.conversationId || null,
       page: {
-        url:
-          window.location.href,
-        path:
-          window.location.pathname,
-        title:
-          document.title
+        url: window.location.href,
+        path: window.location.pathname,
+        title: document.title
       }
     };
+
     const headers = {
-      'Content-Type':
-        'application/json'
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
     };
-    if (
-      session &&
-      session.access_token
-    ) {
-      headers.Authorization =
-        `Bearer ${session.access_token}`;
+
+    if (session?.access_token) {
+      headers.Authorization = `Bearer ${session.access_token}`;
     }
-    /*
-     AbortController prevents a request from hanging
-     forever in the browser.
-    */
-    const controller =
-      new AbortController();
-    const timeoutId =
-      setTimeout(
-        () => {
-          controller.abort();
-        },
-        CONFIG.REQUEST_TIMEOUT
-      );
+
+    const controller = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, CONFIG.REQUEST_TIMEOUT);
+
     try {
-      const response =
-        await fetch(
-          CONFIG.API_ENDPOINT,
-          {
-            method: 'POST',
-            headers,
-            body:
-              JSON.stringify(payload),
-            signal:
-              controller.signal
-          }
-        );
+      const response = await fetch(CONFIG.API_ENDPOINT, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+
+      const data = await response.json().catch(() => ({}));
+
       if (!response.ok) {
-        let errorMessage =
-          'Chat request failed.';
-        try {
-          const errorData =
-            await response.json();
-          if (
-            errorData &&
-            errorData.error
-          ) {
-            errorMessage =
-              errorData.error;
-          }
-        } catch {
-          /*
-           Ignore invalid error response.
-          */
-        }
         throw new Error(
-          errorMessage
+          data.error || `Request failed (${response.status}).`
         );
       }
-      return await response.json();
+
+      return data;
     } catch (error) {
-      if (
-        error &&
-        error.name ===
-          'AbortError'
-      ) {
+      if (error?.name === 'AbortError') {
         throw new Error(
-          'The request took too long.'
+          'The request timed out. Please try again.'
         );
       }
+
       throw error;
     } finally {
-      clearTimeout(
-        timeoutId
-      );
+      clearTimeout(timeoutId);
     }
   }
-  /* =========================================================
-     MESSAGE RENDERING
-     ---------------------------------------------------------
-     AI responses are treated as text first.
-     Accidental HTML returned by the backend is stripped
-     before our own safe Markdown formatting is applied.
-     This prevents visible output such as:
-     <p>Hello</p>
-     from appearing to the visitor.
-     ========================================================= */
-  function addMessage(
-    role,
-    content
-  ) {
+
+  function addMessage(role, content) {
     if (!messageList) {
       return null;
     }
-    const messageElement =
-      document.createElement(
-        'div'
-      );
+
+    const messageElement = document.createElement('div');
+
     messageElement.className =
       `chat-message chat-message-${role}`;
-    const bubble =
-      document.createElement(
-        'div'
-      );
-    bubble.className =
-      'chat-message-bubble';
-    if (
-      role === 'assistant'
-    ) {
-      bubble.innerHTML =
-        renderMarkdown(
-          content
-        );
+
+    /*
+     * The CSS styles `.chat-message-content`.
+     * Use that same class here.
+     */
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-message-content';
+
+    if (role === 'assistant') {
+      bubble.innerHTML = renderMarkdown(content);
     } else {
-      bubble.textContent =
-        content;
+      bubble.textContent = String(content);
     }
-    messageElement.appendChild(
-      bubble
-    );
-    messageList.appendChild(
-      messageElement
-    );
+
+    messageElement.appendChild(bubble);
+    messageList.appendChild(messageElement);
+
     state.messages.push({
       role,
-      content
+      content: String(content)
     });
-    /*
-     IMPORTANT:
-     Scroll the actual #chat-messages container,
-     not #chat-message-list.
-    */
-    scrollMessagesToBottom(true);
+
+    scrollMessagesToBottom();
+
     return messageElement;
   }
-  /* =========================================================
-     MARKDOWN RENDERER
-     ---------------------------------------------------------
-     Safe lightweight Markdown renderer.
-     It also handles accidental HTML from the backend
-     so raw tags are never displayed to the visitor.
-     ========================================================= */
-  function renderMarkdown(text) {
-    if (!text) {
+
+  function renderMarkdown(value) {
+    if (!value) {
       return '';
     }
+
+    let text = String(value);
+
     /*
-     Always convert the incoming response to a string.
-    */
-    let safe =
-      String(text);
+     * Convert common accidental HTML into readable text.
+     * This is not a general-purpose HTML parser.
+     */
+    text = text
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/p>\s*<p[^>]*>/gi, '\n\n')
+      .replace(/<\/(div|p|li|h[1-6])>/gi, '\n')
+      .replace(/<[^>]*>/g, '');
+
+    let safe = escapeHTML(text);
+
     /*
-     ---------------------------------------------------------
-     REMOVE ACCIDENTAL HTML
-     ---------------------------------------------------------
-     If the backend returns:
-       <p>Hello</p>
-       <p>How can I help?</p>
-     convert it to:
-       Hello
-       How can I help?
-     This prevents raw HTML from appearing.
-    */
-    safe =
-      safe
-        .replace(
-          /<br\s*\/?>/gi,
-          '\n'
-        )
-        .replace(
-          /<\/p>\s*<p>/gi,
-          '\n\n'
-        )
-        .replace(
-          /<\/?(p|div|section|article|span|strong|em|b|i|ul|ol|li|h1|h2|h3|h4|h5|h6)[^>]*>/gi,
-          ''
-        )
-        .replace(
-          /<[^>]+>/g,
-          ''
-        );
+     * Code blocks first.
+     */
+    safe = safe.replace(
+      /```([\s\S]*?)```/g,
+      '<pre><code>$1</code></pre>'
+    );
+
+    safe = safe.replace(
+      /`([^`]+)`/g,
+      '<code>$1</code>'
+    );
+
+    safe = safe.replace(
+      /\*\*(.*?)\*\*/g,
+      '<strong>$1</strong>'
+    );
+
+    safe = safe.replace(
+      /(^|[^\*])\*([^\*]+)\*/g,
+      '$1<em>$2</em>'
+    );
+
     /*
-     Escape HTML before creating our own formatting.
-     This is important for security.
-    */
-    safe =
-      escapeHTML(
-        safe
-      );
+     * Linkify only http/https links.
+     */
+    safe = safe.replace(
+      /(https?:\/\/[^\s<]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+
     /*
-     Code blocks
-    */
-    safe =
-      safe.replace(
-        /```([\s\S]*?)```/g,
-        '<pre><code>$1</code></pre>'
-      );
-    /*
-     Inline code
-    */
-    safe =
-      safe.replace(
-        /`([^`]+)`/g,
-        '<code>$1</code>'
-      );
-    /*
-     Bold
-    */
-    safe =
-      safe.replace(
-        /\*\*(.*?)\*\*/g,
-        '<strong>$1</strong>'
-      );
-    /*
-     Italic
-    */
-    safe =
-      safe.replace(
-        /(^|[^\*])\*([^\*]+)\*/g,
-        '$1<em>$2</em>'
-      );
-    /*
-     Links
-     Only allow http/https.
-    */
-    safe =
-      safe.replace(
-        /(https?:\/\/[^\s<]+)/g,
-        '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
-      );
-    /*
-     Bullet lists
-    */
-    safe =
-      safe.replace(
-        /^\s*[-•]\s+(.+)$/gm,
-        '<li>$1</li>'
-      );
-    /*
-     Convert consecutive list items.
-    */
-    safe =
-      safe.replace(
-        /(<li>.*?<\/li>)/gs,
-        '<ul>$1</ul>'
-      );
-    /*
-     Headings
-    */
-    safe =
-      safe.replace(
-        /^###\s+(.+)$/gm,
-        '<h4>$1</h4>'
-      );
-    safe =
-      safe.replace(
-        /^##\s+(.+)$/gm,
-        '<h3>$1</h3>'
-      );
-    safe =
-      safe.replace(
-        /^#\s+(.+)$/gm,
-        '<h3>$1</h3>'
-      );
-    /*
-     Paragraphs
-    */
-    safe =
-      safe.replace(
-        /\n\n/g,
-        '</p><p>'
-      );
-    /*
-     Single line breaks
-    */
-    safe =
-      safe.replace(
-        /\n/g,
-        '<br>'
-      );
+     * Convert headings and bullet lines.
+     */
+    safe = safe.replace(
+      /^###\s+(.+)$/gm,
+      '<h4>$1</h4>'
+    );
+
+    safe = safe.replace(
+      /^##\s+(.+)$/gm,
+      '<h3>$1</h3>'
+    );
+
+    safe = safe.replace(
+      /^#\s+(.+)$/gm,
+      '<h3>$1</h3>'
+    );
+
+    safe = safe.replace(
+      /^\s*[-•]\s+(.+)$/gm,
+      '<li>$1</li>'
+    );
+
+    safe = safe.replace(
+      /(<li>[\s\S]*?<\/li>)/g,
+      '<ul>$1</ul>'
+    );
+
+    safe = safe.replace(/\n\n/g, '</p><p>');
+    safe = safe.replace(/\n/g, '<br>');
+
     return `<p>${safe}</p>`;
   }
-  function escapeHTML(
-    value
-  ) {
-    const div =
-      document.createElement(
-        'div'
-      );
-    div.textContent =
-      String(value);
-    return div.innerHTML;
+
+  function escapeHTML(value) {
+    const element = document.createElement('div');
+    element.textContent = String(value);
+    return element.innerHTML;
   }
-  /* =========================================================
-     THINKING INDICATOR
-     ========================================================= */
+
   function showThinking() {
-    if (!thinkingIndicator) {
-      return;
+    if (thinkingIndicator) {
+      thinkingIndicator.hidden = false;
+      scrollMessagesToBottom();
     }
-    thinkingIndicator.hidden =
-      false;
-    /*
-     Make sure the thinking indicator is visible.
-    */
-    scrollMessagesToBottom(true);
   }
+
   function hideThinking() {
-    if (!thinkingIndicator) {
-      return;
+    if (thinkingIndicator) {
+      thinkingIndicator.hidden = true;
     }
-    thinkingIndicator.hidden =
-      true;
   }
-  /* =========================================================
-     CHAT SCROLLING
-     ---------------------------------------------------------
-     IMPORTANT:
-     #chat-messages is the actual scrolling container.
-     The previous implementation attempted to set
-     scrollTop on #chat-message-list, which does not
-     control the visible chatbot viewport.
-     This implementation waits for the browser to finish
-     rendering before calculating the final scroll position.
-     ========================================================= */
-  function scrollMessagesToBottom(
-    force = true
-  ) {
+
+  function scrollMessagesToBottom() {
     if (!chatMessages) {
       return;
     }
+
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const targetTop =
-          chatMessages.scrollHeight -
-          chatMessages.clientHeight;
-        if (force) {
-          chatMessages.scrollTo({
-            top:
-              Math.max(
-                0,
-                targetTop
-              ),
-            behavior:
-              'smooth'
-          });
-          return;
-        }
-        /*
-         Only follow the conversation when the visitor
-         is already close to the bottom.
-         This allows the user to manually read older
-         messages without the chatbot fighting their scroll.
-        */
-        const distanceFromBottom =
-          chatMessages.scrollHeight -
-          chatMessages.scrollTop -
-          chatMessages.clientHeight;
-        if (
-          distanceFromBottom < 180
-        ) {
-          chatMessages.scrollTo({
-            top:
-              Math.max(
-                0,
-                targetTop
-              ),
-            behavior:
-              'smooth'
-          });
-        }
+      chatMessages.scrollTo({
+        top: chatMessages.scrollHeight,
+        behavior: 'smooth'
       });
     });
   }
-  /* =========================================================
-     WELCOME STATE
-     ========================================================= */
+
   function hideWelcomeState() {
-    if (!welcomeState) {
-      return;
+    if (welcomeState) {
+      welcomeState.hidden = true;
     }
-    welcomeState.hidden =
-      true;
   }
+
   function showWelcomeState() {
-    if (!welcomeState) {
-      return;
+    if (welcomeState) {
+      welcomeState.hidden = false;
     }
-    welcomeState.hidden =
-      false;
   }
-  /* =========================================================
-     RETURNING USER
-     ========================================================= */
-  function renderReturningUserState() {
-    if (
-      !returningUser ||
-      !userNameElement
-    ) {
-      return;
-    }
-    if (!state.currentUser) {
-      returningUser.hidden =
-        true;
-      return;
-    }
-    const name =
-      getUserName();
-    userNameElement.textContent =
-      name;
-    returningUser.hidden =
-      !state.hasExistingConversation;
-  }
-  function getUserName() {
-    if (
-      state.currentProfile &&
-      state.currentProfile.full_name
-    ) {
-      return state.currentProfile.full_name;
-    }
-    if (
-      state.currentUser &&
-      state.currentUser.user_metadata
-    ) {
-      const metadata =
-        state.currentUser.user_metadata;
-      if (
-        metadata.full_name
-      ) {
-        return metadata.full_name;
-      }
-      if (
-        metadata.name
-      ) {
-        return metadata.name;
-      }
-    }
-    if (
-      state.currentUser &&
-      state.currentUser.email
-    ) {
-      const email =
-        state.currentUser.email;
-      return email.split('@')[0];
-    }
-    return CONFIG.FALLBACK_USER_NAME;
-  }
-  /* =========================================================
-     AUTHENTICATION
-     ========================================================= */
+
   async function loadAuthenticatedUser() {
     if (!supabaseClient) {
       return;
     }
+
     try {
-      const session =
-        await getCurrentSession();
-      state.currentUser =
-        session?.user || null;
+      const session = await getCurrentSession();
+
+      state.currentUser = session?.user || null;
+
       if (state.currentUser) {
         await loadUserProfile();
       }
     } catch (error) {
       console.warn(
-        '[Alphex Chatbot] Could not load user:',
+        '[Alphex Chatbot] Could not load authenticated user:',
         error
       );
     }
   }
+
   async function getCurrentSession() {
-    if (
-      !supabaseClient ||
-      !supabaseClient.auth
-    ) {
+    if (!supabaseClient?.auth) {
       return null;
     }
-    const {
-      data,
-      error
-    } =
+
+    const { data, error } =
       await supabaseClient.auth.getSession();
+
     if (error) {
       throw error;
     }
+
     return data?.session || null;
   }
+
   async function loadUserProfile() {
-    if (
-      !supabaseClient ||
-      !state.currentUser
-    ) {
+    if (!supabaseClient || !state.currentUser) {
       return;
     }
+
     try {
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from('profiles')
-          .select(
-            'user_id,full_name,company,role,avatar_url'
-          )
-          .eq(
-            'user_id',
-            state.currentUser.id
-          )
-          .maybeSingle();
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('user_id,full_name,company,role,avatar_url')
+        .eq('user_id', state.currentUser.id)
+        .maybeSingle();
+
       if (error) {
         throw error;
       }
-      state.currentProfile =
-        data || null;
+
+      state.currentProfile = data || null;
     } catch (error) {
       console.warn(
         '[Alphex Chatbot] Profile could not be loaded:',
         error
       );
-      state.currentProfile =
-        null;
+
+      state.currentProfile = null;
     }
   }
-  /* =========================================================
-     CONVERSATION STORAGE
-     ========================================================= */
+
   function loadStoredConversation() {
     try {
-      const storedId =
-        localStorage.getItem(
-          CONFIG.STORAGE_KEYS.conversationId
-        );
-      if (storedId) {
-        state.conversationId =
-          storedId;
-        state.hasExistingConversation =
-          true;
+      const stored = localStorage.getItem(CONFIG.STORAGE_KEY);
+
+      if (stored) {
+        state.conversationId = stored;
+        state.hasExistingConversation = true;
       }
     } catch (error) {
       console.warn(
-        '[Alphex Chatbot] Local storage unavailable:',
+        '[Alphex Chatbot] Local storage is unavailable:',
         error
       );
     }
   }
+
   function saveStoredConversation() {
     if (!state.conversationId) {
       return;
     }
+
     try {
       localStorage.setItem(
-        CONFIG.STORAGE_KEYS.conversationId,
+        CONFIG.STORAGE_KEY,
         state.conversationId
       );
     } catch (error) {
       console.warn(
-        '[Alphex Chatbot] Could not save conversation:',
+        '[Alphex Chatbot] Could not save conversation ID:',
         error
       );
     }
   }
-  /* =========================================================
-     CONTINUE PREVIOUS CONVERSATION
-     ========================================================= */
+
   async function continuePreviousConversation() {
     if (!state.conversationId) {
       return;
     }
+
+    const session = await getCurrentSession();
+
+    if (!session?.access_token) {
+      addMessage(
+        'assistant',
+        'Please sign in to retrieve a saved conversation.'
+      );
+      return;
+    }
+
     hideWelcomeState();
+
+    const headers = {
+      Accept: 'application/json',
+      Authorization: `Bearer ${session.access_token}`
+    };
+
     try {
-      const session =
-        await getCurrentSession();
-      const headers = {
-        'Accept':
-          'application/json'
-      };
-      if (
-        session &&
-        session.access_token
-      ) {
-        headers.Authorization =
-          `Bearer ${session.access_token}`;
-      }
-      const response =
-        await fetch(
-          `${CONFIG.API_ENDPOINT}?conversation_id=${encodeURIComponent(
-            state.conversationId
-          )}`,
-          {
-            method: 'GET',
-            headers
-          }
-        );
+      const response = await fetch(
+        `${CONFIG.API_ENDPOINT}?conversation_id=${encodeURIComponent(
+          state.conversationId
+        )}`,
+        {
+          method: 'GET',
+          headers
+        }
+      );
+
+      const data = await response.json().catch(() => ({}));
+
       if (!response.ok) {
         throw new Error(
-          'Unable to load previous conversation.'
+          data.error || 'Unable to load conversation history.'
         );
       }
-      const data =
-        await response.json();
-      if (
-        Array.isArray(
-          data.messages
-        )
-      ) {
-        clearRenderedMessages();
-        state.messages =
-          [];
-        data.messages.forEach(
-          (message) => {
-            if (
-              message.role === 'user' ||
-              message.role === 'assistant'
-            ) {
-              addMessage(
-                message.role,
-                message.content
-              );
-            }
-          }
-        );
-        /*
-         After all messages have been inserted,
-         move to the latest message.
-        */
-        scrollMessagesToBottom(true);
+
+      if (!Array.isArray(data.messages)) {
+        return;
       }
+
+      clearRenderedMessages();
+      state.messages = [];
+
+      data.messages.forEach(item => {
+        if (
+          ['user', 'assistant'].includes(item.role) &&
+          typeof item.content === 'string'
+        ) {
+          addMessage(item.role, item.content);
+        }
+      });
+
+      scrollMessagesToBottom();
     } catch (error) {
-      console.warn(
-        '[Alphex Chatbot] Previous conversation could not be loaded:',
+      console.error(
+        '[Alphex Chatbot] Conversation retrieval failed:',
         error
       );
-      /*
-       Do not show a scary error to the visitor.
-       The chatbot can simply start fresh.
-      */
+
+      addMessage(
+        'assistant',
+        'I could not load that saved conversation. You can start a new conversation instead.'
+      );
     }
   }
-  /* =========================================================
-     NEW CONVERSATION
-     ========================================================= */
+
   function startNewConversation() {
-    state.conversationId =
-      null;
-    state.messages =
-      [];
-    state.hasExistingConversation =
-      false;
+    state.conversationId = null;
+    state.messages = [];
+    state.hasExistingConversation = false;
+
     try {
-      localStorage.removeItem(
-        CONFIG.STORAGE_KEYS.conversationId
-      );
+      localStorage.removeItem(CONFIG.STORAGE_KEY);
     } catch {
-      /* Ignore storage errors */
+      // Storage is optional.
     }
+
     clearRenderedMessages();
     hideThinking();
     showWelcomeState();
     renderReturningUserState();
-    /*
-     Reset the scroll position to the top when
-     starting a completely new conversation.
-    */
+
     if (chatMessages) {
       chatMessages.scrollTo({
         top: 0,
         behavior: 'auto'
       });
     }
+
     if (chatInput) {
-      chatInput.value =
-        '';
+      chatInput.value = '';
       autoResizeInput();
       updateSendButton();
       chatInput.focus();
     }
   }
+
   function clearRenderedMessages() {
-    if (!messageList) {
+    if (messageList) {
+      messageList.replaceChildren();
+    }
+  }
+
+  function getUserName() {
+    if (state.currentProfile?.full_name) {
+      return state.currentProfile.full_name;
+    }
+
+    const metadata = state.currentUser?.user_metadata || {};
+
+    if (metadata.full_name) {
+      return metadata.full_name;
+    }
+
+    if (metadata.name) {
+      return metadata.name;
+    }
+
+    if (state.currentUser?.email) {
+      return state.currentUser.email.split('@')[0];
+    }
+
+    return CONFIG.FALLBACK_USER_NAME;
+  }
+
+  function renderReturningUserState() {
+    if (!returningUser || !userNameElement) {
       return;
     }
-    messageList.innerHTML =
-      '';
-  }
-  /* =========================================================
-     ERROR HANDLING
-     ---------------------------------------------------------
-     Plain text only.
-     IMPORTANT:
-     Do not return <p>...</p> here because the message
-     renderer already creates the HTML structure.
-     ========================================================= */
-  function getFallbackErrorMessage(
-    error = null
-  ) {
-    /*
-     Temporarily expose the actual backend/network error
-     so we can diagnose the current chatbot failure.
-     Once the backend is working correctly, this can be
-     changed back to the generic visitor-facing message.
-    */
-    if (
-      error &&
-      error.message
-    ) {
-      return `Sorry, something went wrong.
-${error.message}`;
+
+    if (!state.currentUser) {
+      returningUser.hidden = true;
+      return;
     }
-    return `I'm sorry, I couldn't complete that request right now.
-Please try again in a moment.`;
+
+    userNameElement.textContent = getUserName();
+
+    returningUser.hidden = !state.hasExistingConversation;
   }
-  /* =========================================================
-     PUBLIC API
-     ========================================================= */
+
+  function getErrorMessage(error) {
+    /*
+     Keep technical provider and database details out
+     of the visitor-facing chat bubble.
+     Full diagnostics remain in the browser/server logs.
+     */
+    if (error?.message === 'Failed to fetch') {
+      return 'I could not reach the chatbot service. Please try again shortly.';
+    }
+
+    if (error?.message?.includes('timed out')) {
+      return 'That request took too long. Please try again.';
+    }
+
+    return 'I’m sorry, I couldn’t complete that request right now. Please try again in a moment.';
+  }
+
   window.AlphexChatbot = {
-    open() {
-      openChat();
-    },
-    close() {
-      closeChat();
-    },
-    newConversation() {
-      startNewConversation();
-    },
-    send(message) {
+    open: openChat,
+    close: closeChat,
+    newConversation: startNewConversation,
+
+    async send(message) {
       if (!chatInput) {
         return;
       }
-      chatInput.value =
-        String(
-          message || ''
-        );
+
+      chatInput.value = String(message || '');
+
       enforceInputLimit();
       autoResizeInput();
       updateSendButton();
+
       return handleSendMessage();
     },
+
     getUser() {
       return state.currentUser;
     },
+
     getConversationId() {
       return state.conversationId;
     }
   };
-  /* =========================================================
-     START
-     ========================================================= */
+
   initialize();
 })();
