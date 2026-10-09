@@ -63,6 +63,21 @@
       document.head.appendChild(script);
     });
   }
+   // Alphex AI — Global Favicon
+(() => {
+  const faviconPath = '/assets/favicon.png';
+
+  let favicon = document.querySelector('link[rel="icon"]');
+
+  if (!favicon) {
+    favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    document.head.appendChild(favicon);
+  }
+
+  favicon.type = 'image/png';
+  favicon.href = faviconPath;
+})();
   /* =========================================================
      SHARED COMPONENTS
      ========================================================= */
