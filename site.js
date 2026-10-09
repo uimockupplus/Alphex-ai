@@ -739,24 +739,71 @@
     start();
   }
 })();
-/* Alphex AI Chatbot Loader */
-(async function () {
-  try {
-    const root = document.getElementById("alphex-chatbot-root");
-    if (!root) return;
+/* =========================================================
+   ALPHEX AI — GLOBAL CHATBOT LOADER
+   Automatically adds Alphex Minibot to every page
+   that loads site.js.
+   ========================================================= */
 
-    const response = await fetch("/chatbot/chatbot.html");
-    if (!response.ok) {
-      throw new Error("Failed to load chatbot HTML");
+(function () {
+  async function loadAlphexChatbot() {
+    try {
+      // Reuse the root if the page already contains one.
+      let root = document.getElementById("alphex-chatbot-root");
+
+      // Create it automatically when missing.
+      if (!root) {
+        root = document.createElement("div");
+        root.id = "alphex-chatbot-root";
+        document.body.appendChild(root);
+      }
+
+      // Prevent duplicate loading.
+      if (root.dataset.loaded === "true") return;
+      root.dataset.loaded = "true";
+
+      const response = await fetch("/chatbot/chatbot.html");
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to load chatbot HTML: ${response.status}`
+        );
+      }
+
+      root.innerHTML = await response.text();
+
+      // Load the chatbot controller only once.
+      if (!document.querySelector(
+        'script[data-alphex-chatbot-script="true"]'
+      )) {
+        const script = document.createElement("script");
+
+        script.src = "/chatbot/chatbot.js";
+        script.dataset.alphexChatbotScript = "true";
+
+        script.onload = () => {
+          console.log("[Alphex Chatbot] Loaded successfully.");
+        };
+
+        script.onerror = () => {
+          root.dataset.loaded = "false";
+          console.error("[Alphex Chatbot] JavaScript failed to load.");
+        };
+
+        document.body.appendChild(script);
+      }
+    } catch (error) {
+      console.error("[Alphex Chatbot] Failed to load:", error);
     }
+  }
 
-    root.innerHTML = await response.text();
-
-    const script = document.createElement("script");
-    script.src = "/chatbot/chatbot.js";
-    script.defer = true;
-    document.body.appendChild(script);
-  } catch (error) {
-    console.error("[Alphex Chatbot] Failed to load:", error);
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      loadAlphexChatbot,
+      { once: true }
+    );
+  } else {
+    loadAlphexChatbot();
   }
 })();
