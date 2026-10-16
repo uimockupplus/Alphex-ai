@@ -29,6 +29,128 @@
 @media(max-width:850px){.shell{width:min(var(--wrap),calc(100% - 40px))}.nav-links{gap:15px}.nav-links a{font-size:11px}.nav-actions>.button.secondary{display:none}.hero{padding-top:92px}.section{padding:82px 0}.section-head{gap:32px}.capability{grid-template-columns:1fr 1fr}.capability-copy{padding:24px}.capability h3{font-size:19px}.console-content{grid-template-columns:165px 1fr}.engineering-card{padding:20px 16px}.engineering-card:first-child{padding-left:0}.footer-top{gap:36px}}
 @media(max-width:650px){.shell{width:calc(100% - 36px)}.topbar{height:64px}.nav-links,.nav-actions>.button{display:none}.nav-actions{margin-left:auto}.mobile-menu{display:block}.mobile-panel{top:64px}.mobile-panel .mobile-auth-link{display:flex!important}.mobile-panel .logged-in{display:none!important}body.authenticated .mobile-panel .logged-out{display:none!important}body.authenticated .mobile-panel .logged-in{display:flex!important}.hero{padding:78px 0 54px}.hero h1{font-size:clamp(43px,11.5vw,62px)}.hero-copy{font-size:14px}.service-line{gap:9px;font-size:8px}.hero-console{height:320px;margin-top:47px}.console-content{grid-template-columns:1fr}.console-sidebar{display:none}.console-main{padding:19px}.chat-msg{max-width:92%;font-size:10px}.section{padding:68px 0}.section-head{display:block}.section-intro{margin-top:21px}.section h2{font-size:clamp(36px,9vw,50px)}.engineering-grid{grid-template-columns:1fr;margin-top:34px}.engineering-card,.engineering-card:first-child{padding:21px 0;border-right:0;border-bottom:1px solid var(--line)}.engineering-card:last-child{border-bottom:0}.engineering-card h3{margin:22px 0 9px}.engineering-card p{min-height:0}.metric{margin-top:16px;padding-top:13px}.cap-list{margin-top:33px}.capability{grid-template-columns:1fr}.capability-copy{min-height:240px;padding:22px}.cap-visual{min-height:210px;border-left:0;border-top:1px solid #26242d}.product-grid,.comparison-grid{grid-template-columns:1fr}.product-card{min-height:280px;padding:21px}.outcomes-grid{grid-template-columns:1fr 1fr}.outcome:nth-child(3n+1){padding-left:15px}.outcome:nth-child(odd){padding-left:0;border-right:1px solid var(--line)}.outcome:nth-child(even){border-right:0}.faq-grid{grid-template-columns:1fr;gap:26px;margin-top:30px}.cta{padding:75px 0}.footer-top{grid-template-columns:1fr;gap:34px}.footer-columns{grid-template-columns:repeat(2,1fr);gap:24px}.footer-bottom{flex-direction:column;gap:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Additional responsive refinements */
+img,svg,video,canvas,iframe{max-width:100%}
+button,a{-webkit-tap-highlight-color:transparent}
+a,button{touch-action:manipulation}
+:focus-visible{outline:2px solid var(--accent2);outline-offset:4px}
+.hero,.section,.cta,.footer{min-width:0}
+.hero h1,.section h2,.cta h2{overflow-wrap:break-word}
+.hero-actions,.product-footer{flex-wrap:wrap}
+.console-bar{gap:12px}
+.console-bar>span:first-child{min-width:0;overflow-wrap:anywhere}
+.console-status{white-space:nowrap}
+.chat-msg,.source-chips span,.tag,.infra-node,.model-pills span{overflow-wrap:anywhere}
+.product-footer .button{white-space:normal;text-align:center}
+.footer-group a{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:850px){
+  .nav{gap:12px}
+  .wordmark{font-size:16px}
+  .hero-console{max-width:100%}
+  .section-head{grid-template-columns:1fr .85fr;gap:28px}
+  .faq-grid{gap:42px}
+  .product-footer{align-items:flex-start}
+}
+@media(max-width:650px){
+  html{scroll-padding-top:76px}
+  .shell{width:calc(100% - 32px)}
+  .topbar{height:64px}
+  .nav{gap:10px}
+  .wordmark{font-size:16px}
+  .mobile-menu{min-width:44px;min-height:44px;display:grid;place-items:center}
+  .mobile-panel{top:64px;max-height:calc(100dvh - 64px);overflow-y:auto;padding:10px 16px 22px}
+  .mobile-panel a{min-height:44px;display:flex;align-items:center}
+  .hero{padding:66px 0 44px}
+  .hero h1{font-size:clamp(39px,10.5vw,58px);letter-spacing:-.065em}
+  .hero-copy{font-size:14px;line-height:1.7}
+  .hero-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:24px}
+  .hero-actions .button{width:100%;white-space:normal;text-align:center;min-height:46px}
+  .service-line{gap:8px 10px;line-height:1.6}
+  .hero-console{height:auto;min-height:300px;margin-top:34px;border-radius:9px}
+  .console-bar{height:auto;min-height:46px;padding:12px;align-items:flex-start;font-size:8px}
+  .console-status{font-size:8px;gap:5px}
+  .console-content{height:auto;min-height:250px;grid-template-columns:minmax(0,1fr)}
+  .console-main{min-width:0;padding:16px 12px;gap:12px}
+  .console-heading{gap:10px;align-items:flex-start}
+  .console-heading strong{font-size:12px}
+  .console-heading span{font-size:8px;text-align:right}
+  .chat-msg{max-width:100%;font-size:10px;padding:10px}
+  .source-chips{gap:6px}
+  .source-chips span{font-size:7px;padding:6px}
+  .section{padding:58px 0}
+  .section-head{display:block}
+  .section h2{font-size:clamp(34px,8.8vw,46px);line-height:1.08}
+  .section-intro{font-size:14px;line-height:1.7;margin-top:17px}
+  .section-rule{margin-top:30px}
+  .engineering-grid{margin-top:28px}
+  .engineering-card,.engineering-card:first-child{padding:20px 0}
+  .engineering-card h3{font-size:20px;margin:18px 0 8px}
+  .engineering-card p{font-size:13px}
+  .metric strong{font-size:23px}
+  .cap-list{gap:12px;margin-top:28px}
+  .capability{grid-template-columns:minmax(0,1fr);min-width:0}
+  .capability-copy{min-height:0;padding:20px 17px;gap:20px}
+  .capability-title{align-items:flex-start;gap:10px}
+  .capability h3{font-size:19px;overflow-wrap:anywhere}
+  .capability p{font-size:13px;margin:15px 0 18px}
+  .tags{gap:6px}
+  .tag{font-size:7px;padding:6px}
+  .cap-visual{min-height:190px;padding:16px}
+  .model-panel,.infra-card{width:100%;max-width:430px;padding:13px}
+  .panel-head,.infra-top{gap:10px;font-size:7px}
+  .model-pills{gap:5px}
+  .model-pills span{font-size:7px;padding:5px}
+  .data-row{gap:10px;font-size:9px}
+  .data-row b{text-align:right;overflow-wrap:anywhere}
+  .orbit{width:145px;height:145px}
+  .infra-nodes{gap:6px}
+  .infra-node{padding:10px 4px;font-size:7px}
+  .infra-node b{font-size:8px}
+  .product-grid,.comparison-grid{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:30px}
+  .product-card{min-height:0;padding:20px 17px;gap:25px}
+  .product-card h3{font-size:24px;margin:22px 0 9px}
+  .product-card p{font-size:13px}
+  .product-footer{display:flex;flex-direction:column;align-items:stretch;gap:13px;margin-top:22px}
+  .product-footer .mono{line-height:1.6;overflow-wrap:anywhere}
+  .product-footer .button{width:100%;min-height:42px;padding:10px 12px}
+  .outcomes-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:28px}
+  .outcome,.outcome:nth-child(3n+1),.outcome:nth-child(odd){padding:16px 12px 18px 0;border-right:1px solid var(--line)}
+  .outcome:nth-child(even){padding:16px 0 18px 12px;border-right:0}
+  .outcome h3{font-size:14px;line-height:1.35;margin:14px 0 6px}
+  .outcome p{font-size:11px;overflow-wrap:anywhere}
+  .comparison-grid{gap:10px}
+  .compare-card{padding:18px}
+  .compare-card h3{margin:18px 0 10px}
+  .faq-grid{grid-template-columns:minmax(0,1fr);gap:18px;margin-top:28px}
+  .faq-list summary{font-size:13px;line-height:1.55;padding-right:22px}
+  .faq-list p{font-size:12px}
+  .cta{padding:62px 0}
+  .cta h2{font-size:clamp(39px,10vw,56px)}
+  .cta p{font-size:13px}
+  .cta .button{max-width:100%;white-space:normal}
+  .cta-note{font-size:7px;line-height:1.8}
+  .footer{padding:34px 0 18px}
+  .footer-top{grid-template-columns:minmax(0,1fr);gap:28px;padding-bottom:28px}
+  .footer-columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+  .footer-group a{width:auto;font-size:11px;line-height:1.5}
+  .footer-bottom{font-size:7px;line-height:1.7;overflow-wrap:anywhere}
+  .profile-menu{right:-4px;width:min(245px,calc(100vw - 32px))}
+}
+@media(max-width:380px){
+  .shell{width:calc(100% - 26px)}
+  .hero h1{font-size:37px}
+  .console-bar{flex-direction:column;gap:6px}
+  .console-status{white-space:normal}
+  .console-heading{flex-direction:column;gap:5px}
+  .console-heading span{text-align:left}
+  .outcome h3{font-size:13px}
+  .footer-columns{column-gap:12px}
+}
+@media(hover:none){
+  .button:hover{transform:none}
+}
+
 </style>
 </head>
 <body>
