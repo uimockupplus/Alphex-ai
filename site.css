@@ -496,6 +496,9 @@ h4{
   box-shadow:
     0 18px 35px rgba(0,0,0,.08);
 }
+.mobile-panel.open {
+  display: block;
+}
 
 .mobile-panel-inner{
   width:min(100% - 36px,620px);
