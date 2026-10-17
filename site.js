@@ -449,51 +449,103 @@
   /* =========================================================
      MOBILE NAVIGATION
      ========================================================= */
+
   let closeMobileMenu = () => {};
+
   function initializeMobileNavigation() {
-    const menuButton = document.querySelector(
-      '.mobile-menu'
+    const menuButton = document.getElementById(
+      'mobileMenuButton'
     );
-    const mobilePanel = document.querySelector(
-      '.mobile-panel'
+
+    const mobilePanel = document.getElementById(
+      'mobileNavigationPanel'
     );
+
     if (!menuButton || !mobilePanel) {
       return;
     }
-    closeMobileMenu = () => {
-      menuButton.classList.remove('open');
-      menuButton.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-      mobilePanel.classList.remove('open');
-      mobilePanel.setAttribute(
-        'aria-hidden',
-        'true'
-      );
-    };
-    menuButton.addEventListener('click', () => {
-      const open =
-        !mobilePanel.classList.contains('open');
+
+    function setMenuState(open) {
       menuButton.classList.toggle('open', open);
+
       menuButton.setAttribute(
         'aria-expanded',
         String(open)
       );
+
+      menuButton.setAttribute(
+        'aria-label',
+        open
+          ? 'Close navigation menu'
+          : 'Open navigation menu'
+      );
+
       mobilePanel.classList.toggle('open', open);
+
       mobilePanel.setAttribute(
         'aria-hidden',
         String(!open)
       );
+
+      if (open) {
+        mobilePanel.removeAttribute('inert');
+      } else {
+        mobilePanel.setAttribute('inert', '');
+      }
+    }
+
+    closeMobileMenu = () => {
+      setMenuState(false);
+    };
+
+    // Open and close the menu.
+    menuButton.addEventListener('click', event => {
+      event.stopPropagation();
+
+      const isOpen =
+        mobilePanel.classList.contains('open');
+
+      setMenuState(!isOpen);
     });
-    mobilePanel
-      .querySelectorAll('a')
-      .forEach(link => {
-        link.addEventListener(
-          'click',
-          closeMobileMenu
-        );
+
+    // Close after selecting a navigation link.
+    mobilePanel.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
       });
+    });
+
+    // Close when clicking outside the menu.
+    document.addEventListener('click', event => {
+      if (
+        mobilePanel.classList.contains('open') &&
+        !mobilePanel.contains(event.target) &&
+        !menuButton.contains(event.target)
+      ) {
+        closeMobileMenu();
+      }
+    });
+
+    // Close using the Escape key.
+    document.addEventListener('keydown', event => {
+      if (
+        event.key === 'Escape' &&
+        mobilePanel.classList.contains('open')
+      ) {
+        closeMobileMenu();
+        menuButton.focus();
+      }
+    });
+
+    // Reset the menu when switching to desktop layout.
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 800) {
+        closeMobileMenu();
+      }
+    });
+
+    // Ensure the menu starts in a consistent closed state.
+    closeMobileMenu();
   }
   /* =========================================================
      ANCHOR NAVIGATION
