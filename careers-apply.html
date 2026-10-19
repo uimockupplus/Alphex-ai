@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply for a Freelance Role | Alphex AI</title>
+  <meta
+    name="description"
+    content="Apply for freelance opportunities at Alphex AI. Submit your details and resume for AI Automation Specialist or Agentic AI Developer roles."
+  >
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    /* Careers Application — uses the shared Alphex AI design system */
+    .application-hero {
+      padding: 76px 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .application-hero h1 {
+      max-width: 760px;
+      margin: 22px 0 18px;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.065em;
+      font-weight: 500;
+    }
+    .application-hero p {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .application-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: 72px;
+      padding: 64px 0 100px;
+      align-items: start;
+    }
+    .application-aside {
+      position: sticky;
+      top: 100px;
+    }
+    .application-aside h2 {
+      margin: 18px 0;
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+      font-weight: 500;
+    }
+    .application-aside > p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.94rem;
+    }
+    .role-summary {
+      margin-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .role-summary-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .role-summary-item h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .role-summary-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    .freelance-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .freelance-label::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .application-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: clamp(24px, 4vw, 40px);
+      background: var(--white);
+    }
+    .form-heading {
+      margin-bottom: 30px;
+    }
+    .form-heading h2 {
+      margin: 0 0 10px;
+      font-size: 1.65rem;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      font-weight: 500;
+    }
+    .form-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px 18px;
+    }
+    .form-field {
+      min-width: 0;
+    }
+    .form-field.full-width {
+      grid-column: 1 / -1;
+    }
+    .form-field label,
+    .resume-label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 0.83rem;
+      font-weight: 500;
+    }
+    .required {
+      color: var(--accent);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form-field textarea {
+      min-height: 124px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--accent);
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+    .form-field select {
+      cursor: pointer;
+    }
+    .resume-upload {
+      position: relative;
+      padding: 22px;
+      border: 1px dashed var(--border);
+      border-radius: 3px;
+      text-align: center;
+      transition: border-color 0.2s ease;
+    }
+    .resume-upload:focus-within,
+    .resume-upload:hover {
+      border-color: var(--accent);
+    }
+    .resume-upload input[type="file"] {
+      width: 100%;
+      min-height: auto;
+      padding: 10px 0;
+      border: 0;
+      font-size: 0.82rem;
+    }
+    .resume-upload p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+    .resume-filename {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+    .form-consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 24px 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+    .form-consent input {
+      margin-top: 4px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+    .form-submit {
+      width: 100%;
+      min-height: 50px;
+      padding: 14px 20px;
+      border: 1px solid #eeecff;
+      border-radius: 3px;
+      background: #eeecff;
+      color: #201b43;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .form-submit:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+    .form-submit:disabled {
+      cursor: wait;
+      opacity: 0.65;
+      transform: none;
+    }
+    .form-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.77rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .form-status {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      font-size: 0.86rem;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .form-status.visible {
+      display: block;
+    }
+    .form-status.error {
+      border-color: #d99a9a;
+    }
+    .form-status.success {
+      border-color: #83b99b;
+    }
+    .dark-theme .application-card {
+      background: var(--paper);
+    }
+    .dark-theme .form-field input,
+    .dark-theme .form-field select,
+    .dark-theme .form-field textarea {
+      background: var(--paper);
+    }
+    .dark-theme .form-submit {
+      background: #eeecff;
+      color: #201b43;
+      border-color: #eeecff;
+    }
+    @media (max-width: 800px) {
+      .application-layout {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding-top: 42px;
+      }
+      .application-aside {
+        position: static;
+      }
+      .role-summary {
+        margin-top: 22px;
+      }
+      .application-hero {
+        padding-top: 54px;
+      }
+    }
+    @media (max-width: 520px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .form-field.full-width {
+        grid-column: auto;
+      }
+      .application-card {
+        padding: 22px 18px;
+      }
+      .application-hero {
+        padding-bottom: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main>
+    <section class="application-hero">
+      <div class="shell">
+        <div class="hero-kicker">CAREERS / APPLICATION</div>
+    <h1>Let's build something intelligent.</h1>
+    <p>
+      Interested in working with Alphex AI? Tell us about yourself,
+      share your experience, and submit your resume for one of our
+      freelance opportunities.
+    </p>
+  </div>
+</section>
+<section class="shell application-layout">
+  <aside class="application-aside">
+    <span class="section-label">01 / THE OPPORTUNITY</span>
+    <h2>Bring your skills to the work that matters.</h2>
+    <p>
+      We're interested in people who enjoy solving real problems,
+      experimenting with AI, and turning ideas into useful systems.
+      Tell us where you can contribute.
+    </p>
+    <div class="role-summary">
+      <div class="role-summary-item">
+        <h3>AI Automation Specialist</h3>
+        <p>
+          Build practical automations, connect APIs, and simplify
+          repetitive business workflows with AI.
+        </p>
+        <span class="freelance-label">Freelance</span>
+      </div>
+      <div class="role-summary-item">
+        <h3>Agentic AI Developer</h3>
+        <p>
+          Develop AI agents that use tools, interact with services,
+          and carry out multi-step tasks.
+        </p>
+        <span class="freelance-label">Freelance</span>
+      </div>
+    </div>
+  </aside>
+  <div class="application-card">
+    <div class="form-heading">
+      <span class="section-label">02 / YOUR DETAILS</span>
+      <h2>Application form</h2>
+      <p>Complete the fields below. Fields marked with * are required.</p>
+    </div>
+    <!--
+      FormSubmit sends submissions to evalloopjobs@gmail.com.
+      Activate the recipient email using the confirmation email
+      received after the first submission.
+    -->
+    <form
+      id="careers-application-form"
+      action="https://formsubmit.co/evalloopjobs@gmail.com"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <input
+        type="hidden"
+        name="_subject"
+        value="New Freelance Application — Alphex AI"
+      >
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="true">
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="full-name">
+            Full name <span class="required">*</span>
+          </label>
+          <input
+            id="full-name"
+            name="Full Name"
+            type="text"
+            placeholder="Your full name"
+            autocomplete="name"
+            required
+            maxlength="120"
+          >
+        </div>
+        <div class="form-field">
+          <label for="email">
+            Email address <span class="required">*</span>
+          </label>
+          <input
+            id="email"
+            name="Email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+            maxlength="254"
+          >
+        </div>
+        <div class="form-field">
+          <label for="phone">Phone number</label>
+          <input
+            id="phone"
+            name="Phone Number"
+            type="tel"
+            placeholder="+91 XXXXX XXXXX"
+            autocomplete="tel"
+            maxlength="30"
+          >
+        </div>
+        <div class="form-field">
+          <label for="location">Current location</label>
+          <input
+            id="location"
+            name="Location"
+            type="text"
+            placeholder="City, country"
+            autocomplete="address-level2"
+            maxlength="120"
+          >
+        </div>
+        <div class="form-field full-width">
+          <label for="role">
+            Role you're applying for <span class="required">*</span>
+          </label>
+          <select id="role" name="Role" required>
+            <option value="" selected disabled>Select a role</option>
+            <option value="AI Automation Specialist">
+              AI Automation Specialist — Freelance
+            </option>
+            <option value="Agentic AI Developer">
+              Agentic AI Developer — Freelance
+            </option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="experience">Relevant experience</label>
+          <select id="experience" name="Relevant Experience">
+            <option value="" selected>Select experience</option>
+            <option value="Student / Learning">
+              Student / Learning
+            </option>
+            <option value="Less than 1 year">Less than 1 year</option>
+            <option value="1–2 years">1–2 years</option>
+            <option value="3–5 years">3–5 years</option>
+            <option value="5+ years">5+ years</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="availability">Availability</label>
+          <select id="availability" name="Availability">
+            <option value="" selected>Select availability</option>
+            <option value="Immediately">Immediately</option>
+            <option value="Within 2 weeks">Within 2 weeks</option>
+            <option value="Within a month">Within a month</option>
+            <option value="Flexible">Flexible</option>
+          </select>
+        </div>
+        <div class="form-field full-width">
+          <label for="linkedin">LinkedIn profile</label>
+          <input
+            id="linkedin"
+            name="LinkedIn Profile"
+            type="url"
+            placeholder="https://www.linkedin.com/in/your-profile"
+            maxlength="500"
+          >
+        </div>
+        <div class="form-field full-width">
+          <label for="portfolio">Portfolio, GitHub, or project link</label>
+          <input
+            id="portfolio"
+            name="Portfolio or GitHub"
+            type="url"
+            placeholder="https://..."
+            maxlength="500"
+          >
+        </div>
+        <div class="form-field full-width">
+          <label for="resume" class="resume-label">
+            Upload your resume <span class="required">*</span>
+          </label>
+          <div class="resume-upload">
+            <input
+              id="resume"
+              name="attachment"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              aria-describedby="resume-help"
+              required
+            >
+            <p id="resume-help">
+              PDF, DOC, or DOCX. Maximum file size: 5 MB.
+            </p>
+            <span
+              id="resume-filename"
+              class="resume-filename"
+              aria-live="polite"
+            ></span>
+          </div>
+        </div>
+        <div class="form-field full-width">
+          <label for="message">
+            Tell us about yourself
+          </label>
+          <textarea
+            id="message"
+            name="Introduction"
+            placeholder="Briefly describe your skills, relevant projects, and how you could contribute..."
+            maxlength="3000"
+          ></textarea>
+        </div>
+      </div>
+      <label class="form-consent" for="privacy-consent">
+        <input
+          id="privacy-consent"
+          name="Privacy Consent"
+          type="checkbox"
+          value="Accepted"
+          required
+        >
+        <span>
+          I consent to Alphex AI using the information and resume I
+          submit to review my application and contact me about relevant
+          opportunities.
+        </span>
+      </label>
+      <button id="submit-button" class="form-submit" type="submit">
+        Submit application <span aria-hidden="true">↗</span>
+      </button>
+      <p class="form-note">
+        Your application details and resume will be sent to our
+        recruitment inbox.
+      </p>
+      <div
+        id="form-status"
+        class="form-status"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </form>
+  </div>
+</section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="/site.js"></script>
+  <script>
+    (() => {
+      const form = document.getElementById("careers-application-form");
+      const resumeInput = document.getElementById("resume");
+      const resumeFilename = document.getElementById("resume-filename");
+      const submitButton = document.getElementById("submit-button");
+      const statusBox = document.getElementById("form-status");
+      const MAX_FILE_SIZE = 5 * 1024 * 1024;
+      const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx"];
+      resumeInput.addEventListener("change", () => {
+        statusBox.className = "form-status";
+        statusBox.textContent = "";
+        const file = resumeInput.files[0];
+        if (!file) {
+          resumeFilename.textContent = "";
+          return;
+        }
+        const extension = file.name.split(".").pop().toLowerCase();
+        if (!ALLOWED_EXTENSIONS.includes(extension)) {
+          resumeInput.value = "";
+          resumeFilename.textContent = "";
+          showStatus(
+            "Please upload your resume as a PDF, DOC, or DOCX file.",
+            "error"
+          );
+          return;
+        }
+        if (file.size > MAX_FILE_SIZE) {
+          resumeInput.value = "";
+          resumeFilename.textContent = "";
+          showStatus(
+            "Your resume exceeds the 5 MB limit. Please choose a smaller file.",
+            "error"
+          );
+          return;
+        }
+        resumeFilename.textContent =
+          "Selected: " + file.name +
+          " (" + (file.size / (1024 * 1024)).toFixed(2) + " MB)";
+      });
+      function showStatus(message, type) {
+        statusBox.textContent = message;
+        statusBox.className = "form-status visible " + type;
+      }
+      form.addEventListener("submit", (event) => {
+        const file = resumeInput.files[0];
+        if (!file) {
+          event.preventDefault();
+          showStatus("Please attach your resume before submitting.", "error");
+          return;
+        }
+        if (file.size > MAX_FILE_SIZE) {
+          event.preventDefault();
+          showStatus("Your resume must be smaller than 5 MB.", "error");
+          return;
+        }
+        if (!form.reportValidity()) {
+          event.preventDefault();
+          return;
+        }
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting application…";
+      });
+    })();
+  </script>
+</body>
+</html>
