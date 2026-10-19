@@ -15,8 +15,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
   <style>
     /* =========================================================
        ALPHEX AI — CAREERS APPLICATION
-       Page-specific styles only.
-       Global design system comes from site.css.
+       Page-specific styles. Global styles come from site.css.
        ========================================================= */
     .application-hero {
       padding: 108px 0 96px;
@@ -154,6 +153,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
        FORM
        ========================================================= */
     .application-form-wrap {
+      min-width: 0;
       border: 1px solid var(--border);
       background: var(--white);
       padding: 38px;
@@ -284,6 +284,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       width: 100%;
       min-height: 54px;
       padding: 15px 19px;
@@ -421,6 +422,9 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
       .application-form-heading h3 {
         font-size: 27px;
       }
+      .resume-upload {
+        padding: 17px;
+      }
     }
   </style>
 </head>
@@ -428,9 +432,9 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
   <!-- SHARED NAVIGATION -->
   <div id="site-nav"></div>
   <main>
-<!-- =====================================================
-     HERO
-     ===================================================== -->
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
 <section class="application-hero">
   <div class="shell">
     <div class="application-hero-grid">
@@ -465,7 +469,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
   </div>
 </section>
 <!-- =====================================================
-     APPLICATION FORM
+     APPLICATION SECTION
      ===================================================== -->
 <section class="application-section">
   <div class="shell">
@@ -546,7 +550,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
           method="POST"
           enctype="multipart/form-data"
         >
-          <!-- Email delivery configuration -->
+          <!-- FormSubmit configuration -->
           <input
             type="hidden"
             name="_subject"
@@ -563,9 +567,11 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
             value="true"
           >
           <div class="application-form-grid">
+            <!-- FULL NAME -->
             <div class="application-field">
               <label for="applicant-name">
-                Full name <span class="application-required">*</span>
+                Full name
+                <span class="application-required">*</span>
               </label>
               <input
                 id="applicant-name"
@@ -577,9 +583,11 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 required
               >
             </div>
+            <!-- EMAIL -->
             <div class="application-field">
               <label for="applicant-email">
-                Email address <span class="application-required">*</span>
+                Email address
+                <span class="application-required">*</span>
               </label>
               <input
                 id="applicant-email"
@@ -591,6 +599,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 required
               >
             </div>
+            <!-- PHONE -->
             <div class="application-field">
               <label for="applicant-phone">
                 Phone number
@@ -604,6 +613,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 maxlength="30"
               >
             </div>
+            <!-- LOCATION -->
             <div class="application-field">
               <label for="applicant-location">
                 Current location
@@ -617,6 +627,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 maxlength="120"
               >
             </div>
+            <!-- ROLE -->
             <div class="application-field full">
               <label for="applicant-role">
                 Role you're applying for
@@ -638,6 +649,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 </option>
               </select>
             </div>
+            <!-- EXPERIENCE -->
             <div class="application-field">
               <label for="applicant-experience">
                 Relevant experience
@@ -666,6 +678,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 </option>
               </select>
             </div>
+            <!-- AVAILABILITY -->
             <div class="application-field">
               <label for="applicant-availability">
                 Availability
@@ -691,6 +704,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 </option>
               </select>
             </div>
+            <!-- LINKEDIN -->
             <div class="application-field full">
               <label for="applicant-linkedin">
                 LinkedIn profile
@@ -703,6 +717,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 maxlength="500"
               >
             </div>
+            <!-- PORTFOLIO -->
             <div class="application-field full">
               <label for="applicant-portfolio">
                 Portfolio, GitHub, or project link
@@ -715,9 +730,11 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 maxlength="500"
               >
             </div>
+            <!-- RESUME -->
             <div class="application-field full">
               <label for="applicant-resume">
-                Resume <span class="application-required">*</span>
+                Resume
+                <span class="application-required">*</span>
               </label>
               <div class="resume-upload">
                 <input
@@ -738,6 +755,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
                 ></span>
               </div>
             </div>
+            <!-- INTRODUCTION -->
             <div class="application-field full">
               <label for="applicant-message">
                 Tell us about yourself
@@ -750,7 +768,7 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
               ></textarea>
             </div>
           </div>
-          <!-- Consent -->
+          <!-- CONSENT -->
           <label
             class="application-consent"
             for="application-consent"
@@ -768,13 +786,15 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
               relevant opportunities.
             </span>
           </label>
-          <!-- Submit -->
+          <!-- SUBMIT -->
           <button
             id="application-submit"
             class="application-submit"
             type="submit"
           >
-            Submit application
+            <span id="application-submit-label">
+              Submit application
+            </span>
             <span aria-hidden="true">↗</span>
           </button>
           <p class="application-form-note">
@@ -800,109 +820,150 @@ content=“Apply for freelance AI Automation Specialist or Agentic AI Developer 
        LOAD SHARED NAVIGATION AND FOOTER
        ======================================================= -->
   <script>
-    async function loadSharedComponent(elementId, file) {
-      try {
-        const response = await fetch(file);
-        if (!response.ok) {
-          throw new Error(
-            `Unable to load ${file}: ${response.status}`
+    (() => {
+      "use strict";
+      async function loadSharedComponent(elementId, file) {
+        const container = document.getElementById(elementId);
+        if (!container) {
+          console.error(`Alphex AI: element #${elementId} was not found.`);
+          return;
+        }
+        try {
+          const response = await fetch(file);
+          if (!response.ok) {
+            throw new Error(
+              `Unable to load ${file}: ${response.status}`
+            );
+          }
+          container.innerHTML = await response.text();
+          /*
+           * Prefer initializeSite() if it exists.
+           * Use initSite() only as a fallback to avoid
+           * running both initialization functions.
+           */
+          if (typeof window.initializeSite === "function") {
+            window.initializeSite();
+          } else if (typeof window.initSite === "function") {
+            window.initSite();
+          }
+        } catch (error) {
+          console.error(
+            `Alphex AI: failed to load ${file}`,
+            error
           );
         }
-        const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
-        if (typeof window.initializeSite === "function") {
-          window.initializeSite();
-        }
-        if (typeof window.initSite === "function") {
-          window.initSite();
-        }
-      } catch (error) {
-        console.error(
-          `Alphex AI: failed to load ${file}`,
-          error
-        );
       }
-    }
-    document.addEventListener("DOMContentLoaded", function () {
-      loadSharedComponent("site-nav", "nav.html");
-      loadSharedComponent("site-footer", "footer.html");
-    });
+      document.addEventListener("DOMContentLoaded", () => {
+        loadSharedComponent("site-nav", "nav.html");
+        loadSharedComponent("site-footer", "footer.html");
+      });
+    })();
   </script>
   <!-- =======================================================
        APPLICATION FORM VALIDATION
        ======================================================= -->
   <script>
     (() => {
+      "use strict";
       const form = document.getElementById("application-form");
       const resumeInput = document.getElementById("applicant-resume");
       const resumeName = document.getElementById("resume-file-name");
       const submitButton = document.getElementById("application-submit");
+      const submitLabel = document.getElementById("application-submit-label");
       const statusBox = document.getElementById("application-status");
+      if (
+        !form ||
+        !resumeInput ||
+        !resumeName ||
+        !submitButton ||
+        !submitLabel ||
+        !statusBox
+      ) {
+        console.error("Alphex AI: application form elements are missing.");
+        return;
+      }
       const MAX_FILE_SIZE = 5 * 1024 * 1024;
       const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx"];
       function showStatus(message, type) {
         statusBox.textContent = message;
-        statusBox.className = "application-status visible " + type;
+        statusBox.className = `application-status visible ${type}`;
       }
-      resumeInput.addEventListener("change", function () {
-        statusBox.className = "application-status";
+      function clearStatus() {
         statusBox.textContent = "";
-        const file = resumeInput.files[0];
+        statusBox.className = "application-status";
+      }
+      function getFileError(file) {
         if (!file) {
-          resumeName.textContent = "";
-          return;
+          return "Please attach your resume before submitting.";
         }
-        const extension = file.name.split(".").pop().toLowerCase();
+        const lastDot = file.name.lastIndexOf(".");
+        const extension = lastDot >= 0
+          ? file.name.slice(lastDot + 1).toLowerCase()
+          : "";
         if (!ALLOWED_EXTENSIONS.includes(extension)) {
-          resumeInput.value = "";
-          resumeName.textContent = "";
-          showStatus(
-            "Please upload your resume in PDF, DOC, or DOCX format.",
-            "error"
-          );
-          return;
+          return "Please upload your resume in PDF, DOC, or DOCX format.";
+        }
+        if (file.size === 0) {
+          return "The selected resume is empty. Please choose another file.";
         }
         if (file.size > MAX_FILE_SIZE) {
+          return "Your resume exceeds 5 MB. Please select a smaller file.";
+        }
+        return "";
+      }
+      function resetSubmitButton() {
+        submitButton.disabled = false;
+        submitLabel.textContent = "Submit application";
+      }
+      resumeInput.addEventListener("change", () => {
+        clearStatus();
+        const file = resumeInput.files && resumeInput.files[0];
+        if (!file) {
+          resumeName.textContent = "";
+          return;
+        }
+        const fileError = getFileError(file);
+        if (fileError) {
           resumeInput.value = "";
           resumeName.textContent = "";
-          showStatus(
-            "Your resume is larger than 5 MB. Please select a smaller file.",
-            "error"
-          );
+          showStatus(fileError, "error");
           return;
         }
+        const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
         resumeName.textContent =
-          "Selected: " + file.name +
-          " (" + (file.size / (1024 * 1024)).toFixed(2) + " MB)";
+          `Selected: ${file.name} (${sizeInMB} MB)`;
       });
-      form.addEventListener("submit", function (event) {
-        const file = resumeInput.files[0];
-        if (!file) {
+      form.addEventListener("submit", (event) => {
+        clearStatus();
+        const file = resumeInput.files && resumeInput.files[0];
+        const fileError = getFileError(file);
+        if (fileError) {
           event.preventDefault();
-          showStatus(
-            "Please attach your resume before submitting.",
-            "error"
-          );
+          showStatus(fileError, "error");
+          resumeInput.focus();
           return;
         }
-        const extension = file.name.split(".").pop().toLowerCase();
-        if (
-          !ALLOWED_EXTENSIONS.includes(extension) ||
-          file.size > MAX_FILE_SIZE
-        ) {
-          event.preventDefault();
-          showStatus(
-            "Please choose a PDF, DOC, or DOCX resume smaller than 5 MB.",
-            "error"
-          );
-          return;
-        }
+        /*
+         * Use native browser validation for all required fields.
+         */
         if (!form.reportValidity()) {
           event.preventDefault();
           return;
         }
+        /*
+         * Keep the browser's normal multipart POST submission
+         * to FormSubmit. Do not prevent the default action here:
+         * doing so would stop the resume from being uploaded.
+         */
         submitButton.disabled = true;
-        submitButton.firstChild.textContent = "Submitting application";
+        submitLabel.textContent = "Submitting application…";
+      });
+      /*
+       * If the user returns to this page using browser history,
+       * restore the button so the form is usable again.
+       */
+      window.addEventListener("pageshow", () => {
+        resetSubmitButton();
       });
     })();
   </script>
