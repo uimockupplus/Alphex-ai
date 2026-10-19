@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <meta
+    name="description"
+    content="Explore opportunities to work with Alphex AI on practical AI systems, intelligent automation, AI agents, and products that solve real-world problems."
+  >
+  <meta
+    name="theme-color"
+    content="#f7f7f5"
+  >
+  <title>Careers — Alphex AI</title>
+  <link
+    rel="stylesheet"
+    href="site.css"
+  >
+  <style>
+    /* =========================================================
+       ALPHEX AI — CAREERS PAGE
+       Page-specific styles only.
+       Global typography and design system come from site.css.
+       ========================================================= */
+    /* =========================================================
+       HERO
+       ========================================================= */
+    .careers-hero{
+      padding:108px 0 96px;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:90px;
+      align-items:end;
+    }
+    .careers-hero h1{
+      max-width:820px;
+      font-size:clamp(54px,7vw,96px);
+      line-height:.91;
+      letter-spacing:-.09em;
+      margin:16px 0 28px;
+    }
+    .careers-hero-copy{
+      max-width:600px;
+      color:#595955;
+      font-size:18px;
+      line-height:1.6;
+      margin:0;
+    }
+    .careers-hero-side{
+      padding-bottom:8px;
+    }
+    .careers-hero-card{
+      border:1px solid var(--border);
+      background:var(--white);
+      padding:25px;
+    }
+    .careers-card-label{
+      font:10px var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:35px;
+    }
+    .careers-card-title{
+      font-size:25px;
+      line-height:1.1;
+      letter-spacing:-.05em;
+      font-weight:300;
+      margin:0 0 17px;
+    }
+    .careers-card-copy{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+      margin:0;
+    }
+    .careers-card-bottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      border-top:1px solid var(--border);
+      margin-top:28px;
+      padding-top:18px;
+    }
+    .careers-card-status{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      color:var(--muted);
+      font:10px var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+    .careers-status-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#79a98a;
+      flex-shrink:0;
+    }
+    .careers-card-index{
+      font:10px var(--mono);
+      color:var(--muted);
+    }
+    /* =========================================================
+       INTRODUCTION
+       ========================================================= */
+    .careers-intro{
+      padding:110px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-intro-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:90px;
+    }
+    .careers-intro h2{
+      max-width:580px;
+      font-size:clamp(42px,5vw,68px);
+      line-height:.96;
+      letter-spacing:-.085em;
+      margin:15px 0 0;
+    }
+    .careers-intro-content{
+      padding-top:42px;
+    }
+    .careers-intro-content p{
+      max-width:510px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+      margin:0 0 20px;
+    }
+    .careers-intro-content p:last-child{
+      margin-bottom:0;
+    }
+    /* =========================================================
+       WHAT WE WORK ON
+       ========================================================= */
+    .careers-work{
+      padding:115px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-section-head{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:80px;
+      align-items:end;
+      margin-bottom:60px;
+    }
+    .careers-section-head h2{
+      max-width:620px;
+      font-size:clamp(42px,5vw,68px);
+      line-height:.96;
+      letter-spacing:-.085em;
+      margin:15px 0 0;
+    }
+    .careers-section-head > p{
+      max-width:450px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+      margin:0 0 5px;
+    }
+    .careers-work-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-top:1px solid var(--border);
+      border-left:1px solid var(--border);
+    }
+    .careers-work-card{
+      min-height:260px;
+      padding:27px;
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      background:var(--paper);
+      transition:
+        background .25s ease,
+        transform .25s ease;
+    }
+    .careers-work-card:hover{
+      background:var(--white);
+      transform:translateY(-3px);
+    }
+    .careers-work-number{
+      font:10px var(--mono);
+      color:var(--accent);
+      margin-bottom:65px;
+    }
+    .careers-work-card h3{
+      font-size:25px;
+      line-height:1.05;
+      letter-spacing:-.05em;
+      margin:0 0 13px;
+    }
+    .careers-work-card p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      margin:0;
+    }
+    /* =========================================================
+       HOW WE THINK
+       ========================================================= */
+    .careers-principles{
+      padding:115px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-principles-layout{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:90px;
+    }
+    .careers-principles-layout h2{
+      max-width:580px;
+      font-size:clamp(42px,5vw,68px);
+      line-height:.96;
+      letter-spacing:-.085em;
+      margin:15px 0 0;
+    }
+    .careers-principles-content{
+      padding-top:42px;
+    }
+    .careers-principles-content > p{
+      max-width:470px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+      margin:0 0 30px;
+    }
+    .careers-principles-list{
+      border-top:1px solid var(--border);
+    }
+    .careers-principle{
+      display:grid;
+      grid-template-columns:35px 1fr;
+      gap:12px;
+      padding:21px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-principle-number{
+      color:var(--accent);
+      font:10px var(--mono);
+      padding-top:4px;
+    }
+    .careers-principle h3{
+      font-size:17px;
+      font-weight:400;
+      letter-spacing:-.035em;
+      margin:0 0 7px;
+    }
+    .careers-principle p{
+      max-width:400px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+      margin:0;
+    }
+    /* =========================================================
+       OPPORTUNITIES
+       ========================================================= */
+    .careers-opportunities{
+      padding:115px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-opportunities-head{
+      display:grid;
+      grid-template-columns:1fr .8fr;
+      gap:80px;
+      align-items:end;
+      margin-bottom:55px;
+    }
+    .careers-opportunities-head h2{
+      max-width:620px;
+      font-size:clamp(42px,5vw,68px);
+      line-height:.96;
+      letter-spacing:-.085em;
+      margin:15px 0 0;
+    }
+    .careers-opportunities-head p{
+      max-width:450px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+      margin:0 0 5px;
+    }
+    .careers-opportunity{
+      display:grid;
+      grid-template-columns:70px 1fr auto;
+      gap:25px;
+      align-items:center;
+      padding:30px 0;
+      border-top:1px solid var(--border);
+    }
+    .careers-opportunity:last-child{
+      border-bottom:1px solid var(--border);
+    }
+    .careers-opportunity-number{
+      align-self:start;
+      padding-top:5px;
+      color:var(--accent);
+      font:11px var(--mono);
+    }
+    .careers-opportunity-main h3{
+      font-size:25px;
+      line-height:1.1;
+      letter-spacing:-.05em;
+      font-weight:400;
+      margin:0 0 10px;
+    }
+    .careers-opportunity-main p{
+      max-width:610px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      margin:0;
+    }
+    .careers-opportunity-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:15px;
+    }
+    .careers-opportunity-tag{
+      padding:6px 9px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font:9px var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.035em;
+    }
+    .careers-opportunity-action{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .careers-opportunity-link{
+      width:42px;
+      height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--border);
+      border-radius:50%;
+      color:var(--text);
+      text-decoration:none;
+      font-size:18px;
+      transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
+    }
+    .careers-opportunity-link:hover{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+    /* =========================================================
+       NO OPENINGS / GENERAL APPLICATION
+       ========================================================= */
+    .careers-general{
+      padding:100px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .careers-general-box{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:70px;
+      align-items:center;
+      padding:45px;
+      border:1px solid var(--border);
+      background:var(--white);
+    }
+    .careers-general-label{
+      color:var(--accent);
+      font:10px var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:20px;
+    }
+    .careers-general-box h2{
+      max-width:620px;
+      font-size:clamp(36px,4.5vw,57px);
+      line-height:.98;
+      letter-spacing:-.08em;
+      margin:0 0 20px;
+    }
+    .careers-general-box p{
+      max-width:530px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+      margin:0;
+    }
+    .careers-general-action{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:16px;
+    }
+    .careers-general-note{
+      max-width:290px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.6;
+      margin:0;
+    }
+    /* =========================================================
+       FINAL CTA
+       ========================================================= */
+    .careers-cta{
+      padding:110px 0 125px;
+    }
+    .careers-cta-box{
+      display:grid;
+      grid-template-columns:1.35fr .65fr;
+      gap:65px;
+      align-items:end;
+      padding:58px;
+      background:#eeecff;
+      border:1px solid #d8d2ff;
+    }
+    .careers-cta-box h2{
+      max-width:700px;
+      font-size:clamp(43px,5.5vw,72px);
+      line-height:.94;
+      letter-spacing:-.085em;
+      margin:14px 0 20px;
+    }
+    .careers-cta-box p{
+      max-width:550px;
+      color:#59546f;
+      font-size:15px;
+      line-height:1.7;
+      margin:0;
+    }
+    .careers-cta-action{
+      display:flex;
+      justify-content:flex-end;
+      align-items:flex-end;
+    }
+    /* =========================================================
+       DARK THEME
+       ========================================================= */
+    body.dark-theme .careers-hero-copy,
+    body.dark-theme .careers-intro-content p,
+    body.dark-theme .careers-section-head > p,
+    body.dark-theme .careers-work-card p,
+    body.dark-theme .careers-principles-content > p,
+    body.dark-theme .careers-principle p,
+    body.dark-theme .careers-opportunities-head p,
+    body.dark-theme .careers-opportunity-main p,
+    body.dark-theme .careers-general-box p,
+    body.dark-theme .careers-general-note{
+      color:#c2c5d5;
+    }
+    body.dark-theme .careers-hero-card,
+    body.dark-theme .careers-general-box{
+      background:#171a28;
+    }
+    body.dark-theme .careers-work-card{
+      background:#121522;
+    }
+    body.dark-theme .careers-work-card:hover{
+      background:#1d2030;
+    }
+    body.dark-theme .careers-opportunity-link{
+      color:#f0f1f8;
+    }
+    body.dark-theme .careers-opportunity-link:hover{
+      color:#fff;
+    }
+    body.dark-theme .careers-cta-box{
+      background:#242044;
+      border-color:#3c356d;
+    }
+    body.dark-theme .careers-cta-box p{
+      color:#c6c1dd;
+    }
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media(max-width:900px){
+      .careers-hero{
+        padding:85px 0 75px;
+      }
+      .careers-hero-grid{
+        grid-template-columns:1fr;
+        gap:50px;
+      }
+      .careers-hero-side{
+        max-width:600px;
+      }
+      .careers-intro-grid,
+      .careers-principles-layout{
+        grid-template-columns:1fr;
+        gap:25px;
+      }
+      .careers-intro-content,
+      .careers-principles-content{
+        padding-top:0;
+      }
+      .careers-section-head,
+      .careers-opportunities-head{
+        grid-template-columns:1fr;
+        gap:25px;
+      }
+      .careers-section-head > p,
+      .careers-opportunities-head p{
+        margin-top:0;
+      }
+      .careers-work-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .careers-general-box{
+        grid-template-columns:1fr;
+        gap:35px;
+      }
+      .careers-cta-box{
+        grid-template-columns:1fr;
+        gap:40px;
+      }
+      .careers-cta-action{
+        justify-content:flex-start;
+      }
+    }
+    @media(max-width:800px){
+      .careers-intro,
+      .careers-work,
+      .careers-principles,
+      .careers-opportunities{
+        padding:80px 0;
+      }
+      .careers-general{
+        padding:75px 0;
+      }
+      .careers-cta{
+        padding:78px 0 85px;
+      }
+      .careers-general-box,
+      .careers-cta-box{
+        padding:35px;
+      }
+    }
+    @media(max-width:600px){
+      .careers-hero{
+        padding:65px 0 60px;
+      }
+      .careers-hero h1{
+        font-size:clamp(48px,15vw,70px);
+      }
+      .careers-hero-copy{
+        font-size:16px;
+      }
+      .careers-intro h2,
+      .careers-section-head h2,
+      .careers-principles-layout h2,
+      .careers-opportunities-head h2{
+        font-size:43px;
+      }
+      .careers-work-grid{
+        grid-template-columns:1fr;
+      }
+      .careers-work-card{
+        min-height:220px;
+      }
+      .careers-work-number{
+        margin-bottom:50px;
+      }
+      .careers-opportunity{
+        grid-template-columns:35px 1fr;
+        gap:15px;
+        padding:25px 0;
+      }
+      .careers-opportunity-main h3{
+        font-size:22px;
+      }
+      .careers-opportunity-action{
+        grid-column:2;
+        justify-content:flex-start;
+        margin-top:5px;
+      }
+      .careers-general-box{
+        padding:28px 24px;
+      }
+      .careers-general-box h2{
+        font-size:40px;
+      }
+      .careers-cta-box{
+        padding:28px 24px;
+      }
+      .careers-cta-box h2{
+        font-size:43px;
+      }
+    }
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+    @media(prefers-reduced-motion:reduce){
+      .careers-work-card,
+      .careers-opportunity-link{
+        transition:none;
+      }
+      .careers-work-card:hover{
+        transform:none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- =======================================================
+       SHARED NAVIGATION
+       ======================================================= -->
+  <div id="site-nav"></div>
+  <main>
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+    <section class="careers-hero">
+      <div class="shell">
+        <div class="careers-hero-grid">
+          <div>
+            <div class="hero-kicker">
+              ALPHEX AI / CAREERS
+            </div>
+            <h1>
+              Build what makes AI useful.
+            </h1>
+            <p class="careers-hero-copy">
+              We're working on practical AI systems, intelligent
+              workflows, and products designed to solve real problems.
+              If that kind of work interests you, we'd like to hear
+              from you.
+            </p>
+          </div>
+          <div class="careers-hero-side">
+            <div class="careers-hero-card">
+              <div class="careers-card-label">
+                A different kind of opportunity
+              </div>
+              <h2 class="careers-card-title">
+                Think clearly. Build thoughtfully. Keep learning.
+              </h2>
+              <p class="careers-card-copy">
+                Work at the intersection of AI, engineering,
+                experimentation, and real-world problem-solving.
+                Bring your curiosity, develop your skills, and
+                contribute to work that matters.
+              </p>
+              <div class="careers-card-bottom">
+                <div class="careers-card-status">
+                  <span class="careers-status-dot"></span>
+                  <span>Open to conversations</span>
+                </div>
+                <span class="careers-card-index">
+                  01 / PEOPLE
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- =====================================================
+         INTRODUCTION
+         ===================================================== -->
+    <section class="careers-intro">
+      <div class="shell">
+        <div class="careers-intro-grid">
+          <div>
+            <div class="section-label">
+              01 / Why Alphex AI
+            </div>
+            <h2>
+              Small teams. Real problems. Thoughtful AI.
+            </h2>
+          </div>
+          <div class="careers-intro-content">
+            <p>
+              At Alphex AI, our focus is on making AI practical.
+              We explore how intelligent systems can help businesses
+              work better, help people access information, and
+              reduce the friction in everyday processes.
+            </p>
+            <p>
+              Our work spans AI assistants, knowledge systems,
+              automation, AI agents, integrations, and products
+              designed around real needs.
+            </p>
+            <p>
+              We're building our capabilities as we grow. That means
+              there is room to experiment, learn, question assumptions,
+              and contribute ideas instead of simply following a
+              predefined playbook.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- =====================================================
+         AREAS OF WORK
+         ===================================================== -->
+    <section class="careers-work">
+      <div class="shell">
+        <div class="careers-section-head">
+          <div>
+            <div class="section-label">
+              02 / Areas of work
+            </div>
+            <h2>
+              Different skills. Shared ambition.
+            </h2>
+          </div>
+          <p>
+            Building useful AI takes more than choosing a model.
+            It requires engineering, good information, thoughtful
+            design, testing, and an understanding of the problem
+            we're trying to solve.
+          </p>
+        </div>
+        <div class="careers-work-grid">
+          <article class="careers-work-card">
+            <div class="careers-work-number">
+              01
+            </div>
+            <h3>
+              AI & Engineering
+            </h3>
+            <p>
+              Develop AI-powered applications, integrate models
+              and APIs, build intelligent workflows, and turn
+              promising ideas into working systems.
+            </p>
+          </article>
+          <article class="careers-work-card">
+            <div class="careers-work-number">
+              02
+            </div>
+            <h3>
+              AI Agents & Automation
+            </h3>
+            <p>
+              Explore tool-using AI, workflow orchestration,
+              business process automation, and systems that
+              perform useful tasks with appropriate controls.
+            </p>
+          </article>
+          <article class="careers-work-card">
+            <div class="careers-work-number">
+              03
+            </div>
+            <h3>
+              AI Quality & Evaluation
+            </h3>
+            <p>
+              Assess AI outputs, investigate hallucinations,
+              evaluate instruction-following, improve reliability,
+              and develop structured approaches to AI quality.
+            </p>
+          </article>
+          <article class="careers-work-card">
+            <div class="careers-work-number">
+              04
+            </div>
+            <h3>
+              Product & Research
+            </h3>
+            <p>
+              Understand user problems, research emerging
+              capabilities, test concepts, and help shape
+              products around practical use cases.
+            </p>
+          </article>
+          <article class="careers-work-card">
+            <div class="careers-work-number">
+              05
+            </div>
+            <h3>
+              Design & Experience
+            </h3>
+            <p>
+              Create clear interfaces, useful interactions,
+              accessible experiences, and product journeys
+              that make complex technology easier to use.
+            </p>
+          </article>
+          <article class="careers-work-card">
+            <div class="careers-work-number">
+              06
+            </div>
+            <h3>
+              Growth & Operations
+            </h3>
+            <p>
+              Help communicate our work, discover opportunities,
+              build partnerships, understand customer needs,
+              and support the systems behind a growing business.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- =====================================================
+         OUR PRINCIPLES
+         ===================================================== -->
+    <section class="careers-principles">
+      <div class="shell">
+        <div class="careers-principles-layout">
+          <div>
+            <div class="section-label">
+              03 / How we work
+            </div>
+            <h2>
+              Curiosity matters. So does getting it right.
+            </h2>
+          </div>
+          <div class="careers-principles-content">
+            <p>
+              AI moves quickly, but good work still depends on
+              clear thinking, honest communication, experimentation,
+              and the willingness to improve when something
+              doesn't work.
+            </p>
+            <div class="careers-principles-list">
+              <div class="careers-principle">
+                <span class="careers-principle-number">
+                  01
+                </span>
+                <div>
+                  <h3>
+                    Stay curious
+                  </h3>
+                  <p>
+                    Explore new ideas, learn unfamiliar tools,
+                    and ask questions before accepting assumptions.
+                  </p>
+                </div>
+              </div>
+              <div class="careers-principle">
+                <span class="careers-principle-number">
+                  02
+                </span>
+                <div>
+                  <h3>
+                    Solve the actual problem
+                  </h3>
+                  <p>
+                    Start with what people need to accomplish.
+                    Use technology because it helps, not simply
+                    because it is available.
+                  </p>
+                </div>
+              </div>
+              <div class="careers-principle">
+                <span class="careers-principle-number">
+                  03
+                </span>
+                <div>
+                  <h3>
+                    Value quality
+                  </h3>
+                  <p>
+                    Test your work, check the details, identify
+                    limitations, and improve what doesn't meet
+                    the required standard.
+                  </p>
+                </div>
+              </div>
+              <div class="careers-principle">
+                <span class="careers-principle-number">
+                  04
+                </span>
+                <div>
+                  <h3>
+                    Communicate openly
+                  </h3>
+                  <p>
+                    Share progress, explain decisions, raise
+                    concerns early, and be willing to learn
+                    from different perspectives.
+                  </p>
+                </div>
+              </div>
+              <div class="careers-principle">
+                <span class="careers-principle-number">
+                  05
+                </span>
+                <div>
+                  <h3>
+                    Take ownership
+                  </h3>
+                  <p>
+                    Be thoughtful about your responsibilities,
+                    follow through on commitments, and look
+                    for ways to make the work better.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- =====================================================
+         OPPORTUNITIES
+         ===================================================== -->
+    <section
+      class="careers-opportunities"
+      id="opportunities"
+    >
+      <div class="shell">
+        <div class="careers-opportunities-head">
+          <div>
+            <div class="section-label">
+              04 / Opportunities
+            </div>
+            <h2>
+              Find your way into the work.
+            </h2>
+          </div>
+          <p>
+            We're interested in people who can contribute to
+            practical AI work across engineering, evaluation,
+            product development, design, and business operations.
+            You don't need to fit every category to start a
+            conversation.
+          </p>
+        </div>
+        <!--
+          These are areas of interest, not confirmed vacancies.
+          Replace this section with verified job listings when
+          specific positions are approved and available.
+        -->
+        <article class="careers-opportunity">
+          <div class="careers-opportunity-number">
+            01
+          </div>
+          <div class="careers-opportunity-main">
+            <h3>
+              AI & Software Development
+            </h3>
+            <p>
+              For people interested in building AI applications,
+              integrating APIs, developing web-based tools, and
+              turning technical concepts into useful products.
+            </p>
+            <div class="careers-opportunity-tags">
+              <span class="careers-opportunity-tag">
+                Engineering
+              </span>
+              <span class="careers-opportunity-tag">
+                AI Applications
+              </span>
+              <span class="careers-opportunity-tag">
+                Integrations
+              </span>
+            </div>
+          </div>
+          <div class="careers-opportunity-action">
+            <a
+              class="careers-opportunity-link"
+              href="#general-application"
+              aria-label="Express interest in AI and software development"
+            >
+              ↗
+            </a>
+          </div>
+        </article>
+        <article class="careers-opportunity">
+          <div class="careers-opportunity-number">
+            02
+          </div>
+          <div class="careers-opportunity-main">
+            <h3>
+              AI Evaluation & Quality
+            </h3>
+            <p>
+              For people who enjoy analyzing model responses,
+              checking factual accuracy, identifying failure
+              patterns, testing instructions, and improving
+              the reliability of AI systems.
+            </p>
+            <div class="careers-opportunity-tags">
+              <span class="careers-opportunity-tag">
+                LLM Evaluation
+              </span>
+              <span class="careers-opportunity-tag">
+                Quality Assurance
+              </span>
+              <span class="careers-opportunity-tag">
+                AI Research
+              </span>
+            </div>
+          </div>
+          <div class="careers-opportunity-action">
+            <a
+              class="careers-opportunity-link"
+              href="#general-application"
+              aria-label="Express interest in AI evaluation and quality"
+            >
+              ↗
+            </a>
+          </div>
+        </article>
+        <article class="careers-opportunity">
+          <div class="careers-opportunity-number">
+            03
+          </div>
+          <div class="careers-opportunity-main">
+            <h3>
+              AI Agents & Automation
+            </h3>
+            <p>
+              For people interested in connecting tools, designing
+              automated workflows, experimenting with AI agents,
+              and simplifying repetitive business processes.
+            </p>
+            <div class="careers-opportunity-tags">
+              <span class="careers-opportunity-tag">
+                AI Agents
+              </span>
+              <span class="careers-opportunity-tag">
+                Automation
+              </span>
+              <span class="careers-opportunity-tag">
+                Workflows
+              </span>
+            </div>
+          </div>
+          <div class="careers-opportunity-action">
+            <a
+              class="careers-opportunity-link"
+              href="#general-application"
+              aria-label="Express interest in AI agents and automation"
+            >
+              ↗
+            </a>
+          </div>
+        </article>
+        <article class="careers-opportunity">
+          <div class="careers-opportunity-number">
+            04
+          </div>
+          <div class="careers-opportunity-main">
+            <h3>
+              Product, Design & Business
+            </h3>
+            <p>
+              For people who can research problems, improve
+              product experiences, communicate ideas clearly,
+              explore partnerships, or help bring AI solutions
+              to the people who need them.
+            </p>
+            <div class="careers-opportunity-tags">
+              <span class="careers-opportunity-tag">
+                Product
+              </span>
+              <span class="careers-opportunity-tag">
+                Design
+              </span>
+              <span class="careers-opportunity-tag">
+                Business
+              </span>
+            </div>
+          </div>
+          <div class="careers-opportunity-action">
+            <a
+              class="careers-opportunity-link"
+              href="#general-application"
+              aria-label="Express interest in product, design, and business"
+            >
+              ↗
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- =====================================================
+         GENERAL APPLICATION
+         ===================================================== -->
+    <section
+      class="careers-general"
+      id="general-application"
+    >
+      <div class="shell">
+        <div class="careers-general-box">
+          <div>
+            <div class="careers-general-label">
+              ALPHEX AI / GENERAL APPLICATIONS
+            </div>
+            <h2>
+              Don't see your role? Start a conversation.
+            </h2>
+            <p>
+              If your skills, experience, or ideas align with
+              what we're building, introduce yourself. Tell us
+              what you do, what interests you about Alphex AI,
+              and how you think you could contribute.
+            </p>
+          </div>
+          <div class="careers-general-action">
+            <!-- Replace with the verified careers email address. -->
+            <a
+              class="pill dark"
+              href="/contact.html?subject=Careers%20at%20Alphex%20AI"
+            >
+              Get in touch
+              <span>↗</span>
+            </a>
+            <p class="careers-general-note">
+              Include your resume, portfolio, GitHub profile,
+              LinkedIn profile, or relevant work samples where
+              applicable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- =====================================================
+         FINAL CTA
+         ===================================================== -->
+    <section class="careers-cta">
+      <div class="shell">
+        <div class="careers-cta-box">
+          <div>
+            <div class="section-label">
+              ALPHEX AI / BUILD WITH US
+            </div>
+            <h2>
+              The future needs people who build thoughtfully.
+            </h2>
+            <p>
+              We're interested in people who want to understand
+              AI deeply, solve meaningful problems, and turn
+              promising ideas into practical systems.
+            </p>
+          </div>
+          <div class="careers-cta-action">
+            <a
+              class="pill dark"
+              href="/contact.html?subject=Careers%20at%20Alphex%20AI"
+            >
+              Connect with Alphex AI
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- =======================================================
+       SHARED FOOTER
+       ======================================================= -->
+  <div id="site-footer"></div>
+  <!-- =======================================================
+       SHARED SITE JAVASCRIPT
+       ======================================================= -->
+  <script src="site.js"></script>
+  <!-- =======================================================
+       LOAD SHARED NAVIGATION + FOOTER
+       ======================================================= -->
+  <script>
+    async function loadSharedComponent(elementId, file){
+      try{
+        const response = await fetch(file);
+        if(!response.ok){
+          throw new Error(
+            `Unable to load ${file}: ${response.status}`
+          );
+        }
+        const html = await response.text();
+        document.getElementById(elementId).innerHTML = html;
+        /*
+         * Support either initializer name if site.js
+         * exposes one after loading the shared component.
+         */
+        if(
+          typeof window.initializeSite === 'function'
+        ){
+          window.initializeSite();
+        }
+        if(
+          typeof window.initSite === 'function'
+        ){
+          window.initSite();
+        }
+      }catch(error){
+        console.error(
+          `Alphex AI: failed to load ${file}`,
+          error
+        );
+      }
+    }
+    document.addEventListener(
+      'DOMContentLoaded',
+      function(){
+        loadSharedComponent(
+          'site-nav',
+          'nav.html'
+        );
+        loadSharedComponent(
+          'site-footer',
+          'footer.html'
+        );
+      }
+    );
+  </script>
+</body>
+</html>
