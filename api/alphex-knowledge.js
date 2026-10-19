@@ -87,7 +87,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       capabilities: {
         name: 'Capabilities',
-        url: 'https://alphex-ai.vercel.app/#capabilities',
+        url: 'https://alphex-ai.vercel.app/capabilities',
         purpose:
           'Introduces AI services such as chatbots, knowledge systems, RAG, AI agents, and custom workflows.',
         verification:
@@ -95,7 +95,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       products: {
         name: 'Products',
-        url: 'https://alphex-ai.vercel.app/#products',
+        url: 'https://alphex-ai.vercel.app/products',
         purpose:
           'Introduces EvalLoop AI and EvalLoop Jobs.',
         verification:
@@ -103,7 +103,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       process: {
         name: 'Process',
-        url: 'https://alphex-ai.vercel.app/#process',
+        url: 'https://alphex-ai.vercel.app/process',
         purpose:
           'Describes discovery, building and testing, and launch and improvement.',
         verification:
@@ -111,7 +111,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       pricing: {
         name: 'Pricing',
-        url: 'https://alphex-ai.vercel.app/#pricing',
+        url: 'https://alphex-ai.vercel.app/pricing',
         purpose:
           'Provides the published starting prices for Starter, Growth, and Custom solutions.',
         verification:
@@ -134,7 +134,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       documentation: {
         name: 'Documentation',
-        url: null,
+        url: 'https://alphex-ai.vercel.app/documentation',
         purpose:
           'Documentation and technical guidance, if publicly available.',
         verification:
@@ -142,7 +142,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       about: {
         name: 'About',
-        url: null,
+        url: 'https://alphex-ai.vercel.app/about',
         purpose:
           'Company background and positioning, if available as a separate page.',
         verification:
@@ -150,7 +150,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       privacy: {
         name: 'Privacy Policy',
-        url: null,
+        url: 'https://alphex-ai.vercel.app/privacy',
         purpose:
           'Privacy information, if available as a public page.',
         verification:
@@ -158,7 +158,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       terms: {
         name: 'Terms of Service',
-        url: null,
+        url: 'https://alphex-ai.vercel.app/terms',
         purpose:
           'Applicable website or service terms, if available as a public page.',
         verification:
@@ -166,7 +166,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       disclaimer: {
         name: 'Disclaimer',
-        url: null,
+        url: 'https://alphex-ai.vercel.app/disclaimer',
         purpose:
           'Applicable disclaimers, if available as a public page.',
         verification:
@@ -174,7 +174,7 @@ const ALPHEX_KNOWLEDGE = {
       },
       evalLoopAI: {
         name: 'EvalLoop AI',
-        url: null,
+        url: 'https://evalloop-ai.vercel.app/',
         purpose:
           'AI evaluation and quality platform built by Alphex AI.',
         verification:
@@ -182,13 +182,13 @@ const ALPHEX_KNOWLEDGE = {
       },
       evalLoopJobs: {
         name: 'EvalLoop Jobs',
-        url: 'https://annotatorjobs.vercel.app',
+        url: 'https://evalloopjobs.vercel.app',
         purpose:
           'AI opportunity discovery platform covering AI evaluation, annotation, AI training, and related opportunities.'
       }
     },
     navigation_rules: [
-      'For contact requests, always provide https://alphex-ai.vercel.app/contact.',
+      'For contact requests, always provide https://alphex-ai.vercel.app/contact',
       'For pricing questions, explain the published starting prices and provide the configured pricing section URL.',
       'For product questions, use the verified product information in this knowledge base.',
       'Use only the configured URLs for website navigation.',
@@ -710,7 +710,7 @@ const ALPHEX_KNOWLEDGE = {
   pricing: {
     currency: 'INR',
     page_url:
-      'https://alphex-ai.vercel.app/#pricing',
+      'https://alphex-ai.vercel.app/pricing',
     plans: [
       {
         name: 'Starter',
