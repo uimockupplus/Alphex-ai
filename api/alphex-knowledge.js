@@ -795,12 +795,12 @@ const ALPHEX_KNOWLEDGE = {
         'https://alphex-ai.vercel.app/contact',
       instructions: [
         'For requests such as contact, contact details, contact sales, get in touch, talk to your team, discuss pricing, or request a proposal, use the official contact URL.',
-        'Never use https://alphex.ai/contact.',
+        'Never use https://alphex.ai/contact',
         'Never invent a phone number, email address, response time, or sales representative.',
         'Do not claim that a contact form has been submitted or that a message has been delivered.'
       ],
       suggested_response:
-        'You can contact the Alphex AI team here: https://alphex-ai.vercel.app/contact. Share your requirements to discuss the right solution and project scope.'
+        'You can contact the Alphex AI team here: https://alphex-ai.vercel.app/contact . Share your requirements to discuss the right solution and project scope.'
     }
   },
   /* =======================================================
@@ -845,7 +845,7 @@ const ALPHEX_KNOWLEDGE = {
       'Do not promise an implementation before requirements are understood.',
       'Do not invent integrations or technical specifications.',
       'Do not invent pricing beyond the public starting prices.',
-      'Guide genuine commercial enquiries to the official contact URL: https://alphex-ai.vercel.app/contact.'
+      'Guide genuine commercial enquiries to the official contact URL: https://alphex-ai.vercel.app/contact'
     ]
   },
   /* =======================================================
@@ -883,7 +883,7 @@ const ALPHEX_KNOWLEDGE = {
     behavior:
       'Understand the requirement, explain the relevant verified capability, and provide the contact URL directly when appropriate.',
     suggested_response:
-      'You can contact the Alphex AI team here: https://alphex-ai.vercel.app/contact. Share your requirements to discuss the right solution and project scope.',
+      'You can contact the Alphex AI team here: https://alphex-ai.vercel.app/contact . Share your requirements to discuss the right solution and project scope.',
     boundary:
       'Do not claim that a form was submitted, a message was delivered, or a representative will respond within a particular time unless the backend confirms it.'
   },
@@ -986,7 +986,7 @@ const ALPHEX_KNOWLEDGE = {
     'Do not invent URLs for unverified pages.',
     'Do not claim to have read live website pages unless the backend actually retrieves them.',
     'Never use https://alphex.ai/contact as the official contact URL.',
-    'The official contact URL is https://alphex-ai.vercel.app/contact.',
+    'The official contact URL is https://alphex-ai.vercel.app/contact',
     'Do not promise a response from a representative unless the response process is verified.',
     'When uncertain about an Alphex-specific fact, acknowledge that the information is not currently available rather than guessing.'
   ],
@@ -1085,8 +1085,8 @@ function getAlphexChatbotRules() {
     'When a visitor asks what Alphex AI does, explain the client-focused AI services first, then mention its products when relevant.',
     'When a visitor asks about EvalLoop AI or EvalLoop Jobs specifically, focus on that product.',
     'When asked which industries Alphex AI serves, use the industries array and describe the listed applications as potential use cases, not confirmed customer deployments.',
-    'When a visitor asks for contact information, provide this exact URL: https://alphex-ai.vercel.app/contact.',
-    'Never use https://alphex.ai/contact.',
+    'When a visitor asks for contact information, provide this exact URL: https://alphex-ai.vercel.app/contact',
+    'Never use https://alphex.ai/contact',
     'Do not invent contact phone numbers, email addresses, response times, or sales representatives.',
     'Do not claim that a contact form was submitted or that a message was delivered.',
     'When a visitor asks about pricing, use the exact starting prices in the knowledge base.',
