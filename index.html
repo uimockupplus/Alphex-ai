@@ -673,7 +673,7 @@ body.dark-theme .pricing{background:linear-gradient(135deg,#171a35,#191d28)}
 .nav-actions .contact-link,.nav-actions .theme-toggle{display:none}.pill{border-radius:999px;padding:12px 22px;font:500 12px var(--sans);min-height:42px}
 .header-demo{background:#fff!important;color:#171717!important;border-color:#fff!important;box-shadow:none!important}.header-demo:hover{background:var(--lavender)!important;color:#171717!important}
 .mobile-menu{border-color:rgba(255,255,255,.35)}.mobile-menu span{background:#fff}.mobile-panel{background:rgba(16,16,18,.98);border-color:#303038}.mobile-panel a{color:#fff;border-color:#303038}
-.hero{width:100%;max-width:none;margin:0;padding:132px max(32px,calc((100vw - 1180px)/2)) 78px;min-height:830px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;text-align:center;color:#fff;background:#101014;position:relative;isolation:isolate;overflow:hidden}
+.hero{width:100%;max-width:none;margin:0;padding:38px max(32px,calc((100vw - 1180px)/2)) 78px;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;text-align:center;color:#fff;background:#101014;position:relative;isolation:isolate;overflow:hidden}
 .hero:before{content:'';position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 59% 64% at 50% 41%,rgba(112,87,255,.2),transparent 72%),radial-gradient(ellipse 50% 70% at 50% 54%,rgba(53,200,192,.09),transparent 78%),#101014}
 .hero:after{content:'';position:absolute;z-index:-1;width:min(78vw,960px);height:min(78vw,960px);left:50%;top:32%;transform:translate(-50%,-50%);border:1px solid rgba(112,87,255,.32);border-radius:50%;box-shadow:inset 0 0 90px rgba(112,87,255,.07),0 0 100px rgba(112,87,255,.09);pointer-events:none}
 .hero .hero-signal-canvas{z-index:-1;opacity:.45!important}
@@ -689,9 +689,9 @@ body.dark-theme .pricing{background:linear-gradient(135deg,#171a35,#191d28)}
 .hero-stage:after{background:linear-gradient(120deg,transparent 0 40%,rgba(53,200,192,.24) 48%,transparent 56%)}
 .stage-ui{width:min(700px,80%);height:310px;border-radius:13px;background:rgba(19,20,28,.82);border-color:rgba(255,255,255,.24)}
 .hero+.ticker{position:relative;background:#eeecff;color:#5144ad;border-color:#e0ddf1}.hero+.ticker .ticker-track{padding:17px 0;font:10px var(--mono);letter-spacing:.12em;gap:34px}
-@media(max-width:950px){.nav-links{gap:14px;margin-left:18px}.hero{min-height:760px;padding-top:122px}.hero-stage{height:380px;margin-top:44px}}
-@media(max-width:800px){.topbar{position:absolute}.nav-links{display:none}.nav-actions .header-demo{display:none}.mobile-menu{display:block}.hero{min-height:0;padding:115px 20px 56px}.hero h1{font-size:clamp(50px,10vw,76px)!important}.hero-stage{height:355px;margin-top:40px}.stage-ui{height:285px}.hero+.ticker{margin:0}}
-@media(max-width:560px){.topbar .shell{width:calc(100% - 30px)}.hero{padding:103px 16px 44px}.hero-announcement{font-size:9px;margin-bottom:23px}.hero-kicker{font-size:9px}.hero h1{font-size:clamp(43px,12vw,60px)!important;margin-top:17px}.hero-copy{font-size:14px;margin-top:18px}.hero-actions{width:100%;flex-direction:row;align-items:center}.hero-actions .pill{padding:11px 15px;font-size:11px}.hero-stage{height:300px;margin-top:34px;border-radius:15px}.stage-ui{height:230px;width:94%;padding:13px}.stage-side{display:none}.stage-body{grid-template-columns:1fr}.hero+.ticker .ticker-track{gap:20px;font-size:8px}}
+@media(max-width:950px){.nav-links{gap:14px;margin-left:18px}.hero{min-height:0;padding-top:34px}.hero-stage{height:380px;margin-top:44px}}
+@media(max-width:800px){.topbar{position:absolute}.nav-links{display:none}.nav-actions .header-demo{display:none}.mobile-menu{display:block}.hero{min-height:0;padding:34px 20px 56px}.hero h1{font-size:clamp(50px,10vw,76px)!important}.hero-stage{height:355px;margin-top:40px}.stage-ui{height:285px}.hero+.ticker{margin:0}}
+@media(max-width:560px){.topbar .shell{width:calc(100% - 30px)}.hero{padding:28px 16px 44px}.hero-announcement{font-size:9px;margin-bottom:23px}.hero-kicker{font-size:9px}.hero h1{font-size:clamp(43px,12vw,60px)!important;margin-top:17px}.hero-copy{font-size:14px;margin-top:18px}.hero-actions{width:100%;flex-direction:row;align-items:center}.hero-actions .pill{padding:11px 15px;font-size:11px}.hero-stage{height:300px;margin-top:34px;border-radius:15px}.stage-ui{height:230px;width:94%;padding:13px}.stage-side{display:none}.stage-body{grid-template-columns:1fr}.hero+.ticker .ticker-track{gap:20px;font-size:8px}}
 
 
 /* Restore Alphex's original navigation and keep its theme switch functional. */
@@ -726,6 +726,31 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
 
 /* Seamless navbar-to-hero blend: same surface, no visible bar edge. */
 .topbar,body.dark-theme .topbar{background:#101014!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+
+
+/* Pitch-black hero background. */
+.hero{background:#000!important}
+.hero:before{background:#000!important;opacity:1!important}
+.hero:after{border-color:rgba(112,87,255,.24);box-shadow:inset 0 0 90px rgba(112,87,255,.045),0 0 100px rgba(112,87,255,.06)}
+.hero .hero-signal-canvas{opacity:.28!important}
+.topbar,body.dark-theme .topbar{background:#000!important}
+
+
+/* Completely flat black hero: remove circles, glow fields, particles and backdrop motion. */
+.hero,.hero:before,.hero:after{background:#000!important;background-image:none!important;box-shadow:none!important;border:0!important;animation:none!important}
+.hero:before,.hero:after{content:none!important;display:none!important}
+.hero .hero-signal-canvas{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}
+
+
+/* Subtle Alphex violet elevation behind the headline; black hero remains undisturbed elsewhere. */
+.hero h1{position:relative;isolation:isolate}
+.hero h1:before{content:'';position:absolute;z-index:-1;pointer-events:none;left:50%;top:50%;width:min(78vw,900px);height:115%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgba(112,87,255,.22) 0%,rgba(112,87,255,.11) 38%,rgba(112,87,255,.035) 62%,transparent 76%);filter:blur(44px);opacity:.9}
+@media(max-width:560px){.hero h1:before{width:115vw;height:125%;filter:blur(32px);background:radial-gradient(ellipse at center,rgba(112,87,255,.2) 0%,rgba(112,87,255,.075) 48%,transparent 76%)}}
+
+
+/* Soft centered violet accent glow across the hero background. */
+.hero:before{content:''!important;display:block!important;position:absolute!important;z-index:0!important;pointer-events:none!important;left:50%!important;top:42%!important;width:min(92vw,1120px)!important;height:480px!important;transform:translate(-50%,-50%)!important;border:0!important;border-radius:50%!important;background:radial-gradient(ellipse at center,rgba(112,87,255,.17) 0%,rgba(112,87,255,.085) 34%,rgba(112,87,255,.025) 57%,transparent 76%)!important;box-shadow:none!important;filter:blur(34px)!important;opacity:1!important;animation:none!important}
+@media(max-width:560px){.hero:before{width:120vw!important;height:360px!important;top:38%!important;filter:blur(28px)!important;background:radial-gradient(ellipse at center,rgba(112,87,255,.16) 0%,rgba(112,87,255,.06) 45%,transparent 76%)!important}}
 
 </style>
 </head>
@@ -840,42 +865,8 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
     <a class="pill dark" href="/contact.html">
       Discuss Your Project <span>↗</span>
     </a>
-    <a class="pill light" href="/capabilities.html">
-      Explore Our Solutions <span>↓</span>
-    </a>
   </div>
-  <div class="hero-stage">
-    <div class="stage-ui">
-      <div class="stage-top">
-        <span>ALPHEX AI / WORKSPACE</span>
-        <i class="stage-dot"></i>
-        <span>online</span>
-      </div>
-      <div class="stage-body">
-        <div class="stage-side">
-          <p>YOUR WORKFLOWS</p>
-          <div class="active">Customer support</div>
-          <div>Knowledge search</div>
-          <div>Lead capture</div>
-          <div>Appointments</div>
-        </div>
-        <div class="chat">
-          <div class="bubble">
-            What should I know before I answer this customer?
-          </div>
-          <div class="bubble user">
-            Use the pricing policy and keep the answer concise.
-          </div>
-          <div class="bubble">
-            Got it. I found the relevant policy and prepared a grounded response. I’ll flag anything uncertain instead of guessing.
-          </div>
-          <div class="chat-input">
-            Ask Alphex anything…
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </section>
 <div class="ticker" aria-label="Alphex AI principles">
   <div class="ticker-track">
@@ -1327,7 +1318,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
         </div>
         <div class="footer-group">
           <h4>Products</h4>
-          <a href="https://evalloop-ai.vercel.app/">EvalLoop AI</a>
+          <a href="https://arthnix.vercel.app/">Arthnix</a>
           <a href="https://evalloopjobs.vercel.app">EvalLoop Jobs</a>
           <a href="/documentation.html">Documentation</a>
         </div>
