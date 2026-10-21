@@ -665,6 +665,68 @@ body.dark-theme .industry-section .industry-work b{color:#f5f4ff}
 body.dark-theme .pricing{background:linear-gradient(135deg,#171a35,#191d28)}
 
 
+
+/* Header + hero only: Observe.AI-inspired composition using Alphex AI's own type and palette. */
+.topbar{position:absolute;top:0;left:0;right:0;background:rgba(12,13,17,.92);border:0;box-shadow:none;color:#fff}
+.topbar .shell{width:min(1320px,calc(100% - 56px))}.nav{height:74px}.wordmark{color:#fff;font:500 22px var(--sans)!important;letter-spacing:-.08em}
+.nav-links{gap:23px;margin-left:42px}.nav-links a{font:400 12px var(--sans);color:rgba(255,255,255,.84)}.nav-links a:after{background:var(--accent)}
+.nav-actions .contact-link,.nav-actions .theme-toggle{display:none}.pill{border-radius:999px;padding:12px 22px;font:500 12px var(--sans);min-height:42px}
+.header-demo{background:#fff!important;color:#171717!important;border-color:#fff!important;box-shadow:none!important}.header-demo:hover{background:var(--lavender)!important;color:#171717!important}
+.mobile-menu{border-color:rgba(255,255,255,.35)}.mobile-menu span{background:#fff}.mobile-panel{background:rgba(16,16,18,.98);border-color:#303038}.mobile-panel a{color:#fff;border-color:#303038}
+.hero{width:100%;max-width:none;margin:0;padding:132px max(32px,calc((100vw - 1180px)/2)) 78px;min-height:830px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;text-align:center;color:#fff;background:#101014;position:relative;isolation:isolate;overflow:hidden}
+.hero:before{content:'';position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 59% 64% at 50% 41%,rgba(112,87,255,.2),transparent 72%),radial-gradient(ellipse 50% 70% at 50% 54%,rgba(53,200,192,.09),transparent 78%),#101014}
+.hero:after{content:'';position:absolute;z-index:-1;width:min(78vw,960px);height:min(78vw,960px);left:50%;top:32%;transform:translate(-50%,-50%);border:1px solid rgba(112,87,255,.32);border-radius:50%;box-shadow:inset 0 0 90px rgba(112,87,255,.07),0 0 100px rgba(112,87,255,.09);pointer-events:none}
+.hero .hero-signal-canvas{z-index:-1;opacity:.45!important}
+.hero-announcement{display:block;position:relative;z-index:2;margin:0 auto 30px;padding:8px 14px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(255,255,255,.07);font-size:11px;color:rgba(255,255,255,.86)}
+.hero-announcement a{color:#c7bdff;text-decoration:none;margin-left:7px}
+.hero-kicker{order:0;width:auto;padding:0;border:0;border-radius:0;background:none;color:#bfb5ff;font:500 10px var(--mono);letter-spacing:.15em;text-transform:uppercase}.hero-kicker:before{display:none}
+.hero h1{order:1;display:block;grid-column:auto;grid-row:auto;width:min(100%,1000px);max-width:1000px;margin:22px auto 0;color:#fff;font:300 clamp(52px,8vw,96px)/.99 var(--sans)!important;letter-spacing:-.075em;text-align:center}
+.hero h1>span{display:inline}.hero h1 .brand-highlight{color:#a99aff}
+.hero-copy{order:2;grid-column:auto;grid-row:auto;max-width:620px;margin:24px auto 0;color:rgba(255,255,255,.72);font:300 16px/1.65 var(--sans);text-align:center}
+.hero-actions{order:3;grid-column:auto;grid-row:auto;justify-content:center;align-self:center;margin:28px auto 0;gap:12px}.hero-actions .pill.dark{background:var(--accent);border-color:var(--accent)}.hero-actions .pill.light{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.4);color:#fff}
+.hero-stage{order:4;grid-column:auto;grid-row:auto;width:min(100%,1060px);height:420px;margin:55px auto 0;border-radius:20px;background:linear-gradient(135deg,#1b1837,#101116 54%,#103534);border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 90px rgba(0,0,0,.4)}
+.hero-stage:before{width:620px;height:620px;background:radial-gradient(circle at 48% 46%,#f4f0ff 0 5%,#a79bff 10%,#7057ff 21%,#30295c 45%,#111217 72%);opacity:.72}
+.hero-stage:after{background:linear-gradient(120deg,transparent 0 40%,rgba(53,200,192,.24) 48%,transparent 56%)}
+.stage-ui{width:min(700px,80%);height:310px;border-radius:13px;background:rgba(19,20,28,.82);border-color:rgba(255,255,255,.24)}
+.hero+.ticker{position:relative;background:#eeecff;color:#5144ad;border-color:#e0ddf1}.hero+.ticker .ticker-track{padding:17px 0;font:10px var(--mono);letter-spacing:.12em;gap:34px}
+@media(max-width:950px){.nav-links{gap:14px;margin-left:18px}.hero{min-height:760px;padding-top:122px}.hero-stage{height:380px;margin-top:44px}}
+@media(max-width:800px){.topbar{position:absolute}.nav-links{display:none}.nav-actions .header-demo{display:none}.mobile-menu{display:block}.hero{min-height:0;padding:115px 20px 56px}.hero h1{font-size:clamp(50px,10vw,76px)!important}.hero-stage{height:355px;margin-top:40px}.stage-ui{height:285px}.hero+.ticker{margin:0}}
+@media(max-width:560px){.topbar .shell{width:calc(100% - 30px)}.hero{padding:103px 16px 44px}.hero-announcement{font-size:9px;margin-bottom:23px}.hero-kicker{font-size:9px}.hero h1{font-size:clamp(43px,12vw,60px)!important;margin-top:17px}.hero-copy{font-size:14px;margin-top:18px}.hero-actions{width:100%;flex-direction:row;align-items:center}.hero-actions .pill{padding:11px 15px;font-size:11px}.hero-stage{height:300px;margin-top:34px;border-radius:15px}.stage-ui{height:230px;width:94%;padding:13px}.stage-side{display:none}.stage-body{grid-template-columns:1fr}.hero+.ticker .ticker-track{gap:20px;font-size:8px}}
+
+
+/* Restore Alphex's original navigation and keep its theme switch functional. */
+.topbar{position:sticky;top:0;left:auto;right:auto;z-index:100;background:rgba(247,247,245,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(16,16,16,.08);box-shadow:none;color:var(--ink)}
+.topbar .shell{width:min(1240px,calc(100% - 64px))}.nav{height:76px}
+.wordmark{color:var(--ink)!important;font-family:var(--sans)!important;font-size:22px!important;font-weight:500!important;letter-spacing:-.075em!important}
+.nav-links{display:flex;gap:26px;margin-left:100px}.nav-links a{color:var(--ink)!important;text-decoration:none;font:400 13px var(--sans)}
+.nav-actions{display:flex;align-items:center;gap:11px}.nav-actions .contact-link{display:inline-flex}.nav-actions .theme-toggle{display:inline-flex}
+.theme-toggle{height:39px;align-items:center;gap:7px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:transparent;color:var(--ink);font:11px var(--mono);cursor:pointer}
+.header-demo{background:linear-gradient(110deg,var(--accent-dark),var(--accent))!important;color:#fff!important;border-color:var(--accent-dark)!important;box-shadow:none!important}
+.mobile-menu{border-color:var(--border)}.mobile-menu span{background:var(--ink)}.mobile-panel{background:rgba(247,247,245,.97);border-color:var(--border)}.mobile-panel a{color:var(--ink);border-color:var(--border)}
+body.dark-theme .topbar{background:rgba(14,16,25,.92);border-color:var(--border);color:var(--ink)}
+body.dark-theme .nav-links a,body.dark-theme .wordmark{color:var(--ink)!important}
+body.dark-theme .mobile-panel{background:rgba(14,16,25,.97);border-color:var(--border)}body.dark-theme .mobile-panel a{color:var(--ink);border-color:var(--border)}body.dark-theme .mobile-menu{border-color:var(--border)}body.dark-theme .mobile-menu span{background:var(--ink)}
+@media(max-width:800px){.nav{height:68px}.topbar .shell{width:calc(100% - 28px)}.nav-links{display:none}.nav-actions{gap:7px}.contact-link{display:none!important}.nav-actions .theme-toggle{display:inline-flex;width:40px;height:40px;padding:0;justify-content:center}.theme-label{display:none}.mobile-menu{display:block}}
+
+
+/* Dark hero-matched treatment for the restored original navigation. */
+.topbar{position:sticky;top:0;background:rgba(16,16,20,.97);border:0;box-shadow:0 1px 0 rgba(255,255,255,.09);color:#fff}
+.topbar .wordmark,.topbar .nav-links a{color:#fff!important}
+.topbar .nav-links a:hover{opacity:.72}
+.topbar .nav-links a:after{background:var(--accent)}
+.topbar .contact-link{background:transparent!important;border-color:rgba(255,255,255,.46)!important;color:#fff!important}
+.topbar .contact-link:hover{border-color:var(--cyan)!important;background:rgba(255,255,255,.06)!important;color:#fff!important}
+.topbar .theme-toggle{border-color:rgba(255,255,255,.4);background:transparent;color:#fff}
+.topbar .theme-toggle:hover{border-color:var(--cyan);background:rgba(255,255,255,.08);color:#fff}
+.topbar .header-demo{background:linear-gradient(110deg,var(--accent-dark),var(--accent))!important;color:#fff!important;border-color:var(--accent-dark)!important}
+body.dark-theme .topbar{background:rgba(16,16,20,.97);border-color:rgba(255,255,255,.09);color:#fff}
+body.dark-theme .topbar .wordmark,body.dark-theme .topbar .nav-links a{color:#fff!important}
+body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.4)}
+
+
+/* Seamless navbar-to-hero blend: same surface, no visible bar edge. */
+.topbar,body.dark-theme .topbar{background:#101014!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+
 </style>
 </head>
 <body>
@@ -758,27 +820,17 @@ body.dark-theme .pricing{background:linear-gradient(135deg,#171a35,#191d28)}
   </div>
 </div>
 <main id="top">
-<div class="announcement">
+
+
+<section class="hero shell">
+  <canvas class="hero-signal-canvas" aria-hidden="true"></canvas>
+  <div class="announcement hero-announcement">
   Alphex AI is building products for a better AI ecosystem.
   <a href="/products.html">Explore what we build →</a>
 </div>
-<div class="ticker" aria-label="Alphex AI principles">
-  <div class="ticker-track">
-    <span>RELIABLE BY DESIGN</span><b>✦</b>
-    <span>GROUNDED IN YOUR DATA</span><b>✦</b>
-    <span>HUMAN HANDOFF WHEN NEEDED</span><b>✦</b>
-    <span>BUILT FOR REAL WORK</span><b>✦</b>
-    <span>RELIABLE BY DESIGN</span><b>✦</b>
-    <span>GROUNDED IN YOUR DATA</span><b>✦</b>
-    <span>HUMAN HANDOFF WHEN NEEDED</span><b>✦</b>
-    <span>BUILT FOR REAL WORK</span><b>✦</b>
-  </div>
-</div>
-<section class="hero shell">
-  <canvas class="hero-signal-canvas" aria-hidden="true"></canvas>
   <div class="hero-kicker">AI systems for real work</div>
   <h1>
-    <span>AI solutions designed around your business needs.</span>
+    <span>AI solutions designed around <span class="brand-highlight">your business needs.</span></span>
     <span></span>
   </h1>
   <p class="hero-copy">
@@ -825,6 +877,18 @@ body.dark-theme .pricing{background:linear-gradient(135deg,#171a35,#191d28)}
     </div>
   </div>
 </section>
+<div class="ticker" aria-label="Alphex AI principles">
+  <div class="ticker-track">
+    <span>RELIABLE BY DESIGN</span><b>✦</b>
+    <span>GROUNDED IN YOUR DATA</span><b>✦</b>
+    <span>HUMAN HANDOFF WHEN NEEDED</span><b>✦</b>
+    <span>BUILT FOR REAL WORK</span><b>✦</b>
+    <span>RELIABLE BY DESIGN</span><b>✦</b>
+    <span>GROUNDED IN YOUR DATA</span><b>✦</b>
+    <span>HUMAN HANDOFF WHEN NEEDED</span><b>✦</b>
+    <span>BUILT FOR REAL WORK</span><b>✦</b>
+  </div>
+</div>
 <section class="section shell" id="capabilities">
   <div class="intro">
     <div>
