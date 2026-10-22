@@ -752,6 +752,85 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
 .hero:before{content:''!important;display:block!important;position:absolute!important;z-index:0!important;pointer-events:none!important;left:50%!important;top:42%!important;width:min(92vw,1120px)!important;height:480px!important;transform:translate(-50%,-50%)!important;border:0!important;border-radius:50%!important;background:radial-gradient(ellipse at center,rgba(112,87,255,.17) 0%,rgba(112,87,255,.085) 34%,rgba(112,87,255,.025) 57%,transparent 76%)!important;box-shadow:none!important;filter:blur(34px)!important;opacity:1!important;animation:none!important}
 @media(max-width:560px){.hero:before{width:120vw!important;height:360px!important;top:38%!important;filter:blur(28px)!important;background:radial-gradient(ellipse at center,rgba(112,87,255,.16) 0%,rgba(112,87,255,.06) 45%,transparent 76%)!important}}
 
+
+/* Animated customer-support chat preview, scoped to the chatbot capability card. */
+.chatbot-visual{display:flex;align-items:center;justify-content:center;padding:26px;background:radial-gradient(ellipse at 50% 45%,rgba(198,186,255,.78),transparent 68%),linear-gradient(140deg,#282044,#7057ff 65%,#39315e)!important}
+.chatbot-visual:before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.18);filter:blur(55px);pointer-events:none}
+.chatbot-card{position:relative;width:min(100%,450px);min-height:270px;padding:17px;border:1px solid rgba(255,255,255,.68);border-radius:18px;background:rgba(255,255,255,.94);box-shadow:0 22px 65px rgba(23,14,65,.27);color:#161527;overflow:hidden;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+.chatbot-topbar{display:flex;align-items:center;gap:10px;padding:0 0 13px;border-bottom:1px solid #eeedf3}
+.chatbot-mark{width:29px;height:29px;display:grid;place-items:center;border-radius:9px;background:linear-gradient(135deg,#5540d8,#8a79ff);color:white;font:500 13px var(--sans)}
+.chatbot-brand{font:500 9px var(--mono);letter-spacing:.06em;color:#36334b}
+.chatbot-online{margin-left:auto;display:flex;align-items:center;gap:5px;font:9px var(--mono);color:#6a6c78}
+.chatbot-online i{width:6px;height:6px;border-radius:50%;background:#35c8a2;box-shadow:0 0 0 3px rgba(53,200,162,.13)}
+.chatbot-conversation{display:flex;flex-direction:column;gap:13px;padding:18px 2px 13px}
+.chatbot-message{width:fit-content;max-width:88%;padding:11px 13px;border-radius:12px;opacity:0;transform:translateY(9px);animation:chatMessageIn .65s cubic-bezier(.2,.75,.25,1) forwards}
+.customer-message{align-self:flex-end;background:#eeeaff;border:1px solid #e1dcff;animation-delay:.35s;border-bottom-right-radius:4px}
+.assistant-message{align-self:flex-start;background:#f5f6f8;border:1px solid #eceef2;animation-delay:1.25s;border-bottom-left-radius:4px}
+.chatbot-speaker{display:block;margin-bottom:4px;font:9px var(--mono);letter-spacing:.07em;color:#6553ca}
+.chatbot-message p{margin:0;color:#262435;font:400 12px/1.45 var(--sans)}
+.chatbot-compose{display:flex;align-items:center;justify-content:space-between;margin-top:2px;padding:8px 9px 8px 12px;border:1px solid #e9e9ee;border-radius:9px;color:#a2a3ac;font:10px var(--sans)}
+.chatbot-compose b{display:grid;place-items:center;width:23px;height:23px;border-radius:7px;background:#7057ff;color:#fff;font:500 14px var(--sans)}
+@keyframes chatMessageIn{to{opacity:1;transform:translateY(0)}}
+@media(max-width:800px){.chatbot-visual{padding:22px}.chatbot-card{min-height:258px}}
+@media(max-width:480px){.chatbot-visual{padding:16px}.chatbot-card{min-height:245px;padding:14px}.chatbot-conversation{gap:10px;padding:15px 1px 12px}.chatbot-message p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.chatbot-message{animation:none;opacity:1;transform:none}}
+
+
+/* Animated task-run checklist for the AI agents and automation capability. */
+.workflow-visual{display:flex;align-items:center;justify-content:center;padding:26px;background:radial-gradient(ellipse at 50% 45%,rgba(112,87,255,.24),transparent 67%),linear-gradient(140deg,#211b3b,#41357f 58%,#174442)!important}
+.workflow-card{position:relative;width:min(100%,470px);padding:19px 20px 14px;border:1px solid rgba(255,255,255,.23);border-radius:16px;background:rgba(18,19,29,.91);box-shadow:0 24px 64px rgba(10,8,27,.34);color:#f8f7ff;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.workflow-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.workflow-title{display:flex;align-items:center;gap:9px;font:10px var(--mono);letter-spacing:.08em;color:#eeecf8}
+.workflow-app-icon{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:linear-gradient(135deg,#7057ff,#35c8c0);font:15px var(--sans);color:#fff}
+.workflow-run{display:flex;align-items:center;gap:6px;font:9px var(--mono);letter-spacing:.06em;color:#a8e8dc}
+.workflow-run i,.workflow-foot-dot{width:6px;height:6px;border-radius:50%;background:#35c8c0;box-shadow:0 0 0 3px rgba(53,200,192,.12)}
+.workflow-progress{height:3px;margin:15px 0 11px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.workflow-progress span{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#7057ff,#35c8c0);animation:workflowProgress 3.2s .1s ease-out forwards}
+.workflow-list{display:grid}
+.workflow-step{min-height:47px;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.09);color:#f2f0fa;font:12px var(--sans);opacity:0;transform:translateY(7px);animation:workflowStepIn .45s ease-out forwards}
+.step-booking{animation-delay:.35s}.step-calendar{animation-delay:.9s}.step-crm{animation-delay:1.45s}.step-approval{animation-delay:2s}
+.workflow-check{width:19px;height:19px;display:grid;place-items:center;border-radius:50%;background:rgba(53,200,192,.14);border:1px solid rgba(53,200,192,.52);color:#63e3d5;font:12px var(--sans);transform:scale(.55);animation:workflowCheck .35s .25s cubic-bezier(.2,.8,.2,1) forwards}
+.step-calendar .workflow-check{animation-delay:.8s}.step-crm .workflow-check{animation-delay:1.35s}
+.workflow-step b{font:8px var(--mono);letter-spacing:.04em;color:#7ddfd3;font-weight:400}
+.workflow-pending{width:17px;height:17px;border:1.5px solid rgba(191,181,255,.42);border-top-color:#bfb5ff;border-radius:50%;animation:approvalSpin 2s linear infinite}
+.step-approval span:nth-child(2){color:#d8d0ff}.step-approval b{color:#c4b8ff}
+.workflow-foot{display:flex;align-items:center;gap:8px;margin-top:13px;color:#9fa1b1;font:9px var(--mono)}.workflow-foot-dot{width:5px;height:5px}
+@keyframes workflowStepIn{to{opacity:1;transform:translateY(0)}}
+@keyframes workflowCheck{to{transform:scale(1)}}
+@keyframes workflowProgress{to{transform:scaleX(1)}}
+@keyframes approvalSpin{to{transform:rotate(360deg)}}
+@media(max-width:800px){.workflow-visual{padding:22px}.workflow-card{max-width:480px}}
+@media(max-width:480px){.workflow-visual{padding:16px}.workflow-card{padding:15px}.workflow-step{min-height:43px;font-size:11px}.workflow-title{font-size:9px}.workflow-foot{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.workflow-progress span{animation:none;transform:scaleX(1)}.workflow-step{animation:none;opacity:1;transform:none}.workflow-check{animation:none;transform:scale(1)}.workflow-pending{animation:none}}
+
+
+/* Restore the original warm yellow background behind the workflow checklist. */
+.workflow-visual{background:linear-gradient(135deg,#604a0f,#f6c85f)!important}
+
+
+/* Warm translucent yellow-white surface for the workflow checklist panel. */
+.workflow-card{background:rgba(255,250,229,.88)!important;border-color:rgba(255,255,255,.74)!important;color:#292316!important;box-shadow:0 22px 60px rgba(82,57,0,.2)!important}
+.workflow-head{border-color:rgba(89,69,20,.12)}
+.workflow-title{color:#383018!important}.workflow-app-icon{background:linear-gradient(135deg,#7057ff,#35c8c0)!important}
+.workflow-run{color:#246d55!important}.workflow-run i,.workflow-foot-dot{background:#35a77e!important;box-shadow:0 0 0 3px rgba(53,167,126,.13)!important}
+.workflow-progress{background:rgba(67,52,16,.12)!important}
+.workflow-step{color:#302a1c!important;border-color:rgba(82,65,23,.13)!important}
+.workflow-step b{color:#318269!important}.workflow-check{background:rgba(53,167,126,.12)!important;border-color:rgba(53,167,126,.5)!important;color:#228467!important}
+.workflow-pending{border-color:rgba(112,87,255,.32)!important;border-top-color:#7057ff!important}
+.step-approval span:nth-child(2){color:#5540a8!important}.step-approval b{color:#7057ff!important}
+.workflow-foot{color:#776b4a!important}
+
+
+/* Coordinate all checklist accents with its warm yellow/gold background. */
+.workflow-app-icon{background:linear-gradient(135deg,#8a6418,#c4932f)!important;color:#fffaf0!important}
+.workflow-run{color:#846016!important}
+.workflow-run i,.workflow-foot-dot{background:#b48424!important;box-shadow:0 0 0 3px rgba(180,132,36,.15)!important}
+.workflow-progress span{background:linear-gradient(90deg,#9b7019,#d2a640)!important}
+.workflow-check{background:rgba(180,132,36,.12)!important;border-color:rgba(156,111,24,.42)!important;color:#956a16!important}
+.workflow-step b{color:#8a681f!important}
+.workflow-pending{border-color:rgba(156,111,24,.35)!important;border-top-color:#a87515!important}
+.step-approval span:nth-child(2){color:#795912!important}.step-approval b{color:#956a16!important}
+
 </style>
 </head>
 <body>
@@ -908,10 +987,25 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
           Explore chatbots <span>↗</span>
         </a>
       </div>
-      <div class="feature-visual">
-        <div class="visual-lines"></div>
-        <div class="visual-orbit"></div>
-        <div class="visual-core"></div>
+      <div class="feature-visual chatbot-visual" role="img" aria-label="Chat preview: Customer asks, Do you ship to Pune? Alphex Assistant replies, Yes — 2–4 business days. Want me to start an order?">
+        <div class="chatbot-card" aria-hidden="true">
+          <div class="chatbot-topbar">
+            <span class="chatbot-mark">A</span>
+            <span class="chatbot-brand">ALPHEX ASSISTANT</span>
+            <span class="chatbot-online"><i></i> Online</span>
+          </div>
+          <div class="chatbot-conversation">
+            <div class="chatbot-message customer-message">
+              <span class="chatbot-speaker">CUSTOMER</span>
+              <p>Do you ship to Pune?</p>
+            </div>
+            <div class="chatbot-message assistant-message">
+              <span class="chatbot-speaker">ALPHEX ASSISTANT</span>
+              <p>Yes — 2–4 business days. Want me to start an order?</p>
+            </div>
+          </div>
+          <div class="chatbot-compose"><span>Write a message…</span><b>↑</b></div>
+        </div>
       </div>
     </article>
     <article class="feature">
@@ -956,10 +1050,21 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
           Explore AI Automation <span>↗</span>
         </a>
       </div>
-      <div class="feature-visual">
-        <div class="visual-lines"></div>
-        <div class="visual-orbit"></div>
-        <div class="visual-core"></div>
+      <div class="feature-visual workflow-visual" role="img" aria-label="Workflow checklist: read new booking, check calendar, update CRM record, awaiting approval.">
+        <div class="workflow-card" aria-hidden="true">
+          <div class="workflow-head">
+            <div class="workflow-title"><span class="workflow-app-icon">↗</span><span>BOOKING WORKFLOW</span></div>
+            <span class="workflow-run"><i></i> RUNNING</span>
+          </div>
+          <div class="workflow-progress"><span></span></div>
+          <div class="workflow-list">
+            <div class="workflow-step step-booking"><span class="workflow-check">✓</span><span>read new booking</span><b>DONE</b></div>
+            <div class="workflow-step step-calendar"><span class="workflow-check">✓</span><span>check calendar</span><b>DONE</b></div>
+            <div class="workflow-step step-crm"><span class="workflow-check">✓</span><span>update CRM record</span><b>DONE</b></div>
+            <div class="workflow-step step-approval"><span class="workflow-pending"></span><span>awaiting approval</span><b>REVIEW</b></div>
+          </div>
+          <div class="workflow-foot"><span class="workflow-foot-dot"></span> All actions follow your approval rules</div>
+        </div>
       </div>
     </article>
   </div>
@@ -1318,7 +1423,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
         </div>
         <div class="footer-group">
           <h4>Products</h4>
-          <a href="https://evalloop-ai.vercel.app/">EvalLoop AI</a>
+          <a href="https://arthnix.vercel.app/">Arthnix</a>
           <a href="https://evalloopjobs.vercel.app">EvalLoop Jobs</a>
           <a href="/documentation.html">Documentation</a>
         </div>
