@@ -905,6 +905,14 @@ body.dark-theme #products .product-card.jobs .product-tags span{color:#b8e6df!im
 .chatbot-card.chatbot-playing .chatbot-message:not(.chatbot-visible){opacity:0!important;transform:translateY(7px)!important}
 .chatbot-message p{min-height:1.45em}
 
+
+/* Keep the mobile hamburger visible on the dark hero-matched navbar in either theme. */
+@media(max-width:800px){
+  .topbar .mobile-menu{display:block;width:40px;height:40px;position:relative;flex:0 0 40px;padding:0;border:1px solid rgba(255,255,255,.52)!important;border-radius:50%;background:rgba(255,255,255,.07)!important;color:#fff!important;opacity:1;visibility:visible}
+  .topbar .mobile-menu span,.topbar .mobile-menu span:first-child,.topbar .mobile-menu span:last-child{background:#fff!important}
+  .topbar .mobile-menu:focus-visible{outline:2px solid #c7bdff;outline-offset:3px}
+}
+
 </style>
 </head>
 <body>
