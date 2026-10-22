@@ -831,6 +831,80 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
 .workflow-pending{border-color:rgba(156,111,24,.35)!important;border-top-color:#a87515!important}
 .step-approval span:nth-child(2){color:#795912!important}.step-approval b{color:#956a16!important}
 
+
+/* Harmonized layout for the attached industries → products → quality → plans → FAQ sequence. */
+.industry-section .intro,.products-section .intro{align-items:end;gap:72px}
+.industry-section .section-copy,.products-section .section-copy{max-width:470px}
+.industry-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+.industry-item{min-height:225px;display:flex;flex-direction:column;align-items:flex-start;padding:25px 26px}
+.industry-item h3{margin:0 0 10px}.industry-item p{margin:0;line-height:1.62}
+.products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.product-card{min-height:390px;display:flex;flex-direction:column;justify-content:space-between;padding:32px}
+.product-card>div:nth-child(2){margin:30px 0 24px}.product-card h3{margin:0 0 12px}.product-card p{max-width:500px;line-height:1.65}
+.product-tags{gap:7px}.product-tags span{font-size:9px;padding:7px 9px}.product-bottom{margin-top:auto;align-items:center}
+.band .band-inner{align-items:center;gap:80px}.band-card{min-height:300px}.checks{gap:13px}
+.pricing .section-title{max-width:740px}.pricing-grid{align-items:stretch;gap:16px;margin-top:42px}
+.price-card{min-height:355px;display:flex;flex-direction:column;padding:28px}.price-card h3{margin:54px 0 10px}.price-card p{max-width:290px;line-height:1.6}.price-amount{margin-top:auto;padding-top:24px}.price-card .pill{margin-top:18px}
+.price-card.featured{transform:translateY(-8px);box-shadow:0 18px 42px rgba(53,43,119,.16)}
+.faq-grid{align-items:start;gap:88px}.faq-grid>div:first-child{position:sticky;top:110px}.faq-grid .section-title{max-width:430px}.faq-list details{padding:21px 0}
+.cta .shell{max-width:980px}.footer-top{align-items:start}
+@media(max-width:900px){.industry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.band .band-inner{gap:38px}.faq-grid{gap:48px}.faq-grid>div:first-child{position:static}}
+@media(max-width:700px){.industry-section .intro,.products-section .intro{gap:20px}.industry-grid,.products-grid{grid-template-columns:1fr}.industry-item{min-height:0}.product-card{min-height:350px}.price-card.featured{transform:none}.pricing-grid{gap:12px}.price-card{min-height:310px}.faq-grid{display:grid;grid-template-columns:1fr;gap:26px}}
+
+
+
+/* Restore the original Alphex product-card color system, without the circle logo badges. */
+#products.products-section{background:var(--paper)!important;color:var(--ink)}
+#products .section-label{color:var(--accent-dark)!important}
+#products .section-title{color:var(--ink)!important}
+#products .section-copy{color:#595955!important}
+#products .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:42px}
+#products .product-card,#products .product-card.ai,#products .product-card.jobs{min-height:390px;padding:32px;background:#fff!important;border:1px solid rgba(16,16,16,.1)!important;border-radius:18px;box-shadow:0 10px 35px rgba(38,31,91,.07)!important;color:var(--ink)!important;backdrop-filter:none;-webkit-backdrop-filter:none;transform:none}
+#products .product-card.ai{background:linear-gradient(135deg,#eeeaff 0%,#fff 78%)!important;border-color:#e2dcff!important}
+#products .product-card.jobs{background:linear-gradient(135deg,#e6f8f4 0%,#fff 78%)!important;border-color:#d4eee8!important}
+#products .product-card:after{display:none}
+#products .product-top{display:flex;align-items:center;justify-content:flex-start;padding-bottom:18px;border-bottom:1px solid rgba(30,25,55,.12)}
+#products .product-number{font:10px var(--mono);letter-spacing:.1em;color:#6258a3!important}
+#products .product-card.jobs .product-number{color:#397b70!important}
+#products .product-card>div:nth-child(2){margin:26px 0 22px}
+#products .product-card h3{margin:0 0 12px;color:#171522!important;font:400 clamp(27px,3vw,36px)/1.05 var(--sans)!important;letter-spacing:-.06em}
+#products .product-card p{max-width:540px;margin:0;color:#555361!important;font:400 13px/1.65 var(--sans)}
+#products .product-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+#products .product-tags span{padding:6px 9px;border:1px solid rgba(57,45,117,.16)!important;border-radius:999px;background:rgba(255,255,255,.68)!important;color:#51468e!important;font:9px var(--mono);letter-spacing:.02em}
+#products .product-card.jobs .product-tags span{border-color:rgba(35,111,100,.18)!important;color:#286f65!important}
+#products .product-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:17px;border-top:1px solid rgba(30,25,55,.12)}
+#products .product-status{color:#6c6880!important;font:9px var(--mono);letter-spacing:.055em}
+#products .product-card.jobs .product-status{color:#52756e!important}
+#products .product-bottom .pill{min-height:38px;margin:0;padding:9px 13px;border:1px solid var(--accent-dark)!important;border-radius:999px;background:var(--accent-dark)!important;color:#fff!important;font:500 11px var(--sans);white-space:nowrap;box-shadow:none!important}
+#products .product-card.jobs .product-bottom .pill{background:#246d69!important;border-color:#246d69!important}
+#products .product-bottom .pill:hover{filter:brightness(.92);transform:translateY(-1px)}
+body.dark-theme #products.products-section{background:var(--paper)!important;color:var(--ink)}
+body.dark-theme #products .product-card.ai{background:linear-gradient(135deg,#211d3d,#171a28)!important;border-color:#40396a!important}
+body.dark-theme #products .product-card.jobs{background:linear-gradient(135deg,#173332,#171a28)!important;border-color:#2d5651!important}
+body.dark-theme #products .product-card h3{color:#f5f4ff!important}body.dark-theme #products .product-card p{color:#c0c3d2!important}
+body.dark-theme #products .product-number{color:#bfb5ff!important}body.dark-theme #products .product-card.jobs .product-number{color:#9ddbd1!important}
+body.dark-theme #products .product-top,body.dark-theme #products .product-bottom{border-color:rgba(255,255,255,.13)!important}
+body.dark-theme #products .product-tags span{background:rgba(255,255,255,.06)!important;color:#ddd8ff!important;border-color:rgba(191,181,255,.24)!important}
+body.dark-theme #products .product-card.jobs .product-tags span{color:#b8e6df!important;border-color:rgba(115,202,189,.25)!important}
+@media(max-width:700px){#products .products-grid{grid-template-columns:1fr;gap:12px}#products .product-card{min-height:350px;padding:24px}}
+@media(max-width:420px){#products .product-card{min-height:0}#products .product-bottom{align-items:flex-start;flex-direction:column}}
+
+
+/* True sequential type-in effect for the chatbot conversation. */
+.chatbot-message{opacity:0!important;transform:translateY(7px);animation:none!important}
+.chatbot-message.chatbot-visible{animation:chatMessageIn .32s cubic-bezier(.2,.75,.25,1) forwards!important}
+.chatbot-message p{min-height:1.45em}
+.chatbot-message p.chatbot-typing:after{content:'';display:inline-block;width:1px;height:1em;margin-left:2px;vertical-align:-.12em;background:#6553ca;animation:chatCaret .75s steps(2,end) infinite}
+@keyframes chatCaret{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.chatbot-message{opacity:1!important;transform:none!important}.chatbot-message.chatbot-visible{animation:none!important}.chatbot-message p.chatbot-typing:after{display:none}}
+
+
+/* Fail-safe: full chat text remains visible unless the typewriter is actively running. */
+.chatbot-message{opacity:1!important;transform:none!important;animation:none!important}
+.chatbot-message.chatbot-visible{animation:chatMessageIn .32s cubic-bezier(.2,.75,.25,1) forwards!important}
+.chatbot-card.chatbot-playing .chatbot-message:not(.chatbot-visible){opacity:0!important;transform:translateY(7px)!important}
+.chatbot-message p{min-height:1.45em}
+
 </style>
 </head>
 <body>
@@ -1157,7 +1231,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
     <div class="intro">
       <div>
         <div class="section-label">
-          02 / What we build
+          08 / What we build
         </div>
         <h2 class="section-title">
           Products for a better AI ecosystem.
@@ -1173,9 +1247,6 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
           <span class="product-number">
             PRODUCT / 01
           </span>
-          <div class="product-mark">
-            EL.AI
-          </div>
         </div>
         <div>
           <h3>
@@ -1205,9 +1276,6 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
           <span class="product-number">
             PRODUCT / 02
           </span>
-          <div class="product-mark">
-            EL·J
-          </div>
         </div>
         <div>
           <h3>
@@ -1240,7 +1308,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
   <div class="shell band-inner">
     <div>
       <div class="section-label">
-        03 / Quality bar
+        09 / Quality bar
       </div>
       <h2>
         Reliable by design.
@@ -1277,7 +1345,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
 <section class="section pricing" id="pricing">
   <div class="shell">
     <div class="section-label">
-      04 / Simple plans
+      10 / Simple plans
     </div>
     <h2 class="section-title">
       Start with one workflow.<br />Expand when you’re ready.
@@ -1340,7 +1408,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
 <section class="section shell faq-grid" id="faq">
   <div>
     <div class="section-label">
-      05 / FAQ
+      11 / FAQ
     </div>
     <h2 class="section-title">
       Good questions deserve clear answers.
@@ -1384,7 +1452,7 @@ body.dark-theme .topbar .theme-toggle{color:#fff;border-color:rgba(255,255,255,.
 <section class="cta">
   <div class="shell">
     <div class="section-label">
-      06 / Start here
+      12 / Start here
     </div>
     <h2>
       Let’s build<br />your assistant.
@@ -2019,5 +2087,58 @@ updateAuthenticationUI();
   }
 })();
 </script>
+
+<script>
+(() => {
+  const card = document.querySelector('.chatbot-card');
+  if (!card) return;
+  const customer = card.querySelector('.customer-message p');
+  const assistant = card.querySelector('.assistant-message p');
+  if (!customer || !assistant) return;
+  const messages = [
+    { el: customer, text: customer.textContent.trim(), speed: 42 },
+    { el: assistant, text: assistant.textContent.trim(), speed: 32 }
+  ];
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const typeText = (el, text, speed, done) => {
+    const chars = Array.from(text);
+    let i = 0;
+    el.classList.add('chatbot-typing');
+    const tick = () => {
+      el.textContent += chars[i++];
+      if (i < chars.length) window.setTimeout(tick, speed);
+      else {
+        el.classList.remove('chatbot-typing');
+        if (done) done();
+      }
+    };
+    tick();
+  };
+  const [first, second] = messages;
+  const firstBubble = first.el.closest('.chatbot-message');
+  const secondBubble = second.el.closest('.chatbot-message');
+  const playCycle = () => {
+    card.classList.add('chatbot-playing');
+    messages.forEach(({el}) => { el.textContent = ''; });
+    firstBubble.classList.remove('chatbot-visible');
+    secondBubble.classList.remove('chatbot-visible');
+    window.requestAnimationFrame(() => {
+      firstBubble.classList.add('chatbot-visible');
+      window.setTimeout(() => typeText(first.el, first.text, first.speed, () => {
+        window.setTimeout(() => {
+          secondBubble.classList.add('chatbot-visible');
+          window.setTimeout(() => typeText(second.el, second.text, second.speed, () => {
+            // Leave the complete exchange on screen briefly, then replay it.
+            window.setTimeout(playCycle, 2600);
+          }), 120);
+        }, 240);
+      }), 120);
+    });
+  };
+  // Auto-start; the original HTML text remains visible if scripting is unavailable.
+  window.setTimeout(playCycle, 250);
+})();
+</script>
+
 </body>
 </html>
