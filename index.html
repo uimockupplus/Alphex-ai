@@ -1385,6 +1385,100 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
   .automation-art .automation-status { gap:7px !important; font-size:9px !important; }
 }
 </style>
+
+<style>
+/* Mobile architecture: keep the Improve copy aligned and move the feedback into its own row. */
+@media(max-width:780px) {
+  #architecture .architecture-diagram {
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+    padding:18px 14px;
+  }
+  #architecture .architecture-column {
+    display:grid;
+    grid-template-columns:44px minmax(0,1fr);
+    align-items:center;
+    gap:0 13px;
+    min-width:0;
+    min-height:0;
+    padding:17px 38px 17px 14px;
+  }
+  #architecture .architecture-index { top:14px; right:13px; }
+  #architecture .architecture-symbol {
+    grid-column:1;
+    grid-row:1;
+    align-self:center;
+    width:40px;
+    height:40px;
+    margin:0;
+  }
+  #architecture .architecture-column > div:last-child { grid-column:2; grid-row:1; min-width:0; }
+  #architecture .architecture-column h3 { margin:5px 0 4px; font-size:20px; line-height:1.2; }
+  #architecture .architecture-column p { max-width:none; margin:0; font-size:12px; line-height:1.55; }
+  #architecture .architecture-connector { height:20px; transform:rotate(90deg); }
+  #architecture .architecture-connector span { left:calc(50% - 16px); right:calc(50% - 16px); }
+  #architecture .architecture-feedback {
+    position:relative;
+    inset:auto;
+    left:auto;
+    bottom:auto;
+    transform:none;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:9px;
+    width:100%;
+    max-width:none;
+    min-width:0;
+    margin:2px 0 0;
+    padding:11px 13px;
+    border-radius:12px;
+    font-size:11px;
+    line-height:1.45;
+    white-space:normal;
+  }
+  #architecture .architecture-feedback span { flex:0 0 auto; line-height:1; }
+}
+@media(max-width:540px) {
+  #architecture .architecture-diagram { padding:15px 11px; gap:10px; }
+  #architecture .architecture-column { padding:15px 34px 15px 11px; grid-template-columns:40px minmax(0,1fr); gap:0 11px; }
+  #architecture .architecture-symbol { width:36px; height:36px; font-size:19px; }
+  #architecture .architecture-column h3 { font-size:19px; }
+  #architecture .architecture-column p { font-size:12px; }
+  #architecture .architecture-kicker { font-size:8px; }
+  #architecture .architecture-feedback { padding:10px 11px; font-size:10px; }
+}
+
+/* Product cards become readable, full-width panels instead of squeezed side-by-side cards. */
+@media(max-width:780px) {
+  #products .product-grid { grid-template-columns:minmax(0,1fr); gap:18px; }
+  #products .product-panel { width:100%; min-width:0; min-height:0; padding:20px; }
+  #products .product-panel-top { min-height:30px; }
+  #products .product-art { width:100%; height:clamp(205px,52vw,260px); margin:16px 0 21px; }
+  #products .product-panel-copy { margin-top:0; min-width:0; }
+  #products .product-panel-copy h3 { margin:10px 0; font-size:clamp(29px,6vw,35px); line-height:1.1; }
+  #products .product-panel-copy p { max-width:none; margin:0; font-size:13px; line-height:1.65; overflow-wrap:anywhere; }
+  #products .product-panel-copy .button { display:inline-flex; justify-content:center; align-items:center; gap:8px; max-width:100%; margin-top:18px; white-space:normal; }
+  #products .jobs-window { width:min(100%,440px); padding:13px; }
+  #products .job-row { gap:9px; }
+  #products .job-row > span:nth-child(2) { flex:1 1 auto; min-width:0; }
+  #products .job-row b, #products .job-row small { overflow-wrap:anywhere; }
+  #products .job-tag { flex:0 0 auto; white-space:nowrap; }
+}
+@media(max-width:420px) {
+  #products .product-panel { padding:16px; }
+  #products .product-art { height:205px; margin:14px 0 18px; }
+  #products .jobs-window { padding:10px; }
+  #products .jobs-window-head { gap:8px; font-size:8px; }
+  #products .jobs-window-head span+span { font-size:6px; white-space:nowrap; }
+  #products .job-row { gap:7px; padding:10px 0; }
+  #products .job-row > i { width:27px; height:27px; flex:0 0 27px; }
+  #products .job-row b { font-size:9px; }
+  #products .job-row small { font-size:7px; }
+  #products .job-tag { font-size:6px; }
+  #products .eval-chip { gap:6px; padding:7px 8px; font-size:7px; }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
