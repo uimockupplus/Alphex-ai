@@ -1548,6 +1548,63 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
   .hero h1 { font-size:clamp(46px,12.4vw,66px) !important; line-height:1.02 !important; }
 }
 </style>
+
+<style>
+/* Clear, minimal demo heading and console hierarchy. */
+#demo .section-heading { align-items:start; gap:48px; margin-bottom:38px; }
+#demo .section-heading .eyebrow { color:#c5baff !important; font-size:10px; font-weight:500; letter-spacing:.14em; }
+#demo .section-heading .eyebrow > span:first-child:not(.status-dot) { color:#8fe5dc !important; }
+#demo .section-heading h2 { margin-top:15px; color:#f6f6fa; font-size:clamp(46px,5.2vw,66px); line-height:1.04; letter-spacing:-.075em; }
+#demo .section-heading h2 .gradient-text { color:#b6a7ff !important; background:none !important; -webkit-text-fill-color:#b6a7ff !important; }
+#demo .section-heading > p { max-width:430px; margin:0 0 3px; color:#b2b3bd !important; font-size:13px; line-height:1.75; }
+#demo .demo-layout { grid-template-columns:minmax(0,1.05fr) minmax(300px,.75fr); gap:42px; align-items:start; }
+#demo .demo-console { border-color:rgba(255,255,255,.16); background:#111218; box-shadow:0 22px 55px rgba(0,0,0,.18); }
+#demo .demo-step { min-width:0; padding-top:17px; padding-bottom:17px; }
+#demo .demo-step:not(.is-active) { opacity:.46; }
+#demo .demo-step.is-active { background:rgba(255,255,255,.035); }
+#demo .demo-step p { max-width:310px; color:#a2a4b0; font-size:11px; line-height:1.65; }
+#demo .demo-cta { margin-top:19px; }
+@media(max-width:780px) {
+  #demo .section-heading { gap:18px; margin-bottom:28px; }
+  #demo .demo-layout { grid-template-columns:minmax(0,1fr); gap:22px; }
+}
+@media(max-width:540px) {
+  #demo .section-heading h2 { font-size:clamp(40px,10.8vw,54px); }
+  #demo .section-heading > p { font-size:12px; }
+  #demo .demo-step { padding-top:13px; padding-bottom:13px; }
+}
+
+/* LLM-as-judge visual: independent evaluator badge, pulsing verdict, and sequential dimension checks. */
+#products .product-evalloop .evaluation-art { isolation:isolate; }
+#products .product-evalloop .judge-label {
+  position:absolute; z-index:3; top:10px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:7px; padding:6px 9px;
+  border:1px solid rgba(155,143,255,.3); border-radius:999px;
+  background:#1a1926; color:#d4ceff; font:8px/1 var(--mono); letter-spacing:.08em; white-space:nowrap;
+}
+#products .product-evalloop .judge-label > span { color:#a99aff; font-size:10px; }
+#products .product-evalloop .judge-label i { padding:3px 5px; border-radius:999px; background:#12372c; color:#6ee0a4; font:7px/1 var(--mono); font-style:normal; }
+#products .product-evalloop .eval-center { animation:judgeVerdictPulse 3.6s ease-in-out infinite; }
+#products .product-evalloop .eval-center span { animation:judgeCheckPulse 3.6s ease-in-out infinite; }
+#products .product-evalloop .eval-ring-one { animation:judgeOrbitOne 16s linear infinite; }
+#products .product-evalloop .eval-ring-two { animation:judgeOrbitTwo 20s linear infinite; }
+#products .product-evalloop .eval-chip { animation:judgeDimension 4.8s ease-in-out infinite; }
+#products .product-evalloop .eval-chip-two { animation-delay:1.1s; }
+#products .product-evalloop .eval-chip-three { animation-delay:2.2s; }
+#products .product-evalloop .eval-chip b { color:#71dfa4; }
+@keyframes judgeVerdictPulse { 0%,100% { box-shadow:0 0 22px rgba(112,87,255,.15); } 50% { box-shadow:0 0 42px rgba(112,87,255,.38); } }
+@keyframes judgeCheckPulse { 0%,18%,100% { transform:translate(22px,20px) scale(1); } 8% { transform:translate(22px,20px) scale(1.18); } }
+@keyframes judgeOrbitOne { from { transform:translate(-50%,-50%) rotate(-12deg); } to { transform:translate(-50%,-50%) rotate(348deg); } }
+@keyframes judgeOrbitTwo { from { transform:translate(-50%,-50%) rotate(32deg); } to { transform:translate(-50%,-50%) rotate(-328deg); } }
+@keyframes judgeDimension { 0%,12%,100% { border-color:rgba(255,255,255,.12); box-shadow:0 8px 24px rgba(0,0,0,.2); } 5% { border-color:rgba(113,223,164,.65); box-shadow:0 0 18px rgba(113,223,164,.18); } }
+@media(prefers-reduced-motion:reduce) {
+  #products .product-evalloop .eval-center,
+  #products .product-evalloop .eval-center span,
+  #products .product-evalloop .eval-ring-one,
+  #products .product-evalloop .eval-ring-two,
+  #products .product-evalloop .eval-chip { animation:none !important; }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -1767,7 +1824,7 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
       <div class="container">
         <div class="section-heading section-heading-dark" data-aos="fade-up"><div><div class="eyebrow"><span>06</span> / Our products</div><h2>Building for the<br><span class="gradient-text">AI ecosystem.</span></h2></div><p>Alongside client solutions, we develop focused products that help improve AI quality and connect people with opportunities.</p></div>
         <div class="product-grid">
-          <article class="product-panel product-evalloop" data-aos="fade-up"><div class="product-panel-top"><span class="product-label">PRODUCT / 01</span><span class="product-arrow">↗</span></div><div class="product-art evaluation-art" aria-hidden="true"><div class="eval-ring eval-ring-one"></div><div class="eval-ring eval-ring-two"></div><div class="eval-center">E<span>✓</span></div><div class="eval-chip eval-chip-one">Factuality <b>94</b></div><div class="eval-chip eval-chip-two">Relevance <b>97</b></div><div class="eval-chip eval-chip-three">Safety <b>Pass</b></div></div><div class="product-panel-copy"><span class="product-category">AI QUALITY / EVALUATION</span><h3>EvalLoop AI</h3><p>Evaluate AI responses, compare outputs, and inspect quality dimensions to build more reliable AI experiences.</p><a class="button button-light" href="https://evalloop-ai.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop AI <span>↗</span></a></div></article>
+          <article class="product-panel product-evalloop" data-aos="fade-up"><div class="product-panel-top"><span class="product-label">PRODUCT / 01</span><span class="product-arrow">↗</span></div><div class="product-art evaluation-art" aria-hidden="true"><div class="eval-ring eval-ring-one"></div><div class="eval-ring eval-ring-two"></div><div class="judge-label"><span>✦</span> LLM AS JUDGE <i>LIVE</i></div><div class="eval-center">E<span>✓</span></div><div class="eval-chip eval-chip-one">Factuality <b>94</b></div><div class="eval-chip eval-chip-two">Relevance <b>97</b></div><div class="eval-chip eval-chip-three">Safety <b>Pass</b></div></div><div class="product-panel-copy"><span class="product-category">AI QUALITY / EVALUATION</span><h3>EvalLoop AI</h3><p>Evaluate AI responses, compare outputs, and inspect quality dimensions to build more reliable AI experiences.</p><a class="button button-light" href="https://evalloop-ai.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop AI <span>↗</span></a></div></article>
           <article class="product-panel product-jobs" data-aos="fade-up" data-aos-delay="100"><div class="product-panel-top"><span class="product-label">PRODUCT / 02</span><span class="product-arrow">↗</span></div><div class="product-art jobs-art" aria-hidden="true"><div class="jobs-window"><div class="jobs-window-head"><span>Opportunity feed</span><span>LIVE DISCOVERY</span></div><div class="job-row"><i>AI</i><span><b>AI Evaluator</b><small>Model quality · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>LLM</i><span><b>Prompt Specialist</b><small>Language systems · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>DATA</i><span><b>Data Annotator</b><small>AI training · Flexible</small></span><span class="job-tag">OPEN</span></div></div></div><div class="product-panel-copy"><span class="product-category">AI OPPORTUNITY DISCOVERY</span><h3>EvalLoop Jobs</h3><p>Discover opportunities across AI evaluation, LLM work, data annotation, AI training, and related fields.</p><a class="button button-light" href="https://annotatorjobs.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop Jobs <span>↗</span></a></div></article>
         </div>
       </div>
