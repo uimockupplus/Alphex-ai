@@ -1841,6 +1841,81 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 #products .judge-dimensions b { color:#e3e4eb !important; }
 #products .judge-dimensions .judge-pass { color:#82dda5 !important; }
 </style>
+
+<style>
+/* Harmonize the black hero with the restrained violet and lavender body palette. */
+.hero.shell {
+  padding-top:42px !important;
+  padding-bottom:62px !important;
+  border-bottom:1px solid #282435 !important;
+  background:#000 !important;
+}
+.hero .hero-violet-glow { opacity:.12 !important; filter:blur(125px) !important; }
+.hero h1 { letter-spacing:-.065em !important; }
+.hero h1::before { background:#49358b !important; opacity:.22 !important; filter:blur(108px) !important; }
+.hero .hero-kicker { color:#c2b7ff !important; letter-spacing:.18em; }
+.hero .hero-announcement { border-color:#34323b; background:#111114 !important; color:#c5c5ce; }
+.hero .hero-announcement a { color:#c0b3ff !important; }
+.hero .hero-copy { max-width:660px; color:#aaaab3 !important; line-height:1.75 !important; }
+.hero .hero-actions .pill.dark { background:#6652ed !important; border-color:#6652ed !important; box-shadow:0 7px 22px rgba(102,82,237,.17); }
+.hero .hero-actions .pill.dark:hover { background:#5844d5 !important; border-color:#5844d5 !important; }
+.signal-strip { border-top:1px solid #d9d3ef !important; }
+@media(max-width:800px) {
+  .hero.shell { padding-top:38px !important; padding-bottom:52px !important; }
+  .hero .hero-violet-glow { opacity:.10 !important; }
+  .hero h1::before { opacity:.2 !important; }
+}
+@media(max-width:560px) {
+  .hero.shell { padding-top:34px !important; padding-bottom:44px !important; }
+  .hero .hero-announcement { margin-bottom:23px !important; }
+  .hero h1 { letter-spacing:-.06em !important; }
+  .hero .hero-copy { margin-top:19px !important; }
+}
+</style>
+
+<style>
+/* Straight, stable footer navigation columns. */
+footer.footer-pro .footer-top { grid-template-columns:minmax(230px,1fr) minmax(0,2.8fr); gap:56px; }
+footer.footer-pro .footer-columns { grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; align-items:start; }
+footer.footer-pro .footer-group { display:flex; flex-direction:column; align-items:flex-start; min-width:0; }
+footer.footer-pro .footer-group h4 { min-height:14px; margin:0 0 17px; line-height:1.4; }
+footer.footer-pro .footer-group a { width:100%; margin:0 0 12px; line-height:1.45; white-space:nowrap; transform:none !important; }
+footer.footer-pro .footer-group a:hover { transform:none !important; }
+@media(max-width:1100px) {
+  footer.footer-pro .footer-top { grid-template-columns:minmax(0,1fr); gap:30px; }
+  footer.footer-pro .footer-brand p { max-width:440px; }
+  footer.footer-pro .footer-columns { grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+}
+@media(max-width:800px) {
+  footer.footer-pro .footer-top { display:block; }
+  footer.footer-pro .footer-columns { grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px 24px; margin-top:38px; }
+  footer.footer-pro .footer-group h4 { margin-bottom:13px; }
+  footer.footer-pro .footer-group a { white-space:normal; }
+}
+@media(max-width:480px) {
+  footer.footer-pro .footer-columns { gap:24px 18px; }
+  footer.footer-pro .footer-group a { margin-bottom:10px; font-size:12px; }
+}
+</style>
+
+<style>
+/* A quiet second route from the hero into the capabilities section. */
+.hero .hero-actions { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+.hero .hero-secondary-action {
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  min-height:50px; padding:0 21px; border:1px solid rgba(255,255,255,.2);
+  border-radius:999px; background:rgba(255,255,255,.035); color:#e4e2ed;
+  font:500 12px var(--sans); text-decoration:none;
+  transition:background .2s ease,border-color .2s ease,color .2s ease;
+}
+.hero .hero-secondary-action span { color:#b9adff; font-size:15px; line-height:1; }
+.hero .hero-secondary-action:hover { border-color:rgba(185,173,255,.58); background:rgba(185,173,255,.09); color:#fff; }
+@media(max-width:560px) {
+  .hero .hero-actions { width:100%; flex-direction:column; gap:10px; }
+  .hero .hero-actions .pill, .hero .hero-secondary-action { width:min(100%,290px); }
+}
+@media(prefers-reduced-motion:reduce) { .hero .hero-secondary-action { transition:none; } }
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -1946,6 +2021,7 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
   </p>
   <div class="hero-actions">
     <a class="pill dark" href="/contact.html">Discuss Your Project <span>↗</span></a>
+    <a class="hero-secondary-action" href="#capabilities">Explore capabilities <span aria-hidden="true">↓</span></a>
   </div>
 </section>
 
