@@ -1962,6 +1962,20 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   .hero-image-backdrop::after { background:rgba(0,0,0,.58); }
 }
 </style>
+
+<style>
+/* Raise data-center visibility while preserving a dark text-safe center. */
+.hero-image-backdrop img { opacity:.92 !important; filter:brightness(.96) saturate(.86) !important; }
+.hero-image-backdrop::after { background:rgba(0,0,0,.30) !important; }
+@media(max-width:800px) {
+  .hero-image-backdrop img { opacity:.86 !important; filter:brightness(.91) saturate(.82) !important; }
+  .hero-image-backdrop::after { background:rgba(0,0,0,.38) !important; }
+}
+@media(max-width:560px) {
+  .hero-image-backdrop img { opacity:.82 !important; filter:brightness(.88) saturate(.78) !important; }
+  .hero-image-backdrop::after { background:rgba(0,0,0,.42) !important; }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
