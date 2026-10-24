@@ -1479,6 +1479,34 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
   #products .eval-chip { gap:6px; padding:7px 8px; font-size:7px; }
 }
 </style>
+
+<style>
+/* Slightly larger responsive hero headline. */
+.hero h1 { max-width:1500px; font-size:clamp(64px,6.7vw,124px) !important; }
+@media(max-width:800px) { .hero h1 { font-size:clamp(56px,8.5vw,86px) !important; } }
+@media(max-width:560px) { .hero h1 { font-size:clamp(42px,10.8vw,60px) !important; line-height:1.04 !important; } }
+
+/* Live typing cursor in the assistant preview. */
+.chat-typing-text { display:inline; }
+.chat-typing-caret { display:none; width:1px; height:1em; margin-left:2px; vertical-align:-.14em; background:#5a47d8; }
+.chat-typing-text.is-typing .chat-typing-caret { display:inline-block; animation:chatCaretBlink .8s steps(2,start) infinite; }
+.bot-msg .assistant-typing-text { min-width:0; }
+.bot-msg .chat-typing-caret { background:#5540d8; }
+@keyframes chatCaretBlink { to { visibility:hidden; } }
+.mini-chat-msg.chat-replay-hidden { visibility:hidden; opacity:0; max-height:0; margin:0 !important; padding-top:0 !important; padding-bottom:0 !important; overflow:hidden; }
+.mini-source.chat-replay-hidden { visibility:hidden; opacity:0; max-height:0; margin:0 !important; padding-top:0 !important; padding-bottom:0 !important; overflow:hidden; }
+.mini-chat-msg.bot-msg { transition:opacity .22s ease, transform .22s ease; }
+.mini-chat-msg.bot-msg.chat-replay-hidden { transform:translateY(4px); }
+@media(prefers-reduced-motion:reduce) {
+  .chat-typing-caret { display:none !important; animation:none !important; }
+  .score-track i { transform:scaleX(1) !important; }
+}
+
+/* Animated 94% score fill in green. */
+.score-track i { width:94% !important; height:100%; transform:scaleX(0); transform-origin:left center; background:#28b879 !important; box-shadow:0 0 8px rgba(40,184,121,.4); }
+.quality-score.score-visible .score-track i { animation:greenScoreFill 1.45s cubic-bezier(.2,.75,.2,1) .12s forwards; }
+@keyframes greenScoreFill { to { transform:scaleX(1); } }
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -1612,7 +1640,7 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
         <div class="capability-grid">
           <article class="capability-card capability-large" data-aos="fade-up">
             <div class="capability-copy"><span class="card-index">01 / ASSIST</span><h3>AI assistants that feel like part of the team.</h3><p>Support customers and employees with useful answers, lead capture, service workflows, and a clear path to a human when needed.</p><a class="text-link" href="/contact.html">Explore assistants <span>↗</span></a></div>
-            <div class="capability-art assistant-art" aria-hidden="true"><div class="mini-chat-window"><div class="mini-window-head"><span class="mini-avatar">A</span><span>Alphex Assistant</span><span class="mini-online">● Online</span></div><div class="mini-chat-body"><div class="mini-chat-msg user-msg">Can you find the latest return policy?</div><div class="mini-source"><span>↳</span> Returns policy · Updated 12 Oct</div><div class="mini-chat-msg bot-msg"><span class="mini-ai-mark">✳</span><span>Returns are accepted within 30 days of delivery. I’ve linked the policy for review.</span></div><div class="mini-chat-foot"><span>Ask a follow-up…</span><b>↑</b></div></div></div><div class="art-orb"></div></div>
+            <div class="capability-art assistant-art" aria-hidden="true"><div class="mini-chat-window"><div class="mini-window-head"><span class="mini-avatar">A</span><span>Alphex Assistant</span><span class="mini-online">● Online</span></div><div class="mini-chat-body"><div class="mini-chat-msg user-msg"><span class="chat-typing-text user-typing-text">Can you find the latest return policy?<i class="chat-typing-caret" aria-hidden="true"></i></span></div><div class="mini-source"><span>↳</span> Returns policy · Updated 12 Oct</div><div class="mini-chat-msg bot-msg"><span class="mini-ai-mark">✳</span><span class="chat-typing-text assistant-typing-text">Returns are accepted within 30 days of delivery. I’ve linked the policy for review.<i class="chat-typing-caret" aria-hidden="true"></i></span></div><div class="mini-chat-foot"><span>Ask a follow-up…</span><b>↑</b></div></div></div><div class="art-orb"></div></div>
           </article>
           <article class="capability-card knowledge-card" data-aos="fade-up" data-aos-delay="80">
             <div class="capability-copy"><span class="card-index">02 / KNOW</span><h3>Knowledge that is easier to find.</h3><p>Connect documents and approved sources to give people relevant, contextual answers.</p><a class="text-link" href="/contact.html">Explore knowledge systems <span>↗</span></a></div>
@@ -2350,5 +2378,99 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 </script>
 
 
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const score = document.querySelector('.quality-score');
+  if (score) {
+    if (reduceMotion) score.classList.add('score-visible');
+    else if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            score.classList.add('score-visible');
+            observer.disconnect();
+            break;
+          }
+        }
+      }, { threshold: 0.35 });
+      observer.observe(score);
+    } else score.classList.add('score-visible');
+  }
+
+  if (reduceMotion) return;
+  const chat = document.querySelector('.assistant-art .mini-chat-window');
+  if (!chat) return;
+  const userBubble = chat.querySelector('.user-msg');
+  const userText = chat.querySelector('.user-typing-text');
+  const sourceLine = chat.querySelector('.mini-source');
+  const answerBubble = chat.querySelector('.bot-msg');
+  const answerText = chat.querySelector('.assistant-typing-text');
+  if (!userBubble || !userText || !sourceLine || !answerBubble || !answerText) return;
+
+  const userCaret = userText.querySelector('.chat-typing-caret');
+  const answerCaret = answerText.querySelector('.chat-typing-caret');
+  const fullPrompt = userText.textContent.replace(/\s+$/, '');
+  const fullAnswer = answerText.textContent.replace(/\s+$/, '');
+  function clearTypedText(el, caret) {
+    for (const node of [...el.childNodes]) if (node !== caret) el.removeChild(node);
+  }
+  function appendCharacter(el, caret, character) {
+    el.insertBefore(document.createTextNode(character), caret || null);
+  }
+  function typeText(el, caret, text, delay, done) {
+    el.classList.add('is-typing');
+    let index = 0;
+    const step = () => {
+      if (index < text.length) {
+        appendCharacter(el, caret, text[index++]);
+        window.setTimeout(step, delay);
+      } else {
+        el.classList.remove('is-typing');
+        if (done) done();
+      }
+    };
+    step();
+  }
+  function eraseText(el, caret, delay, done) {
+    el.classList.add('is-typing');
+    const step = () => {
+      const textNodes = [...el.childNodes].filter(node => node !== caret && node.nodeType === Node.TEXT_NODE);
+      const last = textNodes[textNodes.length - 1];
+      if (last && last.textContent.length) {
+        last.textContent = last.textContent.slice(0, -1);
+        if (!last.textContent) el.removeChild(last);
+        window.setTimeout(step, delay);
+      } else {
+        el.classList.remove('is-typing');
+        if (done) done();
+      }
+    };
+    step();
+  }
+  function runCycle() {
+    clearTypedText(userText, userCaret);
+    clearTypedText(answerText, answerCaret);
+    sourceLine.classList.add('chat-replay-hidden');
+    answerBubble.classList.add('chat-replay-hidden');
+    userBubble.classList.remove('chat-replay-hidden');
+    typeText(userText, userCaret, fullPrompt, 43, () => {
+      sourceLine.classList.remove('chat-replay-hidden');
+      window.setTimeout(() => {
+        answerBubble.classList.remove('chat-replay-hidden');
+        typeText(answerText, answerCaret, fullAnswer, 25, () => {
+          window.setTimeout(() => {
+            answerBubble.classList.add('chat-replay-hidden');
+            sourceLine.classList.add('chat-replay-hidden');
+            eraseText(userText, userCaret, 15, () => window.setTimeout(runCycle, 450));
+          }, 2600);
+        });
+      }, 180);
+    });
+  }
+  runCycle();
+})();
+</script>
 </body>
 </html>
