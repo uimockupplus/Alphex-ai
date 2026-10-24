@@ -1541,6 +1541,13 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 }
 @media(prefers-reduced-motion:reduce) { .demo-preview-change { animation:none; } }
 </style>
+
+<style>
+/* Mobile-only hero headline enlargement; desktop typography is unchanged. */
+@media(max-width:560px) {
+  .hero h1 { font-size:clamp(46px,12.4vw,66px) !important; line-height:1.02 !important; }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
