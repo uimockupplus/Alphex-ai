@@ -1916,6 +1916,52 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
 }
 @media(prefers-reduced-motion:reduce) { .hero .hero-secondary-action { transition:none; } }
 </style>
+
+<style>
+/* A quiet AI-network detail adds depth without competing with hero copy. */
+.hero.shell > .hero-network-art {
+  position:absolute !important; z-index:0 !important; top:50%; left:50%;
+  display:block; width:min(1120px,100vw); height:auto; max-height:430px;
+  transform:translate(-50%,-52%); overflow:visible; color:#a897ff;
+  opacity:.12; pointer-events:none;
+}
+.hero-network-orbit { transform-origin:600px 215px; animation:heroNetworkDrift 72s linear infinite; }
+@keyframes heroNetworkDrift { to { transform:rotate(360deg); } }
+@media(max-width:800px) {
+  .hero.shell > .hero-network-art { width:120vw; top:49%; opacity:.09; }
+}
+@media(max-width:560px) {
+  .hero.shell > .hero-network-art { width:145vw; top:48%; opacity:.075; }
+}
+@media(prefers-reduced-motion:reduce) { .hero-network-orbit { animation:none; } }
+</style>
+
+<style>
+/* Dark-masked data-center image layer: visible around the edges, subdued behind copy. */
+.hero.shell { position:relative !important; isolation:isolate; overflow:hidden; background:#000 !important; }
+.hero.shell > .hero-image-backdrop {
+  position:absolute !important; z-index:0 !important; inset:0; display:block;
+  overflow:hidden; pointer-events:none;
+}
+.hero-image-backdrop img {
+  display:block; width:100%; height:100%; object-fit:cover; object-position:center 52%;
+  opacity:.72; filter:brightness(.78) saturate(.72);
+}
+.hero-image-backdrop::after {
+  content:""; position:absolute; inset:0; background:rgba(0,0,0,.48);
+}
+.hero.shell > .hero-network-art { z-index:1 !important; }
+.hero.shell > .hero-violet-glow { z-index:1 !important; }
+.hero.shell > :not(.hero-violet-glow):not(.hero-image-backdrop):not(.hero-network-art) { position:relative; z-index:2; }
+@media(max-width:800px) {
+  .hero-image-backdrop img { object-position:38% center; opacity:.66; }
+  .hero-image-backdrop::after { background:rgba(0,0,0,.53); }
+}
+@media(max-width:560px) {
+  .hero-image-backdrop img { object-position:33% center; opacity:.62; }
+  .hero-image-backdrop::after { background:rgba(0,0,0,.58); }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -2005,7 +2051,22 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
 </div>
 <main id="main">
     <section class="hero shell" id="top">
+  <div class="hero-image-backdrop" aria-hidden="true"><img src="./hero-ai-datacenter.png" alt=""></div>
   <div class="hero-violet-glow" aria-hidden="true"></div>
+  <svg class="hero-network-art" viewBox="0 0 1200 430" aria-hidden="true" focusable="false">
+    <g class="hero-network-orbit" fill="none" stroke="currentColor" stroke-width="1">
+      <ellipse cx="600" cy="215" rx="475" ry="162" opacity=".42" />
+      <ellipse cx="600" cy="215" rx="350" ry="112" transform="rotate(-15 600 215)" opacity=".28" />
+      <path d="M118 205 C270 130 355 144 470 211 S710 294 830 214 1000 140 1082 203" opacity=".34" />
+      <path d="M250 102 C345 192 390 247 511 276 S740 245 835 135 966 95 1033 160" opacity=".24" />
+      <circle cx="178" cy="183" r="4" fill="currentColor" opacity=".75" />
+      <circle cx="365" cy="148" r="3" fill="currentColor" opacity=".62" />
+      <circle cx="505" cy="263" r="4" fill="currentColor" opacity=".7" />
+      <circle cx="735" cy="152" r="3" fill="currentColor" opacity=".7" />
+      <circle cx="890" cy="243" r="4" fill="currentColor" opacity=".64" />
+      <circle cx="1030" cy="183" r="3" fill="currentColor" opacity=".7" />
+    </g>
+  </svg>
   <div class="announcement hero-announcement">
     Alphex AI is building products for a better AI ecosystem.
     <a href="/products.html">Explore what we build →</a>
