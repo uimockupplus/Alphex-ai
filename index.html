@@ -1524,6 +1524,23 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
   .knowledge-file.file-one, .knowledge-file.file-two { animation:none !important; will-change:auto; }
 }
 </style>
+
+<style>
+/* Make the workflow stages visibly selectable and easy to use on touch screens. */
+.demo-step { cursor:pointer; border-radius:10px; padding-left:10px; padding-right:10px; transition:opacity .25s ease, background .25s ease, border-color .25s ease, transform .25s ease; }
+.demo-step:not(.is-active) { opacity:.38; filter:saturate(.55); }
+.demo-step:hover:not(.is-active) { opacity:.72; }
+.demo-step.is-active { opacity:1; background:rgba(255,255,255,.045); border-bottom-color:rgba(143,229,220,.35); }
+.demo-step:focus-visible { outline:2px solid #8fe5dc; outline-offset:3px; }
+.demo-preview-change { animation:demoPreviewIn .28s ease both; }
+@keyframes demoPreviewIn { from { opacity:.55; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+@media(max-width:540px) {
+  .demo-step { grid-template-columns:28px minmax(0,1fr) auto; gap:9px; padding:14px 8px; }
+  .demo-step p { max-width:none; }
+  .step-state { white-space:nowrap; }
+}
+@media(prefers-reduced-motion:reduce) { .demo-preview-change { animation:none; } }
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -1690,10 +1707,10 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
             <div class="console-disclaimer">Illustrative interaction · Not a live model response</div>
           </div>
           <div class="demo-steps">
-            <div class="demo-step is-active" data-demo-step="0"><span class="demo-step-number">01</span><div><b>Understand intent</b><p>Identify what the person needs and what information is relevant.</p></div><span class="step-state">READY</span></div>
-            <div class="demo-step" data-demo-step="1"><span class="demo-step-number">02</span><div><b>Retrieve context</b><p>Find relevant information from the approved knowledge base.</p></div><span class="step-state">WAITING</span></div>
-            <div class="demo-step" data-demo-step="2"><span class="demo-step-number">03</span><div><b>Respond with context</b><p>Answer clearly and point back to the source.</p></div><span class="step-state">WAITING</span></div>
-            <div class="demo-step" data-demo-step="3"><span class="demo-step-number">04</span><div><b>Escalate if needed</b><p>Leave sensitive or uncertain decisions with a person.</p></div><span class="step-state">AVAILABLE</span></div>
+            <div class="demo-step is-active" data-demo-step="0" role="button" tabindex="0" aria-pressed="true"><span class="demo-step-number">01</span><div><b>Understand intent</b><p>Identify what the person needs and what information is relevant.</p></div><span class="step-state">READY</span></div>
+            <div class="demo-step" data-demo-step="1" role="button" tabindex="0" aria-pressed="false"><span class="demo-step-number">02</span><div><b>Retrieve context</b><p>Find relevant information from the approved knowledge base.</p></div><span class="step-state">WAITING</span></div>
+            <div class="demo-step" data-demo-step="2" role="button" tabindex="0" aria-pressed="false"><span class="demo-step-number">03</span><div><b>Respond with context</b><p>Answer clearly and point back to the source.</p></div><span class="step-state">WAITING</span></div>
+            <div class="demo-step" data-demo-step="3" role="button" tabindex="0" aria-pressed="false"><span class="demo-step-number">04</span><div><b>Escalate if needed</b><p>Leave sensitive or uncertain decisions with a person.</p></div><span class="step-state">AVAILABLE</span></div>
             <a class="button button-primary demo-cta" href="/contact.html">Design your workflow <span>↗</span></a>
           </div>
         </div>
@@ -2145,64 +2162,111 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 
 
 
-      /* ===== Groq/demo interaction: inlined from groq.js ===== */
-      /*
-       * Frontend-only product demo.
-       * This is a clearly labeled illustrative interaction and does not call Groq.
-       * Keep real Groq requests in a Vercel serverless function; never place API keys here.
-       */
+      /* ===== Interactive demo: selectable workflow stages update the assistant preview. ===== */
       (() => {
         const replayButton = document.getElementById('demoReplay');
         const answer = document.getElementById('demoAnswer');
         const steps = [...document.querySelectorAll('[data-demo-step]')];
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!replayButton || !answer || !steps.length) return;
+        const messages = document.getElementById('demoMessages');
+        const question = document.querySelector('.demo-user p');
+        const source = document.querySelector('.answer-source');
+        const context = document.querySelector('.console-context');
+        const contextTitle = context && context.querySelector('b');
+        const contextDetail = context && context.querySelector('small');
+        const contextState = context && context.querySelector('.context-state');
+        if (!replayButton || !answer || !steps.length || !messages || !question || !source || !contextTitle || !contextDetail || !contextState) return;
 
-        const finalAnswer = 'Returns are accepted within 30 days of delivery, provided the item meets the policy conditions. You can review the full returns policy here.';
-        let timers = [];
-        const clearTimers = () => {
-          timers.forEach(window.clearTimeout);
-          timers = [];
+        const stages = [
+          {
+            question: 'Can I return an item after two weeks?',
+            contextTitle: 'Intent understood',
+            contextDetail: 'Request type · Return eligibility',
+            contextState: '1 signal',
+            answer: 'The customer wants to know whether a return is still possible after two weeks. I’ll check the relevant policy before answering.',
+            source: 'Intent · Return eligibility'
+          },
+          {
+            question: 'Can I return an item after two weeks?',
+            contextTitle: 'Knowledge connected',
+            contextDetail: 'Returns policy · Support handbook · Product guide',
+            contextState: '3 sources',
+            answer: 'The approved returns policy allows returns within 30 days of delivery, subject to its conditions.',
+            source: 'Returns policy · Section 2.1'
+          },
+          {
+            question: 'Can I return an item after two weeks?',
+            contextTitle: 'Response prepared',
+            contextDetail: 'Policy matched · Clear answer · Source linked',
+            contextState: 'READY',
+            answer: 'Returns are accepted within 30 days of delivery, provided the item meets the policy conditions. You can review the full returns policy here.',
+            source: 'Returns policy · Section 2.1'
+          },
+          {
+            question: 'Could someone review this return request?',
+            contextTitle: 'Human review needed',
+            contextDetail: 'Uncertain cases · Support team',
+            contextState: 'HANDOFF',
+            answer: 'I’ve sent this case to a team member to confirm the policy before advising the customer.',
+            source: 'Human review · Escalation queued'
+          }
+        ];
+
+        let replayTimers = [];
+        const clearReplayTimers = () => {
+          replayTimers.forEach(window.clearTimeout);
+          replayTimers = [];
         };
-        const schedule = (callback, delay) => timers.push(window.setTimeout(callback, delay));
-        const setStep = index => {
+        const setStage = index => {
+          const stage = stages[index];
+          if (!stage) return;
           steps.forEach((step, stepIndex) => {
-            step.classList.toggle('is-active', stepIndex === index);
+            const active = stepIndex === index;
+            step.classList.toggle('is-active', active);
+            step.setAttribute('aria-pressed', String(active));
             const status = step.querySelector('.step-state');
-            if (status) status.textContent = stepIndex < index ? 'COMPLETE' : stepIndex === index ? 'ACTIVE' : 'WAITING';
+            if (status) status.textContent = active ? 'ACTIVE' : stepIndex < index ? 'COMPLETE' : 'WAITING';
           });
+          messages.classList.remove('demo-preview-change');
+          void messages.offsetWidth;
+          question.textContent = stage.question;
+          contextTitle.textContent = stage.contextTitle;
+          contextDetail.textContent = stage.contextDetail;
+          contextState.textContent = stage.contextState;
+          answer.textContent = stage.answer;
+          const arrow = source.querySelector('span');
+          source.replaceChildren(...(arrow ? [arrow, document.createTextNode(' ' + stage.source)] : [document.createTextNode(stage.source)]));
+          messages.classList.add('demo-preview-change');
         };
-        const replay = () => {
-          clearTimers();
-          answer.textContent = reduceMotion ? finalAnswer : '';
-          setStep(0);
-          if (reduceMotion) return;
-          const messages = [
-            () => setStep(0),
-            () => setStep(1),
-            () => setStep(2),
-            () => {
-              let i = 0;
-              const type = () => {
-                answer.textContent = finalAnswer.slice(0, i);
-                i += 3;
-                if (i <= finalAnswer.length) schedule(type, 17);
-                else {
-                  answer.textContent = finalAnswer;
-                  setStep(3);
-                  schedule(() => setStep(0), 2400);
-                }
-              };
-              type();
+
+        steps.forEach((step, index) => {
+          step.addEventListener('click', () => {
+            clearReplayTimers();
+            setStage(index);
+          });
+          step.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              clearReplayTimers();
+              setStage(index);
             }
-          ];
-          messages.forEach((fn, index) => schedule(fn, [0, 500, 1050, 1550][index]));
+          });
+        });
+
+        const replay = () => {
+          clearReplayTimers();
+          let index = 0;
+          setStage(index);
+          const advance = () => {
+            index += 1;
+            if (index >= stages.length) return;
+            setStage(index);
+            replayTimers.push(window.setTimeout(advance, 2100));
+          };
+          replayTimers.push(window.setTimeout(advance, 1800));
         };
         replayButton.addEventListener('click', replay);
-        replay();
+        setStage(0);
       })();
-
-
 
       /* ===== Animations: inlined from animations(1).js ===== */
       (() => {
