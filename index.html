@@ -1507,6 +1507,23 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 .quality-score.score-visible .score-track i { animation:greenScoreFill 1.45s cubic-bezier(.2,.75,.2,1) .12s forwards; }
 @keyframes greenScoreFill { to { transform:scaleX(1); } }
 </style>
+
+<style>
+/* Subtle floating motion for the PDF and DOC source cards. */
+.knowledge-file.file-one { animation:knowledgeFloatOne 4.8s ease-in-out infinite; will-change:transform; }
+.knowledge-file.file-two { animation:knowledgeFloatTwo 5.4s ease-in-out -1.6s infinite; will-change:transform; }
+@keyframes knowledgeFloatOne {
+  0%,100% { transform:translateY(0) rotate(-3deg); }
+  50% { transform:translateY(-9px) rotate(-3deg); }
+}
+@keyframes knowledgeFloatTwo {
+  0%,100% { transform:translateY(0) rotate(2deg); }
+  50% { transform:translateY(-11px) rotate(2deg); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .knowledge-file.file-one, .knowledge-file.file-two { animation:none !important; will-change:auto; }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
