@@ -1763,6 +1763,84 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 }
 @media(prefers-reduced-motion:reduce) { #approach .process-step { transition:none; } #approach .process-step:hover { transform:none; } }
 </style>
+
+<style>
+/* Static, professional LLM-as-judge workspace preview for EvalLoop AI. */
+#products .product-evalloop .judge-workspace-art {
+  display:flex; align-items:center; justify-content:center;
+  height:235px; padding:13px; border:1px solid rgba(255,255,255,.08);
+  border-radius:13px; background:#14151c !important; overflow:hidden;
+}
+#products .product-evalloop .judge-workspace {
+  width:100%; max-width:520px; padding:11px;
+  border:1px solid #e3e5eb; border-radius:10px;
+  background:#f7f8fa; color:#252834; box-shadow:0 8px 22px rgba(0,0,0,.18);
+  text-align:left;
+}
+#products .judge-workspace-header { display:flex; align-items:center; justify-content:space-between; gap:8px; padding-bottom:8px; border-bottom:1px solid #e7e8ed; }
+#products .judge-workspace-brand { display:flex; align-items:center; gap:7px; min-width:0; }
+#products .judge-workspace-mark { display:grid; place-items:center; width:24px; height:24px; border-radius:7px; background:#eae7ff; color:#5a4ac6; font:700 9px var(--sans); }
+#products .judge-workspace-brand b { display:block; color:#272a35; font-size:9px; font-weight:600; }
+#products .judge-workspace-brand small { display:block; margin-top:2px; color:#858895; font-size:7px; }
+#products .judge-run-status { display:flex; align-items:center; gap:5px; padding:4px 6px; border:1px solid #dcefe5; border-radius:999px; background:#f2faf5; color:#39825d; font:7px var(--mono); white-space:nowrap; }
+#products .judge-run-status i { width:5px; height:5px; border-radius:50%; background:#43b77a; }
+#products .judge-workspace-body { display:grid; gap:8px; padding-top:8px; }
+#products .judge-candidates { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+#products .judge-candidate { min-width:0; padding:7px; border:1px solid #e6e7ed; border-radius:7px; background:#fff; }
+#products .judge-candidate-head { display:flex; justify-content:space-between; align-items:center; gap:5px; color:#818492; font:6px var(--mono); letter-spacing:.04em; }
+#products .judge-candidate-head b { color:#737785; font-size:7px; font-weight:500; }
+#products .judge-candidate p { display:-webkit-box; min-height:30px; margin:5px 0; overflow:hidden; color:#484c59; font-size:7px; line-height:1.45; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+#products .judge-candidate > small { color:#9295a1; font-size:6px; }
+#products .judge-verdict-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:7px; padding:7px; border:1px solid #e4e1f4; border-radius:7px; background:#f2f0fc; }
+#products .judge-verdict > span { display:block; color:#7568bd; font:6px var(--mono); letter-spacing:.07em; }
+#products .judge-verdict > b { display:block; margin-top:3px; color:#302d43; font-size:8px; font-weight:600; }
+#products .judge-verdict > small { display:block; margin-top:2px; color:#77768a; font-size:6px; }
+#products .judge-dimensions { display:flex; gap:9px; align-items:center; }
+#products .judge-dimensions > div { display:grid; gap:2px; text-align:center; }
+#products .judge-dimensions span { color:#808391; font-size:6px; white-space:nowrap; }
+#products .judge-dimensions b { color:#3d4260; font:600 8px var(--mono); }
+#products .judge-dimensions .judge-pass { color:#248356; }
+@media(max-width:540px) {
+  #products .product-evalloop .judge-workspace-art { height:215px; padding:9px; }
+  #products .product-evalloop .judge-workspace { padding:9px; }
+  #products .judge-candidates { gap:5px; }
+  #products .judge-candidate { padding:6px; }
+  #products .judge-verdict-row { grid-template-columns:minmax(0,1fr) auto; gap:5px; padding:6px; }
+  #products .judge-dimensions { gap:6px; }
+}
+@media(prefers-reduced-motion:reduce) { #products .product-evalloop .judge-workspace-art * { animation:none !important; transition:none !important; } }
+</style>
+
+<style>
+/* Improve contrast for the product section heading on the dark background. */
+#products .section-heading-dark .eyebrow { color:#c9c0ff !important; }
+#products .section-heading-dark .eyebrow > span:first-child:not(.status-dot) { color:#8fe5dc !important; }
+#products .section-heading-dark .eyebrow { text-shadow:0 0 14px rgba(201,192,255,.12); }
+
+/* Match the judge workspace surface to the surrounding dark EvalLoop product card. */
+#products .product-evalloop .judge-workspace-art { background:#14151c !important; border-color:rgba(255,255,255,.09); }
+#products .product-evalloop .judge-workspace {
+  border-color:#343541 !important; background:#1b1c25 !important; color:#ececf1 !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.22) !important;
+}
+#products .judge-workspace-header { border-bottom-color:#30313b !important; }
+#products .judge-workspace-mark { background:#302a53 !important; color:#c5b8ff !important; }
+#products .judge-workspace-brand b { color:#f0f0f4 !important; }
+#products .judge-workspace-brand small { color:#9a9ca8 !important; }
+#products .judge-run-status { border-color:#28503e !important; background:#192a22 !important; color:#8ed9ad !important; }
+#products .judge-candidate { border-color:#353641 !important; background:#22232d !important; }
+#products .judge-candidate-head { color:#a0a2ae !important; }
+#products .judge-candidate-head b { color:#b9bbc5 !important; }
+#products .judge-candidate p { color:#e0e1e7 !important; }
+#products .judge-candidate > small { color:#9a9daa !important; }
+#products .judge-verdict-row { border-color:#47415f !important; background:#29263b !important; }
+#products .judge-verdict > span { color:#c1b5ff !important; }
+#products .judge-verdict > b { color:#f0edff !important; }
+#products .judge-verdict > small { color:#b0adc0 !important; }
+#products .judge-dimensions span { color:#b1b3bf !important; }
+#products .judge-dimensions b { color:#e3e4eb !important; }
+#products .judge-dimensions .judge-pass { color:#82dda5 !important; }
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -1982,7 +2060,36 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
       <div class="container">
         <div class="section-heading section-heading-dark" data-aos="fade-up"><div><div class="eyebrow"><span>06</span> / Our products</div><h2>Building for the<br><span class="gradient-text">AI ecosystem.</span></h2></div><p>Alongside client solutions, we develop focused products that help improve AI quality and connect people with opportunities.</p></div>
         <div class="product-grid">
-          <article class="product-panel product-evalloop" data-aos="fade-up"><div class="product-panel-top"><span class="product-label">PRODUCT / 01</span><span class="product-arrow">↗</span></div><div class="product-art evaluation-art" aria-hidden="true"><div class="eval-ring eval-ring-one"></div><div class="eval-ring eval-ring-two"></div><div class="judge-label"><span>✦</span> LLM AS JUDGE <i>LIVE</i></div><div class="eval-center">E<span>✓</span></div><div class="eval-chip eval-chip-one">Factuality <b>94</b></div><div class="eval-chip eval-chip-two">Relevance <b>97</b></div><div class="eval-chip eval-chip-three">Safety <b>Pass</b></div></div><div class="product-panel-copy"><span class="product-category">AI QUALITY / EVALUATION</span><h3>EvalLoop AI</h3><p>Evaluate AI responses, compare outputs, and inspect quality dimensions to build more reliable AI experiences.</p><a class="button button-light" href="https://evalloop-ai.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop AI <span>↗</span></a></div></article>
+          <article class="product-panel product-evalloop" data-aos="fade-up"><div class="product-panel-top"><span class="product-label">PRODUCT / 01</span><span class="product-arrow">↗</span></div><div class="product-art evaluation-art judge-workspace-art" aria-hidden="true">
+  <div class="judge-workspace">
+    <div class="judge-workspace-header">
+      <div class="judge-workspace-brand"><span class="judge-workspace-mark">E✓</span><span><b>EvalLoop</b><small>Evaluation run · 024</small></span></div>
+      <span class="judge-run-status"><i></i> Complete</span>
+    </div>
+    <div class="judge-workspace-body">
+      <div class="judge-candidates">
+        <div class="judge-candidate">
+          <div class="judge-candidate-head"><span>MODEL A</span><b>Response</b></div>
+          <p>Returns are accepted within 30 days of delivery under the policy conditions.</p>
+          <small>GPT-4.1</small>
+        </div>
+        <div class="judge-candidate">
+          <div class="judge-candidate-head"><span>MODEL B</span><b>Response</b></div>
+          <p>You can return it within 30 days. Check the policy for eligibility details.</p>
+          <small>Claude Sonnet</small>
+        </div>
+      </div>
+      <div class="judge-verdict-row">
+        <div class="judge-verdict"><span>LLM AS JUDGE</span><b>Model A preferred</b><small>Stronger policy grounding</small></div>
+        <div class="judge-dimensions">
+          <div><span>Factuality</span><b>94</b></div>
+          <div><span>Relevance</span><b>97</b></div>
+          <div><span>Safety</span><b class="judge-pass">Pass</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div class="product-panel-copy"><span class="product-category">AI QUALITY / EVALUATION</span><h3>EvalLoop AI</h3><p>Evaluate AI responses, compare outputs, and inspect quality dimensions to build more reliable AI experiences.</p><a class="button button-light" href="https://evalloop-ai.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop AI <span>↗</span></a></div></article>
           <article class="product-panel product-jobs" data-aos="fade-up" data-aos-delay="100"><div class="product-panel-top"><span class="product-label">PRODUCT / 02</span><span class="product-arrow">↗</span></div><div class="product-art jobs-art" aria-hidden="true"><div class="jobs-window"><div class="jobs-window-head"><span>Opportunity feed</span><span>LIVE DISCOVERY</span></div><div class="job-row"><i>AI</i><span><b>AI Evaluator</b><small>Model quality · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>LLM</i><span><b>Prompt Specialist</b><small>Language systems · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>DATA</i><span><b>Data Annotator</b><small>AI training · Flexible</small></span><span class="job-tag">OPEN</span></div></div></div><div class="product-panel-copy"><span class="product-category">AI OPPORTUNITY DISCOVERY</span><h3>EvalLoop Jobs</h3><p>Discover opportunities across AI evaluation, LLM work, data annotation, AI training, and related fields.</p><a class="button button-light" href="https://annotatorjobs.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop Jobs <span>↗</span></a></div></article>
         </div>
       </div>
