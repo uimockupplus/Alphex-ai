@@ -783,7 +783,6 @@
     // Authentication starts after this point.
     initializeAuthentication();
     initializeProfileMenu();
-    initializeTheme();
     initializeMobileNavigation();
     initializeAnchorNavigation();
     initializeReactiveVisuals();
