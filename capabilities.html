@@ -17,10 +17,14 @@
 
   <meta
     name="theme-color"
-    content="#f7f7f5"
+    content="#08090d"
   >
 
   <title>Capabilities — Alphex AI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link
     rel="stylesheet"
@@ -28,544 +32,169 @@
   >
 
   <style>
-
-    /* =========================================================
-       ALPHEX AI — CAPABILITIES PAGE
-       Page-specific styles only.
-       Global design system comes from site.css.
-       ========================================================= */
-
-    .capabilities-hero{
-      padding:108px 0 96px;
-      border-bottom:1px solid var(--border);
-    }
-
-    .capabilities-hero-grid{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:90px;
-      align-items:end;
-    }
-
-    .capabilities-hero h1{
-      max-width:820px;
-      font-size:clamp(54px,7vw,96px);
-      line-height:.91;
-      letter-spacing:-.09em;
-      margin:16px 0 28px;
-    }
-
-    .capabilities-hero-copy{
-      max-width:620px;
-      color:#595955;
-      font-size:18px;
-      line-height:1.6;
-      margin:0;
-    }
-
-    .hero-side{
-      padding-bottom:8px;
-    }
-
-    .hero-side-box{
-      border:1px solid var(--border);
-      background:var(--white);
-      padding:25px;
-    }
-
-    .hero-side-label{
-      font:10px var(--mono);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:var(--muted);
-      margin-bottom:20px;
-    }
-
-    .hero-side-title{
-      font-size:25px;
-      line-height:1.1;
-      letter-spacing:-.05em;
-      font-weight:300;
-      margin:0 0 17px;
-    }
-
-    .hero-side-copy{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-      margin:0;
-    }
-
-    /* =========================================================
-       PRIMARY CAPABILITIES
-       ========================================================= */
-
-    .capabilities-list{
-      padding:0 0 30px;
-    }
-
-    .capability-row{
-      display:grid;
-      grid-template-columns:90px 1fr 1fr;
-      gap:35px;
-      padding:58px 0;
-      border-bottom:1px solid var(--border);
-    }
-
-    .capability-number{
-      font:11px var(--mono);
-      color:var(--accent);
-      padding-top:7px;
-    }
-
-    .capability-main h2{
-      font-size:clamp(34px,4vw,54px);
-      line-height:1;
-      letter-spacing:-.07em;
-      margin:0;
-    }
-
-    .capability-main p{
-      max-width:450px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.65;
-      margin:17px 0 0;
-    }
-
-    .capability-details{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .capability-detail{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      font-size:13px;
-      line-height:1.5;
-      color:#494945;
-    }
-
-    .capability-detail-mark{
-      flex:0 0 auto;
-      width:20px;
-      height:20px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:1px solid var(--border);
-      border-radius:50%;
-      color:var(--accent);
-      font:10px var(--mono);
-      margin-top:1px;
-    }
-
-    .capability-detail span:last-child{
-      padding-top:1px;
-    }
-
-    /* =========================================================
-       EXTENDED CAPABILITIES
-       ========================================================= */
-
-    .capability-section{
-      padding:118px 0;
-      border-bottom:1px solid var(--border);
-    }
-
-    .capability-section-head{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:80px;
-      margin-bottom:65px;
-    }
-
-    .capability-section-head h2{
-      font-size:clamp(42px,5vw,68px);
-      line-height:.96;
-      letter-spacing:-.085em;
-      margin:15px 0 0;
-    }
-
-    .capability-section-head p{
-      max-width:450px;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.6;
-      margin:42px 0 0;
-    }
-
-    .capability-cards{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      border-top:1px solid var(--border);
-      border-left:1px solid var(--border);
-    }
-
-    .capability-card{
-      min-height:270px;
-      padding:28px;
-      border-right:1px solid var(--border);
-      border-bottom:1px solid var(--border);
-      background:var(--paper);
-      transition:
-        background .25s ease,
-        transform .25s ease;
-    }
-
-    .capability-card:hover{
-      background:var(--white);
-      transform:translateY(-3px);
-    }
-
-    .capability-card-number{
-      font:10px var(--mono);
-      color:var(--accent);
-      margin-bottom:70px;
-    }
-
-    .capability-card h3{
-      font-size:25px;
-      line-height:1.05;
-      letter-spacing:-.05em;
-      margin:0 0 13px;
-    }
-
-    .capability-card p{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-      margin:0;
-    }
-
-    /* =========================================================
-       HOW WE APPROACH AI
-       ========================================================= */
-
-    .quality-section{
-      padding:118px 0;
-      border-bottom:1px solid var(--border);
-    }
-
-    .quality-layout{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:90px;
-    }
-
-    .quality-layout h2{
-      max-width:600px;
-      font-size:clamp(42px,5vw,68px);
-      line-height:.96;
-      letter-spacing:-.085em;
-      margin:15px 0 0;
-    }
-
-    .quality-content{
-      padding-top:43px;
-    }
-
-    .quality-content > p{
-      max-width:470px;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.6;
-      margin:0 0 30px;
-    }
-
-    .quality-list{
-      border-top:1px solid var(--border);
-    }
-
-    .quality-item{
-      display:flex;
-      align-items:flex-start;
-      gap:15px;
-      padding:17px 0;
-      border-bottom:1px solid var(--border);
-      font-size:13px;
-    }
-
-    .quality-item-mark{
-      color:var(--accent);
-      font-family:var(--mono);
-      font-size:11px;
-    }
-
-    /* =========================================================
-       USE CASES
-       ========================================================= */
-
-    .use-cases{
-      padding:118px 0;
-      border-bottom:1px solid var(--border);
-    }
-
-    .use-case-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
-      margin-top:65px;
-    }
-
-    .use-case{
-      min-height:210px;
-      border:1px solid var(--border);
-      padding:30px;
-      background:var(--white);
-    }
-
-    .use-case-label{
-      font:10px var(--mono);
-      color:var(--accent);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      margin-bottom:55px;
-    }
-
-    .use-case h3{
-      font-size:27px;
-      line-height:1.05;
-      letter-spacing:-.055em;
-      margin:0 0 12px;
-    }
-
-    .use-case p{
-      max-width:470px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-      margin:0;
-    }
-
-    /* =========================================================
-       CTA
-       ========================================================= */
-
-    .capabilities-cta{
-      padding:110px 0 125px;
-    }
-
-    .cta-box{
-      display:grid;
-      grid-template-columns:1.4fr .6fr;
-      gap:70px;
-      align-items:end;
-      padding:58px;
-      background:#eeecff;
-      border:1px solid #d8d2ff;
-    }
-
-    .cta-box h2{
-      max-width:720px;
-      font-size:clamp(43px,5.5vw,72px);
-      line-height:.94;
-      letter-spacing:-.085em;
-      margin:14px 0 20px;
-    }
-
-    .cta-box p{
-      max-width:570px;
-      color:#59546f;
-      font-size:15px;
-      line-height:1.6;
-      margin:0;
-    }
-
-    .cta-action{
-      display:flex;
-      justify-content:flex-end;
-      align-items:flex-end;
-    }
-
-    /* =========================================================
-       DARK MODE
-       ========================================================= */
-
-    body.dark-theme .capabilities-hero-copy,
-    body.dark-theme .capability-main p,
-    body.dark-theme .capability-card p,
-    body.dark-theme .quality-content > p,
-    body.dark-theme .use-case p{
-      color:#c2c5d5;
-    }
-
-    body.dark-theme .hero-side-box,
-    body.dark-theme .capability-card,
-    body.dark-theme .use-case{
-      background:#171a28;
-    }
-
-    body.dark-theme .capability-card:hover{
-      background:#1d2030;
-    }
-
-    body.dark-theme .capability-detail{
-      color:#c2c5d5;
-    }
-
-    body.dark-theme .cta-box{
-      background:#242044;
-      border-color:#3c356d;
-    }
-
-    body.dark-theme .cta-box p{
-      color:#c6c1dd;
-    }
-
-    /* =========================================================
-       RESPONSIVE
-       ========================================================= */
-
-    @media(max-width:900px){
-
-      .capabilities-hero{
-        padding:85px 0 75px;
-      }
-
-      .capabilities-hero-grid{
-        grid-template-columns:1fr;
-        gap:55px;
-      }
-
-      .hero-side{
-        max-width:600px;
-      }
-
-      .capability-row{
-        grid-template-columns:55px 1fr;
-        gap:20px;
-      }
-
-      .capability-details{
-        grid-column:2;
-        margin-top:5px;
-      }
-
-      .capability-section-head,
-      .quality-layout{
-        grid-template-columns:1fr;
-        gap:25px;
-      }
-
-      .capability-section-head p{
-        margin-top:0;
-      }
-
-      .quality-content{
-        padding-top:0;
-      }
-
-      .capability-cards{
-        grid-template-columns:1fr 1fr;
-      }
-
-      .cta-box{
-        grid-template-columns:1fr;
-        gap:40px;
-      }
-
-      .cta-action{
-        justify-content:flex-start;
-      }
-
-    }
-
-    @media(max-width:800px){
-
-      .capability-section,
-      .quality-section,
-      .use-cases{
-        padding:78px 0;
-      }
-
-      .use-case-grid{
-        grid-template-columns:1fr;
-        margin-top:45px;
-      }
-
-      .capabilities-cta{
-        padding:78px 0 85px;
-      }
-
-      .cta-box{
-        padding:35px;
-      }
-
-    }
-
-    @media(max-width:600px){
-
-      .capabilities-hero{
-        padding:65px 0 60px;
-      }
-
-      .capabilities-hero h1{
-        font-size:clamp(48px,15vw,70px);
-      }
-
-      .capabilities-hero-copy{
-        font-size:16px;
-      }
-
-      .capability-row{
-        grid-template-columns:1fr;
-        gap:15px;
-        padding:42px 0;
-      }
-
-      .capability-number{
-        padding-top:0;
-      }
-
-      .capability-details{
-        grid-column:auto;
-        margin-top:10px;
-      }
-
-      .capability-main h2{
-        font-size:40px;
-      }
-
-      .capability-cards{
-        grid-template-columns:1fr;
-      }
-
-      .capability-card{
-        min-height:230px;
-      }
-
-      .capability-card-number{
-        margin-bottom:55px;
-      }
-
-      .use-case{
-        min-height:190px;
-        padding:24px;
-      }
-
-      .use-case-label{
-        margin-bottom:45px;
-      }
-
-      .cta-box{
-        padding:28px 24px;
-      }
-
-      .cta-box h2{
-        font-size:43px;
-      }
-
-    }
-
-  </style>
+:root {
+  --bg:#08090d; --paper:#f7f7f5; --white:#fff; --ink:#101010; --text:#f4f4f7;
+  --muted:#9a9ca9; --line-light:rgba(15,16,22,.13); --accent:#7057ff;
+  --accent-dark:#5540d8; --cyan:#35c8c0; --lavender:#eeeaff;
+  --sans:"Inter",Arial,sans-serif; --mono:"DM Mono",monospace; --container:1160px;
+}
+body.capabilities-page { margin:0; background:var(--paper); color:var(--ink); font:400 15px/1.55 var(--sans); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body.capabilities-page *, body.capabilities-page *::before, body.capabilities-page *::after { box-sizing:border-box; }
+body.capabilities-page .shell { width:min(1240px,calc(100% - 64px)); margin-inline:auto; }
+body.capabilities-page a { -webkit-tap-highlight-color:transparent; }
+body.capabilities-page h1, body.capabilities-page h2, body.capabilities-page h3, body.capabilities-page p { margin-top:0; }
+body.capabilities-page h1, body.capabilities-page h2, body.capabilities-page h3 { font-weight:300; letter-spacing:-.065em; }
+body.capabilities-page .section-label { color:#7466c7; font:400 10px/1.4 var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+body.capabilities-page .muted-heading { color:#8c8d98 !important; }
+body.capabilities-page .hero-side-title .muted-heading { color:#a2a3af !important; }
+
+/* Page hero echoes the homepage's centered, dark photographic hero. */
+body.capabilities-page .capabilities-hero { position:relative; isolation:isolate; overflow:hidden; padding:92px 0 70px; border:0; background:#08090d; color:var(--text); text-align:center; }
+body.capabilities-page .capabilities-hero-backdrop { position:absolute; z-index:-1; inset:0; overflow:hidden; pointer-events:none; }
+body.capabilities-page .capabilities-hero-backdrop img { width:100%; height:100%; display:block; object-fit:cover; object-position:center 52%; opacity:.92; filter:brightness(.96) saturate(.86); }
+body.capabilities-page .capabilities-hero-backdrop::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,.43); }
+body.capabilities-page .capabilities-hero::before { content:""; position:absolute; z-index:0; width:min(800px,78vw); height:440px; left:50%; top:36%; transform:translate(-50%,-50%); border-radius:50%; background:rgba(76,49,157,.18); filter:blur(115px); pointer-events:none; }
+body.capabilities-page .capabilities-hero .shell { position:relative; z-index:1; }
+body.capabilities-page .capabilities-hero-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:31px; align-items:center; }
+body.capabilities-page .hero-kicker { display:flex; justify-content:center; align-items:center; gap:9px; margin:0; color:#c3baff; font:400 10px/1.4 var(--mono); letter-spacing:.14em; text-transform:uppercase; }
+body.capabilities-page .hero-kicker::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 4px rgba(53,200,192,.1); }
+body.capabilities-page .capabilities-hero h1 { max-width:1000px; margin:19px auto 0; color:#f6f6f9; font-size:clamp(58px,7.3vw,94px); font-weight:300; line-height:.98; letter-spacing:-.085em; }
+body.capabilities-page .hero-title-highlight { color:#bdb2ff; }
+body.capabilities-page .capabilities-hero-copy { max-width:610px; margin:22px auto 0; color:#aeb0bc; font-size:15px; line-height:1.75; font-weight:300; }
+
+
+
+
+
+
+
+body.capabilities-page .hero-side { width:min(760px,100%); margin:0 auto; text-align:left; }
+body.capabilities-page .hero-side-box { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:10px 24px; align-items:center; padding:19px 22px; border:1px solid rgba(255,255,255,.13); border-radius:16px; background:rgba(12,13,19,.72); box-shadow:0 18px 55px rgba(0,0,0,.2); backdrop-filter:blur(12px); }
+body.capabilities-page .hero-side-label { grid-column:1/-1; margin:0; color:#c1b6ff; font:400 9px/1.4 var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+body.capabilities-page .hero-side-title { margin:0; color:#f3f3f7; font-size:21px; font-weight:300; line-height:1.16; letter-spacing:-.045em; }
+body.capabilities-page .hero-side-copy { margin:0; color:#a7a9b4; font-size:10px; line-height:1.65; }
+
+/* Light, editorial service rows on the same warm-white base as homepage sections. */
+body.capabilities-page .capabilities-list { padding:64px 0 82px; background:var(--paper); }
+body.capabilities-page .capabilities-list-heading { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:22px; }
+body.capabilities-page .capabilities-list-heading .section-label { margin-bottom:5px; }
+body.capabilities-page .capabilities-list-heading h2 { margin:0; color:#19191e; font-size:clamp(30px,4vw,45px); font-weight:300; line-height:1; letter-spacing:-.07em; }
+body.capabilities-page .capability-row { display:grid; grid-template-columns:44px minmax(0,1fr) minmax(240px,.8fr); gap:24px; align-items:start; margin:10px 0; padding:23px 25px; border:1px solid #dedee3; border-radius:18px; background:#fff; box-shadow:0 4px 15px rgba(21,18,48,.025); transition:transform .3s cubic-bezier(.2,.75,.25,1),box-shadow .3s,border-color .3s; }
+body.capabilities-page .capability-row:hover { transform:translateY(-3px); box-shadow:0 18px 38px rgba(21,18,48,.07); border-color:#c8c1ff; }
+body.capabilities-page .capability-number { display:grid; place-items:center; width:30px; height:30px; padding:0; border:1px solid #e6e2f7; border-radius:9px; background:#f7f5ff; color:#7466c7; font:400 9px var(--mono); }
+body.capabilities-page .capability-main h2 { margin:0; color:#17171d; font-size:clamp(25px,3vw,35px); font-weight:300; line-height:1.05; letter-spacing:-.065em; }
+body.capabilities-page .capability-main p { max-width:490px; margin:9px 0 0; color:#656671; font-size:12px; line-height:1.75; font-weight:300; }
+body.capabilities-page .capability-details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px; padding-top:3px; }
+body.capabilities-page .capability-detail { display:flex; align-items:flex-start; gap:8px; color:#4f505a; font-size:10px; line-height:1.5; }
+body.capabilities-page .capability-detail-mark { flex:0 0 18px; display:grid; place-items:center; width:18px; height:18px; margin-top:0; border:1px solid #d5eee5; border-radius:50%; background:#f3faf7; color:#319777; font:9px var(--mono); }
+body.capabilities-page .capability-detail span:last-child { padding-top:2px; }
+
+/* Homepage-matched capability cards: soft surface, thin borders, lavender index. */
+body.capabilities-page .capability-section { padding:100px 0; border:0; background:#efeff5; }
+body.capabilities-page .capability-section-head { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.65fr); align-items:end; gap:70px; margin-bottom:38px; }
+body.capabilities-page .capability-section-head h2, body.capabilities-page .quality-layout h2, body.capabilities-page .use-cases .section-title { margin:16px 0 0; color:#17171d; font-size:clamp(42px,5.4vw,68px); font-weight:300; line-height:1.02; letter-spacing:-.085em; }
+body.capabilities-page .capability-section-head p { max-width:390px; margin:0 0 3px; color:#676873; font-size:13px; line-height:1.75; font-weight:300; }
+body.capabilities-page .capability-cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; border:0; }
+body.capabilities-page .capability-card { min-height:0; padding:25px; border:1px solid #dedee3; border-radius:18px; background:#fff; box-shadow:0 3px 12px rgba(21,18,48,.02); transition:transform .35s cubic-bezier(.2,.75,.25,1),box-shadow .35s,border-color .35s; }
+body.capabilities-page .capability-card:hover { transform:translateY(-4px); border-color:#c8c1ff; background:#fff; box-shadow:0 22px 50px rgba(21,18,48,.08); }
+body.capabilities-page .capability-card-number { display:inline-flex; align-items:center; justify-content:center; min-width:30px; height:24px; margin:0 0 26px; padding:0 7px; border:1px solid #e7e3fa; border-radius:7px; background:#f7f5ff; color:#7466c7; font:400 9px var(--mono); }
+body.capabilities-page .capability-card h3 { margin:0 0 10px; color:#1b1b21; font-size:23px; font-weight:300; line-height:1.06; letter-spacing:-.055em; }
+body.capabilities-page .capability-card p { max-width:490px; margin:0; color:#656671; font-size:12px; line-height:1.75; font-weight:300; }
+
+/* Approach content stays light like the homepage's process/trust sections. */
+body.capabilities-page .quality-section { padding:98px 0; border:0; background:#f7f7f5; }
+body.capabilities-page .quality-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.75fr); gap:78px; }
+body.capabilities-page .quality-layout h2 { max-width:560px; }
+body.capabilities-page .quality-content { padding-top:38px; }
+body.capabilities-page .quality-content>p { max-width:470px; margin:0 0 23px; color:#676873; font-size:13px; line-height:1.75; font-weight:300; }
+body.capabilities-page .quality-list { border-top:1px solid #deded8; }
+body.capabilities-page .quality-item { display:flex; align-items:flex-start; gap:13px; padding:14px 0; border-bottom:1px solid #deded8; color:#292930; font-size:11px; }
+body.capabilities-page .quality-item-mark { color:#7466c7; font:400 9px var(--mono); }
+
+/* Use-case cards mirror the homepage's rounded white capability cards. */
+body.capabilities-page .use-cases { padding:100px 0; border:0; background:#f1f0ed; }
+body.capabilities-page .use-cases .intro { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.65fr); align-items:end; gap:70px; margin-top:15px; }
+body.capabilities-page .use-cases .section-title { margin:0; }
+body.capabilities-page .use-cases .section-copy { max-width:390px; margin:0 0 3px; color:#676873; font-size:13px; line-height:1.75; font-weight:300; }
+body.capabilities-page .use-case-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; margin-top:36px; }
+body.capabilities-page .use-case { min-height:0; padding:24px; border:1px solid #dedee3; border-radius:18px; background:#fff; box-shadow:0 3px 12px rgba(21,18,48,.02); transition:transform .35s cubic-bezier(.2,.75,.25,1),box-shadow .35s,border-color .35s; }
+body.capabilities-page .use-case:hover { transform:translateY(-4px); border-color:#c8c1ff; box-shadow:0 22px 50px rgba(21,18,48,.08); }
+body.capabilities-page .use-case-label { margin:0 0 36px; color:#7466c7; font:400 9px var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+body.capabilities-page .use-case h3 { margin:0 0 10px; color:#1b1b21; font-size:24px; font-weight:300; line-height:1.06; letter-spacing:-.055em; }
+body.capabilities-page .use-case p { max-width:480px; margin:0; color:#656671; font-size:12px; line-height:1.75; font-weight:300; }
+
+/* Soft lavender project CTA matches the homepage's violet action language. */
+body.capabilities-page .capabilities-cta { padding:24px 0 100px; background:#f1f0ed; }
+body.capabilities-page .cta-box { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(190px,.7fr); gap:48px; align-items:end; padding:44px; border:1px solid #d8d2ff; border-radius:20px; background:#eeeaff; }
+body.capabilities-page .cta-box h2 { max-width:720px; margin:14px 0 17px; color:#17151f; font-size:clamp(43px,5.5vw,68px); font-weight:300; line-height:.98; letter-spacing:-.085em; }
+body.capabilities-page .cta-box p { max-width:570px; margin:0; color:#59546f; font-size:13px; line-height:1.75; font-weight:300; }
+body.capabilities-page .cta-box .section-label { color:#5540d8; }
+body.capabilities-page .cta-action { display:flex; justify-content:flex-end; align-items:flex-end; }
+body.capabilities-page .cta-action .pill.dark { display:inline-flex; align-items:center; justify-content:center; gap:12px; min-height:48px; padding:0 22px; border:1px solid #7057ff; border-radius:999px; background:#7057ff; color:#fff; font-size:11px; font-weight:500; box-shadow:0 8px 22px rgba(112,87,255,.16); transition:transform .2s,background .2s,border-color .2s; }
+body.capabilities-page .cta-action .pill.dark:hover { transform:translateY(-2px); border-color:#5e45e8; background:#5e45e8; }
+
+@media(max-width:900px) {
+  body.capabilities-page .capabilities-hero { padding:78px 0 60px; }
+  body.capabilities-page .capabilities-hero h1 { font-size:clamp(52px,8vw,76px); }
+  body.capabilities-page .capability-row { grid-template-columns:38px minmax(0,1fr); gap:14px 18px; }
+  body.capabilities-page .capability-details { grid-column:2; }
+  body.capabilities-page .capability-section-head, body.capabilities-page .quality-layout { grid-template-columns:1fr; gap:24px; }
+  body.capabilities-page .capability-section-head p { margin:0; }
+  body.capabilities-page .quality-content { padding-top:0; }
+  body.capabilities-page .capability-section, body.capabilities-page .quality-section, body.capabilities-page .use-cases { padding:78px 0; }
+  body.capabilities-page .use-cases .intro { grid-template-columns:1fr; gap:15px; }
+  body.capabilities-page .cta-box { grid-template-columns:1fr; gap:28px; }
+  body.capabilities-page .cta-action { justify-content:flex-start; }
+}
+@media(max-width:780px) {
+  body.capabilities-page .shell { width:min(calc(100% - 36px),620px); }
+  body.capabilities-page .capabilities-hero-backdrop img { object-position:38% center; opacity:.86; filter:brightness(.91) saturate(.82); }
+  body.capabilities-page .capabilities-hero-backdrop::after { background:rgba(0,0,0,.52); }
+  body.capabilities-page .capabilities-list { padding:49px 0 62px; }
+  body.capabilities-page .capability-row { padding:20px; }
+  body.capabilities-page .capability-details { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  body.capabilities-page .capability-section, body.capabilities-page .quality-section, body.capabilities-page .use-cases { padding:72px 0; }
+  body.capabilities-page .capabilities-cta { padding:12px 0 72px; }
+}
+@media(max-width:600px) {
+  body.capabilities-page .shell { width:calc(100% - 36px); }
+  body.capabilities-page .capabilities-hero { padding:64px 0 48px; }
+  body.capabilities-page .capabilities-hero-backdrop img { object-position:33% center; opacity:.82; filter:brightness(.88) saturate(.78); }
+  body.capabilities-page .capabilities-hero-backdrop::after { background:rgba(0,0,0,.57); }
+  body.capabilities-page .capabilities-hero h1 { font-size:clamp(45px,12vw,60px); line-height:1; }
+  body.capabilities-page .capabilities-hero-copy { max-width:540px; margin-top:17px; font-size:13px; }
+
+
+  body.capabilities-page .hero-side-box { grid-template-columns:1fr; gap:7px; padding:16px; }
+  body.capabilities-page .hero-side-label { grid-column:auto; }
+  body.capabilities-page .hero-side-title { font-size:18px; }
+  body.capabilities-page .hero-side-copy { font-size:10px; }
+  body.capabilities-page .capabilities-list-heading { display:block; margin-bottom:17px; }
+  body.capabilities-page .capabilities-list-heading h2 { margin-top:7px; font-size:32px; }
+  body.capabilities-page .capability-row { grid-template-columns:1fr; gap:10px; padding:17px; border-radius:15px; }
+  body.capabilities-page .capability-number { width:27px; height:26px; }
+  body.capabilities-page .capability-main h2 { font-size:27px; }
+  body.capabilities-page .capability-details { grid-column:auto; grid-template-columns:1fr; gap:8px; padding-top:2px; }
+  body.capabilities-page .capability-section-head h2, body.capabilities-page .quality-layout h2, body.capabilities-page .use-cases .section-title { font-size:clamp(38px,10.5vw,52px); }
+  body.capabilities-page .capability-cards, body.capabilities-page .use-case-grid { grid-template-columns:1fr; gap:11px; }
+  body.capabilities-page .capability-card, body.capabilities-page .use-case { padding:20px; border-radius:15px; }
+  body.capabilities-page .capability-card-number { margin-bottom:19px; }
+  body.capabilities-page .capability-card h3, body.capabilities-page .use-case h3 { font-size:21px; }
+  body.capabilities-page .use-case-label { margin-bottom:23px; }
+  body.capabilities-page .cta-box { padding:25px 21px; border-radius:16px; }
+  body.capabilities-page .cta-box h2 { font-size:clamp(38px,10.5vw,50px); }
+}
+@media(prefers-reduced-motion:reduce) {
+
+  body.capabilities-page .capability-row:hover, body.capabilities-page .capability-card:hover,
+
+}
+</style>
 
 </head>
 
 
-<body>
+<body class="capabilities-page">
 
   <!-- =======================================================
        SHARED NAVIGATION
@@ -587,6 +216,7 @@
 
     <section class="capabilities-hero">
 
+      <div class="capabilities-hero-backdrop" aria-hidden="true"><img src="./hero-ai-datacenter.png" alt=""></div>
       <div class="shell">
 
         <div class="capabilities-hero-grid">
@@ -598,7 +228,7 @@
             </div>
 
             <h1>
-              AI systems built for real work.
+              AI systems built for <span class="hero-title-highlight">real work.</span>
             </h1>
 
             <p class="capabilities-hero-copy">
@@ -606,7 +236,6 @@
               and improve practical AI systems around the way their
               teams actually work.
             </p>
-
           </div>
 
 
@@ -619,7 +248,7 @@
               </div>
 
               <h2 class="hero-side-title">
-                From AI strategy to working systems.
+                From AI strategy to <span class="muted-heading">working systems.</span>
               </h2>
 
               <p class="hero-side-copy">
@@ -643,10 +272,13 @@
          CORE SERVICES
          ===================================================== -->
 
-    <section class="capabilities-list">
+    <section class="capabilities-list" id="core-capabilities">
 
       <div class="shell">
-
+        <div class="capabilities-list-heading">
+          <div class="section-label">01 / Core capabilities</div>
+          <h2>What we <span class="muted-heading">build.</span></h2>
+        </div>
 
         <!-- 01 -->
 
@@ -861,11 +493,11 @@
           <div>
 
             <div class="section-label">
-              01 / Extended capabilities
+              02 / Extended capabilities
             </div>
 
             <h2>
-              AI that fits the workflow.
+              AI that fits the<br><span class="muted-heading">workflow.</span>
             </h2>
 
           </div>
@@ -1020,11 +652,11 @@
           <div>
 
             <div class="section-label">
-              02 / Our approach
+              03 / Our approach
             </div>
 
             <h2>
-              Useful AI needs more than a model.
+              Useful AI needs more than a<br><span class="muted-heading">model.</span>
             </h2>
 
           </div>
@@ -1086,7 +718,7 @@
       <div class="shell">
 
         <div class="section-label">
-          03 / Where it works
+          04 / Where it works
         </div>
 
 
@@ -1095,7 +727,7 @@
           <div>
 
             <h2 class="section-title">
-              Built around the work.
+              Built around<br><span class="muted-heading">the work.</span>
             </h2>
 
           </div>
@@ -1215,7 +847,7 @@
             </div>
 
             <h2>
-              Have an AI problem worth solving?
+              Have an AI problem worth<br><span class="muted-heading">solving?</span>
             </h2>
 
             <p>
