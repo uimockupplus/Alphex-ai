@@ -156,7 +156,7 @@ body.products-page .products-cta-action .pill:hover { transform:translateY(-2px)
 </style>
 
 <style>
-/* Match the current index palette while preserving this page's existing typography. */
+/* Refined capabilities-page treatment adapted to Products; source font family and copy stay intact. */
 body.products-page #site-nav .topbar,
 body.products-page #site-nav .site-header,
 body.products-page #site-nav .navbar {
@@ -173,47 +173,54 @@ body.products-page #site-nav .nav-links a {color:#f7f6fb!important;text-decorati
 body.products-page #site-nav .nav-links a:hover {color:#b9a8ff!important}
 body.products-page #site-nav .nav-links a::after {display:none!important}
 body.products-page #site-nav .nav-actions {display:flex!important;align-items:center!important;gap:13px!important;margin-left:auto!important}
-body.products-page #site-nav .contact-link {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 23px!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:999px!important;background:transparent!important;background-image:none!important;color:#f7f6fb!important;text-decoration:none!important}
-body.products-page #site-nav .header-demo {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 24px!important;border:1px solid #6047ed!important;border-radius:999px!important;background:#6047ed!important;background-image:none!important;color:#fff!important;text-decoration:none!important}
+body.products-page #site-nav .contact-link {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 23px!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:999px!important;background:transparent!important;background-image:none!important;color:#f7f6fb!important;text-decoration:none!important;transition:background .2s,border-color .2s,color .2s!important}
+body.products-page #site-nav .contact-link:hover {background:rgba(255,255,255,.06)!important;border-color:#a995ff!important;color:#fff!important}
+body.products-page #site-nav .header-demo {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 24px!important;border:1px solid #6047ed!important;border-radius:999px!important;background:#6047ed!important;background-image:none!important;color:#fff!important;text-decoration:none!important;transition:background .2s,border-color .2s,transform .2s!important}
+body.products-page #site-nav .header-demo:hover {background:#725cff!important;background-image:none!important;border-color:#725cff!important;transform:translateY(-1px)}
 body.products-page #site-nav .mobile-menu {border-color:rgba(255,255,255,.45)!important;background:rgba(255,255,255,.05)!important}
 body.products-page #site-nav .mobile-menu span {background:#fff!important}
 body.products-page .products-hero {
-  min-height:530px;display:flex;align-items:center;padding:82px 0 76px!important;
+  min-height:590px!important;display:flex!important;align-items:center!important;padding:76px 0 72px!important;
   border:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important;text-align:left!important;
   color:#f6f5fb!important;isolation:isolate;
-  background:radial-gradient(ellipse at 72% 53%,rgba(100,68,205,.2),transparent 39%),radial-gradient(ellipse at 43% 112%,rgba(104,68,231,.14),transparent 42%),linear-gradient(110deg,#050507 0%,#090810 53%,#050509 100%)!important
+  background:radial-gradient(ellipse at 74% 48%,rgba(93,65,194,.20),transparent 38%),radial-gradient(ellipse at 45% 112%,rgba(110,72,236,.14),transparent 42%),#050509!important
 }
-body.products-page .products-hero-backdrop img {opacity:.13!important;filter:brightness(.42) saturate(.7)!important}
-body.products-page .products-hero-backdrop::after {background:rgba(2,2,7,.66)!important}
-body.products-page .products-hero::before {z-index:-1;width:min(740px,55vw);height:430px;left:74%;top:52%;background:rgba(102,69,206,.18)!important;filter:blur(112px)}
+body.products-page .products-hero-backdrop img {opacity:.075!important;filter:brightness(.28) saturate(.55)!important}
+body.products-page .products-hero-backdrop::after {background:linear-gradient(90deg,rgba(3,3,8,.78),rgba(3,3,8,.46) 65%,rgba(3,3,8,.58))!important}
+body.products-page .products-hero::before {z-index:-1!important;width:min(780px,62vw)!important;height:470px!important;left:75%!important;top:53%!important;background:rgba(102,69,206,.18)!important;filter:blur(120px)!important}
 body.products-page .products-hero::after {content:"";position:absolute;z-index:-1;right:12%;top:50%;width:min(37vw,440px);aspect-ratio:1;transform:translateY(-50%);border:1px solid rgba(151,123,255,.2);border-radius:50%;box-shadow:0 0 65px rgba(112,78,231,.08),inset 0 0 70px rgba(112,78,231,.04);pointer-events:none}
-body.products-page .products-hero .shell {width:min(1240px,calc(100% - 64px))}
-body.products-page .products-hero-grid {grid-template-columns:minmax(0,1.12fr) minmax(330px,.88fr)!important;gap:64px!important;align-items:center!important}
+body.products-page .products-hero .shell {width:min(1240px,calc(100% - 64px))!important}
+body.products-page .products-hero-grid {grid-template-columns:minmax(0,1.08fr) minmax(350px,.82fr)!important;gap:clamp(42px,6vw,82px)!important;align-items:center!important}
 body.products-page .products-hero-grid>div:first-child {position:relative;z-index:1}
 body.products-page .products-hero .hero-kicker {justify-content:flex-start!important;color:#a99aff!important}
 body.products-page .products-hero .hero-kicker::before {background:#8b75ff!important;box-shadow:0 0 0 4px rgba(139,117,255,.12)!important}
-body.products-page .products-hero h1 {max-width:760px!important;margin:20px 0 0!important;color:#f7f6fb!important;text-align:left!important}
+body.products-page .products-hero h1 {max-width:700px!important;margin:20px 0 0!important;color:#f7f6fb!important;font-size:clamp(52px,6.2vw,82px)!important;font-weight:400!important;line-height:1.02!important;letter-spacing:-.075em!important;text-align:left!important}
 body.products-page .products-hero h1 .muted-heading {color:#a78cff!important}
-body.products-page .products-hero-copy {max-width:480px!important;margin:0 0 0 auto!important;padding:24px 0 24px 25px!important;border-left:1px solid rgba(167,140,255,.42);color:#b5b3c0!important;text-align:left!important}
-body.products-page .products-hero-copy p {margin:0 0 18px!important}
-body.products-page .ecosystem-note {justify-content:flex-start!important;color:#aaa8b6!important}
-body.products-page .ecosystem-dot {background:#9a80ff!important;box-shadow:0 0 0 4px rgba(154,128,255,.12)!important}
-/* Preserve the attached page's original fonts, type scales, content and light sections. */
-body.products-page .product-intro,body.products-page .products-list,body.products-page .philosophy,body.products-page .products-cta {background:#f7f7f5!important;color:#101010!important}
-body.products-page .relationship {background:#101014!important;color:#f4f4f7!important}
+body.products-page .products-hero-copy {
+  position:relative;max-width:500px!important;margin:0 0 0 auto!important;padding:30px!important;
+  border:1px solid rgba(255,255,255,.16)!important;border-radius:20px!important;
+  background:linear-gradient(145deg,rgba(22,21,33,.96),rgba(13,13,20,.96))!important;
+  box-shadow:0 28px 80px rgba(0,0,0,.42),0 0 48px rgba(112,78,231,.12),inset 0 1px rgba(255,255,255,.05)!important;
+  color:#b3b0bf!important;text-align:left!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important
+}
+body.products-page .products-hero-copy::before {content:"";position:absolute;top:0;left:24px;right:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(169,145,255,.75),transparent);pointer-events:none}
+body.products-page .products-hero-copy p {margin:0 0 20px!important;color:#b3b0bf!important}
+body.products-page .ecosystem-note {justify-content:flex-start!important;gap:9px!important;color:#b6a5ff!important;font-size:9px!important}
+body.products-page .ecosystem-dot {background:#9b82ff!important;box-shadow:0 0 0 4px rgba(155,130,255,.12)!important}
+/* Retain existing light content and dark ecosystem section; harmonize purple action colors. */
 body.products-page .product-action .pill,body.products-page .products-cta-action .pill {background:#6047ed!important;background-image:none!important;border-color:#6047ed!important;color:#fff!important}
 body.products-page .product-action .pill:hover,body.products-page .products-cta-action .pill:hover {background:#5039d2!important;background-image:none!important;border-color:#5039d2!important}
 @media(max-width:900px) {
  body.products-page #site-nav .shell {width:calc(100% - 40px)!important}
  body.products-page #site-nav .nav-links {gap:17px!important}
- body.products-page .products-hero {min-height:0;padding:72px 0 62px!important}
- body.products-page .products-hero-grid {grid-template-columns:1fr!important;gap:28px!important}
+ body.products-page .products-hero {min-height:0!important;padding:66px 0 60px!important}
+ body.products-page .products-hero-backdrop img {opacity:.055!important}
+ body.products-page .products-hero::before {left:50%!important;top:68%!important;width:75vw!important}
+ body.products-page .products-hero-grid {grid-template-columns:1fr!important;gap:31px!important}
  body.products-page .products-hero-grid>div:first-child {text-align:center}
  body.products-page .products-hero .hero-kicker {justify-content:center!important}
  body.products-page .products-hero h1 {margin:19px auto 0!important;text-align:center!important}
- body.products-page .products-hero-copy {max-width:650px!important;margin:0 auto!important;padding:0!important;border:0!important;text-align:center!important}
- body.products-page .ecosystem-note {justify-content:center!important}
- body.products-page .products-hero::before {left:50%;top:68%;width:75vw}
+ body.products-page .products-hero-copy {max-width:620px!important;margin:0 auto!important}
  body.products-page .products-hero::after {right:3%;top:66%;width:min(60vw,420px)}
 }
 @media(max-width:800px) {
@@ -227,8 +234,32 @@ body.products-page .product-action .pill:hover,body.products-page .products-cta-
  body.products-page #site-nav .mobile-panel a {color:#f7f6fb!important;border-color:rgba(255,255,255,.13)!important}
 }
 @media(max-width:600px) {
- body.products-page .products-hero {padding:58px 0 48px!important}
+ body.products-page .products-hero {padding:54px 0 44px!important}
+ body.products-page .products-hero h1 {font-size:clamp(43px,11.6vw,58px)!important}
+ body.products-page .products-hero-copy {padding:21px!important;border-radius:16px!important}
  body.products-page .products-hero::after {right:-18%;top:65%;width:72vw;opacity:.7}
+}
+@media(prefers-reduced-motion:reduce) {
+ body.products-page #site-nav .contact-link,body.products-page #site-nav .header-demo,
+ body.products-page .product-card,body.products-page .product-action .pill,body.products-page .products-cta-action .pill {transition:none!important}
+}
+</style>
+
+<style>
+/* Exact heading typography parity with the refined capabilities hero. */
+body.products-page main .products-hero h1 {
+  font-family:var(--sans)!important;
+  font-size:clamp(52px,6.2vw,82px)!important;
+  font-weight:400!important;
+  line-height:1.02!important;
+  letter-spacing:-.075em!important;
+}
+@media(max-width:600px) {
+  body.products-page main .products-hero h1 {
+    font-size:clamp(43px,11.6vw,58px)!important;
+    line-height:1.02!important;
+    letter-spacing:-.075em!important;
+  }
 }
 </style>
 </head>
