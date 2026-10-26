@@ -1,8 +1,8 @@
 /* =========================================================
    ALPHEX AI — SHARED SITE SYSTEM
-   Navigation + Authentication + Interactions
+   Navigation + Theme + Authentication + Interactions
    + Global Alphex Minibot
-   Light-theme only
+   Dark-first theme aligned with the redesigned index.html
    ========================================================= */
 (() => {
   'use strict';
@@ -122,14 +122,6 @@
 
   async function loadSharedComponents() {
     await loadComponent('#site-nav', '/nav.html');
-
-    // Light-theme only: remove legacy theme switches from the navbar.
-    document
-      .querySelectorAll(
-        '#site-nav .theme-toggle, #site-nav .theme-switch'
-      )
-      .forEach(toggle => toggle.remove());
-
     await loadComponent('#site-footer', '/footer.html');
   }
 
@@ -347,8 +339,7 @@
       }
     );
   }
-
-  /* =========================================================
+     /* =========================================================
      PROFILE MENU
      ========================================================= */
   function initializeProfileMenu() {
@@ -449,6 +440,85 @@
   }
 
   /* =========================================================
+     THEME
+     Matches the redesigned dark-first index.html
+     ========================================================= */
+  function initializeTheme() {
+    const root = document.documentElement;
+    const body = document.body;
+    const themeToggle = document.querySelector('.theme-toggle');
+
+    const getSavedTheme = () => {
+      try {
+        const saved = window.localStorage.getItem('alphex-theme');
+
+        return saved === 'light' || saved === 'dark'
+          ? saved
+          : null;
+      } catch (_error) {
+        return null;
+      }
+    };
+
+    const saveTheme = theme => {
+      try {
+        window.localStorage.setItem('alphex-theme', theme);
+      } catch (_error) {
+        // Theme still works for this visit when storage is unavailable.
+      }
+    };
+
+    const setTheme = theme => {
+      const dark = theme === 'dark';
+
+      body.classList.toggle('dark-theme', dark);
+      root.classList.toggle('dark-theme', dark);
+      root.style.colorScheme = dark ? 'dark' : 'light';
+
+      if (themeToggle) {
+        themeToggle.setAttribute(
+          'aria-pressed',
+          String(dark)
+        );
+
+        themeToggle.setAttribute(
+          'aria-label',
+          dark
+            ? 'Switch to light mode'
+            : 'Switch to dark mode'
+        );
+
+        const icon = themeToggle.querySelector('.theme-icon');
+        const label = themeToggle.querySelector('.theme-label');
+
+        if (icon) {
+          icon.textContent = dark ? '☀' : '☾';
+        }
+
+        if (label) {
+          label.textContent = dark ? 'Light' : 'Dark';
+        }
+      }
+
+      saveTheme(dark ? 'dark' : 'light');
+    };
+
+    // Dark is the default, but previously selected preferences are respected.
+    setTheme(getSavedTheme() || 'dark');
+
+    if (themeToggle && !themeToggle.dataset.themeBound) {
+      themeToggle.dataset.themeBound = 'true';
+
+      themeToggle.addEventListener('click', () => {
+        setTheme(
+          body.classList.contains('dark-theme')
+            ? 'light'
+            : 'dark'
+        );
+      });
+    }
+  }
+     /* =========================================================
      MOBILE NAVIGATION
      ========================================================= */
   let closeMobileMenu = () => {};
@@ -613,8 +683,7 @@
       });
     });
   }
-
-  /* =========================================================
+     /* =========================================================
      ALPHEX AI — GLOBAL CHATBOT LOADER
      Automatically adds Alphex Minibot to every page
      that loads site.js.
@@ -714,6 +783,7 @@
     // Authentication starts after this point.
     initializeAuthentication();
     initializeProfileMenu();
+    initializeTheme();
     initializeMobileNavigation();
     initializeAnchorNavigation();
     initializeReactiveVisuals();
