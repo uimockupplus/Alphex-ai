@@ -464,6 +464,52 @@ body.careers-page .application-form-wrap{padding:27px;border:1px solid #dedee3;b
 @media(max-width:600px){body.careers-page.application-page .shell{width:calc(100% - 36px)}body.careers-page .application-hero{padding:54px 0 44px}body.careers-page .application-hero h1{font-size:clamp(43px,11.6vw,58px)}body.careers-page .application-hero-copy{font-size:12px}body.careers-page .application-hero-box{padding:21px;border-radius:16px}body.careers-page .application-hero-title{font-size:24px}body.careers-page .application-section{padding:60px 0 65px}body.careers-page .application-section-heading h2{font-size:clamp(38px,10vw,50px)}body.careers-page .application-form-wrap{padding:21px 16px;border-radius:14px}body.careers-page .application-form-grid{grid-template-columns:1fr;gap:17px}body.careers-page .application-field.full{grid-column:auto}body.careers-page .application-sidebar{padding:18px}body.careers-page .application-submit{width:100%}}
 @media(prefers-reduced-motion:reduce){body.careers-page .application-submit,body.careers-page .application-field input,body.careers-page .application-field select,body.careers-page .application-field textarea{transition:none}}
 </style>
+<style>
+/* Clean, restrained application call-to-action */
+body.careers-page .application-submit {
+  min-height:52px;
+  padding:6px 8px 6px 20px;
+  border:1px solid #6047ed;
+  border-radius:12px;
+  background:#6047ed;
+  color:#fff;
+  font-size:12px;
+  font-weight:500;
+  box-shadow:0 5px 14px rgba(96,71,237,.16);
+  transition:background .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+body.careers-page .application-submit:hover {
+  transform:none;
+  border-color:#5039d2;
+  background:#5039d2;
+  box-shadow:0 7px 18px rgba(96,71,237,.22);
+}
+body.careers-page .application-submit:focus-visible {
+  outline:3px solid rgba(112,87,255,.28);
+  outline-offset:3px;
+}
+body.careers-page .application-submit span:last-child {
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  flex:0 0 36px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  font-size:16px;
+}
+body.careers-page .application-submit:disabled {
+  transform:none;
+  box-shadow:none;
+}
+@media(prefers-reduced-motion:reduce) {
+  body.careers-page .application-submit { transition:none; }
+}
+</style>
+<style>
+body.careers-page .application-hero .hero-kicker { text-transform:none; }
+</style>
 </head>
 <body class="careers-page application-page">
   <!-- SHARED NAVIGATION -->
@@ -477,7 +523,7 @@ body.careers-page .application-form-wrap{padding:27px;border:1px solid #dedee3;b
     <div class="application-hero-grid">
       <div>
         <div class="hero-kicker">
-          ALPHEX AI / CAREERS
+          Alphex AI / Careers
         </div>
         <h1>
           Bring your <span class="hero-accent">ideas to life.</span>
