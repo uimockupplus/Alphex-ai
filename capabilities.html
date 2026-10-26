@@ -191,6 +191,87 @@ body.capabilities-page .cta-action .pill.dark:hover { transform:translateY(-2px)
 }
 </style>
 
+
+<style>
+/* Capabilities page alignment with the current dark Alphex AI homepage. */
+body.capabilities-page #site-nav .topbar,
+body.capabilities-page #site-nav .site-header,
+body.capabilities-page #site-nav .navbar {
+  position:sticky!important;top:0!important;z-index:1000!important;
+  color:#f7f6fb!important;background:#050509!important;background-image:none!important;
+  border:0!important;border-bottom:1px solid rgba(255,255,255,.13)!important;
+  box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important
+}
+body.capabilities-page #site-nav .shell {width:min(1390px,calc(100% - 64px))!important}
+body.capabilities-page #site-nav .nav {height:80px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:24px!important;position:relative!important}
+body.capabilities-page #site-nav .wordmark,
+body.capabilities-page #site-nav .brand,
+body.capabilities-page #site-nav .wordmark:hover {color:#f7f6fb!important}
+body.capabilities-page #site-nav .nav-links {display:flex!important;align-items:center!important;justify-content:center!important;gap:30px!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important;padding:0!important}
+body.capabilities-page #site-nav .nav-links a {color:#f7f6fb!important;font:500 13px/1 var(--sans)!important;text-decoration:none!important;white-space:nowrap}
+body.capabilities-page #site-nav .nav-links a:hover {color:#b9a8ff!important}
+body.capabilities-page #site-nav .nav-links a::after {display:none!important}
+body.capabilities-page #site-nav .nav-actions {display:flex!important;align-items:center!important;gap:13px!important;margin-left:auto!important}
+body.capabilities-page #site-nav .contact-link {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 23px!important;border:1px solid rgba(255,255,255,.48)!important;border-radius:999px!important;background:transparent!important;background-image:none!important;color:#f7f6fb!important;font:500 13px/1 var(--sans)!important}
+body.capabilities-page #site-nav .header-demo {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 24px!important;border:1px solid #6047ed!important;border-radius:999px!important;background:#6047ed!important;background-image:none!important;color:#fff!important;font:500 13px/1 var(--sans)!important}
+body.capabilities-page #site-nav .mobile-menu {border-color:rgba(255,255,255,.45)!important;background:rgba(255,255,255,.05)!important}
+body.capabilities-page #site-nav .mobile-menu span {background:#fff!important}
+body.capabilities-page .capabilities-hero {
+  min-height:560px;display:flex;align-items:center;padding:76px 0 68px!important;
+  text-align:left!important;color:#f6f5fb!important;
+  background:radial-gradient(ellipse at 76% 48%,rgba(94,65,195,.19),transparent 38%),radial-gradient(ellipse at 50% 115%,rgba(111,74,237,.14),transparent 42%),#050509!important
+}
+body.capabilities-page .capabilities-hero-backdrop img {opacity:.2!important;filter:brightness(.38) saturate(.72)!important}
+body.capabilities-page .capabilities-hero-backdrop::after {background:rgba(3,3,8,.68)!important}
+body.capabilities-page .capabilities-hero::before {z-index:0;width:min(700px,55vw);height:430px;left:77%;top:52%;background:rgba(103,71,205,.19)!important;filter:blur(115px)}
+body.capabilities-page .capabilities-hero .shell {width:min(1240px,calc(100% - 64px))}
+body.capabilities-page .capabilities-hero-grid {grid-template-columns:minmax(0,1.05fr) minmax(330px,.8fr)!important;gap:64px!important;align-items:center!important}
+body.capabilities-page .hero-kicker {justify-content:flex-start!important;color:#a99aff!important}
+body.capabilities-page .hero-kicker::before {background:#8b75ff!important;box-shadow:0 0 0 4px rgba(139,117,255,.12)!important}
+body.capabilities-page .capabilities-hero h1 {max-width:720px;margin:20px 0 0!important;color:#f7f6fb!important;font-size:clamp(52px,6.2vw,82px)!important;font-weight:400!important;line-height:1.02!important;letter-spacing:-.075em!important;text-align:left!important}
+body.capabilities-page .hero-title-highlight {color:#a78cff!important}
+body.capabilities-page .capabilities-hero-copy {max-width:600px;margin:22px 0 0!important;color:#b2b1bd!important;font-size:15px!important;line-height:1.75!important;text-align:left!important}
+body.capabilities-page .hero-side {width:100%!important;max-width:490px!important;margin:0 auto!important;position:relative}
+body.capabilities-page .hero-side::before {content:"";position:absolute;inset:12% -5%;z-index:-1;border-radius:50%;background:rgba(104,70,222,.19);filter:blur(55px)}
+body.capabilities-page .hero-side-box {grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;gap:12px 22px!important;padding:30px!important;border:1px solid rgba(255,255,255,.17)!important;border-radius:18px!important;background:rgba(19,18,29,.88)!important;background-image:none!important;box-shadow:0 28px 70px rgba(0,0,0,.36),0 0 42px rgba(104,70,222,.12)!important;backdrop-filter:blur(18px)!important}
+body.capabilities-page .hero-side-label {color:#a995ff!important}
+body.capabilities-page .hero-side-title {color:#f6f4fb!important;font-size:25px!important;line-height:1.16!important}
+body.capabilities-page .hero-side-title .muted-heading {color:#aaa5c2!important}
+body.capabilities-page .hero-side-copy {color:#b6b3c1!important;font-size:12px!important}
+@media(max-width:900px) {
+  body.capabilities-page #site-nav .shell {width:calc(100% - 40px)!important}
+  body.capabilities-page #site-nav .nav-links {gap:17px!important}
+  body.capabilities-page #site-nav .nav-links a {font-size:12px!important}
+  body.capabilities-page .capabilities-hero {min-height:0;padding:66px 0 58px!important}
+  body.capabilities-page .capabilities-hero-grid {grid-template-columns:1fr!important;gap:32px!important}
+  body.capabilities-page .capabilities-hero-grid>div:first-child {text-align:center}
+  body.capabilities-page .hero-kicker {justify-content:center!important}
+  body.capabilities-page .capabilities-hero h1 {margin:19px auto 0!important;text-align:center!important}
+  body.capabilities-page .capabilities-hero-copy {margin:20px auto 0!important;text-align:center!important}
+  body.capabilities-page .hero-side {max-width:620px!important}
+  body.capabilities-page .capabilities-hero::before {left:50%;top:70%;width:70vw}
+}
+@media(max-width:800px) {
+  body.capabilities-page #site-nav .shell {width:calc(100% - 28px)!important}
+  body.capabilities-page #site-nav .nav {height:68px!important}
+  body.capabilities-page #site-nav .nav-links {display:none!important}
+  body.capabilities-page #site-nav .contact-link,body.capabilities-page #site-nav .header-demo {display:none!important}
+  body.capabilities-page #site-nav .mobile-menu {display:block!important}
+  body.capabilities-page #site-nav .mobile-menu span {background:#fff!important}
+  body.capabilities-page #site-nav .mobile-panel {background:rgba(8,8,13,.98)!important;border-color:rgba(255,255,255,.14)!important}
+  body.capabilities-page #site-nav .mobile-panel a {color:#f7f6fb!important;border-color:rgba(255,255,255,.13)!important}
+}
+@media(max-width:600px) {
+  body.capabilities-page .capabilities-hero {padding:55px 0 44px!important}
+  body.capabilities-page .capabilities-hero h1 {font-size:clamp(43px,11.6vw,58px)!important;line-height:1.02!important}
+  body.capabilities-page .capabilities-hero-copy {font-size:13px!important}
+  body.capabilities-page .hero-side-box {grid-template-columns:1fr!important;gap:9px!important;padding:20px!important}
+  body.capabilities-page .hero-side-title {font-size:21px!important}
+}
+@media(prefers-reduced-motion:reduce) {
+  body.capabilities-page .capability-row,body.capabilities-page .capability-card,body.capabilities-page .use-case {transition:none!important}
+}
+</style>
 </head>
 
 
