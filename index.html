@@ -2105,8 +2105,21 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   #top.hero .hero-ref-float-flow {top:54px;right:-4px}
   #top.hero .hero-ref-float-answer {right:-4px;bottom:7px}
 }
+@keyframes alphexDashboardFloat {
+  0%,100% { translate:0 0; }
+  50% { translate:0 -8px; }
+}
+@keyframes alphexCalloutFloat {
+  0%,100% { translate:0 0; }
+  50% { translate:0 -9px; }
+}
+#top.hero .hero-ref-dashboard {animation:alphexDashboardFloat 6s ease-in-out infinite}
+#top.hero .hero-ref-float-data {animation:alphexCalloutFloat 5.2s ease-in-out infinite;animation-delay:-1.4s}
+#top.hero .hero-ref-float-flow {animation:alphexCalloutFloat 5.8s ease-in-out infinite;animation-delay:-3.2s}
+#top.hero .hero-ref-float-answer {animation:alphexCalloutFloat 5.4s ease-in-out infinite;animation-delay:-2.3s}
 @media(prefers-reduced-motion:reduce) {
   #top.hero .hero-ref-button {transition:none}
+  #top.hero .hero-ref-dashboard, #top.hero .hero-ref-float-data, #top.hero .hero-ref-float-flow, #top.hero .hero-ref-float-answer {animation:none;translate:none}
 }
 </style>
 
