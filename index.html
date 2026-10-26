@@ -2233,6 +2233,13 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
 .hero-mobile-break {display:none!important}
 @media(max-width:560px) {#top.hero .hero-mobile-break {display:block!important}}
 </style>
+
+<style>
+/* Slightly offset the requested hero text section to the right on wider screens. */
+@media (min-width: 801px) {
+  #top.hero .hero-ref-copy { transform: translateX(24px); }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
