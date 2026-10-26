@@ -2,9 +2,11 @@
    ALPHEX AI — SHARED SITE SYSTEM
    Navigation + Theme + Authentication + Interactions
    + Global Alphex Minibot
+   Dark-first theme aligned with the redesigned index.html
    ========================================================= */
 (() => {
   'use strict';
+
   /* =========================================================
      CONFIGURATION
      ========================================================= */
@@ -13,6 +15,7 @@
   const SUPABASE_PUBLISHABLE_KEY =
     'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
   let supabaseClient = null;
+
   /* =========================================================
      SUPABASE
      ========================================================= */
@@ -20,30 +23,33 @@
     if (!window.supabase) {
       return null;
     }
-    /*
-     * Reuse the same client if another Alphex script
-     * has already created one.
-     */
+
+    // Reuse the same client if another Alphex script has already created one.
     if (window.alphexSupabase) {
       supabaseClient = window.alphexSupabase;
       return supabaseClient;
     }
+
     supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_PUBLISHABLE_KEY
     );
+
     window.alphexSupabase = supabaseClient;
     return supabaseClient;
   }
+
   function loadSupabase() {
     return new Promise((resolve, reject) => {
       if (window.supabase) {
         resolve();
         return;
       }
+
       const existing = document.querySelector(
         'script[data-alphex-supabase]'
       );
+
       if (existing) {
         existing.addEventListener('load', resolve, {
           once: true
@@ -53,6 +59,7 @@
         });
         return;
       }
+
       const script = document.createElement('script');
       script.src =
         'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
@@ -63,38 +70,45 @@
       document.head.appendChild(script);
     });
   }
-   // Alphex AI — Global Favicon
-(() => {
-  const faviconPath = '/assets/favicon.png';
 
-  let favicon = document.querySelector('link[rel="icon"]');
+  /* =========================================================
+     GLOBAL FAVICON
+     ========================================================= */
+  (() => {
+    const faviconPath = '/assets/favicon.png';
+    let favicon = document.querySelector('link[rel="icon"]');
 
-  if (!favicon) {
-    favicon = document.createElement('link');
-    favicon.rel = 'icon';
-    document.head.appendChild(favicon);
-  }
+    if (!favicon) {
+      favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      document.head.appendChild(favicon);
+    }
 
-  favicon.type = 'image/png';
-  favicon.href = faviconPath;
-})();
+    favicon.type = 'image/png';
+    favicon.href = faviconPath;
+  })();
+
   /* =========================================================
      SHARED COMPONENTS
      ========================================================= */
   async function loadComponent(selector, file) {
     const container = document.querySelector(selector);
+
     if (!container) {
       return false;
     }
+
     try {
       const response = await fetch(file, {
         cache: 'no-store'
       });
+
       if (!response.ok) {
         throw new Error(
           `Failed to load ${file}: ${response.status}`
         );
       }
+
       container.innerHTML = await response.text();
       return true;
     } catch (error) {
@@ -105,10 +119,12 @@
       return false;
     }
   }
+
   async function loadSharedComponents() {
     await loadComponent('#site-nav', '/nav.html');
     await loadComponent('#site-footer', '/footer.html');
   }
+
   /* =========================================================
      AUTH ELEMENTS
      ========================================================= */
@@ -136,6 +152,7 @@
         document.getElementById('mobileProfileLink')
     };
   }
+
   /* =========================================================
      USER DISPLAY
      ========================================================= */
@@ -143,52 +160,65 @@
     if (!user) {
       return 'Alphex AI';
     }
+
     const metadata = user.user_metadata || {};
     const fullName =
       metadata.full_name ||
       metadata.name ||
       '';
+
     if (
       typeof fullName === 'string' &&
       fullName.trim()
     ) {
       return fullName.trim();
     }
+
     if (user.email) {
       return user.email.split('@')[0];
     }
+
     return 'Alphex AI';
   }
+
   function getProfileInitial(name) {
     if (!name) {
       return 'A';
     }
+
     return (
       name.trim().charAt(0).toUpperCase() || 'A'
     );
   }
+
   /* =========================================================
      LOGGED OUT
      ========================================================= */
   function showLoggedOutNavigation() {
     const elements = getAuthElements();
     document.body.classList.remove('authenticated');
+
     if (elements.loginNavButton) {
       elements.loginNavButton.style.display =
         'inline-flex';
     }
+
     if (elements.authProfile) {
       elements.authProfile.style.display = 'none';
     }
+
     if (elements.mobileLoginLink) {
       elements.mobileLoginLink.style.display = 'flex';
     }
+
     if (elements.mobileProfileLink) {
       elements.mobileProfileLink.style.display = 'none';
     }
+
     if (elements.profileMenu) {
       elements.profileMenu.classList.remove('open');
     }
+
     if (elements.profileButton) {
       elements.profileButton.setAttribute(
         'aria-expanded',
@@ -196,6 +226,7 @@
       );
     }
   }
+
   /* =========================================================
      LOGGED IN
      ========================================================= */
@@ -204,38 +235,49 @@
       showLoggedOutNavigation();
       return;
     }
+
     const elements = getAuthElements();
     document.body.classList.add('authenticated');
+
     const name = getUserDisplayName(user);
     const initial = getProfileInitial(name);
+
     if (elements.loginNavButton) {
       elements.loginNavButton.style.display = 'none';
     }
+
     if (elements.authProfile) {
       elements.authProfile.style.display = 'inline-flex';
     }
+
     if (elements.profileInitial) {
       elements.profileInitial.textContent = initial;
     }
+
     if (elements.profileName) {
       elements.profileName.textContent = name;
     }
+
     if (elements.profileEmail) {
       elements.profileEmail.textContent =
         user.email || 'Signed in';
     }
+
     if (elements.mobileLoginLink) {
       elements.mobileLoginLink.style.display = 'none';
     }
+
     if (elements.mobileProfileLink) {
       elements.mobileProfileLink.style.display = 'flex';
     }
   }
+
   /* =========================================================
      SESSION CHECK
      ========================================================= */
   async function updateAuthenticationUI() {
     const client = getSupabaseClient();
+
     if (!client) {
       console.error(
         'Alphex AI: Supabase client unavailable.'
@@ -243,9 +285,11 @@
       showLoggedOutNavigation();
       return;
     }
+
     try {
       const { data, error } =
         await client.auth.getSession();
+
       if (error) {
         console.error(
           'Alphex AI: session error',
@@ -254,7 +298,9 @@
         showLoggedOutNavigation();
         return;
       }
+
       const session = data?.session || null;
+
       if (session && session.user) {
         showLoggedInNavigation(session.user);
       } else {
@@ -268,22 +314,21 @@
       showLoggedOutNavigation();
     }
   }
+
   /* =========================================================
      AUTH EVENTS
      ========================================================= */
   function initializeAuthentication() {
     const client = getSupabaseClient();
+
     if (!client) {
       return;
     }
-    /*
-     * Check the existing session first.
-     */
+
+    // Check the existing session first.
     updateAuthenticationUI();
-    /*
-     * Keep every page synchronized with login,
-     * logout, token refresh, and other auth events.
-     */
+
+    // Synchronize login, logout, and token refresh events.
     client.auth.onAuthStateChange(
       (_event, session) => {
         if (session && session.user) {
@@ -294,68 +339,82 @@
       }
     );
   }
-  /* =========================================================
+     /* =========================================================
      PROFILE MENU
      ========================================================= */
   function initializeProfileMenu() {
     const elements = getAuthElements();
+
     if (
       !elements.profileButton ||
       !elements.profileMenu
     ) {
       return;
     }
+
     elements.profileButton.addEventListener(
       'click',
       event => {
         event.stopPropagation();
+
         const isOpen =
           elements.profileMenu.classList.contains('open');
+
         elements.profileMenu.classList.toggle(
           'open',
           !isOpen
         );
+
         elements.profileButton.setAttribute(
           'aria-expanded',
           String(!isOpen)
         );
       }
     );
+
     document.addEventListener('click', event => {
       if (
         elements.authProfile &&
         !elements.authProfile.contains(event.target)
       ) {
         elements.profileMenu.classList.remove('open');
+
         elements.profileButton.setAttribute(
           'aria-expanded',
           'false'
         );
       }
     });
+
     if (elements.profileSignout) {
       elements.profileSignout.addEventListener(
         'click',
         async () => {
           const client = getSupabaseClient();
+
           if (!client) {
             return;
           }
+
           elements.profileSignout.disabled = true;
           elements.profileSignout.textContent =
             'Signing out...';
+
           try {
             const { error } =
               await client.auth.signOut();
+
             if (error) {
               throw error;
             }
+
             window.location.replace('/index.html');
           } catch (error) {
             console.error(
               'Alphex AI: sign out error',
               error
             );
+
             elements.profileSignout.disabled = false;
             elements.profileSignout.textContent =
               'Sign out';
@@ -363,103 +422,115 @@
         }
       );
     }
+
     if (elements.mobileProfileLink) {
       elements.mobileProfileLink.addEventListener(
         'click',
         event => {
           event.preventDefault();
+
           if (elements.profileMenu) {
             elements.profileMenu.classList.toggle('open');
           }
+
           closeMobileMenu();
         }
       );
     }
   }
+
   /* =========================================================
      THEME
+     Matches the redesigned dark-first index.html
      ========================================================= */
   function initializeTheme() {
     const root = document.documentElement;
     const body = document.body;
-    const themeToggle = document.querySelector(
-      '.theme-toggle'
-    );
-    if (!themeToggle) {
-      return;
-    }
+    const themeToggle = document.querySelector('.theme-toggle');
+
     const getSavedTheme = () => {
       try {
-        return window.localStorage.getItem(
-          'alphex-theme'
-        );
+        const saved = window.localStorage.getItem('alphex-theme');
+
+        return saved === 'light' || saved === 'dark'
+          ? saved
+          : null;
       } catch (_error) {
         return null;
       }
     };
+
     const saveTheme = theme => {
       try {
-        window.localStorage.setItem(
-          'alphex-theme',
-          theme
-        );
+        window.localStorage.setItem('alphex-theme', theme);
       } catch (_error) {
-        /*
-         * Theme still works for this visit.
-         */
+        // Theme still works for this visit when storage is unavailable.
       }
     };
+
     const setTheme = theme => {
       const dark = theme === 'dark';
+
       body.classList.toggle('dark-theme', dark);
       root.classList.toggle('dark-theme', dark);
-      themeToggle.setAttribute(
-        'aria-pressed',
-        String(dark)
-      );
-      themeToggle.setAttribute(
-        'aria-label',
-        dark
-          ? 'Switch to light mode'
-          : 'Switch to dark mode'
-      );
-      const icon = themeToggle.querySelector(
-        '.theme-icon'
-      );
-      const label = themeToggle.querySelector(
-        '.theme-label'
-      );
-      if (icon) {
-        icon.textContent = dark ? '☀' : '☾';
+      root.style.colorScheme = dark ? 'dark' : 'light';
+
+      if (themeToggle) {
+        themeToggle.setAttribute(
+          'aria-pressed',
+          String(dark)
+        );
+
+        themeToggle.setAttribute(
+          'aria-label',
+          dark
+            ? 'Switch to light mode'
+            : 'Switch to dark mode'
+        );
+
+        const icon = themeToggle.querySelector('.theme-icon');
+        const label = themeToggle.querySelector('.theme-label');
+
+        if (icon) {
+          icon.textContent = dark ? '☀' : '☾';
+        }
+
+        if (label) {
+          label.textContent = dark ? 'Light' : 'Dark';
+        }
       }
-      if (label) {
-        label.textContent = dark ? 'Light' : 'Dark';
-      }
+
       saveTheme(dark ? 'dark' : 'light');
     };
-    setTheme(getSavedTheme() || 'light');
-    themeToggle.addEventListener('click', () => {
-      setTheme(
-        body.classList.contains('dark-theme')
-          ? 'light'
-          : 'dark'
-      );
-    });
+
+    // Dark is the default, but previously selected preferences are respected.
+    setTheme(getSavedTheme() || 'dark');
+
+    if (themeToggle && !themeToggle.dataset.themeBound) {
+      themeToggle.dataset.themeBound = 'true';
+
+      themeToggle.addEventListener('click', () => {
+        setTheme(
+          body.classList.contains('dark-theme')
+            ? 'light'
+            : 'dark'
+        );
+      });
+    }
   }
-  /* =========================================================
+     /* =========================================================
      MOBILE NAVIGATION
      ========================================================= */
-
   let closeMobileMenu = () => {};
 
   function initializeMobileNavigation() {
-    const menuButton = document.getElementById(
-      'mobileMenuButton'
-    );
+    const menuButton =
+      document.getElementById('mobileMenuButton') ||
+      document.querySelector('.mobile-menu');
 
-    const mobilePanel = document.getElementById(
-      'mobileNavigationPanel'
-    );
+    const mobilePanel =
+      document.getElementById('mobileNavigationPanel') ||
+      document.querySelector('.mobile-panel');
 
     if (!menuButton || !mobilePanel) {
       return;
@@ -547,6 +618,7 @@
     // Ensure the menu starts in a consistent closed state.
     closeMobileMenu();
   }
+
   /* =========================================================
      ANCHOR NAVIGATION
      ========================================================= */
@@ -556,22 +628,29 @@
       .forEach(link => {
         link.addEventListener('click', event => {
           const target = link.getAttribute('href');
+
           if (!target || target === '#') {
             return;
           }
+
           const element =
             document.querySelector(target);
+
           if (!element) {
             return;
           }
+
           event.preventDefault();
+
           element.scrollIntoView({
             behavior: 'smooth'
           });
+
           closeMobileMenu();
         });
       });
   }
+
   /* =========================================================
      REACTIVE VISUALS
      ========================================================= */
@@ -579,105 +658,115 @@
     const reactive = document.querySelectorAll(
       '.hero-stage, .feature-visual'
     );
+
     reactive.forEach(panel => {
       panel.addEventListener('pointermove', event => {
         const rect = panel.getBoundingClientRect();
+
         const x =
           (event.clientX - rect.left) /
             rect.width -
           0.5;
+
         const y =
           (event.clientY - rect.top) /
             rect.height -
           0.5;
+
         panel.style.setProperty('--mx', x.toFixed(3));
         panel.style.setProperty('--my', y.toFixed(3));
       });
+
       panel.addEventListener('pointerleave', () => {
         panel.style.setProperty('--mx', '0');
         panel.style.setProperty('--my', '0');
       });
     });
   }
-  /* =========================================================
+     /* =========================================================
      ALPHEX AI — GLOBAL CHATBOT LOADER
      Automatically adds Alphex Minibot to every page
      that loads site.js.
      ========================================================= */
   async function loadAlphexChatbot() {
-    /*
-     * Reuse an existing root if the page already has one.
-     * Otherwise, create it automatically.
-     */
+    // Reuse an existing root if the page already has one.
+    // Otherwise, create it automatically.
     let root = document.getElementById(
       'alphex-chatbot-root'
     );
+
     if (!root) {
       root = document.createElement('div');
       root.id = 'alphex-chatbot-root';
       document.body.appendChild(root);
     }
-    /*
-     * Prevent the chatbot HTML from being injected twice.
-     */
+
+    // Prevent the chatbot HTML from being injected twice.
     if (root.dataset.loaded === 'true') {
       return;
     }
+
     root.dataset.loaded = 'true';
+
     try {
-      /*
-       * Load the chatbot interface.
-       */
+      // Load the chatbot interface.
       const response = await fetch(
         '/chatbot/chatbot.html',
         { cache: 'no-cache' }
       );
+
       if (!response.ok) {
         throw new Error(
           `Failed to load chatbot HTML: ${response.status}`
         );
       }
+
       root.innerHTML = await response.text();
-      /*
-       * Load the controller after the interface exists.
-       */
+
+      // Load the controller after the interface exists.
       const existingScript = document.querySelector(
         'script[data-alphex-chatbot-script="true"]'
       );
+
       if (existingScript) {
         return;
       }
+
       const script = document.createElement('script');
       script.src = '/chatbot/chatbot.js';
       script.dataset.alphexChatbotScript = 'true';
       script.async = true;
+
       script.onload = () => {
         console.log(
           '[Alphex Minibot] Loaded successfully.'
         );
       };
+
       script.onerror = () => {
         root.dataset.loaded = 'false';
+
         console.error(
           '[Alphex Minibot] Failed to load chatbot.js'
         );
       };
+
       document.body.appendChild(script);
     } catch (error) {
       root.dataset.loaded = 'false';
+
       console.error(
         '[Alphex Minibot] Failed to initialize:',
         error
       );
     }
   }
+
   /* =========================================================
      STARTUP
      ========================================================= */
   async function start() {
-    /*
-     * Load Supabase first.
-     */
+    // Load Supabase first.
     try {
       await loadSupabase();
     } catch (error) {
@@ -686,29 +775,33 @@
         error
       );
     }
-    /*
-     * Load shared navigation and footer.
-     */
+
+    // Load shared navigation and footer.
     await loadSharedComponents();
-    /*
-     * The navbar now exists in the DOM.
-     * Authentication starts after this point.
-     */
+
+    // The navbar now exists in the DOM.
+    // Authentication starts after this point.
     initializeAuthentication();
     initializeProfileMenu();
     initializeTheme();
     initializeMobileNavigation();
     initializeAnchorNavigation();
     initializeReactiveVisuals();
-    /*
-     * Load Alphex Minibot on every page
-     * that includes this shared site.js file.
-     */
+
+    // Load Alphex Minibot on every page using site.js.
     await loadAlphexChatbot();
   }
-  /*
-   * Wait for the DOM before starting.
-   */
+
+  /* =========================================================
+     INITIALIZATION GUARD
+     ========================================================= */
+  if (window.__alphexSiteJsInitialized) {
+    return;
+  }
+
+  window.__alphexSiteJsInitialized = true;
+
+  // Wait for the DOM before starting.
   if (document.readyState === 'loading') {
     document.addEventListener(
       'DOMContentLoaded',
