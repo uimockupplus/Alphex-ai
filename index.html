@@ -1981,6 +1981,253 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
 /* Slightly stronger hero headline weight; typography scale and line breaks stay intact. */
 .hero h1 { font-weight:400 !important; }
 </style>
+
+<style>
+/* Reference-inspired hero only; the rest of the page remains unchanged. */
+#top.hero {
+  width:100%;max-width:none;min-height:620px;margin:0;padding:48px max(32px,calc((100vw - 1360px)/2)) 42px!important;
+  display:flex;align-items:center;justify-content:center;text-align:left;color:#111!important;
+  background:radial-gradient(ellipse at 72% 52%,rgba(226,220,255,.82),transparent 40%),linear-gradient(105deg,#faf9fc 0%,#f5f3fc 55%,#faf9fc 100%)!important;
+  overflow:hidden;isolation:isolate;
+}
+#top.hero::before {content:""!important;display:block!important;position:absolute!important;z-index:-1!important;inset:0!important;width:auto!important;height:auto!important;left:0!important;top:0!important;transform:none!important;border:0!important;border-radius:0!important;filter:none!important;opacity:1!important;box-shadow:none!important;background:radial-gradient(ellipse at 69% 55%,rgba(219,211,255,.52),transparent 42%)!important;pointer-events:none!important}
+#top.hero::after {content:""!important;display:none!important}
+#top.hero .hero-ref-layout {width:min(100%,1360px);display:grid;grid-template-columns:minmax(0,1.12fr) minmax(490px,.88fr);align-items:center;gap:36px;position:relative;z-index:1}
+#top.hero .hero-ref-copy {max-width:700px;position:relative;z-index:2}
+#top.hero .hero-ref-kicker {margin:0 0 27px;color:#7866d7;font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+#top.hero h1 {width:auto;max-width:690px;margin:0;color:#101014!important;font:300 clamp(48px,5.1vw,68px)/1.08 var(--sans)!important;letter-spacing:-.075em!important;text-align:left!important}
+#top.hero h1::before {display:none!important}
+#top.hero h1 span {color:#7057e8}
+#top.hero .hero-ref-description {max-width:590px;margin:25px 0 0;color:#74747f;font:400 16px/1.8 var(--sans);text-align:left}
+#top.hero .hero-ref-actions {display:flex;align-items:center;justify-content:flex-start;gap:16px;margin:25px 0 0}
+#top.hero .hero-ref-button {min-height:54px;display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:0 27px;border:1px solid #d9d8df;border-radius:999px;color:#17161d;text-decoration:none;font:500 13px/1 var(--sans);white-space:nowrap;box-shadow:0 2px 5px rgba(22,16,56,.04);transition:transform .2s,box-shadow .2s,background .2s}
+#top.hero .hero-ref-button:hover {transform:translateY(-2px);box-shadow:0 8px 20px rgba(58,43,130,.12)}
+#top.hero .hero-ref-button span {font-size:17px}
+#top.hero .hero-ref-primary {border-color:#6148e8;color:#fff;background:linear-gradient(110deg,#6248e8,#7658f0);box-shadow:0 8px 20px rgba(98,72,232,.17)}
+#top.hero .hero-ref-secondary {background:rgba(255,255,255,.72)}
+#top.hero .hero-ref-secondary span {color:#7057e8}
+#top.hero .hero-ref-benefits {display:flex;align-items:center;gap:24px;margin-top:40px}
+#top.hero .hero-ref-benefit {display:flex;align-items:center;gap:10px;min-width:0;color:#191820}
+#top.hero .hero-ref-icon {width:28px;flex:0 0 28px;color:#7259e8;font-size:22px;line-height:1;text-align:center}
+#top.hero .hero-ref-database {font-size:21px}
+#top.hero .hero-ref-people {font-size:22px}
+#top.hero .hero-ref-benefit b,#top.hero .hero-ref-benefit small {display:block;white-space:nowrap}
+#top.hero .hero-ref-benefit b {font-size:12px;font-weight:600}
+#top.hero .hero-ref-benefit small {margin-top:5px;color:#85848e;font-size:11px}
+#top.hero .hero-ref-visual {height:450px;min-width:0;position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate}
+#top.hero .hero-ref-orbit {position:absolute;left:50%;top:51%;border:1px solid rgba(119,94,235,.18);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+#top.hero .hero-ref-orbit-one {width:400px;height:400px;background:rgba(232,227,255,.22)}
+#top.hero .hero-ref-orbit-two {width:285px;height:285px;border-color:rgba(119,94,235,.12)}
+#top.hero .hero-ref-dot-grid {position:absolute;width:100px;height:80px;background-image:radial-gradient(rgba(119,94,235,.3) 1px,transparent 1.5px)!important;background-size:11px 11px!important;opacity:.55;pointer-events:none}
+#top.hero .hero-ref-dots-top {top:20px;right:12%}
+#top.hero .hero-ref-dots-bottom {bottom:24px;left:5%;opacity:.33}
+#top.hero .hero-ref-dashboard {width:min(100%,575px);height:304px;position:relative;z-index:1;display:grid;grid-template-columns:116px minmax(0,1fr);overflow:hidden;border:1px solid rgba(255,255,255,.84);border-radius:20px;background:rgba(255,255,255,.63)!important;box-shadow:0 24px 70px rgba(93,74,166,.13);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transform:translateY(6px)}
+#top.hero .hero-ref-sidebar {padding:20px 12px;border-right:1px solid rgba(125,113,180,.12);background:rgba(255,255,255,.23)!important;color:#63616f;font-size:9px}
+#top.hero .hero-ref-app-name {margin:0 0 18px 3px;color:#15141b;font-size:12px;font-weight:600;letter-spacing:-.04em}
+#top.hero .hero-ref-side-item {display:flex;align-items:center;gap:7px;margin:3px 0;padding:7px 6px;border-radius:7px;white-space:nowrap}
+#top.hero .hero-ref-side-item i {width:12px;color:#777483;font-size:10px;font-style:normal;text-align:center}
+#top.hero .hero-ref-side-item.is-active {color:#7057e8;background:#f0edff}
+#top.hero .hero-ref-side-item.is-active i {color:#7057e8}
+#top.hero .hero-ref-side-spacer {height:17px}
+#top.hero .hero-ref-side-sub {padding:3px 0 3px 25px;color:#96949e;font-size:8px}
+#top.hero .hero-ref-chat {position:relative;display:flex;flex-direction:column;align-items:center;padding:74px 24px 20px;color:#18171e;text-align:center}
+#top.hero .hero-ref-user {position:absolute;right:18px;top:16px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#9c99b5;color:white;font-size:9px}
+#top.hero .hero-ref-assistant-mark {width:37px;height:37px;display:grid;place-items:center;margin-bottom:11px;border-radius:50%;background:#f0edff;color:#765de8;font-size:21px}
+#top.hero .hero-ref-chat h2 {margin:0 0 20px;color:#17161d;font-size:14px;font-weight:600;letter-spacing:-.03em}
+#top.hero .hero-ref-input {width:100%;min-height:57px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 9px 10px 13px;border:1px solid #e9e7f0;border-radius:12px;background:rgba(255,255,255,.53)!important;color:#9997a2;font-size:9px;text-align:left}
+#top.hero .hero-ref-send {width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;border-radius:8px;background:#7057e8;color:#fff;font-size:16px}
+#top.hero .hero-ref-tools {width:100%;display:flex;justify-content:center;gap:5px;margin-top:9px;flex-wrap:wrap}
+#top.hero .hero-ref-tools span {padding:5px 8px;border:1px solid #eae8f1;border-radius:999px;background:rgba(255,255,255,.55)!important;color:#666371;font-size:8px;white-space:nowrap}
+#top.hero .hero-ref-float {position:absolute;z-index:3;display:flex;align-items:center;gap:12px;min-width:210px;padding:13px 15px;border:1px solid rgba(255,255,255,.92);border-radius:14px;background:rgba(255,255,255,.82)!important;box-shadow:0 14px 38px rgba(68,54,130,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform:rotate(-3deg)}
+#top.hero .hero-ref-float b,#top.hero .hero-ref-float small {display:block;white-space:nowrap}
+#top.hero .hero-ref-float b {color:#1c1a23;font-size:10px;font-weight:600}
+#top.hero .hero-ref-float small {margin-top:5px;color:#898792;font-size:8px}
+#top.hero .hero-ref-float-icon {width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:10px;background:#f1eeff;color:#7259e8;font-size:18px}
+#top.hero .hero-ref-float-data {top:43px;left:-8px}
+#top.hero .hero-ref-float-flow {top:70px;right:-2px;transform:rotate(4deg)}
+#top.hero .hero-ref-float-answer {right:-3px;bottom:26px;transform:rotate(-5deg)}
+@media(max-width:1100px) {
+  #top.hero {padding-left:32px!important;padding-right:32px!important}
+  #top.hero .hero-ref-layout {grid-template-columns:minmax(0,1fr) minmax(410px,.9fr);gap:18px}
+  #top.hero .hero-ref-benefits {gap:14px}
+  #top.hero .hero-ref-benefit b {font-size:10px}
+  #top.hero .hero-ref-benefit small {font-size:9px}
+  #top.hero .hero-ref-dashboard {grid-template-columns:100px minmax(0,1fr)}
+}
+@media(max-width:860px) {
+  #top.hero {min-height:0;padding:58px 30px 48px!important}
+  #top.hero .hero-ref-layout {max-width:700px;grid-template-columns:1fr;gap:12px}
+  #top.hero .hero-ref-copy {max-width:680px;margin:0 auto;text-align:center}
+  #top.hero .hero-ref-kicker {margin-bottom:20px}
+  #top.hero h1 {max-width:680px;margin-inline:auto;text-align:center!important}
+  #top.hero .hero-ref-description {margin:20px auto 0;text-align:center}
+  #top.hero .hero-ref-actions {justify-content:center}
+  #top.hero .hero-ref-benefits {justify-content:center;margin-top:28px}
+  #top.hero .hero-ref-visual {width:min(100%,640px);height:410px;margin:0 auto}
+  #top.hero .hero-ref-float-data {left:1%}
+  #top.hero .hero-ref-float-flow {right:0}
+  #top.hero .hero-ref-float-answer {right:1%;bottom:15px}
+}
+@media(max-width:560px) {
+  #top.hero {padding:43px 18px 34px!important}
+  #top.hero .hero-ref-kicker {font-size:9px;margin-bottom:18px}
+  #top.hero h1 {font-size:clamp(39px,10.8vw,54px)!important;line-height:1.09!important;letter-spacing:-.07em!important}
+  #top.hero .hero-ref-description {font-size:13px;line-height:1.7}
+  #top.hero .hero-ref-actions {gap:9px;margin-top:22px}
+  #top.hero .hero-ref-button {min-height:46px;padding:0 14px;gap:7px;font-size:10px}
+  #top.hero .hero-ref-benefits {display:grid;grid-template-columns:1fr 1fr;justify-content:start;gap:14px 8px;margin:25px auto 0;max-width:380px;text-align:left}
+  #top.hero .hero-ref-benefit:last-child {grid-column:1/-1}
+  #top.hero .hero-ref-icon {width:24px;flex-basis:24px;font-size:19px}
+  #top.hero .hero-ref-benefit b {font-size:10px}
+  #top.hero .hero-ref-benefit small {font-size:9px}
+  #top.hero .hero-ref-visual {height:330px;margin-top:5px}
+  #top.hero .hero-ref-orbit-one {width:285px;height:285px}
+  #top.hero .hero-ref-orbit-two {width:205px;height:205px}
+  #top.hero .hero-ref-dashboard {width:100%;height:238px;grid-template-columns:76px minmax(0,1fr);border-radius:14px}
+  #top.hero .hero-ref-sidebar {padding:14px 6px;font-size:7px}
+  #top.hero .hero-ref-app-name {margin:0 0 12px 2px;font-size:9px}
+  #top.hero .hero-ref-side-item {gap:4px;padding:6px 3px}
+  #top.hero .hero-ref-side-item i {width:9px;font-size:8px}
+  #top.hero .hero-ref-side-sub {padding-left:16px;font-size:6px}
+  #top.hero .hero-ref-chat {padding:58px 11px 12px}
+  #top.hero .hero-ref-user {right:10px;top:11px;width:18px;height:18px}
+  #top.hero .hero-ref-assistant-mark {width:29px;height:29px;margin-bottom:9px;font-size:17px}
+  #top.hero .hero-ref-chat h2 {margin-bottom:14px;font-size:11px}
+  #top.hero .hero-ref-input {min-height:44px;padding:7px;font-size:7px}
+  #top.hero .hero-ref-send {width:22px;height:22px;flex-basis:22px}
+  #top.hero .hero-ref-tools {gap:3px;margin-top:7px}
+  #top.hero .hero-ref-tools span {padding:4px 5px;font-size:6px}
+  #top.hero .hero-ref-float {min-width:0;gap:7px;padding:8px 9px;border-radius:10px}
+  #top.hero .hero-ref-float b {font-size:8px}
+  #top.hero .hero-ref-float small {font-size:6px;margin-top:3px}
+  #top.hero .hero-ref-float-icon {width:25px;height:25px;flex-basis:25px;border-radius:7px;font-size:14px}
+  #top.hero .hero-ref-float-data {top:18px;left:-4px}
+  #top.hero .hero-ref-float-flow {top:54px;right:-4px}
+  #top.hero .hero-ref-float-answer {right:-4px;bottom:7px}
+}
+@media(prefers-reduced-motion:reduce) {
+  #top.hero .hero-ref-button {transition:none}
+}
+</style>
+
+<style>
+/* Reference-matched navbar and header controls only. */
+.topbar, body.dark-theme .topbar {position:sticky!important;top:0!important;z-index:1000!important;background:rgba(250,249,252,.96)!important;background-image:none!important;color:#111!important;border:0!important;border-bottom:1px solid rgba(20,18,30,.08)!important;box-shadow:none!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important}
+.topbar .shell {width:min(1390px,calc(100% - 64px))!important}
+.topbar .nav {height:80px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:26px!important}
+.topbar .wordmark, .topbar .wordmark:hover {flex:0 0 auto;color:#111!important;font:500 22px/1 var(--sans)!important;letter-spacing:-.085em!important}
+.topbar .nav-links {display:flex!important;align-items:center!important;justify-content:center!important;gap:30px!important;margin:0 auto!important;padding:0!important}
+.topbar .nav-links a {color:#18171d!important;text-decoration:none!important;font:500 13px/1 var(--sans)!important;white-space:nowrap}
+.topbar .nav-links a:after {display:none!important}
+.topbar .nav-links a:hover {color:#7057e8!important;opacity:1!important}
+.topbar .nav-actions {display:flex!important;align-items:center!important;gap:13px!important;margin-left:auto!important}
+.topbar .nav-actions .contact-link {display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:112px!important;min-height:48px!important;padding:0 23px!important;border:1px solid #a9a8ad!important;border-radius:999px!important;background:transparent!important;background-image:none!important;color:#17161c!important;font:500 13px/1 var(--sans)!important;box-shadow:none!important}
+.topbar .nav-actions .contact-link:hover {border-color:#7057e8!important;background:#f3f0ff!important;color:#5540d8!important}
+.topbar .nav-actions .header-demo {display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;min-width:122px!important;min-height:48px!important;padding:0 24px!important;border:1px solid #6047e8!important;border-radius:999px!important;background:#6047e8!important;background-image:none!important;color:#fff!important;font:500 13px/1 var(--sans)!important;box-shadow:none!important}
+.topbar .nav-actions .header-demo:hover {background:#5039d2!important;background-image:none!important;border-color:#5039d2!important;color:#fff!important}
+.topbar .nav-actions .header-demo span {font-size:16px}
+@media(max-width:900px) and (min-width:801px) {
+  .topbar .shell {width:calc(100% - 40px)!important}
+  .topbar .nav {gap:18px!important}
+  .topbar .nav-links {gap:18px!important}
+  .topbar .nav-links a {font-size:12px!important}
+  .topbar .nav-actions {gap:8px!important}
+  .topbar .nav-actions .contact-link {min-width:92px!important;padding:0 16px!important}
+  .topbar .nav-actions .header-demo {min-width:104px!important;padding:0 18px!important}
+}
+@media(max-width:800px) {
+  .topbar .shell {width:calc(100% - 28px)!important}
+  .topbar .nav {height:68px!important}
+  .topbar .nav-links {display:none!important}
+  .topbar .nav-actions .contact-link, .topbar .nav-actions .header-demo {display:none!important}
+  .topbar .mobile-menu {display:block!important;border-color:#d4d3da!important;background:transparent!important}
+  .topbar .mobile-menu span, .topbar .mobile-menu span:first-child, .topbar .mobile-menu span:last-child {background:#191820!important}
+  .topbar .mobile-panel {background:rgba(250,249,252,.98)!important;border-color:#e0dfe5!important}
+  .topbar .mobile-panel a {color:#191820!important;border-color:#e5e4ea!important}
+}
+</style>
+
+<style>
+/* Visibility and color-continuity corrections requested for the hero CTA and navbar. */
+#top.hero {background:#faf9fc!important;background-image:none!important}
+#top.hero::before {background:radial-gradient(ellipse at 69% 55%,rgba(219,211,255,.52),transparent 42%)!important}
+.topbar, body.dark-theme .topbar {background:#faf9fc!important;background-image:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-bottom-color:rgba(20,18,30,.08)!important}
+#top.hero .hero-ref-button.hero-ref-primary {display:inline-flex!important;visibility:visible!important;opacity:1!important;background-color:#6047e8!important;background-image:none!important;color:#fff!important;border-color:#6047e8!important;box-shadow:0 8px 20px rgba(98,72,232,.2)!important}
+#top.hero .hero-ref-button.hero-ref-primary:hover {background-color:#5039d2!important;background-image:none!important;color:#fff!important;border-color:#5039d2!important}
+#top.hero .hero-ref-button.hero-ref-secondary {display:inline-flex!important;visibility:visible!important;opacity:1!important;background-color:#fff!important;background-image:none!important;color:#17161d!important;border-color:#d9d8df!important}
+#top.hero .hero-ref-button.hero-ref-secondary:hover {background-color:#f3f0ff!important;color:#5540d8!important;border-color:#c9c0fa!important}
+</style>
+
+<style>
+/* Slightly stronger hero headline, with emphasis on the key phrase. */
+#top.hero h1 {font-weight:400!important}
+#top.hero h1 span {font-weight:500!important}
+</style>
+
+<style>
+/* Dark reference treatment for the navbar and hero only. */
+.topbar, body.dark-theme .topbar {background:#050509!important;background-image:none!important;border-bottom:1px solid rgba(255,255,255,.13)!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;color:#f7f6ff!important}
+.topbar .wordmark, .topbar .wordmark:hover, .topbar .nav-links a, body.dark-theme .topbar .wordmark, body.dark-theme .topbar .nav-links a {color:#f7f6ff!important}
+.topbar .nav-links a:hover {color:#b9a8ff!important}
+.topbar .nav-actions .contact-link {border-color:rgba(255,255,255,.48)!important;background:transparent!important;background-image:none!important;color:#f7f6ff!important}
+.topbar .nav-actions .contact-link:hover {border-color:#a18bff!important;background-color:rgba(255,255,255,.06)!important;color:#fff!important}
+.topbar .nav-actions .header-demo {border-color:#6047ed!important;background:#6047ed!important;background-image:none!important;color:#fff!important}
+.topbar .nav-actions .header-demo:hover {border-color:#725cff!important;background:#725cff!important;background-image:none!important;color:#fff!important}
+#top.hero {color:#f6f5fb!important;background:radial-gradient(ellipse at 69% 45%,rgba(100,68,205,.2),transparent 37%),radial-gradient(ellipse at 48% 112%,rgba(104,68,231,.18),transparent 41%),linear-gradient(110deg,#050507 0%,#090810 53%,#050509 100%)!important;isolation:isolate}
+#top.hero::before {background:radial-gradient(ellipse at 69% 53%,rgba(120,74,255,.2),transparent 40%),linear-gradient(180deg,transparent 60%,rgba(0,0,0,.2))!important;opacity:1!important}
+#top.hero .hero-ref-kicker {color:#a99aff!important}
+#top.hero h1 {color:#f5f4f8!important;font-weight:400!important}
+#top.hero h1 span {color:#a78cff!important;font-weight:400!important}
+#top.hero .hero-ref-description {color:#b3b2bd!important}
+#top.hero .hero-ref-primary {background-color:#6047ed!important;background-image:none!important;border-color:#6047ed!important;color:#fff!important;box-shadow:0 9px 28px rgba(93,64,235,.22)!important}
+#top.hero .hero-ref-primary:hover {background-color:#725cff!important;background-image:none!important;border-color:#725cff!important}
+#top.hero .hero-ref-secondary {background-color:transparent!important;background-image:none!important;border-color:rgba(255,255,255,.42)!important;color:#f6f5fb!important}
+#top.hero .hero-ref-secondary span {color:#a994ff!important}
+#top.hero .hero-ref-secondary:hover {background-color:rgba(255,255,255,.07)!important;color:#fff!important;border-color:#a994ff!important}
+#top.hero .hero-ref-benefit {color:#f3f2f8!important}
+#top.hero .hero-ref-benefit + .hero-ref-benefit {padding-left:18px;border-left:1px solid rgba(255,255,255,.2)}
+#top.hero .hero-ref-icon {color:#9b80ff!important}
+#top.hero .hero-ref-benefit small {color:#aaa9b5!important}
+#top.hero .hero-ref-orbit-one {border-color:rgba(143,112,255,.34)!important;background:rgba(87,58,177,.035)!important;box-shadow:0 0 35px rgba(112,78,231,.09)!important}
+#top.hero .hero-ref-orbit-two {border-color:rgba(143,112,255,.24)!important}
+#top.hero .hero-ref-dot-grid {background-image:radial-gradient(rgba(142,111,255,.48) 1px,transparent 1.5px)!important;opacity:.52!important}
+#top.hero .hero-ref-dashboard {border-color:rgba(255,255,255,.16)!important;background:#111118!important;background-image:none!important;box-shadow:0 28px 85px rgba(0,0,0,.55),0 0 45px rgba(102,72,221,.13)!important;backdrop-filter:blur(18px)!important}
+#top.hero .hero-ref-sidebar {border-color:rgba(255,255,255,.1)!important;background:#101016!important;background-image:none!important;color:#b4b2c0!important}
+#top.hero .hero-ref-app-name {color:#f4f2fa!important}
+#top.hero .hero-ref-side-item {color:#c0beca!important}
+#top.hero .hero-ref-side-item i {color:#b3b0c0!important}
+#top.hero .hero-ref-side-item.is-active {color:#c4b5ff!important;background:#292044!important}
+#top.hero .hero-ref-side-item.is-active i {color:#ad95ff!important}
+#top.hero .hero-ref-side-sub {color:#898796!important}
+#top.hero .hero-ref-chat {color:#f4f3f8!important}
+#top.hero .hero-ref-user {background:#5e5b6e!important;color:#fff!important}
+#top.hero .hero-ref-assistant-mark {background:#241c40!important;color:#b69cff!important;box-shadow:0 0 25px rgba(123,81,255,.14)}
+#top.hero .hero-ref-chat h2 {color:#f6f4fb!important}
+#top.hero .hero-ref-input {border-color:rgba(255,255,255,.14)!important;background:#1a1a22!important;background-image:none!important;color:#aaa8b4!important}
+#top.hero .hero-ref-send {background:#7052f3!important;color:#fff!important}
+#top.hero .hero-ref-tools span {border-color:rgba(255,255,255,.18)!important;background:#17171f!important;background-image:none!important;color:#d1cfda!important}
+#top.hero .hero-ref-float {border-color:rgba(255,255,255,.18)!important;background:rgba(24,23,33,.94)!important;background-image:none!important;box-shadow:0 17px 42px rgba(0,0,0,.34),0 0 25px rgba(111,76,231,.1)!important}
+#top.hero .hero-ref-float b {color:#f4f2f8!important}
+#top.hero .hero-ref-float small {color:#b1afbb!important}
+#top.hero .hero-ref-float-icon {background:#292044!important;color:#ac91ff!important}
+#top.hero .hero-ref-visual::before {content:"";position:absolute;z-index:-1;left:-8%;right:-8%;bottom:-9%;height:145px;pointer-events:none;background:radial-gradient(ellipse at 53% 5%,rgba(134,91,255,.44),transparent 48%),linear-gradient(170deg,transparent 24%,rgba(11,10,17,.9) 66%,#050507 100%)!important;filter:blur(7px)}
+#top.hero .hero-ref-visual::after {content:"";position:absolute;z-index:-1;left:0;right:0;bottom:-4%;height:105px;pointer-events:none;opacity:.2;background-image:linear-gradient(rgba(166,145,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(166,145,255,.3) 1px,transparent 1px)!important;background-size:34px 26px!important;transform:perspective(120px) rotateX(52deg);transform-origin:center bottom;mask-image:linear-gradient(transparent,#000)}
+@media(max-width:800px) {
+  .topbar .mobile-menu {border-color:rgba(255,255,255,.45)!important;background:rgba(255,255,255,.05)!important}
+  .topbar .mobile-menu span, .topbar .mobile-menu span:first-child, .topbar .mobile-menu span:last-child {background:#fff!important}
+  .topbar .mobile-panel {background:rgba(8,8,13,.98)!important;border-color:rgba(255,255,255,.15)!important}
+  .topbar .mobile-panel a {color:#f6f5fb!important;border-color:rgba(255,255,255,.13)!important}
+}
+@media(max-width:560px) {#top.hero .hero-ref-benefit + .hero-ref-benefit {padding-left:0;border-left:0}}
+</style>
+
+<style>
+/* Precisely center the desktop navigation group between the left and right controls. */
+@media(min-width:801px) {
+  .topbar .nav {position:relative!important}
+  .topbar .nav-links {position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -2069,39 +2316,51 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   </div>
 </div>
 <main id="main">
-    <section class="hero shell" id="top">
-  <div class="hero-image-backdrop" aria-hidden="true"><img src="./hero-ai-datacenter.png" alt=""></div>
-  <div class="hero-violet-glow" aria-hidden="true"></div>
-  <svg class="hero-network-art" viewBox="0 0 1200 430" aria-hidden="true" focusable="false">
-    <g class="hero-network-orbit" fill="none" stroke="currentColor" stroke-width="1">
-      <ellipse cx="600" cy="215" rx="475" ry="162" opacity=".42" />
-      <ellipse cx="600" cy="215" rx="350" ry="112" transform="rotate(-15 600 215)" opacity=".28" />
-      <path d="M118 205 C270 130 355 144 470 211 S710 294 830 214 1000 140 1082 203" opacity=".34" />
-      <path d="M250 102 C345 192 390 247 511 276 S740 245 835 135 966 95 1033 160" opacity=".24" />
-      <circle cx="178" cy="183" r="4" fill="currentColor" opacity=".75" />
-      <circle cx="365" cy="148" r="3" fill="currentColor" opacity=".62" />
-      <circle cx="505" cy="263" r="4" fill="currentColor" opacity=".7" />
-      <circle cx="735" cy="152" r="3" fill="currentColor" opacity=".7" />
-      <circle cx="890" cy="243" r="4" fill="currentColor" opacity=".64" />
-      <circle cx="1030" cy="183" r="3" fill="currentColor" opacity=".7" />
-    </g>
-  </svg>
-  <div class="announcement hero-announcement">
-    Alphex AI is building products for a better AI ecosystem.
-    <a href="/products.html">Explore what we build →</a>
-  </div>
-  <div class="hero-kicker">AI systems for real work</div>
-  <h1>
-    <span>AI solutions designed</span>
-    <span>around</span>
-    <span class="brand-highlight">your business needs.</span>
-  </h1>
-  <p class="hero-copy">
-    Alphex AI builds AI assistants, knowledge systems, and intelligent automations that help businesses reduce repetitive work, make information accessible, and build more efficient workflows.
-  </p>
-  <div class="hero-actions">
-    <a class="pill dark" href="/contact.html">Discuss Your Project <span>↗</span></a>
-    <a class="hero-secondary-action" href="#capabilities">Explore capabilities <span aria-hidden="true">↓</span></a>
+    <section class="hero shell" id="top" aria-labelledby="hero-ref-title">
+  <div class="hero-ref-layout">
+    <div class="hero-ref-copy">
+      <p class="hero-ref-kicker">AI systems for real work</p>
+      <h1 id="hero-ref-title">AI solutions designed<br>around <span>your business needs.</span></h1>
+      <p class="hero-ref-description">Alphex AI builds AI assistants, knowledge systems, and intelligent automations that help businesses reduce repetitive work, make information accessible, and build more efficient workflows.</p>
+      <div class="hero-ref-actions">
+        <a class="hero-ref-button hero-ref-primary" href="/contact.html">Discuss Your Project <span aria-hidden="true">↗</span></a>
+        <a class="hero-ref-button hero-ref-secondary" href="#capabilities">Explore capabilities <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-ref-benefits" aria-label="What Alphex AI delivers">
+        <div class="hero-ref-benefit"><span class="hero-ref-icon" aria-hidden="true">ϟ</span><span><b>Faster workflows</b><small>Reduce repetitive work</small></span></div>
+        <div class="hero-ref-benefit"><span class="hero-ref-icon hero-ref-database" aria-hidden="true">▤</span><span><b>Your data, your control</b><small>Secure and private</small></span></div>
+        <div class="hero-ref-benefit"><span class="hero-ref-icon hero-ref-people" aria-hidden="true">♧</span><span><b>Built for real teams</b><small>Practical and easy to use</small></span></div>
+      </div>
+    </div>
+
+    <div class="hero-ref-visual" aria-label="Preview of the Alphex AI assistant workspace">
+      <div class="hero-ref-orbit hero-ref-orbit-one" aria-hidden="true"></div>
+      <div class="hero-ref-orbit hero-ref-orbit-two" aria-hidden="true"></div>
+      <div class="hero-ref-dot-grid hero-ref-dots-top" aria-hidden="true"></div>
+      <div class="hero-ref-dot-grid hero-ref-dots-bottom" aria-hidden="true"></div>
+      <div class="hero-ref-dashboard">
+        <aside class="hero-ref-sidebar">
+          <div class="hero-ref-app-name">alphex ai</div>
+          <div class="hero-ref-side-item is-active"><i aria-hidden="true">✳</i> New chat</div>
+          <div class="hero-ref-side-item"><i aria-hidden="true">◉</i> Assistants</div>
+          <div class="hero-ref-side-spacer"></div>
+          <div class="hero-ref-side-item"><i aria-hidden="true">⌘</i> Workflows</div>
+          <div class="hero-ref-side-sub">Workflows</div>
+          <div class="hero-ref-side-sub">Analytics</div>
+          <div class="hero-ref-side-item"><i aria-hidden="true">⚙</i> Settings</div>
+        </aside>
+        <div class="hero-ref-chat">
+          <div class="hero-ref-user">T</div>
+          <div class="hero-ref-assistant-mark" aria-hidden="true">ϟ</div>
+          <h2>How can I help you today?</h2>
+          <div class="hero-ref-input"><span>Ask anything about your business...</span><span class="hero-ref-send" aria-hidden="true">↑</span></div>
+          <div class="hero-ref-tools"><span>✧ Summarize</span><span>⌕ Analyze</span><span>◈ Generate</span><span>⌕ Research</span></div>
+        </div>
+      </div>
+      <div class="hero-ref-float hero-ref-float-data"><span class="hero-ref-float-icon" aria-hidden="true">▤</span><span><b>Connect your data</b><small>Docs, tools, and knowledge</small></span></div>
+      <div class="hero-ref-float hero-ref-float-flow"><span class="hero-ref-float-icon" aria-hidden="true">ϟ</span><span><b>Automate workflows</b><small>Turn ideas into actions</small></span></div>
+      <div class="hero-ref-float hero-ref-float-answer"><span class="hero-ref-float-icon" aria-hidden="true">✧</span><span><b>Get useful answers</b><small>Context-aware and reliable</small></span></div>
+    </div>
   </div>
 </section>
 
