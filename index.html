@@ -2228,6 +2228,11 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   .topbar .nav-links {position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important}
 }
 </style>
+
+<style>
+.hero-mobile-break {display:none!important}
+@media(max-width:560px) {#top.hero .hero-mobile-break {display:block!important}}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -2320,7 +2325,7 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   <div class="hero-ref-layout">
     <div class="hero-ref-copy">
       <p class="hero-ref-kicker">AI systems for real work</p>
-      <h1 id="hero-ref-title">AI solutions designed<br>around <span>your business needs.</span></h1>
+      <h1 id="hero-ref-title">AI solutions designed<br>around<br class="hero-mobile-break"><span>your business needs.</span></h1>
       <p class="hero-ref-description">Alphex AI builds AI assistants, knowledge systems, and intelligent automations that help businesses reduce repetitive work, make information accessible, and build more efficient workflows.</p>
       <div class="hero-ref-actions">
         <a class="hero-ref-button hero-ref-primary" href="/contact.html">Discuss Your Project <span aria-hidden="true">↗</span></a>
