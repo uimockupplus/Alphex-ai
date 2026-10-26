@@ -1,12 +1,16 @@
+```html
 <footer class="footer-pro">
-
   <div class="shell">
 
     <div class="footer-top">
 
+      <!-- Brand -->
       <div class="footer-brand">
-
-        <a class="wordmark" href="index.html">
+        <a
+          class="wordmark"
+          href="/index.html"
+          aria-label="Alphex AI home"
+        >
           alphex ai
         </a>
 
@@ -19,109 +23,76 @@
           class="pill light"
           href="mailto:hello@alphex.ai?subject=Alphex%20AI%20demo"
         >
-          Book a demo <span>↗</span>
+          Book a demo <span aria-hidden="true">↗</span>
         </a>
-
       </div>
 
-      <div class="footer-columns">
+      <!-- Footer Links -->
+      <nav class="footer-columns" aria-label="Footer navigation">
 
         <div class="footer-group">
-
           <h4>Overview</h4>
-
-          <a href="index.html">
-            Home
-          </a>
-
-          <a href="/capabilities.html">
-            Capabilities
-          </a>
-
-          <a href="/products.html">
-            Products
-          </a>
-
-          <a href="/process.html">
-            Process
-          </a>
-
-          <a href="/pricing.html">
-            Pricing
-          </a>
-
+          <a href="/index.html">Home</a>
+          <a href="/capabilities.html">Capabilities</a>
+          <a href="/products.html">Products</a>
+          <a href="/process.html">Process</a>
+          <a href="/pricing.html">Pricing</a>
         </div>
 
         <div class="footer-group">
-
           <h4>Products</h4>
-
-          <a href="https://evalloop-ai.vercel.app">
-            EvalLoop AI
+          <a
+            href="https://evalloop-ai.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            EvalLoop AI <span aria-hidden="true">↗</span>
           </a>
-
-          <a href="https://evalloopjobs.vercel.app">
-            EvalLoop Jobs
+          <a
+            href="https://evalloopjobs.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            EvalLoop Jobs <span aria-hidden="true">↗</span>
           </a>
-
-          <a href="/documentation.html">
-            Documentation
-          </a>
-
+          <a href="/documentation.html">Documentation</a>
         </div>
 
         <div class="footer-group">
-
           <h4>Company</h4>
-
-          <a href="/about.html">
-            About
-          </a>
-
-          <a href="/contact.html">
-            Contact
-          </a>
-
-          <a href="/careers.html">
-            Careers
-          </a>
-
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/careers.html">Careers</a>
         </div>
 
         <div class="footer-group">
-
           <h4>Legal</h4>
-
-          <a href="/privacy.html">
-            Privacy Policy
-          </a>
-
-          <a href="/terms.html">
-            Terms of Service
-          </a>
-
-          <a href="/disclaimer.html">
-            Disclaimer
-          </a>
-
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/disclaimer.html">Disclaimer</a>
         </div>
 
-      </div>
-
+      </nav>
     </div>
 
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
-
-      <span>
-        AI systems with a quality bar.
-      </span>
+      <span>AI systems with a quality bar.</span>
 
       <span class="mono">
-        © 2026 ALPHEX AI / HYDERABAD, INDIA
+        © <span id="footerYear">2026</span> ALPHEX AI / HYDERABAD, INDIA
       </span>
-
     </div>
 
   </div>
-
 </footer>
+
+<script>
+  (() => {
+    const year = document.getElementById('footerYear');
+    if (year) {
+      year.textContent = new Date().getFullYear();
+    }
+  })();
+</script>
+```
