@@ -1499,13 +1499,15 @@ footer.footer-pro .footer-bottom .mono { font-size:9px; }
 .mini-chat-msg.bot-msg.chat-replay-hidden { transform:translateY(4px); }
 @media(prefers-reduced-motion:reduce) {
   .chat-typing-caret { display:none !important; animation:none !important; }
-  .score-track i { transform:scaleX(1) !important; }
+  .score-track i { transform:scaleX(1) !important; animation:none !important; }
+  .quality-score .score-value { animation:none !important; }
 }
 
 /* Animated 94% score fill in green. */
 .score-track i { width:94% !important; height:100%; transform:scaleX(0); transform-origin:left center; background:#28b879 !important; box-shadow:0 0 8px rgba(40,184,121,.4); }
-.quality-score.score-visible .score-track i { animation:greenScoreFill 1.45s cubic-bezier(.2,.75,.2,1) .12s forwards; }
-@keyframes greenScoreFill { to { transform:scaleX(1); } }
+.quality-score.score-visible .score-track i { animation:greenScoreFill 9s cubic-bezier(.4,0,.2,1) infinite; }
+@keyframes greenScoreFill { 0% {transform:scaleX(0)} 72% {transform:scaleX(1)} 100% {transform:scaleX(1)} }
+.quality-score .score-value {display:inline!important;color:inherit!important;font-size:inherit!important}
 </style>
 
 <style>
@@ -2107,16 +2109,16 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
 }
 @keyframes alphexDashboardFloat {
   0%,100% { translate:0 0; }
-  50% { translate:0 -8px; }
+  50% { translate:0 -22px; }
 }
 @keyframes alphexCalloutFloat {
   0%,100% { translate:0 0; }
-  50% { translate:0 -9px; }
+  50% { translate:0 -26px; }
 }
-#top.hero .hero-ref-dashboard {animation:alphexDashboardFloat 6s ease-in-out infinite}
-#top.hero .hero-ref-float-data {animation:alphexCalloutFloat 5.2s ease-in-out infinite;animation-delay:-1.4s}
-#top.hero .hero-ref-float-flow {animation:alphexCalloutFloat 5.8s ease-in-out infinite;animation-delay:-3.2s}
-#top.hero .hero-ref-float-answer {animation:alphexCalloutFloat 5.4s ease-in-out infinite;animation-delay:-2.3s}
+#top.hero .hero-ref-dashboard {animation:alphexDashboardFloat 4.2s ease-in-out infinite}
+#top.hero .hero-ref-float-data {animation:alphexCalloutFloat 3.7s ease-in-out infinite;animation-delay:-1.4s}
+#top.hero .hero-ref-float-flow {animation:alphexCalloutFloat 4.1s ease-in-out infinite;animation-delay:-3.2s}
+#top.hero .hero-ref-float-answer {animation:alphexCalloutFloat 3.9s ease-in-out infinite;animation-delay:-2.3s}
 @media(prefers-reduced-motion:reduce) {
   #top.hero .hero-ref-button {transition:none}
   #top.hero .hero-ref-dashboard, #top.hero .hero-ref-float-data, #top.hero .hero-ref-float-flow, #top.hero .hero-ref-float-answer {animation:none;translate:none}
@@ -2423,7 +2425,7 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
           </article>
           <article class="capability-card capability-large quality-card evaluation-large" data-aos="fade-up" data-aos-delay="80">
             <div class="capability-copy"><span class="card-index">04 / EVALUATE</span><h3>Quality built into the process.</h3><p>Test responses, review edge cases, and improve behavior before and after launch.</p><a class="text-link" href="https://evalloop-ai.vercel.app/">Meet EvalLoop AI <span>↗</span></a></div>
-            <div class="quality-art" aria-hidden="true"><div class="quality-score"><span class="mono-label">RESPONSE QUALITY</span><strong>94<span>/100</span></strong><div class="score-track"><i></i></div><span class="score-caption"><b>✓</b> Evaluation complete</span></div><div class="quality-metrics"><div><span>Grounding</span><b>Strong</b></div><div><span>Relevance</span><b>High</b></div><div><span>Safety</span><b>Checked</b></div></div></div>
+            <div class="quality-art" aria-hidden="true"><div class="quality-score"><span class="mono-label">RESPONSE QUALITY</span><strong><span class="score-value">0</span><span>/100</span></strong><div class="score-track"><i></i></div><span class="score-caption"><b>✓</b> Evaluation complete</span></div><div class="quality-metrics"><div><span>Grounding</span><b>Strong</b></div><div><span>Relevance</span><b>High</b></div><div><span>Safety</span><b>Checked</b></div></div></div>
           </article>
         </div>
       </div>
@@ -3343,6 +3345,45 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
       card.style.removeProperty('--cursor-shadow-x');
       card.style.removeProperty('--cursor-shadow-y');
     });
+  });
+})();
+</script>
+<script>
+(() => {
+  const card = document.querySelector('.quality-score');
+  const value = card && card.querySelector('.score-value');
+  if (!card || !value) return;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) { value.textContent = '94'; card.classList.add('score-visible'); return; }
+  let raf = 0;
+  const duration = 9000;
+  const countDuration = 6480;
+  function animateCycle(start) {
+    function frame(now) {
+      const elapsed = (now - start) % duration;
+      const progress = Math.min(elapsed / countDuration, 1);
+      const eased = progress * progress * (3 - 2 * progress);
+      value.textContent = String(Math.min(94, Math.floor(94 * eased)));
+      raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        card.classList.add('score-visible');
+        animateCycle(performance.now());
+        observer.disconnect();
+      }
+    }, {threshold:0.35});
+    observer.observe(card);
+  } else {
+    card.classList.add('score-visible');
+    animateCycle(performance.now());
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(raf);
+    else if (card.classList.contains('score-visible')) animateCycle(performance.now());
   });
 })();
 </script>
