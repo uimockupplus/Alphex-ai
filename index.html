@@ -2257,6 +2257,93 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   #top.hero .hero-ref-kicker { transform: translateX(12px); }
 }
 </style>
+<style>
+/* Translucent violet glass is reserved for the three hero callout cards. */
+#top.hero .hero-ref-float {
+  background:linear-gradient(135deg,rgba(112,87,255,.13),rgba(25,22,40,.56))!important;
+  border:1px solid rgba(157,128,255,.48)!important;
+  box-shadow:0 16px 40px rgba(0,0,0,.3),inset 0 1px 0 rgba(207,190,255,.2),0 0 22px rgba(112,87,255,.12)!important;
+  backdrop-filter:blur(16px) saturate(135%)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(135%)!important;
+}
+#top.hero .hero-ref-float-icon {
+  background:rgba(127,96,255,.18)!important;
+  border:1px solid rgba(177,151,255,.28)!important;
+}
+</style>
+<style>
+/* Rolling live feed: incoming cards slide in from the side; older rows move up. */
+@keyframes opportunityJobFromSide {
+  from {transform:translateX(78px)}
+  to {transform:translateX(0)}
+}
+#products .jobs-window .job-row.job-entering {
+  animation:opportunityJobFromSide .72s cubic-bezier(.2,.75,.25,1) both;
+}
+@media(prefers-reduced-motion:reduce) {
+  #products .jobs-window .job-row.job-entering {animation:none!important;transform:none!important}
+}
+</style>
+<style>
+/* Keep the expanded role list clipped as a compact rolling feed. */
+#products .jobs-window {width:90%;height:190px;padding:12px;overflow:hidden}
+#products .jobs-window-head {flex:none;padding-bottom:10px;font-size:10px}
+#products .jobs-window-head span+span {font-size:8px}
+#products .job-row {min-height:44px;padding:7px 0;flex:none;gap:10px}
+#products .job-row>i {width:30px;height:30px;flex:0 0 30px;font-size:7px}
+#products .job-row b {font-size:9px}
+#products .job-row small {font-size:7.5px}
+#products .job-tag {font-size:7px}
+@media(max-width:560px) {
+  #products .jobs-window {width:94%;height:186px;padding:10px}
+  #products .jobs-window-head {font-size:9px}
+  #products .job-row {min-height:43px;padding:6px 0;gap:8px}
+  #products .job-row>i {width:28px;height:28px;flex-basis:28px}
+  #products .job-row b {font-size:8.5px}
+  #products .job-row small {font-size:7px}
+}
+</style>
+<style>
+/* EvalLoop demo: brief loading phase followed by a staged evaluation result. */
+#products .judge-workspace.eval-animated .judge-workspace-body > * {
+  transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);
+}
+#products .judge-workspace.eval-loading .judge-workspace-body > * {
+  opacity:0;transform:translateY(5px);pointer-events:none;
+}
+#products .judge-workspace.eval-loading .judge-workspace-body {position:relative;min-height:116px}
+#products .judge-workspace.eval-loading .judge-workspace-body::before {
+  content:"Comparing model responses…";position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);
+  color:#c8c3db;font:8px var(--mono);white-space:nowrap;z-index:2;
+}
+#products .judge-workspace.eval-loading .judge-workspace-body::after {
+  content:"";position:absolute;top:61%;left:18%;width:64%;height:4px;border-radius:8px;
+  background:linear-gradient(90deg,#6757d9 0%,#a18bff 45%,#46c8aa 70%,rgba(255,255,255,.1) 70%);
+  background-size:220% 100%;animation:evalLoadProgress 2s cubic-bezier(.4,0,.2,1) infinite;z-index:2;
+}
+@keyframes evalLoadProgress {from{background-position:100% 0}to{background-position:-120% 0}}
+@keyframes evalResultIn {from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+#products .judge-workspace.eval-reveal .judge-candidate {animation:evalResultIn .8s cubic-bezier(.22,1,.36,1) both}
+#products .judge-workspace.eval-reveal .judge-candidate:nth-child(2) {animation-delay:.35s}
+#products .judge-workspace.eval-reveal .judge-verdict-row {animation:evalResultIn .8s cubic-bezier(.22,1,.36,1) .9s both}
+@media(prefers-reduced-motion:reduce) {
+  #products .judge-workspace.eval-animated .judge-workspace-body > * {opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+  #products .judge-workspace.eval-loading .judge-workspace-body::before,
+  #products .judge-workspace.eval-loading .judge-workspace-body::after {display:none!important}
+}
+</style>
+<style>
+/* Match the EvalLoop mobile copy spacing to the Automation capability card. */
+@media(max-width:800px) {
+  .evaluation-large .capability-copy {min-height:0!important}
+}
+@media(max-width:540px) {
+  .evaluation-large .capability-copy {padding:22px!important}
+  .evaluation-large .capability-copy h3 {margin:20px 0 10px!important;font-size:29px!important}
+  .evaluation-large .capability-copy p {font-size:12px!important}
+  .evaluation-large .capability-copy .text-link {padding-top:18px!important}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -2530,8 +2617,8 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
       </div>
     </div>
   </div>
-</div><div class="product-panel-copy"><span class="product-category">AI QUALITY / EVALUATION</span><h3>EvalLoop AI</h3><p>Evaluate AI responses, compare outputs, and inspect quality dimensions to build more reliable AI experiences.</p><a class="button button-light" href="https://evalloop.alphexai.com//" target="_blank" rel="noopener">Explore EvalLoop AI <span>↗</span></a></div></article>
-          <article class="product-panel product-jobs" data-aos="fade-up" data-aos-delay="100"><div class="product-panel-top"><span class="product-label">PRODUCT / 02</span><span class="product-arrow">↗</span></div><div class="product-art jobs-art" aria-hidden="true"><div class="jobs-window"><div class="jobs-window-head"><span>Opportunity feed</span><span>LIVE DISCOVERY</span></div><div class="job-row"><i>AI</i><span><b>AI Evaluator</b><small>Model quality · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>LLM</i><span><b>Prompt Specialist</b><small>Language systems · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>DATA</i><span><b>Data Annotator</b><small>AI training · Flexible</small></span><span class="job-tag">OPEN</span></div></div></div><div class="product-panel-copy"><span class="product-category">AI OPPORTUNITY DISCOVERY</span><h3>EvalLoop Jobs</h3><p>Discover opportunities across AI evaluation, LLM work, data annotation, AI training, and related fields.</p><a class="button button-light" href="https://evalloopjobs.alphexai.com/" target="_blank" rel="noopener">Explore EvalLoop Jobs <span>↗</span></a></div></article>
+</div><div class="product-panel-copy"><span class="product-category">AI QUALITY / EVALUATION</span><h3>EvalLoop AI</h3><p>Evaluate AI responses, compare outputs, and inspect quality dimensions to build more reliable AI experiences.</p><a class="button button-light" href="https://evalloop-ai.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop AI <span>↗</span></a></div></article>
+          <article class="product-panel product-jobs" data-aos="fade-up" data-aos-delay="100"><div class="product-panel-top"><span class="product-label">PRODUCT / 02</span><span class="product-arrow">↗</span></div><div class="product-art jobs-art" aria-hidden="true"><div class="jobs-window"><div class="jobs-window-head"><span>Opportunity feed</span><span>LIVE DISCOVERY</span></div><div class="job-row"><i>AI</i><span><b>AI Evaluator</b><small>Model quality · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>LLM</i><span><b>Prompt Specialist</b><small>Language systems · Remote</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>DATA</i><span><b>Data Annotator</b><small>AI training · Flexible</small></span><span class="job-tag">OPEN</span></div><div class="job-row"><i>LABEL</i><span><b>AI Data Labeler</b><small>Text &amp; image tagging · Flexible</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>SAFE</i><span><b>AI Safety Reviewer</b><small>Content quality · Remote</small></span><span class="job-tag">OPEN</span></div><div class="job-row"><i>SEARCH</i><span><b>Search Quality Rater</b><small>Search relevance · Flexible</small></span><span class="job-tag">NEW</span></div><div class="job-row"><i>AUDIO</i><span><b>Speech Data Annotator</b><small>Audio labeling · Remote</small></span><span class="job-tag">OPEN</span></div><div class="job-row"><i>REVIEW</i><span><b>AI Response Reviewer</b><small>Answer quality · Remote</small></span><span class="job-tag">NEW</span></div></div></div><div class="product-panel-copy"><span class="product-category">AI OPPORTUNITY DISCOVERY</span><h3>EvalLoop Jobs</h3><p>Discover opportunities across AI evaluation, LLM work, data annotation, AI training, and related fields.</p><a class="button button-light" href="https://annotatorjobs.vercel.app/" target="_blank" rel="noopener">Explore EvalLoop Jobs <span>↗</span></a></div></article>
         </div>
       </div>
     </section>
@@ -3387,6 +3474,94 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
     if (document.hidden) cancelAnimationFrame(raf);
     else if (card.classList.contains('score-visible')) animateCycle(performance.now());
   });
+})();
+</script>
+<script>
+(() => {
+  const feed = document.querySelector('#products .jobs-window');
+  if (!feed) return;
+  const rows = () => Array.from(feed.querySelectorAll('.job-row'));
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let loop;
+  function startFeed() {
+    if (feed.dataset.rolling === 'true') return;
+    feed.dataset.rolling = 'true';
+    const cards = rows();
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add('job-entering');
+        setTimeout(() => card.classList.remove('job-entering'), 760);
+      }, i * 420);
+    });
+    if (reduced || cards.length < 2) return;
+    loop = setInterval(() => {
+      const current = rows();
+      if (current.length < 2) return;
+      const previous = new Map(current.slice(1).map(card => [card, card.getBoundingClientRect().top]));
+      const incoming = current[0];
+      feed.appendChild(incoming);
+      rows().forEach(card => {
+        if (card === incoming) return;
+        const oldTop = previous.get(card);
+        const newTop = card.getBoundingClientRect().top;
+        if (oldTop == null) return;
+        card.animate(
+          [{transform:`translateY(${oldTop-newTop}px)`},{transform:'translateY(0)'}],
+          {duration:680,easing:'cubic-bezier(.2,.75,.25,1)'}
+        );
+      });
+      incoming.classList.remove('job-entering');
+      void incoming.offsetWidth;
+      incoming.classList.add('job-entering');
+      setTimeout(() => incoming.classList.remove('job-entering'), 760);
+    }, 2600);
+  }
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        startFeed();
+        observer.disconnect();
+      }
+    }, {threshold:.25});
+    observer.observe(feed);
+  } else startFeed();
+})();
+</script>
+<script>
+(() => {
+  const card = document.querySelector('#products .product-evalloop .judge-workspace');
+  if (!card || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const status = card.querySelector('.judge-run-status');
+  const originalStatus = status ? status.innerHTML : '';
+  let timers = [];
+  let active = false;
+  function clearTimers() { timers.forEach(clearTimeout); timers=[]; }
+  function runCycle() {
+    if (!active) return;
+    card.classList.remove('eval-reveal');
+    card.classList.add('eval-animated','eval-loading');
+    if (status) status.innerHTML='<i></i> Evaluating';
+    timers.push(setTimeout(() => {
+      if (!active) return;
+      card.classList.remove('eval-loading');
+      card.classList.add('eval-reveal');
+      if (status) status.innerHTML=originalStatus;
+    }, 2200));
+    timers.push(setTimeout(runCycle, 9500));
+  }
+  function start() { if (active) return; active=true; runCycle(); }
+  function stop() {
+    active=false;clearTimers();
+    card.classList.remove('eval-loading','eval-reveal','eval-animated');
+    if (status) status.innerHTML=originalStatus;
+  }
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry=>entry.isIntersecting)) start(); else stop();
+    },{threshold:.25});
+    observer.observe(card);
+  } else start();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden) stop(); else if(card.getBoundingClientRect().bottom>0 && card.getBoundingClientRect().top<innerHeight) start();});
 })();
 </script>
 </body>
