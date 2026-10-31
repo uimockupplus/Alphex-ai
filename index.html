@@ -2465,7 +2465,6 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
       <div class="hero-ref-actions">
         <a class="hero-ref-button hero-ref-primary" href="/contact.html">Discuss Your Project <span aria-hidden="true">↗</span></a>
         <a class="hero-ref-button hero-ref-secondary" href="#capabilities">Explore capabilities <span aria-hidden="true">↓</span></a>
-        <a href="#industries">Industries</a>
       </div>
       <div class="hero-ref-benefits" aria-label="What Alphex AI delivers">
         <div class="hero-ref-benefit"><span class="hero-ref-icon" aria-hidden="true">ϟ</span><span><b>Faster workflows</b><small>Reduce repetitive work</small></span></div>
@@ -3634,9 +3633,6 @@ button, a { touch-action:manipulation; }
   #top.hero .hero-ref-kicker { transform:none!important; margin-bottom:18px; }
   #top.hero h1 { max-width:100%; font-size:clamp(40px, 11vw, 58px)!important; line-height:1.04!important; text-align:center!important; overflow-wrap:anywhere; }
   #top.hero .hero-ref-description { max-width:580px; margin:20px auto 0; font-size:14px; line-height:1.7; text-align:center; }
-  #top.hero .hero-ref-actions { justify-content:center; flex-wrap:wrap; gap:9px; }
-  #top.hero .hero-ref-button { min-height:46px; padding:0 15px; font-size:11px; }
-  #top.hero .hero-ref-actions > a:last-child { width:100%; margin-top:2px; color:#b9a8ff; font-size:12px; text-align:center; }
   #top.hero .hero-ref-benefits { width:100%; justify-content:center; flex-wrap:wrap; gap:14px 18px; margin-top:26px; }
   #top.hero .hero-ref-benefit { flex:1 1 160px; min-width:145px; }
   #top.hero .hero-ref-benefit + .hero-ref-benefit { padding-left:0; border-left:0; }
@@ -3694,9 +3690,6 @@ button, a { touch-action:manipulation; }
   .section-heading h2, .trust-intro h2, .faq-intro h2 { font-size:clamp(34px, 10vw, 46px); }
 
   #top.hero { padding:40px 16px 30px!important; }
-  #top.hero .hero-ref-actions { display:grid; grid-template-columns:1fr 1fr; width:100%; }
-  #top.hero .hero-ref-button { width:100%; padding:0 9px; font-size:10px; }
-  #top.hero .hero-ref-actions > a:last-child { grid-column:1/-1; }
   #top.hero .hero-ref-benefits { display:grid; grid-template-columns:1fr 1fr; gap:14px 10px; max-width:390px; text-align:left; }
   #top.hero .hero-ref-benefit { min-width:0; }
   #top.hero .hero-ref-benefit:last-child { grid-column:1/-1; }
@@ -3721,7 +3714,7 @@ button, a { touch-action:manipulation; }
   .footer-bottom { align-items:flex-start; flex-direction:column; }
 
   /* Prevent long labels, prices, and action rows from creating a horizontal scroll. */
-  .price-amount, .button, .product-panel-copy .button, .hero-ref-button { max-width:100%; }
+  .price-amount, .button, .product-panel-copy .button { max-width:100%; }
   .price-amount { font-size:30px; }
   .faq-list details summary { gap:12px; }
   .faq-list details summary span { min-width:0; }
