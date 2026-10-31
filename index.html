@@ -2344,6 +2344,12 @@ footer.footer-pro .footer-group a:hover { transform:none !important; }
   .evaluation-large .capability-copy .text-link {padding-top:18px!important}
 }
 </style>
+<style>
+/* Keep desktop auth controls mutually exclusive despite legacy !important rules. */
+body.authenticated .topbar .nav-actions #loginNavButton { display:none!important; }
+body.authenticated .topbar .nav-actions #authProfile { display:inline-flex!important; }
+body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!important; }
+</style>
 </head>
 <body>
 <header class="topbar">
