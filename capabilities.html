@@ -190,6 +190,10 @@ body.capabilities-page .cta-action .pill.dark:hover { transform:translateY(-2px)
   body.capabilities-page .capability-row:hover, body.capabilities-page .capability-card:hover,
 
 }
+/* Keep shared auth controls mutually exclusive with this page's header overrides. */
+body.capabilities-page.authenticated #site-nav .header-demo { display:none!important; }
+body.capabilities-page.authenticated #site-nav .auth-profile { display:inline-flex!important; }
+body.capabilities-page:not(.authenticated) #site-nav .auth-profile { display:none!important; }
 </style>
 
 
