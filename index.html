@@ -2350,6 +2350,16 @@ body.authenticated .topbar .nav-actions #loginNavButton { display:none!important
 body.authenticated .topbar .nav-actions #authProfile { display:inline-flex!important; }
 body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!important; }
 </style>
+  <style>
+    .industries-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .industry-card{min-height:220px;padding:26px;border:1px solid #dedee3;border-radius:16px;background:#fff;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+    .industry-card:hover{transform:translateY(-3px);border-color:#c8c1ff;box-shadow:0 18px 38px rgba(21,18,48,.07)}
+    .industry-kicker{display:block;min-height:28px;color:#7466c7;font:400 9px/1.5 var(--mono);letter-spacing:.09em}
+    .industry-card h3{margin:20px 0 10px;font-size:25px;line-height:1.1;letter-spacing:-.06em}
+    .industry-card p{color:#656671;font-size:13px;line-height:1.75;font-weight:300}
+    @media(max-width:900px){.industries-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.industries-grid{grid-template-columns:1fr}.industry-card{min-height:0;padding:23px}.industry-card h3{margin-top:14px}}
+  </style>
 </head>
 <body>
 <header class="topbar">
@@ -2444,6 +2454,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
       <div class="hero-ref-actions">
         <a class="hero-ref-button hero-ref-primary" href="/contact.html">Discuss Your Project <span aria-hidden="true">↗</span></a>
         <a class="hero-ref-button hero-ref-secondary" href="#capabilities">Explore capabilities <span aria-hidden="true">↓</span></a>
+        <a href="#industries">Industries</a>
       </div>
       <div class="hero-ref-benefits" aria-label="What Alphex AI delivers">
         <div class="hero-ref-benefit"><span class="hero-ref-icon" aria-hidden="true">ϟ</span><span><b>Faster workflows</b><small>Reduce repetitive work</small></span></div>
@@ -2522,6 +2533,20 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
             <div class="capability-copy"><span class="card-index">04 / EVALUATE</span><h3>Quality built into the process.</h3><p>Test responses, review edge cases, and improve behavior before and after launch.</p><a class="text-link" href="https://evalloop-ai.vercel.app/">Meet EvalLoop AI <span>↗</span></a></div>
             <div class="quality-art" aria-hidden="true"><div class="quality-score"><span class="mono-label">RESPONSE QUALITY</span><strong><span class="score-value">0</span><span>/100</span></strong><div class="score-track"><i></i></div><span class="score-caption"><b>✓</b> Evaluation complete</span></div><div class="quality-metrics"><div><span>Grounding</span><b>Strong</b></div><div><span>Relevance</span><b>High</b></div><div><span>Safety</span><b>Checked</b></div></div></div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light industries-section" id="industries" aria-labelledby="industries-title">
+      <div class="container">
+        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>02</span> / Industries we serve</div><h2 id="industries-title">Useful AI, shaped<br><span class="muted-heading">around your industry.</span></h2></div><p>We apply practical AI to the knowledge and service workflows that matter in different operating contexts—keeping people and professional judgment in the loop.</p></div>
+        <div class="industries-grid">
+          <article class="industry-card" data-aos="fade-up"><span class="industry-kicker">KNOWLEDGE &amp; SERVICE WORKFLOWS</span><h3>Financial services</h3><p>Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p></article>
+          <article class="industry-card" data-aos="fade-up" data-aos-delay="60"><span class="industry-kicker">ADMINISTRATIVE SUPPORT</span><h3>Healthcare</h3><p>Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters.</p></article>
+          <article class="industry-card" data-aos="fade-up" data-aos-delay="120"><span class="industry-kicker">PRODUCT &amp; CUSTOMER EXPERIENCE</span><h3>SaaS &amp; technology</h3><p>Connect product documentation and support knowledge so customers and employees can get useful, consistent answers.</p></article>
+          <article class="industry-card" data-aos="fade-up" data-aos-delay="180"><span class="industry-kicker">EXPERTISE &amp; REPEATABLE DELIVERY</span><h3>Professional services</h3><p>Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop.</p></article>
+          <article class="industry-card" data-aos="fade-up" data-aos-delay="60"><span class="industry-kicker">COMMERCE &amp; CUSTOMER OPERATIONS</span><h3>E-commerce</h3><p>Support shoppers and service teams with product knowledge and routine order-related information across the customer journey.</p></article>
+          <article class="industry-card" data-aos="fade-up" data-aos-delay="120"><span class="industry-kicker">CROSS-TEAM OPERATIONS</span><h3>Growing businesses</h3><p>Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows.</p></article>
         </div>
       </div>
     </section>
