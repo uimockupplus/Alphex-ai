@@ -191,6 +191,13 @@
     );
   }
 
+  /* Auth visibility must win over page-level !important display rules. */
+  function setAuthDisplay(element, value) {
+    if (element) {
+      element.style.setProperty('display', value, 'important');
+    }
+  }
+
   /* =========================================================
      LOGGED OUT
      ========================================================= */
@@ -198,22 +205,13 @@
     const elements = getAuthElements();
     document.body.classList.remove('authenticated');
 
-    if (elements.loginNavButton) {
-      elements.loginNavButton.style.display =
-        'inline-flex';
-    }
+    setAuthDisplay(elements.loginNavButton, 'inline-flex');
 
-    if (elements.authProfile) {
-      elements.authProfile.style.display = 'none';
-    }
+    setAuthDisplay(elements.authProfile, 'none');
 
-    if (elements.mobileLoginLink) {
-      elements.mobileLoginLink.style.display = 'flex';
-    }
+    setAuthDisplay(elements.mobileLoginLink, 'flex');
 
-    if (elements.mobileProfileLink) {
-      elements.mobileProfileLink.style.display = 'none';
-    }
+    setAuthDisplay(elements.mobileProfileLink, 'none');
 
     if (elements.profileMenu) {
       elements.profileMenu.classList.remove('open');
@@ -242,13 +240,9 @@
     const name = getUserDisplayName(user);
     const initial = getProfileInitial(name);
 
-    if (elements.loginNavButton) {
-      elements.loginNavButton.style.display = 'none';
-    }
+    setAuthDisplay(elements.loginNavButton, 'none');
 
-    if (elements.authProfile) {
-      elements.authProfile.style.display = 'inline-flex';
-    }
+    setAuthDisplay(elements.authProfile, 'inline-flex');
 
     if (elements.profileInitial) {
       elements.profileInitial.textContent = initial;
@@ -263,13 +257,9 @@
         user.email || 'Signed in';
     }
 
-    if (elements.mobileLoginLink) {
-      elements.mobileLoginLink.style.display = 'none';
-    }
+    setAuthDisplay(elements.mobileLoginLink, 'none');
 
-    if (elements.mobileProfileLink) {
-      elements.mobileProfileLink.style.display = 'flex';
-    }
+    setAuthDisplay(elements.mobileProfileLink, 'flex');
   }
 
   /* =========================================================
