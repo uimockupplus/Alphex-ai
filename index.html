@@ -2351,26 +2351,154 @@ body.authenticated .topbar .nav-actions #authProfile { display:inline-flex!impor
 body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!important; }
 </style>
   <style>
+    /* Industry cards use the simple numbered card language from the Approach section. */
     .industries-section{overflow:hidden}
-    .industries-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .industry-card{position:relative;overflow:hidden;min-height:390px;padding:0 25px 27px;border:1px solid #dedee3;border-radius:18px;background:#fff;transition:transform .32s ease,border-color .32s ease,box-shadow .32s ease}
-    .industry-card:hover{transform:translateY(-5px);border-color:#c8c1ff;box-shadow:0 23px 46px rgba(21,18,48,.12)}
-    .industry-visual{position:relative;display:grid;place-items:center;height:176px;margin:0 -25px 24px;overflow:hidden;color:#7057ff;background:#eeeaff}
-    
-    .industry-visual-health,.industry-visual-growth{background:#e7f7f4;color:#2e9e8c}
-    .industry-visual-professional,.industry-visual-commerce{background:#f7f0db;color:#625a46}
-    .industry-visual:before,.industry-visual:after{content:"";position:absolute;border:1px solid currentColor;border-radius:50%;opacity:.12}
-    .industry-visual:before{width:190px;height:190px}.industry-visual:after{width:240px;height:240px}
-    .industry-visual svg{position:relative;z-index:1;width:min(94%,310px);height:auto;max-height:164px;overflow:visible;filter:drop-shadow(0 15px 18px rgba(48,39,105,.12));transition:transform .4s cubic-bezier(.2,.75,.25,1),filter .4s ease}
-    .industry-card:hover .industry-visual svg{transform:translateY(-3px) scale(1.035);filter:drop-shadow(0 19px 22px rgba(48,39,105,.18))}
-    .industry-orbit{position:absolute;width:142px;height:50px;border:1px solid currentColor;border-radius:50%;opacity:.22;transform:rotate(-23deg)}
-    .industry-visual-label{position:absolute;right:15px;bottom:13px;color:rgba(48,39,105,.58);font:400 8px var(--mono);letter-spacing:.1em}
-    .industry-kicker{display:block;min-height:28px;color:#7466c7;font:400 9px/1.5 var(--mono);letter-spacing:.09em}
-    .industry-card h3{margin:14px 0 10px;font-size:25px;line-height:1.1;letter-spacing:-.06em}
-    .industry-card p{color:#656671;font-size:13px;line-height:1.75;font-weight:300}
-    @media(max-width:900px){.industries-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.industry-card{min-height:370px}}
-    @media(max-width:560px){.industries-grid{grid-template-columns:1fr}.industry-card{min-height:0;padding:0 23px 24px}.industry-visual{height:160px;margin:0 -23px 21px}.industry-card h3{margin-top:12px}}
+    .industries-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:34px}
+    .industry-card{position:relative;height:fit-content;padding:28px 26px 25px;border:1px solid #dedee3;border-radius:18px;background:#fff;transition:transform .32s ease,border-color .32s ease,box-shadow .32s ease}
+    .industry-card:hover{transform:translateY(-4px);border-color:#c8c1ff;box-shadow:0 20px 40px rgba(21,18,48,.08)}
+        .industry-card .industry-kicker{display:block;margin-bottom:13px;color:#7466c7;font:400 9px/1.5 var(--mono);letter-spacing:.09em}
+    .industry-card h3{margin:0 0 10px;font-size:25px;line-height:1.1;letter-spacing:-.06em}
+    .industry-card p{max-width:330px;color:#696a75;font-size:12px;line-height:1.8;font-weight:300}
+    .industry-card .process-tag{display:block;margin-top:18px;color:#888992;font:400 8px/1.5 var(--mono);letter-spacing:.1em}
+    @media(max-width:900px){.industries-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.industry-card{height:fit-content}}
+    @media(max-width:560px){.industries-track{grid-template-columns:1fr;gap:28px}.industry-card{height:fit-content;padding:26px 23px 23px}}
   </style>
+<style id="mobile-responsive-overrides">
+/* Final mobile pass: keep every section inside the viewport and preserve the desktop hierarchy. */
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,video,canvas{max-width:100%;height:auto}
+
+@media (max-width:800px){
+  .container{width:min(100% - 36px,680px)}
+  .nav-shell{height:68px}
+  .desktop-nav,.header-demo{display:none!important}
+  .mobile-menu{display:block!important}
+  .mobile-panel{top:68px;max-height:calc(100vh - 68px);overflow:auto}
+  .brand{font-size:19px}
+  .nav-actions{gap:8px}
+
+  .section{padding:82px 0}
+  .section-heading{grid-template-columns:1fr;gap:18px;margin-bottom:34px}
+  .section-heading h2,.trust-intro h2,.faq-intro h2{font-size:clamp(40px,10.5vw,56px);line-height:1.03}
+  .section-heading>p{max-width:600px;font-size:13px;line-height:1.75}
+
+  .hero{min-height:0;padding:58px 0 24px}
+  .hero-copy{max-width:680px}
+  .hero-title{font-size:clamp(46px,12vw,78px);line-height:1}
+  .hero-description{max-width:560px;font-size:14px;line-height:1.7}
+  .hero-actions{flex-wrap:wrap;margin-top:24px}
+  .hero-visual{height:auto;min-height:300px;margin-top:38px}
+  .hero-ref-layout{grid-template-columns:1fr;gap:28px}
+  .hero-ref-visual,.hero-ref-dashboard{width:100%;max-width:100%;min-width:0}
+  .hero-ref-sidebar{width:92px}
+  .hero-ref-chat{min-width:0}
+  .hero-ref-float{display:none}
+
+  .signal-strip-inner{flex-wrap:wrap;justify-content:center;gap:9px 13px;padding:14px 0;font-size:8px;line-height:1.45}
+
+  .capability-grid,.industries-track,.product-grid,.pricing-grid{grid-template-columns:1fr;gap:18px}
+  .capability-card,.capability-large{min-height:0}
+  .capability-large{grid-template-columns:1fr}
+  .capability-copy{padding:25px 23px 24px}
+  .capability-copy h3{margin-top:23px;font-size:32px}
+  .capability-art{min-height:220px}
+  .knowledge-art,.automation-art,.quality-art{min-height:210px}
+
+  .industry-card{height:fit-content;min-height:0}
+  .industry-card h3{font-size:27px}
+
+  .demo-layout{grid-template-columns:1fr;gap:22px}
+  .demo-console,.demo-steps{min-width:0}
+  .demo-console{overflow:hidden}
+  .demo-messages{min-width:0}
+  .demo-message{max-width:100%}
+  .demo-steps{gap:10px}
+  .demo-step{grid-template-columns:auto minmax(0,1fr) auto;min-width:0}
+  .demo-step p{max-width:none}
+  .demo-cta{width:100%;justify-self:stretch}
+
+  .process-track{grid-template-columns:1fr;gap:30px;padding:24px 0 0 24px}
+  .process-line{top:24px;bottom:0;left:7px;right:auto;width:1px;height:auto}
+  .process-line span{width:1px;height:0;background:linear-gradient(180deg,#7057ff,#35c8c0)}
+  .process-step{padding:0 0 8px 20px}
+  .process-number{left:-35px;top:0;width:27px;height:27px;font-size:8px}
+  .process-icon{width:33px;height:33px;margin-bottom:12px}
+  .process-step h3{font-size:23px}
+  .process-step p{max-width:100%;font-size:12px}
+  .process-tag{margin-top:14px}
+
+  .architecture-diagram{grid-template-columns:1fr;gap:18px;padding:24px 19px 26px}
+  .architecture-connector{transform:rotate(90deg);height:26px;margin:0 auto}
+  .architecture-feedback{margin-top:6px}
+
+  .trust-layout,.faq-layout{grid-template-columns:1fr;gap:36px}
+  .trust-list{min-width:0}
+  .trust-item{grid-template-columns:auto minmax(0,1fr) auto;gap:12px}
+  .trust-item h3{font-size:20px}
+  .trust-item p{font-size:11px}
+
+  .product-grid{gap:18px}
+  .product-panel{min-width:0}
+  .product-panel-copy{padding:24px}
+  .pricing-grid{gap:12px}
+  .price-card{padding:25px 22px}
+  .faq-list{min-width:0}
+  .faq-list summary{font-size:13px;line-height:1.45}
+
+  .footer-top{grid-template-columns:1fr;gap:32px}
+  .footer-columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 18px}
+  .footer-bottom{flex-wrap:wrap;gap:10px}
+  .footer-location{margin-left:0}
+}
+
+@media (max-width:560px){
+  .container{width:calc(100% - 32px)}
+  .section{padding:68px 0}
+  .section-heading{margin-bottom:28px}
+  .section-heading h2,.trust-intro h2,.faq-intro h2{font-size:clamp(37px,11.8vw,52px)}
+  .hero{padding-top:44px}
+  .hero-title{font-size:clamp(42px,12.5vw,60px)}
+  .hero-description{font-size:13px}
+  .hero-actions{align-items:stretch;flex-direction:column}
+  .hero-actions .button{width:100%}
+  .hero-visual{min-height:245px;margin-top:30px;border-radius:16px}
+  .hero-ref-dashboard{grid-template-columns:72px 1fr}
+  .hero-ref-sidebar{width:72px;padding:14px 9px}
+  .hero-ref-side-item,.hero-ref-side-sub{font-size:8px}
+  .hero-ref-chat{padding:25px 14px}
+  .hero-ref-chat h2{font-size:27px}
+  .hero-ref-tools{flex-wrap:wrap;gap:7px}
+  .capability-copy h3{font-size:29px}
+  .capability-art{min-height:190px}
+  .mini-chat-window{width:90%}
+  .industry-card{padding:24px 20px 22px}
+  .industry-card h3{font-size:25px}
+  .industry-card p{font-size:12px}
+  .demo-console{border-radius:14px}
+  .console-context{align-items:flex-start}
+  .context-state{margin-left:auto}
+  .demo-step{grid-template-columns:auto minmax(0,1fr);}
+  .step-state{grid-column:2;margin-top:5px}
+  .architecture-diagram{padding:21px 15px 24px}
+  .architecture-column{grid-template-columns:auto minmax(0,1fr);gap:10px}
+  .architecture-column>div:last-child{min-width:0}
+  .architecture-column h3{font-size:22px}
+  .trust-item{grid-template-columns:auto minmax(0,1fr);padding:17px 0}
+  .trust-item-index{grid-column:2}
+  .product-panel-copy{padding:22px}
+  .footer-columns{grid-template-columns:1fr 1fr}
+  .footer-bottom{font-size:8px}
+}
+
+@media (max-width:380px){
+  .container{width:calc(100% - 24px)}
+  .brand{font-size:18px}
+  .section{padding:58px 0}
+  .hero-title{font-size:40px}
+  .section-heading h2,.trust-intro h2,.faq-intro h2{font-size:36px}
+  .footer-columns{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -2550,20 +2678,50 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
     <section class="section section-light industries-section" id="industries" aria-labelledby="industries-title">
       <div class="container">
         <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>02</span> / Industries we serve</div><h2 id="industries-title">Useful AI, shaped<br><span class="muted-heading">around your industry.</span></h2></div><p>We apply practical AI to the knowledge and service workflows that matter in different operating contexts—keeping people and professional judgment in the loop.</p></div>
-        <div class="industries-grid">
-          <article class="industry-card" data-aos="fade-up"><div class="industry-visual industry-visual-finance" aria-hidden="true"><span class="industry-orbit"></span><svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="finance industry illustration"><circle cx="151" cy="84" r="73" fill="#fff" opacity=".25"/><rect x="50" y="28" width="200" height="122" rx="16" fill="#fff" stroke="#fff" stroke-opacity=".9"/><path d="M68 58h62M68 69h39" stroke="#7057ff" stroke-width="4" stroke-linecap="round" opacity=".45"/><rect x="164" y="46" width="68" height="42" rx="8" fill="#fff" opacity=".8"/><path d="m174 77 13-12 11 6 18-16" stroke="#7057ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216" cy="55" r="3" fill="#35c8c0"/><path d="M71 126h158" stroke="#bdb2ff" stroke-width="2"/><rect x="82" y="105" width="19" height="21" rx="5" fill="#7057ff" opacity=".48"/><rect x="111" y="93" width="19" height="33" rx="5" fill="#7057ff" opacity=".7"/><rect x="140" y="78" width="19" height="48" rx="5" fill="#7057ff"/><circle cx="221" cy="111" r="15" fill="#35c8c0"/><path d="M221 101v20m-6-15c0-5 12-5 12 0s-12 3-12 8 12 5 12 0" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="252" cy="47" r="5" fill="#35c8c0" opacity=".8"/></svg><span class="industry-visual-label">ALPHEX / FINANCE</span></div><span class="industry-kicker">KNOWLEDGE &amp; SERVICE WORKFLOWS</span><h3>Financial services</h3><p>Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p></article>
-          <article class="industry-card" data-aos="fade-up" data-aos-delay="60"><div class="industry-visual industry-visual-health" aria-hidden="true"><span class="industry-orbit"></span><svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="health industry illustration"><circle cx="155" cy="86" r="70" fill="#fff" opacity=".34"/><rect x="61" y="30" width="178" height="119" rx="16" fill="#fff" stroke="#fff"/><rect x="77" y="47" width="43" height="43" rx="13" fill="#fff"/><path d="M98.5 57v23m-11.5-11.5h23" stroke="#257c70" stroke-width="5" stroke-linecap="round"/><path d="M137 57h78m-78 12h52" stroke="#257c70" stroke-width="4" stroke-linecap="round" opacity=".45"/><rect x="78" y="104" width="144" height="28" rx="9" fill="#fff" opacity=".78"/><circle cx="95" cy="118" r="6" fill="#257c70"/><path d="M109 115h64m-64 7h46" stroke="#257c70" stroke-width="3" stroke-linecap="round" opacity=".5"/><path d="M202 97c0-7 10-7 10 0v7h-10v-7Z" fill="#2e9e8c" opacity=".8"/><rect x="198" y="103" width="18" height="14" rx="4" fill="#2e9e8c" opacity=".8"/><path d="M204 109h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="245" cy="45" r="8" fill="#257c70" opacity=".35"/><circle cx="55" cy="124" r="5" fill="#2e9e8c" opacity=".35"/></svg><span class="industry-visual-label">ALPHEX / HEALTH</span></div><span class="industry-kicker">ADMINISTRATIVE SUPPORT</span><h3>Healthcare</h3><p>Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters.</p></article>
-          <article class="industry-card" data-aos="fade-up" data-aos-delay="120"><div class="industry-visual industry-visual-tech" aria-hidden="true"><span class="industry-orbit"></span><svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="tech industry illustration"><circle cx="153" cy="85" r="74" fill="#fff" opacity=".3"/><rect x="48" y="29" width="204" height="118" rx="16" fill="#fff" stroke="#fff"/><path d="M48 50h204" stroke="#bdb2ff"/><circle cx="64" cy="40" r="3" fill="#35c8c0"/><circle cx="75" cy="40" r="3" fill="#35c8c0"/><circle cx="86" cy="40" r="3" fill="#35c8c0"/><rect x="65" y="64" width="57" height="65" rx="9" fill="#fff" opacity=".7"/><circle cx="93" cy="81" r="10" fill="#7057ff" opacity=".2"/><path d="M78 103h31m-31 9h23" stroke="#7057ff" stroke-width="3" stroke-linecap="round" opacity=".5"/><rect x="137" y="64" width="98" height="65" rx="9" fill="#fff" opacity=".8"/><path d="M150 113v-13l17-11 15 7 23-20" stroke="#7057ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="205" cy="76" r="5" fill="#7057ff"/><path d="m201 76 3 3 6-7" stroke="#fff" stroke-width="1.5"/><rect x="157" y="137" width="84" height="17" rx="8" fill="#7057ff" opacity=".9"/><circle cx="177" cy="145.5" r="3" fill="#fff"/><path d="M185 145h39" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg><span class="industry-visual-label">ALPHEX / TECH</span></div><span class="industry-kicker">PRODUCT &amp; CUSTOMER EXPERIENCE</span><h3>SaaS &amp; technology</h3><p>Connect product documentation and support knowledge so customers and employees can get useful, consistent answers.</p></article>
-          <article class="industry-card" data-aos="fade-up" data-aos-delay="180"><div class="industry-visual industry-visual-professional" aria-hidden="true"><span class="industry-orbit"></span><svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="professional industry illustration"><circle cx="154" cy="86" r="73" fill="#fff" opacity=".28"/><rect x="53" y="35" width="190" height="112" rx="16" fill="#fff" stroke="#fff"/><rect x="69" y="52" width="72" height="78" rx="9" fill="#fff" opacity=".85"/><path d="M83 69h44M83 79h34M83 89h39" stroke="#e2dac4" stroke-width="3" stroke-linecap="round" opacity=".55"/><rect x="83" y="103" width="38" height="17" rx="5" fill="#f7f0db"/><path d="m93 112 6 5 12-13" stroke="#625a46" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="155" y="52" width="70" height="49" rx="10" fill="#fff" opacity=".82"/><path d="M171 68h37m-37 10h27" stroke="#e2dac4" stroke-width="3" stroke-linecap="round" opacity=".5"/><circle cx="201" cy="112" r="24" fill="#625a46"/><circle cx="201" cy="108" r="7" fill="#fff" opacity=".95"/><path d="M188 126c2-8 8-12 13-12s11 4 13 12" fill="#fff" opacity=".95"/><circle cx="223" cy="120" r="11" fill="#8b8575"/><path d="m218 120 3 3 6-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="56" cy="48" r="5" fill="#625a46" opacity=".4"/></svg><span class="industry-visual-label">ALPHEX / PROFESSIONAL</span></div><span class="industry-kicker">EXPERTISE &amp; REPEATABLE DELIVERY</span><h3>Professional services</h3><p>Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop.</p></article>
-          <article class="industry-card" data-aos="fade-up" data-aos-delay="60"><div class="industry-visual industry-visual-commerce" aria-hidden="true"><span class="industry-orbit"></span><svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="commerce industry illustration"><circle cx="155" cy="87" r="74" fill="#fff" opacity=".3"/><rect x="54" y="30" width="192" height="116" rx="16" fill="#fff" stroke="#fff"/><rect x="69" y="47" width="66" height="82" rx="9" fill="#fff" opacity=".78"/><rect x="80" y="59" width="44" height="34" rx="6" fill="#f1f0ed"/><path d="M90 82V70a12 12 0 0 1 24 0v12" stroke="#e2dac4" stroke-width="2.5"/><path d="M81 104h40m-40 8h29" stroke="#625a46" stroke-width="3" stroke-linecap="round" opacity=".45"/><path d="M157 64h64l-6 63h-52l-6-63Z" fill="#625a46"/><path d="M174 67v-9a15 15 0 0 1 30 0v9" stroke="#fff" stroke-width="3"/><path d="m174 96 11 11 21-24" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="224" cy="46" r="13" fill="#8b8575"/><path d="M220 46h8m-4-4v8" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="70" cy="134" r="5" fill="#8b8575"/></svg><span class="industry-visual-label">ALPHEX / COMMERCE</span></div><span class="industry-kicker">COMMERCE &amp; CUSTOMER OPERATIONS</span><h3>E-commerce</h3><p>Support shoppers and service teams with product knowledge and routine order-related information across the customer journey.</p></article>
-          <article class="industry-card" data-aos="fade-up" data-aos-delay="120"><div class="industry-visual industry-visual-growth" aria-hidden="true"><span class="industry-orbit"></span><svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="growth industry illustration"><circle cx="155" cy="87" r="74" fill="#fff" opacity=".3"/><rect x="51" y="29" width="198" height="120" rx="16" fill="#fff" stroke="#fff"/><path d="M73 125h155" stroke="#257c70" stroke-width="2" opacity=".6"/><rect x="81" y="99" width="24" height="26" rx="6" fill="#257c70" opacity=".55"/><rect x="119" y="83" width="24" height="42" rx="6" fill="#257c70" opacity=".75"/><rect x="157" y="65" width="24" height="60" rx="6" fill="#257c70"/><rect x="195" y="47" width="24" height="78" rx="6" fill="#257c70"/><path d="m80 82 37-19 28 8 48-39" stroke="#257c70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M181 32h14v14" stroke="#257c70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="117" cy="63" r="4" fill="#fff" stroke="#257c70" stroke-width="2"/><circle cx="145" cy="71" r="4" fill="#fff" stroke="#257c70" stroke-width="2"/><circle cx="193" cy="32" r="4" fill="#fff" stroke="#257c70" stroke-width="2"/><rect x="72" y="43" width="38" height="16" rx="8" fill="#fff" opacity=".72"/><path d="M80 51h21" stroke="#257c70" stroke-width="2" stroke-linecap="round"/></svg><span class="industry-visual-label">ALPHEX / GROWTH</span></div><span class="industry-kicker">CROSS-TEAM OPERATIONS</span><h3>Growing businesses</h3><p>Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows.</p></article>
+        <div class="industries-track">
+          <article class="process-step industry-card" data-aos="fade-up">
+            <span class="industry-kicker">ALPHEX / FINANCE</span>
+            <h3>Financial services</h3>
+            <p>Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p>
+            <span class="process-tag">KNOWLEDGE &amp; SERVICE WORKFLOWS</span>
+          </article>
+          <article class="process-step industry-card" data-aos="fade-up" data-aos-delay="60">
+            <span class="industry-kicker">ALPHEX / HEALTH</span>
+            <h3>Healthcare</h3>
+            <p>Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters.</p>
+            <span class="process-tag">ADMINISTRATIVE SUPPORT</span>
+          </article>
+          <article class="process-step industry-card" data-aos="fade-up" data-aos-delay="120">
+            <span class="industry-kicker">ALPHEX / TECH</span>
+            <h3>SaaS &amp; technology</h3>
+            <p>Connect product documentation and support knowledge so customers and employees can get useful, consistent answers.</p>
+            <span class="process-tag">PRODUCT &amp; CUSTOMER EXPERIENCE</span>
+          </article>
+          <article class="process-step industry-card" data-aos="fade-up" data-aos-delay="180">
+            <span class="industry-kicker">ALPHEX / PROFESSIONAL</span>
+            <h3>Professional services</h3>
+            <p>Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop.</p>
+            <span class="process-tag">EXPERTISE &amp; REPEATABLE DELIVERY</span>
+          </article>
+          <article class="process-step industry-card" data-aos="fade-up" data-aos-delay="60">
+            <span class="industry-kicker">ALPHEX / COMMERCE</span>
+            <h3>E-commerce</h3>
+            <p>Support shoppers and service teams with product knowledge and routine order-related information across the customer journey.</p>
+            <span class="process-tag">COMMERCE &amp; CUSTOMER OPERATIONS</span>
+          </article>
+          <article class="process-step industry-card" data-aos="fade-up" data-aos-delay="120">
+            <span class="industry-kicker">ALPHEX / GROWTH</span>
+            <h3>Growing businesses</h3>
+            <p>Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows.</p>
+            <span class="process-tag">CROSS-TEAM OPERATIONS</span>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="section demo-section section-dark" id="demo">
       <div class="container">
-        <div class="section-heading section-heading-dark" data-aos="fade-up"><div><div class="eyebrow"><span>02</span> / See the thinking</div><h2>From a question<br>to a <span class="gradient-text">useful answer.</span></h2></div><p>A small preview of how an AI assistant can retrieve relevant context, respond clearly, and pass work to a person when it should.</p></div>
+        <div class="section-heading section-heading-dark" data-aos="fade-up"><div><div class="eyebrow"><span>03</span> / See the thinking</div><h2>From a question<br>to a <span class="gradient-text">useful answer.</span></h2></div><p>A small preview of how an AI assistant can retrieve relevant context, respond clearly, and pass work to a person when it should.</p></div>
         <div class="demo-layout" data-aos="fade-up">
           <div class="demo-console">
             <div class="console-header"><div class="console-title"><span class="assistant-glyph"><i></i><i></i><i></i></span><span>Alphex assistant</span></div><span class="console-status"><i></i> Demo environment</span></div>
@@ -2588,7 +2746,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
 
     <section class="section section-light process-section" id="approach">
       <div class="container">
-        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>03</span> / Approach</div><h2>Small steps.<br><span class="muted-heading">Clear outcomes.</span></h2></div><p>Good AI projects are built through shared understanding, deliberate testing, and iteration. Here’s how we get there.</p></div>
+        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>04</span> / Approach</div><h2>Small steps.<br><span class="muted-heading">Clear outcomes.</span></h2></div><p>Good AI projects are built through shared understanding, deliberate testing, and iteration. Here’s how we get there.</p></div>
         <div class="process-track">
           <div class="process-line" aria-hidden="true"><span></span></div>
           <article class="process-step" data-process-step><span class="process-number">01</span><div class="process-icon">⌕</div><h3>Understand</h3><p>Map the workflow, define the problem, and agree on what a useful outcome looks like.</p><span class="process-tag">DISCOVER</span></article>
@@ -2600,7 +2758,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
 
     <section class="section architecture-section section-muted" id="architecture">
       <div class="container">
-        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>04</span> / Architecture</div><h2>A connected system.<br><span class="muted-heading">Not a disconnected toolset.</span></h2></div><p>We bring context, action, and evaluation together so each layer has a clear job and a path to improvement.</p></div>
+        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>05</span> / Architecture</div><h2>A connected system.<br><span class="muted-heading">Not a disconnected toolset.</span></h2></div><p>We bring context, action, and evaluation together so each layer has a clear job and a path to improvement.</p></div>
         <div class="architecture-diagram" data-aos="fade-up">
           <div class="architecture-column"><span class="architecture-index">01</span><div class="architecture-symbol symbol-understand">⌕</div><div><span class="architecture-kicker">UNDERSTAND</span><h3>Context</h3><p>Knowledge, instructions, and business rules.</p></div></div>
           <div class="architecture-connector"><span></span><i>→</i></div>
@@ -2614,7 +2772,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
 
     <section class="section section-light trust-section" id="trust">
       <div class="container trust-layout">
-        <div class="trust-intro" data-aos="fade-up"><div class="eyebrow"><span>05</span> / Trust & safety</div><h2>Capability matters.<br><span class="muted-heading">Control matters more.</span></h2><p>Responsible AI starts with clear boundaries. We consider grounding, testing, and human oversight as part of the design, not an afterthought.</p><a class="text-link" href="/contact.html">Talk about your requirements <span>↗</span></a></div>
+        <div class="trust-intro" data-aos="fade-up"><div class="eyebrow"><span>06</span> / Trust & safety</div><h2>Capability matters.<br><span class="muted-heading">Control matters more.</span></h2><p>Responsible AI starts with clear boundaries. We consider grounding, testing, and human oversight as part of the design, not an afterthought.</p><a class="text-link" href="/contact.html">Talk about your requirements <span>↗</span></a></div>
         <div class="trust-list">
           <article class="trust-item" data-aos="fade-up"><span class="trust-check">✓</span><div><h3>Grounded answers</h3><p>Use approved sources and make the basis for a response easier to inspect.</p></div><span class="trust-item-index">01</span></article>
           <article class="trust-item" data-aos="fade-up" data-aos-delay="60"><span class="trust-check">↗</span><div><h3>Human handoff</h3><p>Define when the system should ask for confirmation or bring in a person.</p></div><span class="trust-item-index">02</span></article>
@@ -2627,7 +2785,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
 
     <section class="section section-dark products-section" id="products">
       <div class="container">
-        <div class="section-heading section-heading-dark" data-aos="fade-up"><div><div class="eyebrow"><span>06</span> / Our products</div><h2>Building for the<br><span class="gradient-text">AI ecosystem.</span></h2></div><p>Alongside client solutions, we develop focused products that help improve AI quality and connect people with opportunities.</p></div>
+        <div class="section-heading section-heading-dark" data-aos="fade-up"><div><div class="eyebrow"><span>07</span> / Our products</div><h2>Building for the<br><span class="gradient-text">AI ecosystem.</span></h2></div><p>Alongside client solutions, we develop focused products that help improve AI quality and connect people with opportunities.</p></div>
         <div class="product-grid">
           <article class="product-panel product-evalloop" data-aos="fade-up"><div class="product-panel-top"><span class="product-label">PRODUCT / 01</span><span class="product-arrow">↗</span></div><div class="product-art evaluation-art judge-workspace-art" aria-hidden="true">
   <div class="judge-workspace">
@@ -2666,7 +2824,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
 
     <section class="section section-light pricing-section" id="pricing">
       <div class="container">
-        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>07</span> / Pricing</div><h2>Start focused.<br><span class="muted-heading">Scale with confidence.</span></h2></div><p>Each project is scoped around the workflow, integrations, and quality requirements. These starting points help frame the conversation.</p></div>
+        <div class="section-heading" data-aos="fade-up"><div><div class="eyebrow"><span>08</span> / Pricing</div><h2>Start focused.<br><span class="muted-heading">Scale with confidence.</span></h2></div><p>Each project is scoped around the workflow, integrations, and quality requirements. These starting points help frame the conversation.</p></div>
         <div class="pricing-grid">
           <article class="price-card" data-aos="fade-up"><span class="price-tier">01 / STARTER</span><h3>Essential answers</h3><p>A focused assistant for common questions and lead capture.</p><div class="price-amount">₹8,000 <span>/ from</span></div><ul><li>Single-channel assistant</li><li>FAQ and approved content</li><li>Basic lead capture</li></ul><a class="button button-outline" href="/contact.html">Discuss scope <span>↗</span></a></article>
           <article class="price-card price-card-featured" data-aos="fade-up" data-aos-delay="80"><div class="popular-label">MOST FLEXIBLE</div><span class="price-tier">02 / GROWTH</span><h3>Grounded support</h3><p>Context-aware answers connected to your knowledge and workflow.</p><div class="price-amount">₹22,000 <span>/ from</span></div><ul><li>Assistant + knowledge retrieval</li><li>Source-aware responses</li><li>Human handoff planning</li></ul><a class="button button-primary" href="/contact.html">Discuss scope <span>↗</span></a></article>
@@ -2678,7 +2836,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
 
     <section class="section section-light faq-section" id="faq">
       <div class="container faq-layout">
-        <div class="faq-intro" data-aos="fade-up"><div class="eyebrow"><span>08</span> / FAQ</div><h2>Good questions.<br><span class="muted-heading">Clear answers.</span></h2><p>Have a question about a use case or integration? Tell us what you’re trying to solve.</p><a class="text-link" href="/contact.html">Talk to Alphex <span>↗</span></a></div>
+        <div class="faq-intro" data-aos="fade-up"><div class="eyebrow"><span>09</span> / FAQ</div><h2>Good questions.<br><span class="muted-heading">Clear answers.</span></h2><p>Have a question about a use case or integration? Tell us what you’re trying to solve.</p><a class="text-link" href="/contact.html">Talk to Alphex <span>↗</span></a></div>
         <div class="faq-list" data-aos="fade-up">
           <details open><summary>Will an AI assistant make things up?<span></span></summary><p>No system can guarantee perfect answers. We can ground responses in approved sources, test edge cases, define uncertainty behavior, and route sensitive situations to a person.</p></details>
           <details><summary>Can it work with our existing tools?<span></span></summary><p>Usually, depending on the tools and their available integrations. We review your current workflow and scope the connections around the task.</p></details>
@@ -2690,7 +2848,7 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
     </section>
 
     <section class="final-cta section-dark">
-      <div class="final-cta-glow" aria-hidden="true"></div><div class="container final-cta-inner" data-aos="fade-up"><div class="eyebrow"><span>09</span> / Start a conversation</div><h2>Bring us the problem.<br><span class="gradient-text">Let's build the right thing.</span></h2><p>Tell us where your team loses time, where information gets stuck, or what you want AI to make possible.</p><a class="button button-primary magnetic" href="/contact.html">Discuss your project <span class="button-arrow" aria-hidden="true">↗</span></a></div>
+      <div class="final-cta-glow" aria-hidden="true"></div><div class="container final-cta-inner" data-aos="fade-up"><div class="eyebrow"><span>10</span> / Start a conversation</div><h2>Bring us the problem.<br><span class="gradient-text">Let's build the right thing.</span></h2><p>Tell us where your team loses time, where information gets stuck, or what you want AI to make possible.</p><a class="button button-primary magnetic" href="/contact.html">Discuss your project <span class="button-arrow" aria-hidden="true">↗</span></a></div>
     </section>
   </main>
 
@@ -3605,121 +3763,5 @@ body:not(.authenticated) .topbar .nav-actions #authProfile { display:none!import
   document.addEventListener('visibilitychange',()=>{if(document.hidden) stop(); else if(card.getBoundingClientRect().bottom>0 && card.getBoundingClientRect().top<innerHeight) start();});
 })();
 </script>
-
-<style id="alphex-responsive-patch">
-/* Final responsive pass: keeps every major section inside the viewport. */
-html, body { max-width:100%; overflow-x:hidden; }
-body { min-width:0; }
-img, svg, video, canvas, iframe { max-width:100%; }
-button, a { touch-action:manipulation; }
-
-@media (max-width: 800px) {
-  .container { width: min(100% - 36px, var(--container)); }
-  .section { padding: 76px 0; }
-  .section-heading { grid-template-columns:1fr; gap:18px; margin-bottom:32px; }
-  .section-heading h2, .trust-intro h2, .faq-intro h2 { font-size:clamp(36px, 9vw, 54px); }
-  .section-heading > p { max-width: none; font-size:13px; }
-
-  /* Header */
-  .topbar .shell { width:calc(100% - 28px)!important; }
-  .topbar .wordmark { margin-left:0!important; font-size:20px!important; }
-  .topbar .nav { min-width:0; }
-  .topbar .mobile-menu { flex:0 0 auto; width:42px; height:42px; border:1px solid rgba(255,255,255,.35); border-radius:10px; }
-
-  /* Hero */
-  #top.hero { min-height:0; padding:48px 18px 34px!important; }
-  #top.hero .hero-ref-layout { width:100%; max-width:680px; grid-template-columns:1fr; gap:24px; }
-  #top.hero .hero-ref-copy { max-width:100%; margin:0 auto; transform:none!important; text-align:center; }
-  #top.hero .hero-ref-kicker { transform:none!important; margin-bottom:18px; }
-  #top.hero h1 { max-width:100%; font-size:clamp(40px, 11vw, 58px)!important; line-height:1.04!important; text-align:center!important; overflow-wrap:anywhere; }
-  #top.hero .hero-ref-description { max-width:580px; margin:20px auto 0; font-size:14px; line-height:1.7; text-align:center; }
-  #top.hero .hero-ref-benefits { width:100%; justify-content:center; flex-wrap:wrap; gap:14px 18px; margin-top:26px; }
-  #top.hero .hero-ref-benefit { flex:1 1 160px; min-width:145px; }
-  #top.hero .hero-ref-benefit + .hero-ref-benefit { padding-left:0; border-left:0; }
-  #top.hero .hero-ref-benefit b { font-size:10px; }
-  #top.hero .hero-ref-benefit small { font-size:9px; }
-  #top.hero .hero-ref-visual { width:100%; height:330px; margin:0 auto; overflow:visible; }
-  #top.hero .hero-ref-dashboard { width:min(100%,575px); max-width:calc(100% - 28px); height:238px; grid-template-columns:76px minmax(0,1fr); }
-  #top.hero .hero-ref-float { max-width:44%; min-width:0; gap:7px; padding:8px 9px; }
-  #top.hero .hero-ref-float b { font-size:8px; white-space:normal; }
-  #top.hero .hero-ref-float small { font-size:6px; white-space:normal; }
-  #top.hero .hero-ref-float-data { left:0; top:16px; }
-  #top.hero .hero-ref-float-flow { right:0; top:51px; }
-  #top.hero .hero-ref-float-answer { right:0; bottom:6px; }
-
-  /* Content grids */
-  .capability-grid, .product-grid, .pricing-grid, .trust-grid, .architecture-grid { grid-template-columns:1fr!important; }
-  .capability-large { grid-column:auto; grid-template-columns:1fr; }
-  .capability-card, .knowledge-card, .automation-card, .quality-card { min-height:0; }
-  .capability-copy { padding:24px 22px 22px; }
-  .capability-copy h3 { margin:22px 0 11px; font-size:clamp(27px, 7vw, 36px); }
-  .capability-copy p { max-width:none; font-size:12px; }
-  .text-link { margin-top:22px; padding-top:0; }
-  .capability-art { min-height:250px; }
-  .knowledge-art, .automation-art, .quality-art { min-height:245px; }
-  .mini-chat-window { width:min(88%,420px); }
-
-  .industries-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; gap:12px; }
-  .industry-card { min-width:0; }
-  .industry-card h3 { font-size:22px; }
-  .industry-card p { font-size:11px; }
-
-  #demo .section-heading > p { max-width:none; }
-  #demo .demo-layout { grid-template-columns:1fr!important; }
-  #demo .demo-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  #process .process-track, #approach .process-track { grid-template-columns:repeat(2,minmax(0,1fr)); }
-
-  .section-dark .section-heading, .products-section .section-heading { grid-template-columns:1fr; }
-  .product-panel { min-width:0; }
-  .product-panel-copy { padding:22px; }
-  .product-panel-copy h3 { font-size:32px; }
-  #products .jobs-window { width:94%; }
-
-  .faq-layout, .trust-layout, .final-cta-inner { grid-template-columns:1fr!important; gap:28px; }
-  .faq-list, .faq-intro { min-width:0; }
-  .price-card { padding:26px 22px; }
-  .footer-top { grid-template-columns:1fr!important; gap:34px; }
-  .footer-columns { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 18px; }
-  .footer-bottom { flex-wrap:wrap; gap:10px 18px; }
-}
-
-@media (max-width: 560px) {
-  .container { width:calc(100% - 32px); }
-  .section { padding:60px 0; }
-  .section-heading { margin-bottom:26px; }
-  .section-heading h2, .trust-intro h2, .faq-intro h2 { font-size:clamp(34px, 10vw, 46px); }
-
-  #top.hero { padding:40px 16px 30px!important; }
-  #top.hero .hero-ref-benefits { display:grid; grid-template-columns:1fr 1fr; gap:14px 10px; max-width:390px; text-align:left; }
-  #top.hero .hero-ref-benefit { min-width:0; }
-  #top.hero .hero-ref-benefit:last-child { grid-column:1/-1; }
-  #top.hero .hero-ref-visual { height:300px; }
-  #top.hero .hero-ref-dashboard { max-width:calc(100% - 12px); height:220px; grid-template-columns:64px minmax(0,1fr); }
-  #top.hero .hero-ref-sidebar { padding:12px 5px; }
-  #top.hero .hero-ref-side-item { font-size:7px; gap:3px; padding:6px 2px; }
-  #top.hero .hero-ref-chat { padding:52px 9px 10px; }
-  #top.hero .hero-ref-tools span { font-size:6px; padding:4px 5px; }
-  #top.hero .hero-ref-float { max-width:47%; }
-  #top.hero .hero-ref-float-data { left:-3px; }
-  #top.hero .hero-ref-float-flow, #top.hero .hero-ref-float-answer { right:-3px; }
-
-  .industries-grid { grid-template-columns:1fr!important; }
-  .industry-card { padding:0 18px 20px; }
-  .industry-visual { height:155px; margin:0 -18px 18px; }
-  .industry-card h3 { font-size:24px; }
-  .industry-card p { font-size:12px; }
-  #demo .demo-steps, #process .process-track, #approach .process-track { grid-template-columns:1fr; }
-  #demo .demo-step, #demo .demo-step:not(.is-active) { grid-template-columns:30px minmax(0,1fr) auto; }
-  .footer-columns { grid-template-columns:1fr 1fr; }
-  .footer-bottom { align-items:flex-start; flex-direction:column; }
-
-  /* Prevent long labels, prices, and action rows from creating a horizontal scroll. */
-  .price-amount, .button, .product-panel-copy .button { max-width:100%; }
-  .price-amount { font-size:30px; }
-  .faq-list details summary { gap:12px; }
-  .faq-list details summary span { min-width:0; }
-}
-</style>
-
 </body>
 </html>
