@@ -1093,3 +1093,8 @@ body:not(.dark-theme) .footer-bottom{border-color:var(--border)}
   .mobile-panel-inner{width:calc(100% - 28px)}
   .mobile-panel a{font-size:17px}
 }
+
+/* Match the index page's desktop wordmark alignment; no other UI changes. */
+@media (min-width:801px) {
+  .topbar .wordmark { margin-left:24px!important; }
+}
