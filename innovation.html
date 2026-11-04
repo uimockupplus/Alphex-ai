@@ -413,7 +413,7 @@ body{padding-top:80px}
   .topbar .nav-actions .contact-link{min-width:92px;padding:0 16px}
   .topbar .nav-actions #loginNavButton{min-width:104px;padding:0 18px}
 }
-@media(max-width:800px){
+@media(max-width:1080px){
   body{padding-top:68px}
   .topbar .shell{width:calc(100% - 28px)}
   .topbar .nav{height:68px}
@@ -423,6 +423,21 @@ body{padding-top:80px}
   .topbar .mobile-menu span{background:#fff}
   .mobile-panel{top:68px;max-height:calc(100vh - 68px);overflow:auto;background:rgba(8,8,13,.98);border-color:rgba(255,255,255,.15)}
   .mobile-panel a{color:#f6f5fb;border-color:rgba(255,255,255,.13)}
+}
+@media(max-width:800px){
+  .final-glow{width:min(800px,100vw);height:min(600px,150vw)}
+}
+@media(max-width:560px){
+  .final-cta h2{font-size:clamp(34px,9.5vw,42px);line-height:1.06;letter-spacing:-.08em}
+  .final-cta .container{width:calc(100% - 32px)}
+}
+@media(max-width:360px){
+  .final-cta h2{font-size:34px}
+  .final-cta .container{width:calc(100% - 28px)}
+  .who-card{padding:20px}
+  .who-head h3{font-size:23px}
+  .who-category{padding:12px}
+  .faq-list summary{gap:12px;font-size:13px}
 }
   </style>
 </head>
