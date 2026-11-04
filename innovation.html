@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="The Alphex AI Innovation & Collaboration Program gives selected innovators a free project subdomain, technical guidance, collaboration support and real visibility.">
-  <meta name="theme-color" content="#050509">
+  <meta name="theme-color" content="#08090d">
   <title>Innovation &amp; Collaboration Program — Alphex AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" href="/assets/favicon.png">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-:root{color-scheme:dark;--bg:#050509;--surface:#11131c;--paper:#f7f7f5;--muted-bg:#efeff5;--ink:#101010;--text:#f4f4f7;--accent:#7057ff;--accent-dark:#5540d8;--cyan:#35c8c0;--lavender:#eeeaff;--line-light:#dedee3;--sans:"Inter",Arial,sans-serif;--mono:"DM Mono",monospace;--container:1160px;--ease:cubic-bezier(.2,.75,.25,1)}
+:root{color-scheme:dark;--bg:#08090d;--surface:#11131c;--paper:#f7f7f5;--muted-bg:#efeff5;--ink:#101010;--text:#f4f4f7;--accent:#7057ff;--accent-dark:#5540d8;--cyan:#35c8c0;--lavender:#eeeaff;--line-light:#dedee3;--sans:"Inter",Arial,sans-serif;--mono:"DM Mono",monospace;--container:1160px;--ease:cubic-bezier(.2,.75,.25,1)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
 html,body{max-width:100%;overflow-x:hidden}
-body{margin:0;padding-top:80px;background:var(--paper);color:var(--ink);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+body{margin:0;padding-top:80px;background:var(--bg);color:var(--text);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit}
 h1,h2,h3,h4,p{margin-top:0}
 h1,h2,h3,h4{font-weight:300;letter-spacing:-.065em}
@@ -191,14 +191,20 @@ body.authenticated .topbar #authProfile{display:inline-flex}
 
 /* Who / what */
 .who-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.who-card{padding:32px;border:1px solid var(--line-light);border-radius:20px;background:#fff}
+.who-card{padding:30px;border:1px solid #dedee3;border-radius:18px;background:#fff;box-shadow:0 8px 30px rgba(21,18,48,.035);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.who-card:hover{transform:translateY(-3px);border-color:#c8c1ff;box-shadow:0 18px 42px rgba(21,18,48,.075)}
 .who-card.tinted{background:#f1efff;border-color:#dcd6f7}
-.who-head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
-.who-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#5540d8;color:#fff;font-size:20px}
+.who-head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.who-heading-copy{min-width:0}
+.who-card-label{display:block;margin-bottom:6px;color:#7466c7;font:400 9px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.who-icon{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border:1px solid #e2ddfa;border-radius:12px;background:#eeeaff;color:#7057ff;font-size:20px}
 .who-head h3{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.06em;font-weight:400}
-.check-list{list-style:none;margin:0;padding:0;display:grid;gap:13px}
-.check-list li{position:relative;padding-left:32px;color:#33343f;font-size:13px;line-height:1.5}
-.check-list li::before{content:"✓";position:absolute;left:0;top:-1px;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#5540d8;color:#fff;font-size:11px}
+.who-groups{display:grid;gap:12px}
+.who-category{padding:15px 16px 16px;border:1px solid #e6e4ed;border-radius:13px;background:linear-gradient(135deg,#fff 0%,#fbfaff 100%);box-shadow:0 5px 18px rgba(35,28,85,.035)}
+.who-category-title{margin:0 0 12px;color:#6f62aa;font:500 10px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.check-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}
+.check-list li{position:relative;min-width:0;padding-left:27px;color:#33343f;font-size:12px;line-height:1.55}
+.check-list li::before{content:"✓";position:absolute;left:0;top:1px;display:grid;place-items:center;width:17px;height:17px;border:1px solid #e1dcf8;border-radius:50%;background:#eeeaff;color:#6755c2;font-size:9px}
 .open-banner{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:15px;padding:26px 30px;border-radius:18px;background:#151323;color:#fff}
 .open-banner h3{margin:0 0 5px;font-size:23px;font-weight:400;letter-spacing:-.05em}
 .open-banner p{color:#b1b2c0;font-size:13px;font-weight:300}
@@ -226,7 +232,7 @@ body.authenticated .topbar #authProfile{display:inline-flex}
 .cost-card p{max-width:720px;color:#696a75;font-size:13px;line-height:1.8;font-weight:300}
 .cost-card p+p{margin-top:12px}
 .apply-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:100px;align-items:start}
-.apply-list{display:grid;gap:10px}
+.apply-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
 .apply-item{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:12px;background:#eeeaff;color:#1c1b26;font-size:14px;font-weight:500}
 .apply-item:nth-child(even){background:#f6f4ff}
 .apply-item b{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:#5540d8;color:#fff;font:500 11px var(--mono)}
@@ -338,6 +344,8 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   .idea-card{min-height:0}.card-index{padding-top:22px}
   .offer-card{min-height:0;padding:24px}
   .who-card{padding:24px}
+  .who-category{padding:14px}
+  .who-category .check-list{grid-template-columns:1fr;gap:9px}
   .clear-item{grid-template-columns:32px 1fr;gap:10px}.clear-idx{display:none}
   .apply-cta{padding:24px}.apply-cta h3{font-size:26px}
   .apply-cta .pill{width:100%}
@@ -348,6 +356,73 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none}
+}
+
+/* Responsive/accessibility refinements: preserve the existing visual system. */
+.mobile-panel{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.mobile-menu::before{content:"";position:absolute;inset:-4px}
+.section-heading>div,.split-intro,.hero-copy{min-width:0}
+.apply-item{min-width:0}
+.apply-item b{flex:0 0 30px}
+@media(max-width:800px){
+  .section-heading{align-items:start}
+  .section-heading>p{max-width:620px}
+  .footer-group{min-width:0}
+}
+@media(max-width:560px){
+  .section-heading{gap:14px}
+  .section-heading>p{font-size:13px}
+  .hero-visual{max-width:100%;overflow:visible}
+  .apply-item{align-items:flex-start;line-height:1.5}
+}
+@media(max-width:360px){
+  .container,.shell{width:calc(100% - 28px)}
+  .hero{padding-inline:14px}
+  .hero-benefits{grid-template-columns:1fr;max-width:260px}
+  .hero-benefit:last-child{grid-column:auto}
+  .hero-visual{height:340px}
+  .float-card{max-width:calc(50% - 8px)}
+  .float-card small{white-space:normal}
+  .skeleton{grid-template-columns:1fr}
+  .skeleton div{padding:7px 9px}
+  .browser-foot{font-size:7px}
+  .footer-columns{grid-template-columns:1fr 1fr}
+}
+
+/* Match the landing page's final dark navbar treatment. */
+.topbar{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:1000!important;background:#050509!important;color:#f7f6ff!important;border-bottom:1px solid rgba(255,255,255,.13)!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body{padding-top:80px}
+.topbar .shell{width:min(1390px,calc(100% - 64px))}
+.topbar .nav{position:relative;height:80px;gap:26px}
+.topbar .wordmark,.topbar .wordmark:hover{flex:0 0 auto;color:#f7f6ff!important;font:500 22px/1 var(--sans)!important;letter-spacing:-.085em!important}
+@media(min-width:801px){.topbar .wordmark{margin-left:24px}}
+.topbar .nav-links{position:absolute;left:50%;top:50%;display:flex;align-items:center;justify-content:center;gap:30px;margin:0;padding:0;transform:translate(-50%,-50%)}
+.topbar .nav-links a{color:#f7f6ff!important;font:500 13px/1 var(--sans);text-decoration:none;white-space:nowrap}
+.topbar .nav-links a:hover,.topbar .nav-links a.is-current{color:#b9a8ff!important}
+.topbar .nav-actions{display:flex;align-items:center;gap:13px;margin-left:auto}
+.topbar .nav-actions .contact-link{display:inline-flex;align-items:center;justify-content:center;min-width:112px;min-height:48px;padding:0 23px;border:1px solid rgba(255,255,255,.48);border-radius:999px;background:transparent;color:#f7f6ff;font:500 13px/1 var(--sans);box-shadow:none}
+.topbar .nav-actions .contact-link:hover{border-color:#a18bff;background:rgba(255,255,255,.06);color:#fff}
+.topbar .nav-actions #loginNavButton{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-width:122px;min-height:48px;padding:0 24px;border:1px solid #6047ed;border-radius:999px;background:#6047ed;color:#fff;font:500 13px/1 var(--sans);box-shadow:none}
+.topbar .nav-actions #loginNavButton:hover{border-color:#725cff;background:#725cff;color:#fff}
+@media(max-width:900px) and (min-width:801px){
+  .topbar .shell{width:calc(100% - 40px)}
+  .topbar .nav{gap:18px}
+  .topbar .nav-links{gap:18px}
+  .topbar .nav-links a{font-size:12px}
+  .topbar .nav-actions{gap:8px}
+  .topbar .nav-actions .contact-link{min-width:92px;padding:0 16px}
+  .topbar .nav-actions #loginNavButton{min-width:104px;padding:0 18px}
+}
+@media(max-width:800px){
+  body{padding-top:68px}
+  .topbar .shell{width:calc(100% - 28px)}
+  .topbar .nav{height:68px}
+  .topbar .wordmark{margin-left:0;font-size:19px!important}
+  .topbar .nav-links,.topbar .nav-actions .contact-link,.topbar .nav-actions #loginNavButton{display:none}
+  .topbar .mobile-menu{display:block;width:40px;height:40px;border:1px solid rgba(255,255,255,.45);border-radius:50%;background:rgba(255,255,255,.05)}
+  .topbar .mobile-menu span{background:#fff}
+  .mobile-panel{top:68px;max-height:calc(100vh - 68px);overflow:auto;background:rgba(8,8,13,.98);border-color:rgba(255,255,255,.15)}
+  .mobile-panel a{color:#f6f5fb;border-color:rgba(255,255,255,.13)}
 }
   </style>
 </head>
@@ -375,22 +450,22 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
           <button class="profile-signout" id="profileSignout" type="button">Sign out</button>
         </div>
       </div>
-      <button class="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+      <button class="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobilePanel"><span></span><span></span></button>
     </div>
   </div>
 </header>
-<div class="mobile-panel" aria-hidden="true">
+<nav class="mobile-panel" id="mobilePanel" aria-label="Mobile navigation" aria-hidden="true">
   <div class="mobile-panel-inner">
     <a href="/capabilities.html">Capabilities</a>
     <a href="/products.html">Products</a>
-    <a href="/innovation.html">Innovation <span>→</span></a>
     <a href="/process.html">Process</a>
+    <a href="/innovation.html" aria-current="page">Innovation Program <span>→</span></a>
     <a href="/pricing.html">Pricing</a>
     <a href="#faq">FAQ</a>
     <a href="login.html" id="mobileLoginLink">Sign in <span>↗</span></a>
     <a href="/contact.html">Contact us <span>↗</span></a>
   </div>
-</div>
+</nav>
 
 <main id="main">
 
@@ -417,7 +492,7 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
         </div>
       </div>
 
-      <div class="hero-visual" aria-label="Illustration of a project hosted on an Alphex AI subdomain">
+      <div class="hero-visual" role="img" aria-label="Illustration of a project hosted on an Alphex AI subdomain">
         <div class="orbit orbit-1" aria-hidden="true"></div>
         <div class="orbit orbit-2" aria-hidden="true"></div>
         <div class="dots dots-a" aria-hidden="true"></div>
@@ -451,10 +526,10 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 02 WHAT WE OFFER -->
-  <section class="section section-muted" id="offer">
+  <section class="section section-muted" id="offer" aria-labelledby="offer-title">
     <div class="container">
       <div class="section-heading reveal">
-        <div><div class="eyebrow"><span>01</span> / The program</div><h2>What <span class="muted-heading">we offer</span></h2></div>
+        <div><div class="eyebrow"><span>01</span> / The program</div><h2 id="offer-title">What <span class="muted-heading">we offer</span></h2></div>
         <p>Through the Innovation &amp; Collaboration Program, we aim to provide selected innovators with the following support to bring their idea to life.</p>
       </div>
       <div class="offer-banner reveal"><span class="dot"></span> AT NO COST FOR SELECTED INNOVATIONS</div>
@@ -470,10 +545,10 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 03 PROCESS -->
-  <section class="section section-light" id="how">
+  <section class="section section-light" id="how" aria-labelledby="how-title">
     <div class="container">
       <div class="section-heading reveal">
-        <div><div class="eyebrow"><span>02</span> / How it works</div><h2>From a spark<br><span class="muted-heading">to a working project.</span></h2></div>
+        <div><div class="eyebrow"><span>02</span> / How it works</div><h2 id="how-title">From a spark<br><span class="muted-heading">to a working project.</span></h2></div>
         <p>A simple, transparent path. We start with a conversation about your idea and take it forward step by step.</p>
       </div>
       <div class="process-track">
@@ -487,24 +562,52 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 04 WHO & WHAT -->
-  <section class="section section-muted" id="who">
+  <section class="section section-light" id="who" aria-labelledby="who-title">
     <div class="container">
       <div class="section-heading reveal">
-        <div><div class="eyebrow"><span>03</span> / Who &amp; what</div><h2>Built for passionate<br><span class="muted-heading">builders and bold ideas.</span></h2></div>
+        <div><div class="eyebrow"><span>03</span> / Who &amp; what</div><h2 id="who-title">Built for passionate<br><span class="muted-heading">builders and bold ideas.</span></h2></div>
         <p>We’re particularly interested in connecting with independent developers, students, researchers, technology enthusiasts and aspiring founders. Our roots are in AI, but ideas from any technology domain are welcome.</p>
       </div>
       <div class="who-grid">
-        <article class="who-card tinted reveal">
-          <div class="who-head"><div class="who-icon" aria-hidden="true">♧</div><h3>Who can participate?</h3></div>
-          <ul class="check-list">
-            <li>AI/ML enthusiasts</li><li>Generative AI and Agentic AI developers</li><li>Full-stack and software developers</li><li>Students and recent graduates</li><li>Independent researchers</li><li>Startup enthusiasts and aspiring founders</li><li>Open-source contributors</li><li>Creative thinkers with innovative ideas</li>
-          </ul>
+        <article class="who-card reveal">
+          <div class="who-head"><div class="who-icon" aria-hidden="true">♧</div><div class="who-heading-copy"><span class="who-card-label">01 / Open to contributors</span><h3>Who can participate?</h3></div></div>
+          <div class="who-groups">
+            <section class="who-category" aria-labelledby="participant-builders">
+              <h4 class="who-category-title" id="participant-builders">Builders &amp; learners</h4>
+              <ul class="check-list">
+                <li>AI/ML enthusiasts</li><li>Generative AI and Agentic AI developers</li><li>Full-stack and software developers</li><li>Students and recent graduates</li>
+              </ul>
+            </section>
+            <section class="who-category" aria-labelledby="participant-community">
+              <h4 class="who-category-title" id="participant-community">Research &amp; community</h4>
+              <ul class="check-list">
+                <li>Independent researchers</li><li>Startup enthusiasts and aspiring founders</li><li>Open-source contributors</li><li>Creative thinkers with innovative ideas</li>
+              </ul>
+            </section>
+          </div>
         </article>
         <article class="who-card reveal">
-          <div class="who-head"><div class="who-icon" aria-hidden="true">💡</div><h3>What kind of innovations are we looking for?</h3></div>
-          <ul class="check-list">
-            <li>Artificial Intelligence and Machine Learning</li><li>Generative AI applications</li><li>AI agents and agentic systems</li><li>AI-powered productivity tools</li><li>Automation and intelligent workflows</li><li>SaaS platforms</li><li>Developer tools and utilities</li><li>Knowledge management systems</li><li>Innovative software applications</li><li>Experimental technology solutions</li>
-          </ul>
+          <div class="who-head"><div class="who-icon" aria-hidden="true">♧</div><div class="who-heading-copy"><span class="who-card-label">02 / Ideas we’re excited by</span><h3>What kind of innovations are we looking for?</h3></div></div>
+          <div class="who-groups">
+            <section class="who-category" aria-labelledby="innovation-ai">
+              <h4 class="who-category-title" id="innovation-ai">AI &amp; intelligent systems</h4>
+              <ul class="check-list">
+                <li>Artificial Intelligence and Machine Learning</li><li>Generative AI applications</li><li>AI agents and agentic systems</li><li>AI-powered productivity tools</li>
+              </ul>
+            </section>
+            <section class="who-category" aria-labelledby="innovation-tools">
+              <h4 class="who-category-title" id="innovation-tools">Platforms &amp; tools</h4>
+              <ul class="check-list">
+                <li>Automation and intelligent workflows</li><li>SaaS platforms</li><li>Developer tools and utilities</li><li>Knowledge management systems</li>
+              </ul>
+            </section>
+            <section class="who-category" aria-labelledby="innovation-software">
+              <h4 class="who-category-title" id="innovation-software">Software &amp; experiments</h4>
+              <ul class="check-list">
+                <li>Innovative software applications</li><li>Experimental technology solutions</li>
+              </ul>
+            </section>
+          </div>
         </article>
       </div>
       <div class="open-banner reveal">
@@ -515,11 +618,11 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 05 TO BE CLEAR -->
-  <section class="section section-light" id="clear">
+  <section class="section section-light" id="clear" aria-labelledby="clear-title">
     <div class="container clear-layout">
       <div class="split-intro reveal">
         <div class="eyebrow"><span>04</span> / To be clear</div>
-        <h2>Honest about<br><span class="muted-heading">what this is.</span></h2>
+        <h2 id="clear-title">Honest about<br><span class="muted-heading">what this is.</span></h2>
         <p>We’d rather set the right expectations from the start. This program is about exploring ideas and building together.</p>
         <div class="callout"><span class="mono">COMPLETELY FREE</span><h3>No fee. No investment.</h3><p>We give you a platform to build together and collaborate, without any fee or investment from you.</p></div>
       </div>
@@ -533,10 +636,10 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 06 COST -->
-  <section class="section section-muted" id="cost">
+  <section class="section section-muted" id="cost" aria-labelledby="cost-title">
     <div class="container">
       <div class="section-heading reveal">
-        <div><div class="eyebrow"><span>05</span> / Cost</div><h2>Transparent<br><span class="muted-heading">from day one.</span></h2></div>
+        <div><div class="eyebrow"><span>05</span> / Cost</div><h2 id="cost-title">Transparent<br><span class="muted-heading">from day one.</span></h2></div>
         <p>No hidden surprises. Here’s exactly how costs are handled.</p>
       </div>
       <div class="cost-card reveal">
@@ -552,21 +655,21 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 07 APPLY -->
-  <section class="section section-light" id="apply">
+  <section class="section section-light" id="apply" aria-labelledby="apply-title">
     <div class="container apply-layout">
       <div class="split-intro reveal">
         <div class="eyebrow"><span>06</span> / How to apply</div>
-        <h2>Simple<br><span class="muted-heading">to apply.</span></h2>
+        <h2 id="apply-title">Simple<br><span class="muted-heading">to apply.</span></h2>
         <p>Share your idea with us. Send a short email with the details on the right. It doesn’t need to be polished, just clear.</p>
       </div>
       <div class="reveal">
-        <div class="apply-list">
-          <div class="apply-item"><b>01</b> Your name and background</div>
-          <div class="apply-item"><b>02</b> A brief introduction about yourself or your team</div>
-          <div class="apply-item"><b>03</b> Your innovation idea or project concept</div>
-          <div class="apply-item"><b>04</b> Technologies or skills you bring (if applicable)</div>
-          <div class="apply-item"><b>05</b> What kind of collaboration you are looking for</div>
-        </div>
+        <ol class="apply-list" aria-label="Details to include in your email">
+          <li class="apply-item"><b>01</b> Your name and background</li>
+          <li class="apply-item"><b>02</b> A brief introduction about yourself or your team</li>
+          <li class="apply-item"><b>03</b> Your innovation idea or project concept</li>
+          <li class="apply-item"><b>04</b> Technologies or skills you bring (if applicable)</li>
+          <li class="apply-item"><b>05</b> What kind of collaboration you are looking for</li>
+        </ol>
         <div class="apply-cta">
           <span class="mono">INTERESTED?</span>
           <h3>Share your idea with us.</h3>
@@ -583,11 +686,11 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- 08 FAQ -->
-  <section class="section section-muted" id="faq">
+  <section class="section section-muted" id="faq" aria-labelledby="faq-title">
     <div class="container faq-layout">
       <div class="split-intro reveal">
         <div class="eyebrow"><span>07</span> / FAQ</div>
-        <h2>Good questions.<br><span class="muted-heading">Clear answers.</span></h2>
+        <h2 id="faq-title">Good questions.<br><span class="muted-heading">Clear answers.</span></h2>
         <p>Not sure whether your idea or situation fits? Just ask us.</p>
         <a class="text-link" href="mailto:team@alphexai.com">Talk to Alphex <span>↗</span></a>
       </div>
@@ -604,11 +707,11 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
   </section>
 
   <!-- FINAL CTA -->
-  <section class="final-cta section-dark">
+  <section class="final-cta section-dark" aria-labelledby="final-cta-title">
     <div class="final-glow" aria-hidden="true"></div>
     <div class="container reveal">
       <div class="eyebrow"><span>08</span> / Start a conversation</div>
-      <h2>Your idea doesn’t need to be perfect.<br><span class="gradient-text">It just needs to be worth exploring.</span></h2>
+      <h2 id="final-cta-title">Your idea doesn’t need to be perfect.<br><span class="gradient-text">It just needs to be worth exploring.</span></h2>
       <p>Tell us what you want to build. We’ll take it from there, together.</p>
       <a class="pill pill-primary" href="#apply">Share your idea <span aria-hidden="true">↗</span></a>
     </div>
@@ -624,10 +727,10 @@ footer.footer-pro{background:#f7f7f5;color:#101010;padding:72px 0 28px;border-to
         <a class="pill pill-outline pill-sm" href="mailto:uimockup.plus@gmail.com">Book a demo <span>↗</span></a>
       </div>
       <div class="footer-columns">
-        <div class="footer-group"><h4>Overview</h4><a href="/index.html">Home</a><a href="/capabilities.html">Capabilities</a><a href="/products.html">Products</a><a href="/process.html">Process</a><a href="/pricing.html">Pricing</a></div>
-        <div class="footer-group"><h4>Products</h4><a href="https://evalloop-ai.vercel.app/">EvalLoop AI</a><a href="https://evalloopjobs.vercel.app">EvalLoop Jobs</a><a href="/documentation.html">Documentation</a></div>
-        <div class="footer-group"><h4>Company</h4><a href="/about.html">About</a><a href="/innovation.html">Innovation Program</a><a href="/contact.html">Contact</a><a href="/careers.html">Careers</a></div>
-        <div class="footer-group"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/disclaimer.html">Disclaimer</a></div>
+        <nav class="footer-group" aria-label="Overview"><h4>Overview</h4><a href="/index.html">Home</a><a href="/capabilities.html">Capabilities</a><a href="/products.html">Products</a><a href="/process.html">Process</a><a href="/pricing.html">Pricing</a></nav>
+        <nav class="footer-group" aria-label="Products"><h4>Products</h4><a href="https://evalloop-ai.vercel.app/">EvalLoop AI</a><a href="https://evalloopjobs.vercel.app">EvalLoop Jobs</a><a href="/documentation.html">Documentation</a></nav>
+        <nav class="footer-group" aria-label="Company"><h4>Company</h4><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/careers.html">Careers</a><a href="/innovation.html">Innovation Program</a></nav>
+        <nav class="footer-group" aria-label="Legal"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/disclaimer.html">Disclaimer</a></nav>
       </div>
     </div>
     <div class="footer-bottom">
@@ -658,11 +761,15 @@ window.addEventListener('DOMContentLoaded', function () {
       const open=!mobilePanel.classList.contains('open');
       menuButton.classList.toggle('open',open);
       menuButton.setAttribute('aria-expanded',String(open));
+      menuButton.setAttribute('aria-label',open?'Close navigation':'Open navigation');
       mobilePanel.classList.toggle('open',open);
       mobilePanel.setAttribute('aria-hidden',String(!open));
     });
     mobilePanel.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'&&mobilePanel.classList.contains('open')){closeMenu();menuButton.focus()}
+    });
+    window.addEventListener('resize',()=>{if(window.innerWidth>800)closeMenu()});
     document.addEventListener('click',e=>{if(!mobilePanel.contains(e.target)&&!menuButton.contains(e.target))closeMenu()});
   }
 
