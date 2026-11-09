@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Alphex AI designs useful AI assistants, knowledge systems, and intelligent workflows for real business needs.">
-  <meta name="theme-color" content="#08090d">
+  <meta name="theme-color" content="#050509">
   <title>Alphex AI — Useful AI, thoughtfully built</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2545,8 +2545,272 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .final-cta h2 {font-size:clamp(44px,10.5vw,68px) !important}
 }
 </style>
+<style id="alphex-light-system">
+/* ===== ALPHEX AI — white body, violet accent blocks, hero-coloured dark sections =====
+   Rhythm: hero (dark) → violet strip → white → tint → DEMO (dark) → white → ARCHITECTURE (violet)
+           → white → PRODUCTS (dark) → tint → white → CTA (violet) → footer (dark)
+   Nothing here touches #top.hero. */
+:root{--a-violet:#5540d8;--a-violet-2:#6047ed;--a-tint:#f5f4fb;--a-line:#e4e2ee}
+
+/* ---------- White body + soft tint alternation ---------- */
+body .section-light, body .section-muted{background:#fff!important;color:#101010}
+body #industries, body #pricing{background:var(--a-tint)!important}
+
+/* ---------- Accent band under the hero ---------- */
+body .signal-strip{background:var(--a-violet)!important;color:#fff!important;border:0!important}
+body .signal-marquee-group{font-size:11px;color:#fff}
+body .signal-marquee-group i{color:#8fe5dc}
+
+/* ---------- Accent section: Architecture ---------- */
+body #architecture{
+  background:radial-gradient(ellipse 60% 70% at 88% 0%,rgba(255,255,255,.14),transparent 62%),var(--a-violet)!important;
+  color:#fff!important;
+}
+body #architecture .section-heading h2{color:#fff}
+body #architecture .muted-heading{color:rgba(255,255,255,.66)!important}
+body #architecture .eyebrow{color:#e4defe!important}
+body #architecture .eyebrow>span:first-child:not(.status-dot){color:#8fe5dc!important}
+body #architecture .section-heading>p{color:rgba(255,255,255,.84)!important}
+body #architecture .architecture-diagram{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28)}
+body #architecture .architecture-column{background:#fff;border-color:#fff;box-shadow:0 14px 34px rgba(20,10,80,.22)}
+body #architecture .architecture-column h3{color:#101010}
+body #architecture .architecture-column p{color:#5b5c68}
+body #architecture .architecture-connector{color:#fff}
+body #architecture .architecture-connector span{background:rgba(255,255,255,.5)}
+body #architecture .architecture-connector i{background:#fff;border-color:#fff;color:var(--a-violet)}
+body #architecture .architecture-feedback{background:#fff;border-color:#fff;color:var(--a-violet);font-size:11px;font-weight:500}
+
+/* ---------- Accent section: final CTA ---------- */
+body .final-cta{
+  background:radial-gradient(ellipse 55% 80% at 50% 0%,rgba(255,255,255,.16),transparent 65%),var(--a-violet)!important;
+  border-top:0!important;color:#fff!important;
+}
+body .final-cta::before{background:radial-gradient(ellipse at 50% 120%,rgba(20,10,80,.35),transparent 60%)!important}
+body .final-cta h2{color:#fff!important}
+body .final-cta h2 .gradient-text{color:#dcd5ff!important;-webkit-text-fill-color:#dcd5ff!important}
+body .final-cta .eyebrow{color:rgba(255,255,255,.86)!important}
+body .final-cta .eyebrow>span:first-child:not(.status-dot){color:#8fe5dc!important}
+body .final-cta p{color:rgba(255,255,255,.86)!important;font-size:15px}
+body .final-cta .button{background:#fff;border-color:#fff;color:#2c2170;box-shadow:0 10px 30px rgba(10,5,50,.28)}
+body .final-cta .button:hover{background:#ece8ff;border-color:#ece8ff;color:#2c2170}
+
+/* ---------- Cards on white need definition ---------- */
+body .capability-card, body #approach .process-step, body .price-card:not(.price-card-featured){
+  border:1px solid var(--a-line);box-shadow:0 1px 2px rgba(25,20,60,.04),0 12px 30px rgba(25,20,60,.05);
+}
+body #approach .process-step{background:#faf9fe}
+body .price-card:not(.price-card-featured){background:#fff}
+body .industry-card{border-color:var(--a-line)}
+
+/* ---------- Buttons: hero violet, consistent size ---------- */
+body .button{min-height:48px;padding:0 24px;font-size:13px}
+body .button-primary{background:var(--a-violet-2);border-color:var(--a-violet-2);box-shadow:0 9px 28px rgba(93,64,235,.22)}
+body .button-primary:hover{background:#725cff;border-color:#725cff}
+body #demo .demo-cta.button{min-height:48px;padding:0 24px;font-size:13px}
+
+/* ---------- Legibility on white (sizes + a few too-faint greys) ---------- */
+body .section-heading>p, body .trust-intro>p, body .faq-intro>p{font-size:15px;line-height:1.75;color:#5f606c}
+body .capability-copy p{font-size:14px;color:#5b5c68}
+body .card-index{font-size:11px}
+body .text-link{font-size:13px}
+body .industry-card p{font-size:13.5px;color:#5b5c68}
+body .industry-card .industry-kicker{font-size:10px}
+body .process-tag, body .industry-card .process-tag{font-size:9px;color:#70717c}
+body #approach .process-step p{font-size:13px;color:#5b5c68}
+body #approach .process-number{font-size:10px}
+body .architecture-kicker{font-size:10px}
+body .architecture-column p{font-size:12.5px;color:#5b5c68}
+body .trust-item h3{font-size:19px}
+body .trust-item p{font-size:13px;color:#5b5c68}
+body .trust-item-index{font-size:10px;color:#8b8c97}
+body .trust-note{font-size:12px;color:#6b6c77}
+body .price-tier{font-size:10px}
+body .price-card>p{font-size:13px;color:#5f606c}
+body .price-card li{font-size:12.5px;color:#4f5060}
+body .price-card-featured>p{color:#b9bac6}
+body .price-card-featured li{color:#d0d1db}
+body .popular-label{font-size:9px}
+body .pricing-footnote{font-size:12px;color:#6b6c77}
+body .faq-list summary{font-size:15px;padding:24px 0}
+body .faq-list details p{font-size:14px;line-height:1.8;color:#5b5c68}
+body .faq-list summary:focus-visible{outline:2px solid var(--a-violet);outline-offset:4px;border-radius:6px}
+
+/* Capability mockups (tiny text → readable) */
+body .capability-card .mini-window-head{font-size:11px}
+body .capability-card .mini-online{font-size:9px}
+body .capability-card .mini-chat-msg{font-size:12px}
+body .capability-card .mini-source{font-size:10px}
+body .capability-card .mini-chat-foot{font-size:11px}
+body .capability-card .knowledge-file b{font-size:12px}
+body .capability-card .knowledge-file small{font-size:10px}
+body .capability-card .file-icon{font-size:9px}
+body .capability-card .knowledge-query{font-size:11px}
+body .capability-card .knowledge-foot{font-size:10px}
+body .automation-art .flow-node b{font-size:12px!important}
+body .automation-art .flow-node small{font-size:10px!important}
+body .automation-art .automation-status{font-size:11px!important}
+body .automation-art .automation-status .mono-label{font-size:9px!important}
+body .capability-card .quality-score .mono-label{font-size:9px}
+body .capability-card .score-caption{font-size:10px}
+body .capability-card .quality-metrics div{font-size:10px}
+
+/* ---------- Dark hero-coloured sections: legibility only ---------- */
+body #demo .demo-step p{font-size:12px}
+body #demo .demo-step b{font-size:13px}
+body #demo .demo-message p{font-size:13px}
+body #demo .message-label{font-size:9px}
+body #demo .answer-source{font-size:10.5px}
+body #demo .console-disclaimer, body #demo .step-state, body #demo .context-state, body #demo .console-status{font-size:9px}
+body #demo .console-context b{font-size:12px}
+body #demo .console-context small{font-size:10px}
+body #demo .demo-compose{font-size:11px}
+body #products .product-panel-copy{padding:0!important}
+body #products .product-panel-copy p{font-size:13.5px}
+body #products .product-label, body #products .product-category{font-size:10px}
+body #products .product-art, body #products .judge-workspace-art{height:270px}
+body #products .jobs-window{height:215px}
+body #products .jobs-window-head{font-size:11px}
+body #products .jobs-window-head span+span{font-size:9px}
+body #products .job-row b{font-size:10.5px}
+body #products .job-row small{font-size:9px}
+body #products .job-tag{font-size:8.5px}
+body #products .job-row>i{font-size:8px}
+body #products .judge-workspace-brand b{font-size:11px}
+body #products .judge-workspace-brand small, body #products .judge-run-status{font-size:8.5px}
+body #products .judge-candidate-head, body #products .judge-candidate>small, body #products .judge-verdict>span, body #products .judge-dimensions span{font-size:8px}
+body #products .judge-candidate p{font-size:9px}
+body #products .judge-verdict>b, body #products .judge-dimensions b{font-size:10px}
+body #products .judge-verdict>small{font-size:8.5px}
+@media(max-width:780px){ body #products .product-art, body #products .judge-workspace-art{height:clamp(240px,62vw,290px)} }
+
+/* ---------- Footer: white ---------- */
+body footer.footer-pro{background:#fff!important;color:#101010!important;border-top:1px solid #e4e2ee}
+body footer.footer-pro .wordmark{color:#101010!important}
+body footer.footer-pro .footer-brand p{color:#5f606c;font-size:14px}
+body footer.footer-pro .footer-group h4{color:#6b6c77;font-size:11px}
+body footer.footer-pro .footer-group a{color:#101010!important;font-size:14px}
+body footer.footer-pro .footer-group a:hover{color:#5540d8!important}
+body footer.footer-pro .footer-bottom{border-top-color:#e4e2ee;color:#6b6c77;font-size:12px}
+body footer.footer-pro .pill.light{background:transparent!important;border-color:#d2d1df!important;color:#2e2d39!important}
+body footer.footer-pro .pill.light:hover{background:#f4f1ff!important;border-color:#7057ff!important;color:#5540d8!important}
+
+/* ---------- Navbar overlap fix (801–1180px) ---------- */
+@media(min-width:801px) and (max-width:1180px){
+  .topbar .nav-links{position:static!important;transform:none!important;margin:0 auto!important;gap:18px!important}
+  .topbar .nav-links a{font-size:12px!important}
+}
+@media(min-width:801px) and (max-width:1020px){
+  .topbar .nav-actions .contact-link{display:none!important}
+}
+
+/* =====================================================================
+   UNIFORMITY LAYER — one container, one type scale, one card system
+   ===================================================================== */
+:root{--u-container:1296px;--u-gutter:64px;--u-card-r:18px;--u-card-pad:28px;--u-h2:clamp(38px,calc(4.8vw + 8px),64px)}
+
+/* ---- One content column for nav, sections and footer (hero keeps its own) ---- */
+body .container, body .topbar .shell, body footer.footer-pro > .shell{width:min(var(--u-container),calc(100% - var(--u-gutter)))!important;max-width:none}
+@media(min-width:801px){ body .topbar .wordmark{margin-left:0!important} }
+@media(max-width:860px){ :root{--u-gutter:60px} }
+@media(max-width:560px){ :root{--u-gutter:36px} }
+
+/* ---- Section rhythm ---- */
+body .section{padding-top:116px;padding-bottom:116px}
+body .final-cta{padding-top:116px!important;padding-bottom:116px!important}
+@media(max-width:780px){ body .section, body .final-cta{padding-top:80px!important;padding-bottom:80px!important} }
+@media(max-width:540px){ body .section, body .final-cta{padding-top:68px!important;padding-bottom:68px!important} }
+
+/* ---- Section headings: identical grid, size, spacing everywhere ---- */
+body .section-heading, body #demo .section-heading, body #products .section-heading{
+  display:grid!important;grid-template-columns:minmax(0,1fr) 380px!important;gap:64px!important;
+  align-items:end!important;max-width:none!important;margin:0 0 56px!important}
+body .section-heading h2, body #demo .section-heading h2, body #products .section-heading h2,
+body .trust-intro h2, body .faq-intro h2, body .final-cta h2{
+  font-size:var(--u-h2)!important;line-height:1.04!important;letter-spacing:-.075em!important;font-weight:300!important;margin:16px 0 0!important}
+body .section-heading>p, body #demo .section-heading>p, body #products .section-heading>p{
+  font-size:15px!important;line-height:1.75!important;max-width:380px!important;margin:0 0 4px!important}
+body .eyebrow{letter-spacing:.12em!important;font-size:10px!important}
+body .final-cta h2{margin-top:22px!important}
+@media(max-width:900px){
+  body .section-heading, body #demo .section-heading, body #products .section-heading{
+    grid-template-columns:minmax(0,1fr)!important;gap:18px!important;margin-bottom:34px!important}
+  body .section-heading>p, body #demo .section-heading>p, body #products .section-heading>p{max-width:560px!important}
+}
+
+/* ---- Trust + FAQ side layouts share one grid ---- */
+body .trust-layout, body .faq-layout{display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;gap:80px!important;align-items:start!important}
+body .trust-intro>p, body .faq-intro>p{max-width:380px!important;margin:22px 0 0!important}
+@media(max-width:900px){ body .trust-layout, body .faq-layout{grid-template-columns:minmax(0,1fr)!important;gap:36px!important} }
+
+/* ---- One card system ---- */
+body .capability-card, body .industry-card, body #approach .process-step, body .architecture-column,
+body .price-card, body .product-panel{border-radius:var(--u-card-r)!important;
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),box-shadow .3s,border-color .3s}
+body .demo-console{border-radius:var(--u-card-r)!important}
+body .demo-step{border-radius:12px!important}
+body .industry-card, body #approach .process-step, body .architecture-column, body .price-card, body .product-panel{padding:var(--u-card-pad)!important}
+body .capability-copy{padding:var(--u-card-pad)!important}
+body .industry-card:hover, body #approach .process-step:hover, body .price-card:hover, body .architecture-column:hover{transform:translateY(-4px)}
+body #approach .process-step:hover{box-shadow:0 22px 50px rgba(21,18,48,.08);border-color:#c8c1ff}
+body .price-card:not(.price-card-featured):hover{border-color:#c8c1ff;box-shadow:0 22px 50px rgba(21,18,48,.08)}
+
+/* card titles: two tiers only */
+body .capability-copy h3, body #products .product-panel-copy h3{font-size:clamp(26px,2.4vw,34px)!important;line-height:1.08!important;letter-spacing:-.06em!important;font-weight:300}
+body .industry-card h3, body #approach .process-step h3, body .architecture-column h3, body .price-card h3{
+  font-size:24px!important;line-height:1.15!important;letter-spacing:-.05em!important;font-weight:300;margin-top:0}
+body .price-card h3{margin-top:26px!important}
+body #approach .process-step h3{margin-bottom:9px!important}
+body .trust-item h3{font-size:20px!important;letter-spacing:-.04em!important}
+
+/* card body copy: one size */
+body .capability-copy p, body .industry-card p, body #approach .process-step p, body .architecture-column p,
+body .price-card>p, body #products .product-panel-copy p, body .trust-item p, body .faq-list details p{
+  font-size:14px!important;line-height:1.75!important}
+body .industry-card p, body #approach .process-step p, body .architecture-column p{max-width:none!important}
+body .price-card li{font-size:13px!important}
+
+/* card labels: one mono style */
+body .card-index, body .industry-card .industry-kicker, body .architecture-kicker, body .price-tier,
+body #products .product-label, body #products .product-category{font-size:10px!important;letter-spacing:.1em!important}
+body .process-tag, body .industry-card .process-tag{font-size:9px!important;letter-spacing:.1em!important}
+
+/* ---- Buttons: one height / type ---- */
+body footer.footer-pro .pill{min-height:48px;padding:0 24px;font-size:13px}
+
+/* ---- Equal heights inside rows ---- */
+body .industries-track{align-items:stretch!important}
+body .industry-card{height:auto!important}
+@media(max-width:540px){ :root{--u-card-pad:22px} }
+
+/* =====================================================================
+   ARCHITECTURE — glass cards that belong to the violet background
+   ===================================================================== */
+body #architecture .architecture-diagram{background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important}
+body #architecture .architecture-column{
+  background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.07))!important;
+  border:1px solid rgba(255,255,255,.28)!important;
+  box-shadow:0 20px 44px rgba(16,6,76,.28),inset 0 1px 0 rgba(255,255,255,.22)!important;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff}
+body #architecture .architecture-column:hover{background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.1))!important;border-color:rgba(255,255,255,.5)!important}
+body #architecture .architecture-index{color:rgba(255,255,255,.62)!important}
+body #architecture .architecture-symbol{background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+body #architecture .symbol-understand{color:#fff!important}
+body #architecture .symbol-act{color:#8fe5dc!important}
+body #architecture .symbol-improve{color:#ffd98a!important}
+body #architecture .architecture-kicker{color:rgba(255,255,255,.72)!important}
+body #architecture .architecture-column h3{color:#fff!important}
+body #architecture .architecture-column p{color:rgba(255,255,255,.84)!important}
+body #architecture .architecture-connector{color:#fff!important}
+body #architecture .architecture-connector span{background:rgba(255,255,255,.4)!important}
+body #architecture .architecture-connector i{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.4)!important;color:#fff!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+body #architecture .architecture-feedback{background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.36)!important;color:#fff!important;font-weight:500;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+@media(min-width:781px){
+  body #architecture .architecture-feedback{position:static!important;transform:none!important;grid-column:1/-1;justify-self:center;margin-top:28px}
+}
+</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar">
   <div class="shell nav">
     <a class="wordmark" href="#top">alphex ai</a>
@@ -2969,11 +3233,17 @@ img,svg,video,canvas{max-width:100%;height:auto}
         'https://nxqxhakjbtdzreimpkdz.supabase.co';
       const SUPABASE_PUBLISHABLE_KEY =
         'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
-      const supabaseClient =
-        window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_PUBLISHABLE_KEY
-        );
+      let supabaseClient;
+      try {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      } catch (err) {
+        console.warn('Supabase unavailable, continuing signed-out:', err);
+        supabaseClient = { auth: {
+          getSession: async () => ({ data: { session: null }, error: null }),
+          onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+          signOut: async () => ({ error: null })
+        } };
+      }
       /* =========================================================
          AUTH NAVIGATION
          ========================================================= */
