@@ -8,7 +8,7 @@
   <title>Alphex AI — Useful AI, thoughtfully built</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="/assets/favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -16,7 +16,7 @@
   <script defer src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
   <style>
-:root {color-scheme:dark;--bg:#08090d;--bg-elevated:#0d0f16;--surface:#11131c;--surface-soft:#151824;--paper:#f7f7f5;--white:#fff;--ink:#101010;--text:#f4f4f7;--muted:#9a9ca9;--muted-light:#676b79;--line:rgba(255,255,255,.12);--line-light:rgba(15,16,22,.13);--accent:#7057ff;--accent-dark:#5540d8;--cyan:#35c8c0;--lavender:#eeeaff;--mint:#e6f8f4;--sun:#f6c85f;--sans:"Inter",Arial,sans-serif;--mono:"DM Mono",monospace;--container:1160px;--ease:cubic-bezier(.2,.75,.25,1);--radius:20px}
+:root {color-scheme:dark;--bg:#08090d;--bg-elevated:#0d0f16;--surface:#11131c;--surface-soft:#151824;--paper:#f7f7f5;--white:#fff;--ink:#101010;--text:#f4f4f7;--muted:#9a9ca9;--muted-light:#676b79;--line:rgba(255,255,255,.12);--line-light:rgba(15,16,22,.13);--accent:#7057ff;--accent-dark:#5540d8;--cyan:#35c8c0;--lavender:#eeeaff;--mint:#e6f8f4;--sun:#f6c85f;--sans:"Inter",Arial,sans-serif;--mono:var(--sans);--container:1160px;--ease:cubic-bezier(.2,.75,.25,1);--radius:20px}
 * {box-sizing:border-box}
 html {scroll-behavior:smooth;scroll-padding-top:90px}
 body {margin:0;background:var(--bg);color:var(--text);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -3275,8 +3275,8 @@ img,svg,video,canvas{max-width:100%;height:auto}
       <div class="workflow-scroll" tabindex="0" aria-label="Scrollable workflow canvas">
         <div class="workflow-canvas" role="img" aria-label="Support email automation workflow: Gmail receives a new customer email, Google Drive searches approved knowledge, OpenAI classifies the request and drafts a grounded reply. A confidence check routes high-confidence replies to a Gmail draft for human review, flags uncertain cases in Gmail, and logs either outcome in Google Sheets.">
           <svg class="workflow-wires" viewBox="0 0 1200 440" preserveAspectRatio="none" aria-hidden="true">
-            <path class="wire-base" d="M182 232 C198 232 200 232 216 232 M388 232 C402 232 408 232 423 232 M613 240 C629 240 638 232 654 232 M818 218 C850 218 837 101 867 101 M818 249 C850 249 837 362 867 362 M1032 101 C1044 101 1045 232 1040 232 M1032 362 C1044 362 1045 232 1040 232"/>
-            <path class="wire-run" d="M182 232 C198 232 200 232 216 232 M388 232 C402 232 408 232 423 232 M613 240 C629 240 638 232 654 232 M818 218 C850 218 837 101 867 101 M818 249 C850 249 837 362 867 362 M1032 101 C1044 101 1045 232 1040 232 M1032 362 C1044 362 1045 232 1040 232"/>
+            <path class="wire-base" d="M183 232 C197 232 201 232 215 232 M389 232 C402 232 408 240 422 240 M614 240 C629 240 638 232 653 232 M819 218 C849 218 837 101 866 101 M819 249 C849 249 837 362 866 362 M1033 101 C1047 101 1048 232 1039 232 M1033 362 C1047 362 1048 232 1039 232"/>
+            <path class="wire-run" d="M183 232 C197 232 201 232 215 232 M389 232 C402 232 408 240 422 240 M614 240 C629 240 638 232 653 232 M819 218 C849 218 837 101 866 101 M819 249 C849 249 837 362 866 362 M1033 101 C1047 101 1048 232 1039 232 M1033 362 C1047 362 1048 232 1039 232"/>
           </svg>
           <span class="workflow-branch-label branch-confident">HIGH CONFIDENCE</span>
           <span class="workflow-branch-label branch-review">LOW CONFIDENCE</span>
