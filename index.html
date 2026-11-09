@@ -2737,6 +2737,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .nx .ind-panel.swap>*{animation:nxdmin .35s ease both}
 @media(max-width:980px){.nx .ind{grid-template-columns:1fr}.nx .ind-list{grid-template-columns:repeat(2,minmax(0,1fr))}.nx .ind-panel{min-height:0;padding:34px}.nx .ind-panel h3{margin-top:32px}}
 @media(max-width:620px){.nx .ind-list{grid-template-columns:1fr}.nx .ind-tab{padding:15px 16px}.nx .ind-panel{padding:26px 22px}.nx .ind-panel>p{font-size:14px}.nx .ind-foot .btn{width:100%;justify-content:center}}
+.nx #industries h2 em{color:#6047ed!important;-webkit-text-fill-color:#6047ed!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important}
 </style>
 <style id="nx-palette">
 /* Accent palette: sections step from the lightest tint to the main accent (#6047ed) at the final CTA. All flat colors. */
@@ -2748,7 +2749,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .nx #trust{background:#c3b7ff!important}
 .nx #our-products{background:#b2a3fc!important}
 .nx #pricing{background:#a08bf9!important}
-.nx #faq{background:#8770f4!important}
+.nx #faq{background:#fff!important}
 .nx #start{background:#6047ed!important}
 .nx .strip{background:#6047ed}
 .nx #approach .lead,.nx #architecture .lead,.nx #trust .lead,.nx #our-products .lead,.nx #pricing .lead,.nx #faq .lead{color:#3b3855}
@@ -2859,6 +2860,29 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .nx #our-products .br.next{border-color:rgba(96,71,237,.45)}
 .nx #our-products .chips span{background:#fff}
 .nx #our-products .br.next{opacity:1}
+/* Requested white section backgrounds; preserve existing typography */
+.nx #approach,.nx #architecture,.nx #trust,.nx #pricing{background:#fff!important}
+/* Our products: dark hero-inspired treatment from the supplied reference */
+.nx #our-products{background:radial-gradient(ellipse at 72% 0,rgba(96,71,237,.26),transparent 46%),#07070b!important;color:#f4f4f8}
+.nx #our-products .head .eyebrow,.nx #our-products .head h2,.nx #our-products .head h2 em,.nx #our-products .head>.lead{color:#fff!important}
+.nx #our-products .head h2 em{color:#a78cff!important;-webkit-text-fill-color:#a78cff!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important}
+.nx #our-products .tree::before,.nx #our-products .br::before{background:rgba(167,140,255,.45)}
+.nx #our-products .br::after{background:#a78cff;box-shadow:0 0 0 4px rgba(167,140,255,.15)}
+.nx #our-products .root{background:rgba(96,71,237,.18);border-color:rgba(167,140,255,.5);color:#e4defe}
+.nx #our-products .root::before{background:#35c8c0}
+.nx #our-products .tree>.br,.nx #our-products .tree>.br:hover{background:rgba(22,24,36,.92)!important;border-color:rgba(139,124,255,.28)!important;color:#f4f4f8}
+.nx #our-products .tree>.br:hover{border-color:rgba(139,124,255,.6)!important}
+.nx #our-products .tree>.br h3{color:#fff}
+.nx #our-products .tree>.br p{color:#aeb0bc}
+.nx #our-products .tree>.br .cat{color:#aaa0ff}
+.nx #our-products .tree>.br .no{border-color:rgba(167,140,255,.35);background:rgba(96,71,237,.16);color:#c6bdff}
+.nx #our-products .tree>.br .chips span{background:transparent!important;border-color:rgba(255,255,255,.16);color:#c8c9d3}
+.nx #our-products .tree>.br .live{border-color:rgba(143,229,220,.3);background:rgba(143,229,220,.08);color:#9be8de}
+.nx #our-products .tree>.br .btn.white{background:#fff;border-color:#fff;color:#2c2170}
+.nx #our-products .tree>.br .btn.white:hover{background:#f1edff;border-color:#f1edff;color:#2c2170}
+.nx #our-products .tree>.br.next{border-style:dashed!important;opacity:.8}
+.nx #our-products .tree>.br.next .no{border-style:dashed;background:transparent;color:#c6bdff;border-color:rgba(167,140,255,.35);font-size:20px}
+.nx #our-products .tree>.br.next .live{border-color:rgba(255,255,255,.2);background:transparent;color:#a4a6b1}
 </style>
 </head>
 <body>
