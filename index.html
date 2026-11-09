@@ -2724,19 +2724,141 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .nx .ind-name b{display:block;font-size:19px;font-weight:400;letter-spacing:-.03em}
 .nx .ind-k{display:block;margin-top:3px;color:#8a8b96;font-size:9px}
 .nx .ind-go{color:var(--v);font-size:18px;transition:transform .2s}
-.nx .ind-tab.on{background:#07070b;border-color:#07070b;color:#fff}
-.nx .ind-tab.on .ind-n,.nx .ind-tab.on .ind-k{color:#a99aff}
+.nx .ind-tab.on{background:#6047ed;border-color:#6047ed;color:#fff}
+.nx .ind-tab.on .ind-n,.nx .ind-tab.on .ind-k{color:#e4defe}
 .nx .ind-tab.on .ind-go{color:#fff;transform:translateX(3px)}
-.nx .ind-panel{display:flex;flex-direction:column;padding:44px;border:1px solid #07070b;border-radius:var(--r);background:#07070b;color:#f4f4f8;min-height:420px}
-.nx .ind-top{display:flex;justify-content:space-between;gap:12px;color:#a99aff}
-.nx .ind-count{color:#7d7f8d}
-.nx .ind-panel h3{margin:48px 0 18px;font-size:clamp(34px,4vw,52px);line-height:1.05;color:#f4f4f8}
-.nx .ind-panel>p{max-width:520px;font-size:16px;line-height:1.75;color:#b3b2bd}
+.nx .ind-panel{display:flex;flex-direction:column;padding:44px;border:1px solid #6047ed;border-radius:var(--r);background:#6047ed;color:#fff;min-height:420px}
+.nx .ind-top{display:flex;justify-content:space-between;gap:12px;color:#e4defe}
+.nx .ind-count{color:rgba(255,255,255,.7)}
+.nx .ind-panel h3{margin:48px 0 18px;font-size:clamp(34px,4vw,52px);line-height:1.05;color:#fff}
+.nx .ind-panel>p{max-width:520px;font-size:16px;line-height:1.75;color:rgba(255,255,255,.88)}
 .nx .ind-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:36px}
-.nx .ind-tag{padding:8px 14px;border:1px solid rgba(167,140,255,.45);border-radius:99px;color:#c6bdff;background:rgba(96,71,237,.14)}
+.nx .ind-tag{padding:8px 14px;border:1px solid rgba(255,255,255,.4);border-radius:99px;color:#fff;background:rgba(255,255,255,.14)}
 .nx .ind-panel.swap>*{animation:nxdmin .35s ease both}
 @media(max-width:980px){.nx .ind{grid-template-columns:1fr}.nx .ind-list{grid-template-columns:repeat(2,minmax(0,1fr))}.nx .ind-panel{min-height:0;padding:34px}.nx .ind-panel h3{margin-top:32px}}
 @media(max-width:620px){.nx .ind-list{grid-template-columns:1fr}.nx .ind-tab{padding:15px 16px}.nx .ind-panel{padding:26px 22px}.nx .ind-panel>p{font-size:14px}.nx .ind-foot .btn{width:100%;justify-content:center}}
+</style>
+<style id="nx-palette">
+/* Accent palette: sections step from the lightest tint to the main accent (#6047ed) at the final CTA. All flat colors. */
+.nx #capabilities{background:#f8f6ff!important}
+.nx #industries{background:#f1edff!important}
+.nx #see-thinking{background:#e8e2ff!important}
+.nx #approach{background:#ded6ff!important}
+.nx #architecture{background:#d1c7ff!important}
+.nx #trust{background:#c3b7ff!important}
+.nx #our-products{background:#b2a3fc!important}
+.nx #pricing{background:#a08bf9!important}
+.nx #faq{background:#8770f4!important}
+.nx #start{background:#6047ed!important}
+.nx .strip{background:#6047ed}
+.nx #approach .lead,.nx #architecture .lead,.nx #trust .lead,.nx #our-products .lead,.nx #pricing .lead,.nx #faq .lead{color:#3b3855}
+.nx #architecture .eyebrow,.nx #trust .eyebrow,.nx #our-products .eyebrow,.nx #pricing .eyebrow,.nx #faq .eyebrow{color:#2a1f73}
+.nx #architecture h2 em,.nx #trust h2 em,.nx #our-products h2 em,.nx #pricing h2 em,.nx #faq h2 em{color:#2a1f73}
+.nx #approach h2 em{color:#5a4fa8}
+.nx #see-thinking .eyebrow{color:#6047ed}
+.nx #see-thinking h2 em{color:#6047ed}
+/* demo tabs on a light section */
+.nx .dm-tab{background:#fff;border-color:rgba(16,16,20,.1);color:var(--ink);opacity:.8}
+.nx .dm-tab:hover{opacity:1;border-color:#c8c1ff}
+.nx .dm-tab.on{opacity:1;border-color:#6047ed;background:#fff;box-shadow:0 8px 22px rgba(96,71,237,.14)}
+.nx .dm-tab .mono{color:#6047ed}
+.nx .dm-tab span.d{color:var(--mut)}
+.nx .dm-tab::after{background:#6047ed}
+/* architecture */
+.nx #architecture .glass{background:#fff;border-color:rgba(96,71,237,.3);box-shadow:0 12px 30px rgba(42,31,115,.12);color:var(--ink)}
+.nx #architecture .glass p{color:var(--mut)}
+.nx #architecture .glass .mono{color:#6047ed}
+.nx #architecture .arrow{color:#2a1f73}
+.nx #architecture .fb span{background:#fff;border-color:rgba(96,71,237,.3);color:#2a1f73}
+/* trust */
+.nx #trust .list,.nx #trust .item{border-color:rgba(16,16,20,.16)}
+.nx #trust .item i{background:#fff}
+.nx #trust .item p,.nx #trust .note{color:#2b2745}
+/* products */
+.nx #our-products .tree::before,.nx #our-products .br::before{background:rgba(42,31,115,.55)}
+.nx #our-products .br::after{background:#6047ed;box-shadow:0 0 0 4px rgba(96,71,237,.2)}
+.nx #our-products .root{background:#6047ed;border-color:#6047ed;color:#fff}
+.nx #our-products .br h3{color:#f4f4f8}
+.nx #our-products .br.next{border-color:rgba(16,16,20,.4)}
+.nx #our-products .br.next h3{color:var(--ink)}
+.nx #our-products .br.next p{color:#2b2745}
+.nx #our-products .br.next .cat{color:#2a1f73}
+.nx #our-products .br.next .no{color:var(--ink);border-color:rgba(16,16,20,.4)}
+.nx #our-products .br.next .live{border-color:rgba(16,16,20,.4);color:var(--ink)}
+.nx #pricing .foot{color:#2b2745}
+/* faq */
+.nx #faq details{border-color:rgba(16,16,20,.25)}
+.nx #faq summary::after{color:var(--ink)}
+.nx #faq details p{color:#1e1a3d}
+/* final CTA = main accent */
+.nx #start{color:#fff}
+.nx #start .eyebrow{color:#e4defe}
+.nx #start h2 em{color:#dcd5ff}
+.nx #start .lead{color:rgba(255,255,255,.88)}
+</style>
+<style id="nx-blend">
+/* Tone-on-tone: every inner surface is a translucent tint of its section; text is one deep indigo family. */
+.nx{--ink:#1e1a3d;--mut:#4a4670}
+.nx .sec h2{color:#1e1a3d}
+.nx #start h2{color:#fff}
+.nx .card,.nx .pcard,.nx #architecture .glass{background:rgba(255,255,255,.6)!important;border-color:rgba(96,71,237,.22)!important;box-shadow:none!important}
+.nx .card:hover{background:rgba(255,255,255,.85)!important;border-color:#6047ed!important}
+.nx .card p,.nx .pcard>p,.nx #architecture .glass p,.nx .pcard li{color:#3b3760}
+.nx .card .tag{color:#4a4670}
+.nx .pcard-feat{background:#6047ed!important;border-color:#6047ed!important;color:#fff}
+.nx .pcard-feat h3,.nx .pcard-feat .pamt{color:#fff}
+.nx .pcard-feat>p,.nx .pcard-feat li,.nx .pcard-feat .ptier,.nx .pcard-feat .pamt span{color:rgba(255,255,255,.88)}
+.nx .pcard-feat .btn{background:#fff;border-color:#fff;color:#2c2170}
+.nx .pcard .btn.line{border-color:rgba(30,26,61,.35);color:#1e1a3d}
+.nx .plabel{background:#fff;color:#6047ed}
+.nx .ind-tab{background:rgba(255,255,255,.6);border-color:rgba(96,71,237,.22)}
+/* demo */
+.nx .dm-tab{background:rgba(255,255,255,.55);border-color:rgba(96,71,237,.22)}
+.nx .dm-tab.on{background:#fff;border-color:#6047ed;box-shadow:none}
+.nx .dm-chat,.nx .dm-insp{background:rgba(255,255,255,.6);border-color:rgba(96,71,237,.25)}
+.nx .dm-bar,.nx .dm-insp h3{color:#4a4670;border-color:rgba(96,71,237,.18)}
+.nx .dm-bar .st{color:#6047ed}.nx .dm-bar .st::before{background:#6047ed;box-shadow:0 0 0 4px rgba(96,71,237,.15)}
+.nx .dm-b{color:#1e1a3d}
+.nx .dm-b.me{background:#6047ed;border-color:#6047ed;color:#fff}
+.nx .dm-b.me .who{color:#e4defe}
+.nx .dm-b.ai{background:#fff;border-color:rgba(96,71,237,.2)}
+.nx .dm-b .who{color:#6047ed}
+.nx .dm-src{background:rgba(96,71,237,.1);border-color:rgba(96,71,237,.3);color:#6047ed}
+.nx .dm-foot{color:#6b6790}
+.nx .dm-row{border-color:rgba(96,71,237,.15)}
+.nx .dm-row small{color:#6b6790}.nx .dm-row b{color:#1e1a3d}
+.nx .dm-row .m{background:rgba(96,71,237,.15)}
+.nx .dm-row .m i{background:#6047ed!important}
+/* architecture */
+.nx #architecture .arrow{color:#1e1a3d}
+.nx #architecture .fb span{background:rgba(255,255,255,.6)}
+/* trust */
+.nx #trust .item i{background:rgba(255,255,255,.7);border:1px solid rgba(96,71,237,.22)}
+.nx #trust .item p,.nx #trust .note{color:#3b3760}
+/* products: light tinted cards instead of dark */
+.nx #our-products .br{background:rgba(255,255,255,.55);border-color:rgba(42,31,115,.22)}
+.nx #our-products .br:hover{background:rgba(255,255,255,.8);border-color:#2a1f73}
+.nx #our-products .br h3{color:#1e1a3d}
+.nx #our-products .br p{color:#3b3760}
+.nx #our-products .br .cat{color:#6047ed}
+.nx #our-products .br .no{background:#6047ed;border-color:#6047ed;color:#fff}
+.nx #our-products .chips span{border-color:rgba(42,31,115,.28);color:#2a1f73;background:rgba(255,255,255,.5)}
+.nx #our-products .live{border-color:rgba(42,31,115,.35);background:transparent;color:#2a1f73}
+.nx #our-products .root::before{background:#fff}
+.nx #our-products .btn.white{background:#6047ed;border-color:#6047ed;color:#fff}
+.nx #our-products .btn.white:hover{background:#725cff;border-color:#725cff}
+.nx #our-products .br.next{background:transparent;border-color:rgba(42,31,115,.45)}
+.nx #our-products .br.next .no{background:transparent;color:#2a1f73;border-color:rgba(42,31,115,.45)}
+/* faq */
+.nx #faq summary{color:#1e1a3d}
+.nx #faq details p{color:#1e1a3d}
+.nx .pcard li::before{color:#6047ed}.nx .pcard-feat li::before{color:#fff}.nx .pcard:not(.pcard-feat) .pamt span,.nx .pcard:not(.pcard-feat) .ptier{color:#4a4670}
+.nx #our-products .br,.nx #our-products .br:hover,.nx #our-products .br.next{background:#fff!important}
+.nx #our-products .br{border-color:rgba(96,71,237,.25)}
+.nx #our-products .br:hover{border-color:#6047ed}
+.nx #our-products .br.next{border-color:rgba(96,71,237,.45)}
+.nx #our-products .chips span{background:#fff}
+.nx #our-products .br.next{opacity:1}
 </style>
 </head>
 <body>
@@ -2888,7 +3010,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 <article class="card rv"><span class="mono">04 / Evaluate</span><h3>Quality built into the process.</h3><p>Test responses, review edge cases and improve behavior before and after launch.</p></article>
 </div></div></section>
 
-<section class="sec tint" id="industries"><div class="wrap">
+<section class="sec" id="industries"><div class="wrap">
 <div class="head rv"><div><p class="eyebrow">02 / Industries we serve</p><h2>Useful AI, shaped<br><em>around your industry.</em></h2></div><p class="lead">We apply practical AI to the knowledge and service workflows that matter in different operating contexts—keeping people and professional judgment in the loop.</p></div>
 <div class="ind rv">
 <div class="ind-list" role="tablist" aria-label="Industries">
@@ -2907,7 +3029,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 </div>
 </div></div></section>
 
-<section class="sec dark" id="see-thinking"><div class="wrap">
+<section class="sec" id="see-thinking"><div class="wrap">
 <div class="head rv"><div><p class="eyebrow">03 / See the thinking</p><h2>From a question<br>to a <em>useful answer.</em></h2></div><p class="lead">A small preview of how an assistant retrieves context, responds clearly and passes work to a person when it should. Pick a stage, or let it play.</p></div>
 <div class="dm-tabs rv" id="nxTabs" role="tablist" aria-label="Assistant stages">
 <button class="dm-tab on" type="button" role="tab" aria-selected="true"><span class="mono">01</span><b>Understand intent</b><span class="d">Identify what the person needs.</span></button>
@@ -2928,7 +3050,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 <article class="card rv"><span class="mono">03</span><h3>Launch &amp; improve</h3><p>Integrate the system, review how it behaves and refine it as needs evolve.</p><span class="mono tag">Iterate</span></article>
 </div></div></section>
 
-<section class="sec violet" id="architecture"><div class="wrap">
+<section class="sec" id="architecture"><div class="wrap">
 <div class="head rv"><div><p class="eyebrow">05 / Architecture</p><h2>A connected system.<br><em>Not a disconnected toolset.</em></h2></div><p class="lead">We bring context, action and evaluation together so each layer has a clear job and a path to improvement.</p></div>
 <div class="arch rv">
 <div class="glass"><span class="mono">Understand</span><h3>Context</h3><p>Knowledge, instructions and business rules.</p></div><div class="arrow">→</div>
@@ -2948,7 +3070,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 </div><p class="note">Security controls, hosting, retention and access are confirmed per implementation. No universal guarantees or certifications are implied.</p></div>
 </div></section>
 
-<section class="sec dark" id="our-products"><div class="wrap">
+<section class="sec" id="our-products"><div class="wrap">
 <div class="head rv"><div><p class="eyebrow">07 / Our products</p><h2>One company.<br><em>Many branches.</em></h2></div><p class="lead">Every product grows from the same idea: useful, reliable technology. New branches are added here as they launch.</p></div>
 <div class="rv"><span class="root">alphex ai</span>
 <div class="tree">
@@ -2958,7 +3080,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 <article class="br next"><span class="no">+</span><div><span class="mono cat">Next branch</span><h3>More products coming</h3><p>New Alphex products will appear here as they are ready.</p></div><div class="act"><span class="live">Soon</span></div></article>
 </div></div></div></section>
 
-<section class="sec tint" id="pricing"><div class="wrap">
+<section class="sec" id="pricing"><div class="wrap">
 <div class="head rv"><div><p class="eyebrow">08 / Pricing</p><h2>Start focused.<br><em>Scale with confidence.</em></h2></div><p class="lead">Each project is scoped around the workflow, integrations, and quality requirements. These starting points help frame the conversation.</p></div>
 <div class="grid g3">
 <article class="pcard rv"><span class="mono ptier">01 / Starter</span><h3>Essential answers</h3><p>A focused assistant for common questions and lead capture.</p><div class="pamt">₹8,000 <span>/ from</span></div><ul><li>Single-channel assistant</li><li>FAQ and approved content</li><li>Basic lead capture</li></ul><a class="btn line" href="/contact.html">Discuss scope ↗</a></article>
@@ -2978,7 +3100,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 <details><summary>Can you improve an AI system we already have?</summary><p>Yes. We review the current experience, find quality gaps and help with evaluation, grounding and workflow design.</p></details>
 </div></div></section>
 
-<section class="sec violet cta" id="start"><div class="wrap">
+<section class="sec cta" id="start"><div class="wrap">
 <p class="eyebrow">10 / Start a conversation</p>
 <h2>Bring us the problem.<br><em>Let’s build the right thing.</em></h2>
 <p class="lead">Tell us where your team loses time, where information gets stuck, or what you want AI or your website to make possible.</p>
