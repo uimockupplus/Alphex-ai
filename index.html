@@ -2501,6 +2501,50 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .footer-columns{grid-template-columns:1fr}
 }
 </style>
+
+<style id="hero-section-consistency">
+/* Reuse the final hero canvas and its violet-accented translucent surfaces. */
+#demo, #products, .final-cta {
+  position:relative; isolation:isolate; overflow:hidden;
+  color:#f6f5fb !important;
+  background:radial-gradient(ellipse at 69% 45%,rgba(100,68,205,.2),transparent 37%),radial-gradient(ellipse at 48% 112%,rgba(104,68,231,.18),transparent 41%),linear-gradient(110deg,#050507 0%,#090810 53%,#050509 100%) !important;
+}
+#demo::before, #products::before, .final-cta::before {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse at 69% 53%,rgba(120,74,255,.2),transparent 40%),linear-gradient(180deg,transparent 60%,rgba(0,0,0,.2)) !important;
+  opacity:1 !important;
+}
+#demo .container, #products .container, .final-cta-inner {position:relative; z-index:1}
+#demo .section-heading, #products .section-heading {max-width:1160px; margin:0 auto 48px; align-items:end; gap:clamp(28px,6vw,80px)}
+#demo .section-heading .eyebrow, #products .section-heading .eyebrow, .final-cta .eyebrow {color:#c3baff !important; text-transform:uppercase; letter-spacing:.12em}
+#demo .section-heading .eyebrow > span:first-child:not(.status-dot), #products .section-heading .eyebrow > span:first-child:not(.status-dot), .final-cta .eyebrow > span:first-child:not(.status-dot) {color:#8fe5dc !important}
+#demo .section-heading h2, #products .section-heading h2 {margin:17px 0 0; color:#f6f5fb !important; font-size:clamp(48px,6.4vw,78px); line-height:.99; letter-spacing:-.085em; font-weight:300}
+#demo .section-heading h2 .gradient-text, #products .section-heading h2 .gradient-text, .final-cta h2 .gradient-text {color:#a78cff !important; background:none !important; -webkit-text-fill-color:#a78cff !important}
+#demo .section-heading > p, #products .section-heading > p {max-width:420px; color:#b3b2bd !important; font-size:14px; line-height:1.75; font-weight:300}
+/* Surface, border, blur and violet accent match the hero's workflow nodes. */
+#demo .demo-console, #demo .demo-step, #products .product-panel {
+  border-color:rgba(139,124,255,.28) !important;
+  background:rgba(22,24,36,.92) !important;
+  color:#f4f4f7 !important;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+#demo .demo-console, #products .product-panel {box-shadow:0 12px 30px rgba(0,0,0,.18)}
+#demo .demo-step p, #products .product-panel-copy p {color:#aeb0bc !important}
+#products .product-panel-copy h3 {color:#f4f4f7 !important}
+#products .product-panel:hover {border-color:rgba(139,124,255,.45) !important}
+#products .product-art {border:1px solid rgba(255,255,255,.14); border-radius:14px; overflow:hidden}
+.final-cta {padding:116px 0 122px !important; border-top:1px solid rgba(255,255,255,.08) !important; text-align:center}
+.final-cta .final-cta-glow {display:none !important}
+.final-cta h2 {color:#f6f5fb !important; font-size:clamp(50px,7.6vw,92px) !important; line-height:.99 !important; letter-spacing:-.09em !important; font-weight:300}
+.final-cta p {color:#b3b2bd !important}
+@media(max-width:780px) {
+  #demo .section-heading, #products .section-heading {grid-template-columns:1fr; gap:18px; margin-bottom:30px}
+  #demo .section-heading h2, #products .section-heading h2 {font-size:clamp(44px,11vw,64px)}
+  #demo .section-heading > p, #products .section-heading > p {max-width:560px}
+  .final-cta {padding:88px 0 94px !important}
+  .final-cta h2 {font-size:clamp(44px,10.5vw,68px) !important}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
