@@ -2884,6 +2884,22 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .nx #our-products .tree>.br.next .no{border-style:dashed;background:transparent;color:#c6bdff;border-color:rgba(167,140,255,.35);font-size:20px}
 .nx #our-products .tree>.br.next .live{border-color:rgba(255,255,255,.2);background:transparent;color:#a4a6b1}
 </style>
+<style id="capabilities-redesign">
+/* 01 / Capabilities — scoped card refresh */
+.nx #capabilities .grid.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.nx #capabilities .grid.g2>.card{position:relative;isolation:isolate;overflow:hidden;min-height:270px;padding:32px 34px;border:1px solid rgba(96,71,237,.16)!important;border-radius:22px;background:linear-gradient(145deg,#fff 0%,#fdfcff 62%,#f4f1ff 100%)!important;box-shadow:0 16px 42px rgba(43,32,112,.06)!important;transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease}
+.nx #capabilities .grid.g2>.card::before{content:"";position:absolute;z-index:-1;top:-90px;right:-82px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(112,87,255,.13),rgba(112,87,255,0) 70%);pointer-events:none}
+.nx #capabilities .grid.g2>.card::after{content:"✦";position:absolute;top:29px;right:31px;display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(96,71,237,.17);border-radius:13px;background:rgba(255,255,255,.76);color:#6047ed;font-size:18px;line-height:1}
+.nx #capabilities .grid.g2>.card:nth-child(2)::after{content:"◈"}
+.nx #capabilities .grid.g2>.card:nth-child(3)::after{content:"↗"}
+.nx #capabilities .grid.g2>.card:nth-child(4)::after{content:"⌁"}
+.nx #capabilities .grid.g2>.card:hover{transform:translateY(-4px);border-color:rgba(96,71,237,.42)!important;box-shadow:0 24px 54px rgba(43,32,112,.11)!important}
+.nx #capabilities .grid.g2>.card>.mono{display:inline-flex;align-items:center;min-height:28px;padding:6px 10px;border:1px solid rgba(96,71,237,.15);border-radius:999px;background:rgba(96,71,237,.07);color:#6047ed;font-size:10px;letter-spacing:.09em}
+.nx #capabilities .grid.g2>.card>h3{max-width:470px;margin:30px 48px 12px 0;color:#171527;font-size:clamp(25px,2.7vw,33px);line-height:1.1;letter-spacing:-.055em;font-weight:300}
+.nx #capabilities .grid.g2>.card>p{max-width:500px;color:#5b5d6c;font-size:14px;line-height:1.75}
+@media(max-width:620px){.nx #capabilities .grid.g2{grid-template-columns:1fr;gap:14px}.nx #capabilities .grid.g2>.card{min-height:0;padding:26px 23px}.nx #capabilities .grid.g2>.card>h3{margin-top:25px;font-size:27px}.nx #capabilities .grid.g2>.card::after{top:24px;right:22px;width:38px;height:38px}}
+.nx #capabilities h2 em,.nx #approach h2 em,.nx #architecture h2 em,.nx #trust h2 em,.nx #pricing h2 em,.nx #faq h2 em{color:#6047ed!important;-webkit-text-fill-color:#6047ed!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important}
+</style>
 </head>
 <body>
 <header class="topbar">
