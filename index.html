@@ -3288,6 +3288,21 @@ body { text-rendering: optimizeLegibility; }
   background-clip: initial !important;
 }
 </style>
+<style id="hero-copy-alignment">
+@media (min-width: 1001px) {
+  #top.hero .hero-ref-copy { transform: translateX(clamp(24px, 2.78vw, 40px)) !important; }
+}
+</style>
+<style id="workflow-section-white-background">
+.nx #implementation-flow { background: #fff !important; }
+</style>
+<style id="wordmark-hero-alignment">
+@media (min-width: 1001px) {
+  .topbar .wordmark {
+    transform: translateX(clamp(4px, calc(4.8vw - 45px), 32px)) !important;
+  }
+}
+</style>
 </head>
 <body>
 <header class="topbar">
