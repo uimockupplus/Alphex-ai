@@ -8,7 +8,7 @@
   <title>Alphex AI — Useful AI, thoughtfully built</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="/assets/favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -3070,6 +3070,224 @@ img,svg,video,canvas{max-width:100%;height:auto}
 @media(prefers-reduced-motion:reduce){.nx #implementation-flow .mobile-flow-link i,.nx #implementation-flow .mobile-branch-in i,.nx #implementation-flow .mobile-merge-line i{animation:none}}
 </style>
 </style>
+<style id="final-ui-refinement">
+/* Alphex AI — final visual refinement pass */
+:root {
+  --accent: #6047ed;
+  --accent-dark: #4d38cf;
+  --cyan: #43d3c8;
+  --text: #f4f3fa;
+  --muted: #a7a6b4;
+  --ease: cubic-bezier(.2,.75,.25,1);
+}
+
+html { scroll-padding-top: 96px; }
+body { text-rendering: optimizeLegibility; }
+:focus-visible { outline: 3px solid #66ddd4; outline-offset: 4px; }
+
+/* A quieter, translucent header that sits naturally over the dark hero. */
+.topbar, body.dark-theme .topbar {
+  background: rgba(7,7,11,.82) !important;
+  border-bottom-color: rgba(255,255,255,.1) !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,.12) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+.topbar .nav-links a { transition: color .2s ease, opacity .2s ease; }
+.topbar .nav-actions .contact-link,
+.topbar .nav-actions .header-demo { transition: transform .2s var(--ease), background-color .2s ease, border-color .2s ease; }
+.topbar .nav-actions .contact-link:hover,
+.topbar .nav-actions .header-demo:hover { transform: translateY(-1px); }
+
+/* Dark hero: subtle grid, balanced headline, and consistent device mockup. */
+#top.hero {
+  min-height: 620px;
+  padding-top: 54px !important;
+  padding-bottom: 54px !important;
+  background-color: #07070b !important;
+}
+#top.hero::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  pointer-events: none !important;
+  opacity: .16 !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px) !important;
+  background-size: 64px 64px !important;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+}
+#top.hero .hero-ref-layout { gap: clamp(28px, 3.4vw, 50px); }
+#top.hero .hero-ref-copy { transform: none; }
+#top.hero h1 {
+  max-width: 700px;
+  font-size: clamp(44px, 4.72vw, 68px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.072em !important;
+  text-wrap: balance;
+}
+#top.hero h1 span { display: block; white-space: nowrap; }
+#top.hero .hero-ref-description { max-width: 560px; line-height: 1.78; }
+#top.hero .hero-ref-button { min-height: 52px; border-radius: 14px; }
+#top.hero .hero-ref-primary { box-shadow: 0 10px 28px rgba(96,71,237,.24) !important; }
+#top.hero .hero-ref-visual { min-height: 420px; }
+#top.hero .hero-ref-dashboard { border-radius: 18px; }
+#top.hero .hero-ref-float { border-radius: 13px; }
+#top.hero .hero-ref-dashboard,
+#top.hero .hero-ref-float-data,
+#top.hero .hero-ref-float-flow,
+#top.hero .hero-ref-float-answer { will-change: transform; }
+
+/* One restrained, readable palette for the information-rich middle of the page. */
+.nx {
+  --ink: #1b1930;
+  --mut: #5b596e;
+  --v: #6047ed;
+  --v2: #a78cff;
+  --line: #e8e5f0;
+  --tint: #f8f7fb;
+  --r: 20px;
+}
+.nx .wrap { width: min(1200px, calc(100% - 64px)); }
+.nx .sec { padding: clamp(76px, 7vw, 96px) 0 !important; }
+.nx .head { gap: clamp(28px, 5vw, 68px); margin-bottom: 44px; }
+.nx .head h2 { max-width: 780px; font-size: clamp(42px, 5vw, 62px); line-height: 1.03; }
+.nx .lead { max-width: 440px; font-size: 15px; line-height: 1.8; }
+.nx #capabilities { background: #faf9fd !important; }
+.nx #industries { background: #f5f3fa !important; }
+.nx #see-thinking { background: #f8f7fb !important; }
+.nx #approach { background: #fff !important; }
+.nx #implementation-flow { background: #f7f6fa !important; }
+.nx #architecture { background: #fff !important; }
+.nx #trust { background: #f7f6fa !important; }
+.nx #our-products { background: radial-gradient(ellipse at 74% 0%, rgba(96,71,237,.24), transparent 46%), #07070b !important; }
+.nx #pricing { background: #fff !important; }
+.nx #faq { background: #faf9fd !important; }
+.nx #start { background: linear-gradient(130deg, #563ed7 0%, #6047ed 56%, #7158f4 100%) !important; }
+.nx .sec h2 { color: #1b1930; }
+.nx .sec h2 em { color: #6047ed !important; -webkit-text-fill-color: #6047ed !important; }
+.nx #our-products .head h2,
+.nx #our-products .head h2 em,
+.nx #start h2 { color: #fff !important; }
+.nx #our-products .head h2 em { color: #b8a8ff !important; -webkit-text-fill-color: #b8a8ff !important; }
+.nx #start h2 em { color: #e2dcff !important; -webkit-text-fill-color: #e2dcff !important; background: none !important; }
+
+/* Give cards and interactive panels a consistent edge, depth, and hover response. */
+.nx .card,
+.nx .pcard:not(.pcard-feat),
+.nx .ind-tab:not(.on),
+.nx .dm-tab,
+.nx .dm-chat,
+.nx .dm-insp,
+.nx #architecture .glass {
+  border-color: rgba(51,42,104,.13) !important;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(34,27,76,.045) !important;
+}
+.nx .card:hover,
+.nx .pcard:not(.pcard-feat):hover,
+.nx .ind-tab:not(.on):hover,
+.nx .dm-tab:hover {
+  border-color: rgba(96,71,237,.42) !important;
+  box-shadow: 0 18px 40px rgba(34,27,76,.09) !important;
+}
+.nx .card p,
+.nx .pcard:not(.pcard-feat) > p,
+.nx .pcard:not(.pcard-feat) li,
+.nx .dm-row small { color: #56566a; }
+.nx .card .mono,
+.nx .eyebrow { letter-spacing: .12em; }
+.nx .ind-panel { border-radius: 20px; box-shadow: 0 18px 48px rgba(69,48,183,.16); }
+.nx .dm-tab.on { border-color: #6047ed !important; box-shadow: 0 10px 24px rgba(96,71,237,.12) !important; }
+.nx .pcard-feat { border-radius: 20px; box-shadow: 0 20px 48px rgba(65,46,173,.2) !important; }
+.nx #faq details { transition: border-color .2s ease, background .2s ease; }
+.nx #faq details[open] { border-color: rgba(96,71,237,.35); background: rgba(255,255,255,.72); }
+.nx .strip .track { animation-duration: 42s; }
+
+@media (max-width: 1000px) {
+  #top.hero { min-height: 0; padding: 58px 30px 48px !important; }
+  #top.hero .hero-ref-layout { max-width: 760px; grid-template-columns: 1fr; gap: 10px; }
+  #top.hero .hero-ref-copy { max-width: 700px; margin: 0 auto; text-align: center; }
+  #top.hero .hero-ref-kicker { margin-bottom: 19px; }
+  #top.hero h1 { max-width: 700px; margin-inline: auto; text-align: center !important; font-size: clamp(42px, 6vw, 60px) !important; }
+  #top.hero .hero-ref-description { margin: 19px auto 0; text-align: center; }
+  #top.hero .hero-ref-actions { justify-content: center; }
+  #top.hero .hero-ref-benefits { justify-content: center; margin-top: 27px; }
+  #top.hero .hero-ref-visual { width: min(100%, 660px); height: 390px; min-height: 0; margin: 0 auto; }
+}
+@media (max-width: 800px) {
+  .nx .wrap { width: min(100% - 40px, 700px); }
+  .nx .sec { padding: 76px 0 !important; }
+  .nx .head { margin-bottom: 34px; }
+}
+@media (max-width: 560px) {
+  #top.hero { padding: 43px 18px 34px !important; }
+  #top.hero h1 { font-size: clamp(28px, 8.8vw, 35px) !important; line-height: 1.12 !important; letter-spacing: -.065em !important; }
+  #top.hero .hero-ref-description { max-width: 440px; }
+  #top.hero .hero-ref-actions { gap: 9px; }
+  #top.hero .hero-ref-button { flex: 1 1 0; min-width: 0; min-height: 46px; padding: 0 11px; gap: 7px; font-size: 11px; }
+  #top.hero .hero-ref-benefits { max-width: 380px; }
+  #top.hero .hero-ref-visual { height: 320px; }
+  .nx .wrap { width: calc(100% - 32px); }
+  .nx .sec { padding: 66px 0 !important; }
+  .nx .head { gap: 14px; margin-bottom: 28px; }
+  .nx .head h2 { font-size: clamp(36px, 10vw, 48px); }
+  .nx .lead { font-size: 14px; }
+  .nx .card { border-radius: 16px; }
+}
+@media (max-width: 380px) {
+  #top.hero { padding-inline: 12px !important; }
+  #top.hero .hero-ref-actions { flex-direction: column; }
+  #top.hero .hero-ref-button { width: 100%; flex: none; }
+  .nx .wrap { width: calc(100% - 24px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  #top.hero .hero-ref-dashboard,
+  #top.hero .hero-ref-float-data,
+  #top.hero .hero-ref-float-flow,
+  #top.hero .hero-ref-float-answer { animation: none !important; transform: none !important; translate: none !important; }
+}
+
+</style>
+<style id="heading-weight-refinement">
+/* Slightly firmer heading weights; retain the page’s understated type style. */
+#top.hero h1, #top.hero h1 span { font-weight: 500 !important; }
+.nx h2, .nx h3, .nx h4 { font-weight: 400 !important; }
+.footer-pro h4 { font-weight: 500 !important; }
+</style>
+<style id="heading-weight-adjustment">
+/* Requested 50-unit reduction from the previous heading weights. */
+#top.hero h1, #top.hero h1 span { font-weight: 450 !important; }
+.nx h2, .nx h3, .nx h4 { font-weight: 350 !important; }
+.footer-pro h4 { font-weight: 450 !important; }
+</style>
+<style id="specified-heading-contrast">
+/* Darker violet for the requested highlighted section-heading phrases. */
+.nx #capabilities h2 em,
+.nx #industries h2 em,
+.nx #see-thinking h2 em,
+.nx #approach h2 em,
+.nx #implementation-flow .head h2 em,
+.nx #architecture h2 em,
+.nx #trust h2 em,
+.nx #pricing h2 em,
+.nx #faq h2 em {
+  color: #8d8a96 !important;
+  -webkit-text-fill-color: #8d8a96 !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -3161,7 +3379,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
   <div class="hero-ref-layout">
     <div class="hero-ref-copy">
       <p class="hero-ref-kicker">AI systems for real work</p>
-      <h1 id="hero-ref-title">AI solutions designed<br>around<br class="hero-mobile-break"><span>your business needs.</span></h1>
+      <h1 id="hero-ref-title">AI solutions<br>designed around<br><span>your business needs.</span></h1>
       <p class="hero-ref-description">Alphex AI builds AI assistants, knowledge systems, and intelligent automations that help businesses reduce repetitive work, make information accessible, and build more efficient workflows.</p>
       <div class="hero-ref-actions">
         <a class="hero-ref-button hero-ref-primary" href="/contact.html">Discuss Your Project <span aria-hidden="true">↗</span></a>
