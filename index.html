@@ -3493,6 +3493,36 @@ body { text-rendering: optimizeLegibility; }
 }
 @media(prefers-reduced-motion:reduce){.nx #capabilities .bento>.card,.nx #capabilities .fl-run,.nx #capabilities .fl-live{transition:none!important;animation:none!important}.nx #capabilities .bento>.card:hover{transform:none!important}}
 </style>
+<style id="chat-live-typing">
+.nx #capabilities .b1>.bv-chat .ch-body{min-height:268px;max-height:268px;overflow:hidden;justify-content:flex-end;transition:opacity .4s ease}
+.nx #capabilities .ch-body.fade{opacity:0}
+.nx #capabilities .ch-body .ch-m,.nx #capabilities .ch-body .ch-r,.nx #capabilities .ch-body .ch-note,.nx #capabilities .ch-body .ch-src{animation:chIn .35s ease both}
+.nx #capabilities .ch-body .ch-r .ch-m,.nx #capabilities .ch-body .ch-col .ch-src{animation:chIn .35s ease both}
+.nx #capabilities .ch-input{min-height:38px;transition:border-color .2s,box-shadow .2s}
+.nx #capabilities .ch-input.focus{border-color:#6047ed;box-shadow:0 0 0 3px rgba(96,71,237,.12)}
+.nx #capabilities .ch-input-text{color:#201e32;font-size:12px;white-space:nowrap;overflow:hidden;min-width:0}
+.nx #capabilities .ch-input-text .ch-ph{color:#a6a4b4}
+.nx #capabilities .ch-input-text.typing::after,.nx #capabilities .ch-m.caret::after{content:"";display:inline-block;width:1px;height:1em;margin-left:2px;vertical-align:-.15em;background:#6047ed;animation:chBlink .8s steps(2,start) infinite}
+.nx #capabilities .ch-input b{transition:transform .15s,background-color .2s;flex:none}
+.nx #capabilities .ch-input b.press{transform:scale(.82);background-color:#4d38cf}
+@keyframes chBlink{to{visibility:hidden}}
+.nx #capabilities .ch-body .ch-dots{display:flex}
+</style>
+<style id="hero-mobile-heading-size">
+/* Mobile: two lines, each sized so the text fills the width exactly (see fit script). */
+#top.hero h1 b.hl{font-weight:inherit;font-style:normal}
+@media (max-width:860px){
+  #top.hero .hero-ref-layout{grid-template-columns:minmax(0,1fr)!important}
+  #top.hero .hero-ref-copy,#top.hero .hero-ref-visual{min-width:0;max-width:100%}
+}
+@media (max-width:560px){
+  #top.hero{overflow-x:hidden}
+  #top.hero h1{font-size:6.1vw!important;line-height:1.14!important;letter-spacing:-.055em!important;white-space:nowrap;width:100%;max-width:100%;min-width:0}
+  #top.hero h1 .m-hide{display:none}
+  #top.hero h1 b.hl{display:block;white-space:nowrap}
+  #top.hero h1 span{display:block;white-space:nowrap!important}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -3584,7 +3614,7 @@ body { text-rendering: optimizeLegibility; }
   <div class="hero-ref-layout">
     <div class="hero-ref-copy">
       <p class="hero-ref-kicker">AI systems for real work</p>
-      <h1 id="hero-ref-title">AI solutions<br>designed around<br><span>your business needs.</span></h1>
+      <h1 id="hero-ref-title"><b class="hl">AI solutions<br> designed around</b><br class="m-hide"><span>your business needs.</span></h1>
       <p class="hero-ref-description">Alphex AI builds AI assistants, knowledge systems, and intelligent automations that help businesses reduce repetitive work, make information accessible, and build more efficient workflows.</p>
       <div class="hero-ref-actions">
         <a class="hero-ref-button hero-ref-primary" href="/contact.html">Discuss Your Project <span aria-hidden="true">↗</span></a>
@@ -3640,15 +3670,8 @@ body { text-rendering: optimizeLegibility; }
 <article class="card rv b1"><span class="mono">01 / Assist</span><h3>AI assistants that feel like part of the team.</h3><p>Support customers and employees with useful answers, lead capture and a clear path to a human when needed.</p>
 <div class="bv bv-chat" aria-hidden="true">
 <div class="ch-top"><span class="ch-ai"><svg viewBox="0 0 16 16" width="14" height="14" fill="#fff"><path d="M8 1.2l1.55 4.25L13.8 7l-4.25 1.55L8 12.8 6.45 8.55 2.2 7l4.25-1.55z"/></svg></span><div><b>Alphex AI <i>AI</i></b><em><u></u>Online</em></div></div>
-<div class="ch-body">
-<div class="ch-m u d1">What is your return window?</div>
-<div class="ch-r d2"><span class="ch-ai sm"><svg viewBox="0 0 16 16" width="10" height="10" fill="#fff"><path d="M8 1.2l1.55 4.25L13.8 7l-4.25 1.55L8 12.8 6.45 8.55 2.2 7l4.25-1.55z"/></svg></span><div class="ch-col"><div class="ch-m a">30 days from delivery.</div><div class="ch-src"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5l3 3V14a.5.5 0 0 1-.5.5h-7.5A.5.5 0 0 1 3.5 14V2a.5.5 0 0 1 .5-.5Z"/><path d="M9 1.5v3h3"/></svg>Source: Returns policy</div></div></div>
-<div class="ch-r d3"><span class="ch-ai sm"><svg viewBox="0 0 16 16" width="10" height="10" fill="#fff"><path d="M8 1.2l1.55 4.25L13.8 7l-4.25 1.55L8 12.8 6.45 8.55 2.2 7l4.25-1.55z"/></svg></span><div class="ch-col"><div class="ch-m a">Want a callback from our team?</div></div></div>
-<div class="ch-m u d4">Yes, please.</div>
-<div class="ch-r ch-typing"><span class="ch-ai sm"><svg viewBox="0 0 16 16" width="10" height="10" fill="#fff"><path d="M8 1.2l1.55 4.25L13.8 7l-4.25 1.55L8 12.8 6.45 8.55 2.2 7l4.25-1.55z"/></svg></span><div class="ch-dots"><i></i><i></i><i></i></div></div>
-<div class="ch-note d6"><span>✓ Lead captured</span><span>↗ Complex case → handed to a person</span></div>
-</div>
-<div class="ch-input"><span>Ask anything…</span><b><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></b></div>
+<div class="ch-body" id="chBody"></div>
+<div class="ch-input"><span class="ch-input-text" id="chInputText"><span class="ch-ph">Ask anything…</span></span><b id="chSend"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></b></div>
 </div></article>
 <article class="card rv b2"><span class="mono">02 / Know</span><h3>Knowledge that is easier to find.</h3><p>Connect documents and approved sources so people get relevant, contextual answers linked to the source.</p>
 <div class="bv bv-know" aria-hidden="true"><div class="kq">⌕&nbsp; How do I change a customer’s plan?</div><div class="ka">Open Billing, choose <b>Change plan</b>, and it applies from the next cycle.<sup>1</sup><sup>2</sup></div><div class="kr"><b>1</b><span>Billing guide.pdf</span><em>✓ Approved</em></div><div class="kr"><b>2</b><span>Plan FAQ</span><em>✓ Approved</em></div></div></article>
@@ -4800,6 +4823,101 @@ g('indTitle').textContent=b.querySelector('b').textContent;g('indDesc').textCont
 g('indTag').textContent=b.dataset.t.replace(/&amp;/g,'&');
 panel.classList.remove('swap');void panel.offsetWidth;panel.classList.add('swap');
 }));
+})();
+</script>
+<script id="chat-live-typing-js">
+(()=>{
+const body=document.getElementById('chBody'),inp=document.getElementById('chInputText'),send=document.getElementById('chSend');
+if(!body||!inp||!send)return;
+const box=inp.closest('.ch-input'),card=body.closest('.b1');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const spark='<svg viewBox="0 0 16 16" width="10" height="10" fill="#fff"><path d="M8 1.2l1.55 4.25L13.8 7l-4.25 1.55L8 12.8 6.45 8.55 2.2 7l4.25-1.55z"/></svg>';
+const docIcon='<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5l3 3V14a.5.5 0 0 1-.5.5h-7.5A.5.5 0 0 1 3.5 14V2a.5.5 0 0 1 .5-.5Z"/><path d="M9 1.5v3h3"/></svg>';
+const PH='<span class="ch-ph">Ask anything…</span>';
+let token=0;
+const wait=(ms,t)=>new Promise((res,rej)=>setTimeout(()=>t===token?res():rej(),ms));
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
+const trim=()=>{while(body.scrollHeight>body.clientHeight+1&&body.children.length>1)body.removeChild(body.firstChild)};
+async function typeInto(node,text,t,min,max){
+  for(let i=1;i<=text.length;i++){node.textContent=text.slice(0,i);await wait(min+Math.random()*(max-min)+(/[,.?]/.test(text[i-1])?90:0),t)}
+}
+async function userSays(text,t){
+  box.classList.add('focus');inp.classList.add('typing');inp.textContent='';
+  await wait(350,t);
+  await typeInto(inp,text,t,38,78);
+  await wait(320,t);
+  send.classList.add('press');await wait(160,t);send.classList.remove('press');
+  inp.classList.remove('typing');inp.innerHTML=PH;box.classList.remove('focus');
+  const m=el('div','ch-m u');m.textContent=text;body.appendChild(m);trim();
+}
+async function botTyping(ms,t){
+  const r=el('div','ch-r','<span class="ch-ai sm">'+spark+'</span><div class="ch-dots"><i></i><i></i><i></i></div>');
+  body.appendChild(r);trim();await wait(ms,t);return r;
+}
+async function botSays(text,t,src){
+  const r=await botTyping(900+Math.random()*500,t);
+  const col=el('div','ch-col');const m=el('div','ch-m a caret');col.appendChild(m);
+  r.replaceChildren(el('span','ch-ai sm',spark),col);
+  await typeInto(m,text,t,22,42);m.classList.remove('caret');
+  if(src){await wait(250,t);col.appendChild(el('div','ch-src',docIcon+src))}
+  trim();
+}
+async function cycle(){
+  const t=++token;
+  try{
+    body.classList.remove('fade');body.replaceChildren();inp.innerHTML=PH;box.classList.remove('focus');
+    await wait(700,t);
+    await userSays('What is your return window?',t);
+    await wait(250,t);
+    await botSays('30 days from delivery.',t,'Source: Returns policy');
+    await wait(900,t);
+    await botSays('Want a callback from our team?',t);
+    await wait(1000,t);
+    await userSays('Yes, please.',t);
+    await wait(250,t);
+    (await botTyping(1000,t)).remove();
+    body.appendChild(el('div','ch-note','<span>✓ Lead captured</span><span>↗ Complex case → handed to a person</span>'));trim();
+    await wait(4200,t);
+    body.classList.add('fade');await wait(500,t);
+    cycle();
+  }catch(e){}
+}
+if(reduced){
+  body.innerHTML='<div class="ch-m u">What is your return window?</div><div class="ch-r"><span class="ch-ai sm">'+spark+'</span><div class="ch-col"><div class="ch-m a">30 days from delivery.</div><div class="ch-src">'+docIcon+'Source: Returns policy</div></div></div><div class="ch-note"><span>✓ Lead captured</span><span>↗ Complex case → handed to a person</span></div>';
+  return;
+}
+if('IntersectionObserver' in window){
+  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)cycle();else token++;}),{threshold:.3}).observe(card);
+}else cycle();
+document.addEventListener('visibilitychange',()=>{if(document.hidden)token++;else{const r=card.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)cycle();}});
+})();
+</script>
+<script id="hero-fit-js">
+(()=>{
+const h1=document.getElementById('hero-ref-title');
+const hero=document.getElementById('top');
+if(!h1||!hero)return;
+const mq=matchMedia('(max-width:560px)');
+function avail(){
+  const cs=getComputedStyle(hero);
+  return hero.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+}
+function fit(){
+  if(!mq.matches){h1.style.removeProperty('font-size');return}
+  const lines=[h1.querySelector('b.hl'),h1.querySelector('span')].filter(Boolean);
+  h1.style.setProperty('font-size','100px','important');
+  let widest=0;
+  lines.forEach(l=>{const r=document.createRange();r.selectNodeContents(l);widest=Math.max(widest,r.getBoundingClientRect().width)});
+  const w=avail();
+  if(!widest||!w){h1.style.removeProperty('font-size');return}
+  h1.style.setProperty('font-size',(Math.floor((w/widest)*100*0.985*10)/10)+'px','important');
+}
+fit();
+addEventListener('resize',fit);
+addEventListener('orientationchange',fit);
+addEventListener('load',fit);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+if('ResizeObserver' in window)new ResizeObserver(fit).observe(hero);
 })();
 </script>
 </body>
