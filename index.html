@@ -8,11 +8,11 @@
 <title>Alphex AI | AI solutions designed around your business</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--ink:#0a0a0f;--soft:#f5f4fa;--line:#e3e1ec;--muted:#5b5d6b;--p:#7057ff;--pd:#5540d8;--lav:#eeeaff;--f:"Inter","Helvetica Neue",Arial,sans-serif}
+:root{--ink:#0a0a0f;--soft:#f5f4fa;--line:#e3e1ec;--muted:#5b5d6b;--p:#7057ff;--pd:#5540d8;--lav:#eeeaff;--f:"DM Sans","Inter","Helvetica Neue",Arial,sans-serif}
 *{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{font:400 17px/1.6 var(--f);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"cv11","ss03"}
 a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
@@ -136,6 +136,79 @@ footer{background:var(--ink);color:#bfc0cc;padding:88px 0 36px}
 @media(max-width:760px){.wf-d{display:none}.wf-m{display:block}.wfbody{padding:20px 12px 24px}.wfhead{padding:16px 20px}.wfhead b{font-size:16px}.wfhead span{margin-left:0;flex-basis:100%;font-size:14px}.family{grid-template-columns:1fr;gap:16px}.bb{padding:22px}.bt{margin-bottom:20px}.brand h3{font-size:24px}.ann{font-size:13.5px;padding:10px 16px}.ann a{display:block;margin:4px 0 0}.nav{height:68px}.mobile-panel{inset:68px 0 0}.wordmark{font-size:23px}.nav-actions .btn{padding:10px 16px;font-size:14px}.hero h1{margin-bottom:24px}.hero p.sub{font-size:18px;margin-bottom:32px}.acts .btn{width:100%}.teasers{padding:24px 0 32px}.head{margin-bottom:40px}.lead{font-size:18px}.ind-panel{min-height:0}.ind-panel h3{font-size:30px}.ind-panel p{font-size:18px}.price .btn,.cta .btn{width:100%}.amt{font-size:42px}.cta h2{font-size:36px}}
 body{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* Refined responsive details */
+:root{--line:#e7e6ed;--muted:#606372;--p:#684ff4;--pd:#4f3bd0;--lav:#f0edff}
+body{font-family:var(--f);letter-spacing:-.012em}
+.hero{isolation:isolate}
+.hero:before{content:"";position:absolute;z-index:0;right:0;top:0;bottom:0;width:min(58%,760px);pointer-events:none;opacity:.2;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='112' viewBox='0 0 64 112'%3E%3Cpath d='M32 0 58 28 32 56 6 28zM32 56 58 84 32 112 6 84z' fill='%23684ff4' fill-opacity='.52'/%3E%3C/svg%3E");background-size:64px 112px;mask-image:linear-gradient(100deg,transparent 0%,#000 82%);-webkit-mask-image:linear-gradient(100deg,transparent 0%,#000 82%)}
+.hero-in,.teasers{position:relative;z-index:2}
+.brand{transform:translateY(0);transition:transform .32s cubic-bezier(.2,.7,.25,1),border-color .22s,box-shadow .22s}
+.brand:hover{transform:translateY(-5px);border-color:#c8bfff;box-shadow:0 20px 48px rgba(63,48,140,.12)}
+.brand .mono{transition:transform .32s ease,background .22s,color .22s}
+.brand:hover .mono{transform:rotate(-6deg) scale(1.06);background:#e8e3ff}
+.brand.next:hover{transform:translateY(-3px)}
+.wfcard{border-radius:20px;box-shadow:0 18px 52px rgba(58,45,120,.07)}
+.wfhead{min-height:76px}.wfhead span{font-size:14px}
+.wf .ln{stroke:#cfc7f2;stroke-width:2}
+.wf .nd{filter:drop-shadow(0 5px 10px rgba(25,20,60,.045))}
+@media(max-width:1000px){
+  .hero:before{width:72%;opacity:.16}
+  .hero .art{display:none}
+  .wrap{padding-left:28px;padding-right:28px}
+  .sec{padding:92px 0}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow div{border-right:1px solid var(--line)}
+  .flow div:nth-child(2n){border-right:0}
+  .flow div:last-child{grid-column:1/-1;border-bottom:0}
+}
+@media(max-width:760px){
+  html{scroll-padding-top:76px}
+  .wrap{padding-left:20px;padding-right:20px}
+  .hero:before{width:100%;opacity:.14;background-size:48px 84px;mask-image:linear-gradient(90deg,transparent 3%,#000 96%);-webkit-mask-image:linear-gradient(90deg,transparent 3%,#000 96%)}
+  .hero-in{padding:58px 0 42px}
+  .hero h1{max-width:11ch;font-size:clamp(42px,11vw,60px);letter-spacing:-.045em}
+  .hero p.sub{max-width:34em}
+  .teasers{background:rgba(255,255,255,.94);backdrop-filter:blur(3px)}
+  .sec{padding:68px 0}
+  .head h2,.split h2{font-size:clamp(34px,9vw,48px);line-height:1.08}
+  .lead{font-size:17px;margin-top:18px}
+  .flow{grid-template-columns:1fr}
+  .flow div,.flow div:nth-child(2n){border-right:0;border-bottom:1px solid var(--line);padding:24px}
+  .flow div:last-child{grid-column:auto;border-bottom:0}
+  .wfbody{padding:16px 10px 20px}
+  .wf-m{width:100%;max-width:360px}
+  .wfhead{gap:8px 12px}
+  .family{gap:14px}
+  .bb{padding:22px}
+  .brand h3{font-size:25px}
+  .brand p{font-size:15.5px}
+  .brand.next .bb{gap:12px}
+  .prod{padding:28px 0}
+  .ind-list{scroll-snap-type:x mandatory}
+  .ind-tab{scroll-snap-align:start;padding:16px 20px;font-size:16px}
+  .ind-panel{padding:26px 22px}
+  .ind-foot{align-items:stretch}
+  .ind-foot .btn{width:100%}
+  .wfhead span{margin-left:42px;flex-basis:100%}
+  .ft{gap:42px}
+  .fb{margin-top:46px}
+  .cta{padding:72px 0}
+  .cta h2{font-size:clamp(36px,10vw,52px)}
+}
+@media(max-width:390px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .nav-actions{gap:8px}.nav-actions .btn{padding:9px 12px}
+  .wordmark{font-size:21px}
+  .wfbody{padding-left:6px;padding-right:6px}
+  .wf-m .t{font-size:15px}.wf-m .s{font-size:13px}.wf-m .lbl{font-size:12px}
+  .wf-m{max-width:340px}
+}
+@keyframes card-enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.brand.motion-in{animation:card-enter .65s cubic-bezier(.2,.7,.25,1) both}
+.brand.motion-in:nth-child(2){animation-delay:.08s}.brand.motion-in:nth-child(3){animation-delay:.16s}.brand.motion-in:nth-child(4){animation-delay:.24s}
+@media(prefers-reduced-motion:reduce){.brand.motion-in{animation:none!important}.brand,.brand .mono{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -611,6 +684,17 @@ window.addEventListener('DOMContentLoaded', function () {
     btn.setAttribute('aria-expanded', String(open)); panel.setAttribute('aria-hidden', String(!open));
   });
   panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (a.id !== 'mobileProfileLink') closeMenu(); }));
+})();
+/* Product family: subtle entrance motion, with content visible if motion APIs are unavailable. */
+(() => {
+  const cards = document.querySelectorAll('#our-products .brand');
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('motion-in'); obs.unobserve(entry.target); }
+    });
+  }, {threshold: 0.12});
+  cards.forEach(card => observer.observe(card));
 })();
 /* Industry tabs */
 (() => {
