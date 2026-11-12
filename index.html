@@ -32,25 +32,42 @@ header{background:#fff;position:sticky;top:0;z-index:50;border-bottom:1px solid 
 .nav-links{display:flex;gap:36px;font-size:15.5px;font-weight:500}.nav-links a:hover{color:var(--p)}
 .nav-actions{display:flex;align-items:center;gap:12px;margin-left:auto}.nav-actions .btn{padding:12px 22px;font-size:15px}
 
-/* Nav dropdowns */
+/* Nav dropdowns: full-width mega panels */
 .nav-links{align-items:stretch}.nav-links>a{display:flex;align-items:center}
-.dd{position:relative;display:flex;align-items:center}
+.dd{display:flex;align-items:center}
 .dd-btn{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--ink);height:100%}
 .dd-btn:hover,.dd.open .dd-btn{color:var(--p)}
 .dd-chev{width:15px;height:15px;transition:transform .2s}.dd.open .dd-chev{transform:rotate(180deg)}
-.dd-panel{display:none;position:absolute;top:100%;left:-24px;background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;box-shadow:0 24px 60px rgba(10,10,15,.14);padding:20px 22px 22px;z-index:60}
-.dd.open .dd-panel{display:block;animation:ddIn .16s ease-out}
-@keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.dd-products{width:410px}.dd-company{width:600px}
-.dd-label{display:inline-block;font-size:13px;font-weight:600;color:var(--ink);background:var(--soft);padding:7px 14px;border-radius:999px;margin-bottom:14px}
-.dd-list{display:grid;gap:10px}.dd-grid{grid-template-columns:1fr 1fr}
-.nav-links .dd-item{display:flex;align-items:flex-start;gap:14px;padding:15px 16px;background:var(--soft);border-radius:12px;color:var(--ink);transition:background .15s,box-shadow .15s}
-.nav-links .dd-item:hover{background:var(--lav);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(112,87,255,.25)}
-.dd-ic{flex:none;width:38px;height:38px;border-radius:10px;background:#fff;color:var(--p);display:grid;place-items:center;box-shadow:0 1px 2px rgba(10,10,15,.06)}
-.dd-ic svg{width:20px;height:20px}
-.dd-tx{display:block;min-width:0}.dd-tx b{display:flex;align-items:center;gap:6px;font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
-.dd-tx small{display:block;font-size:14px;font-weight:400;color:var(--muted);line-height:1.45;margin-top:3px}
+.dd-panel{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);border-radius:0 0 28px 28px;box-shadow:0 30px 70px rgba(10,10,15,.16);z-index:60}
+.dd.open .dd-panel{display:block;animation:ddIn .18s ease-out}
+@keyframes ddIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.mega{display:grid;gap:0;align-items:stretch;padding-top:0;padding-bottom:0}
+.mega{grid-template-columns:300px minmax(0,1fr) 340px}
+/* Products (card style) */
+.mg-lead{padding:44px 36px 44px 0;border-right:1px solid var(--line)}
+.mg-badge{display:grid;place-items:center;width:64px;height:64px;border-radius:14px;background:var(--ink);color:#fff;margin-bottom:22px}.mg-badge svg{width:30px;height:30px}
+.mg-lead h3{font-size:34px;letter-spacing:-.035em;margin-bottom:12px}
+.mg-lead p{font-size:18px;color:var(--muted);line-height:1.5;margin-bottom:24px}
+.nav-links .mg-btn{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:#fff;padding:10px 12px 10px 20px;border-radius:6px;font-size:16px;font-weight:500;margin-bottom:26px}
+.nav-links .mg-btn:hover{background:#2a2a35;color:#fff}
+.mg-btn i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;color:var(--ink)}.mg-btn svg{width:15px;height:15px}
+.nav-links .mg-link{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:15.5px;padding:7px 0}.nav-links .mg-link:hover{color:var(--p)}.mg-link svg{width:18px;height:18px}
+.mg-main{padding:44px 40px}
+.dd-label{display:inline-block;font-size:14px;font-weight:500;color:var(--ink);background:var(--soft);padding:9px 20px;border-radius:999px;margin-bottom:20px}
+.dd-list{display:grid;gap:14px}.dd-grid{grid-template-columns:1fr 1fr}.dd-grid .dd-item:last-child:nth-child(odd){grid-column:1/-1}
+.nav-links .dd-item{display:flex;align-items:flex-start;gap:14px;padding:20px 22px;background:var(--soft);border-radius:14px;color:var(--ink);transition:background .15s,box-shadow .15s}
+.nav-links .dd-item:hover{background:var(--lav);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(112,87,255,.28)}
+.dd-ic{flex:none;width:24px;height:24px;color:var(--p);margin-top:2px}.dd-ic svg{width:24px;height:24px}
+.dd-tx{display:block;min-width:0}.dd-tx b{display:flex;align-items:center;gap:6px;font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.dd-tx small{display:block;font-size:15px;font-weight:400;color:var(--muted);line-height:1.5;margin-top:4px}
 .dd-arrow{width:13px;height:13px;color:var(--muted);flex:none}
+.mg-promo{margin:0;padding:44px 0 44px 36px;border-left:1px solid var(--line)}
+.promo{display:block;border-radius:16px;padding:22px;background:var(--soft)}
+.promo-vis{height:150px;border-radius:12px;margin-bottom:20px;background:radial-gradient(120% 140% at 15% 0%,rgba(112,87,255,.32) 0,transparent 60%),radial-gradient(110% 120% at 100% 100%,rgba(112,87,255,.18) 0,transparent 60%),var(--lav);display:grid;place-items:center}
+.promo-vis span{background:var(--ink);color:#fff;font-weight:700;letter-spacing:-.03em;font-size:20px;padding:14px 22px;border-radius:8px}
+.promo b{display:block;font-size:20px;font-weight:500;letter-spacing:-.02em;line-height:1.35;margin-bottom:16px}
+.promo:hover em{color:var(--p)}
+.promo em{font-style:normal;font-size:17px;font-weight:500;display:inline-flex;align-items:center;gap:8px}.promo em svg{width:16px;height:16px}
 .mp-group{padding:22px 0 6px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
 .mobile-panel a.mp-sub{font-size:17px;font-weight:500;padding-left:16px;min-height:48px}
 .auth-profile{position:relative;display:none}
@@ -995,17 +1012,29 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
       <a href="#capabilities">Capabilities</a>
       <a href="#approach">Process</a>
       <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Products<svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="dd-panel dd-products" role="menu"><div class="dd-label">Our products</div><div class="dd-list">
-          <a class="dd-item" href="https://studio.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></span><span class="dd-tx"><b>Alphex Studio<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Fast, modern websites for growing brands.</small></span></a>
-          <a class="dd-item" href="https://evalloop.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/><path d="m9 12 2 2 4-4"/></svg></span><span class="dd-tx"><b>EvalLoop AI<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Test and improve AI systems with real cases.</small></span></a>
-          <a class="dd-item" href="https://evalloopjobs.alphexai.com" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span><span class="dd-tx"><b>EvalLoop Jobs<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Evaluation, annotation and AI training work.</small></span></a>
+        <div class="dd-panel dd-products"><div class="wrap mega">
+          <div class="mg-lead"><span class="mg-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg></span><h3>Our products</h3><p>Build, test and ship reliable AI.</p>
+            <a class="mg-btn" href="#our-products">Learn more <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+            <a class="mg-link" href="#pricing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12 12 20 3 11V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>Pricing</a><a class="mg-link" href="#faq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>FAQ</a></div>
+          <div class="mg-main"><span class="dd-label">Products</span><div class="dd-list dd-grid">
+            <a class="dd-item" href="https://studio.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></span><span class="dd-tx"><b>Alphex Studio<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Fast, modern websites for growing brands.</small></span></a>
+            <a class="dd-item" href="https://evalloop.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/><path d="m9 12 2 2 4-4"/></svg></span><span class="dd-tx"><b>EvalLoop AI<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Test and improve AI systems with real cases.</small></span></a>
+            <a class="dd-item" href="https://evalloopjobs.alphexai.com" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span><span class="dd-tx"><b>EvalLoop Jobs<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Evaluation, annotation and AI training work.</small></span></a>
+          </div></div>
+          <aside class="mg-promo"><a class="promo" href="https://studio.alphexai.com/" target="_blank" rel="noopener"><div class="promo-vis"><span>Alphex Studio</span></div><b>Need a website too? Alphex Studio builds fast, modern sites for growing brands.</b><em>Explore Studio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></a></aside>
         </div></div></div>
       <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Company<svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="dd-panel dd-company" role="menu"><div class="dd-label">Company</div><div class="dd-list dd-grid">
-          <a class="dd-item" href="/about.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span class="dd-tx"><b>About</b><small>Who we are and how we work.</small></span></a>
-          <a class="dd-item" href="/careers.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span><span class="dd-tx"><b>Careers</b><small>Join the team building reliable AI.</small></span></a>
-          <a class="dd-item" href="/innovation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="dd-tx"><b>Innovation Program</b><small>Our program for new ideas and builders.</small></span></a>
-          <a class="dd-item" href="/documentation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg></span><span class="dd-tx"><b>Documentation</b><small>Guides and technical references.</small></span></a>
+        <div class="dd-panel dd-company"><div class="wrap mega">
+          <div class="mg-lead"><span class="mg-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5l8-2v18M12 8l8 2v11M3 21h18M8 8h1M8 12h1M8 16h1M16 14h1M16 18h1"/></svg></span><h3>Company</h3><p>Reliable AI, built with care.</p>
+            <a class="mg-btn" href="/about.html">Learn more <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+            <a class="mg-link" href="/contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Contact</a><a class="mg-link" href="#pricing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12 12 20 3 11V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>Pricing</a></div>
+          <div class="mg-main"><span class="dd-label">Company</span><div class="dd-list dd-grid">
+            <a class="dd-item" href="/about.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span class="dd-tx"><b>About</b><small>Who we are and how we build reliable AI.</small></span></a>
+            <a class="dd-item" href="/careers.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span><span class="dd-tx"><b>Careers</b><small>Join the team behind Alphex AI.</small></span></a>
+            <a class="dd-item" href="/innovation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="dd-tx"><b>Innovation Program</b><small>Our program for new ideas and builders.</small></span></a>
+            <a class="dd-item" href="/documentation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg></span><span class="dd-tx"><b>Documentation</b><small>Guides and technical references.</small></span></a>
+          </div></div>
+          <aside class="mg-promo"><a class="promo" href="/innovation.html"><div class="promo-vis"><span>Innovation Program</span></div><b>Have a big idea? Build it with the Alphex Innovation Program.</b><em>Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></a></aside>
         </div></div></div>
       <a href="#pricing">Pricing</a>
     </nav>
