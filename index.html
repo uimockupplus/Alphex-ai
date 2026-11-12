@@ -31,6 +31,28 @@ header{background:#fff;position:sticky;top:0;z-index:50;border-bottom:1px solid 
 .wordmark{font-weight:700;font-size:25px;letter-spacing:-.045em;color:var(--ink)}.wordmark i{font-style:normal;color:var(--p)}
 .nav-links{display:flex;gap:36px;font-size:15.5px;font-weight:500}.nav-links a:hover{color:var(--p)}
 .nav-actions{display:flex;align-items:center;gap:12px;margin-left:auto}.nav-actions .btn{padding:12px 22px;font-size:15px}
+
+/* Nav dropdowns */
+.nav-links{align-items:stretch}.nav-links>a{display:flex;align-items:center}
+.dd{position:relative;display:flex;align-items:center}
+.dd-btn{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--ink);height:100%}
+.dd-btn:hover,.dd.open .dd-btn{color:var(--p)}
+.dd-chev{width:15px;height:15px;transition:transform .2s}.dd.open .dd-chev{transform:rotate(180deg)}
+.dd-panel{display:none;position:absolute;top:100%;left:-24px;background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;box-shadow:0 24px 60px rgba(10,10,15,.14);padding:20px 22px 22px;z-index:60}
+.dd.open .dd-panel{display:block;animation:ddIn .16s ease-out}
+@keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.dd-products{width:410px}.dd-company{width:600px}
+.dd-label{display:inline-block;font-size:13px;font-weight:600;color:var(--ink);background:var(--soft);padding:7px 14px;border-radius:999px;margin-bottom:14px}
+.dd-list{display:grid;gap:10px}.dd-grid{grid-template-columns:1fr 1fr}
+.nav-links .dd-item{display:flex;align-items:flex-start;gap:14px;padding:15px 16px;background:var(--soft);border-radius:12px;color:var(--ink);transition:background .15s,box-shadow .15s}
+.nav-links .dd-item:hover{background:var(--lav);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(112,87,255,.25)}
+.dd-ic{flex:none;width:38px;height:38px;border-radius:10px;background:#fff;color:var(--p);display:grid;place-items:center;box-shadow:0 1px 2px rgba(10,10,15,.06)}
+.dd-ic svg{width:20px;height:20px}
+.dd-tx{display:block;min-width:0}.dd-tx b{display:flex;align-items:center;gap:6px;font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.dd-tx small{display:block;font-size:14px;font-weight:400;color:var(--muted);line-height:1.45;margin-top:3px}
+.dd-arrow{width:13px;height:13px;color:var(--muted);flex:none}
+.mp-group{padding:22px 0 6px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.mobile-panel a.mp-sub{font-size:17px;font-weight:500;padding-left:16px;min-height:48px}
 .auth-profile{position:relative;display:none}
 .profile-button{width:42px;height:42px;border-radius:50%;border:0;background:var(--p);color:#fff;font-weight:700}
 .profile-menu{position:absolute;right:0;top:54px;min-width:240px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px;display:none;box-shadow:0 18px 50px rgba(10,10,15,.14)}
@@ -970,7 +992,22 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
   <div class="wrap nav">
     <a class="wordmark" href="#top">alphex<i>.</i>ai</a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#capabilities">Capabilities</a><a href="#our-products">Products</a><a href="#approach">Process</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#approach">Process</a>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Products<svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dd-panel dd-products" role="menu"><div class="dd-label">Our products</div><div class="dd-list">
+          <a class="dd-item" href="https://studio.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></span><span class="dd-tx"><b>Alphex Studio<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Fast, modern websites for growing brands.</small></span></a>
+          <a class="dd-item" href="https://evalloop.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/><path d="m9 12 2 2 4-4"/></svg></span><span class="dd-tx"><b>EvalLoop AI<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Test and improve AI systems with real cases.</small></span></a>
+          <a class="dd-item" href="https://evalloopjobs.alphexai.com" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span><span class="dd-tx"><b>EvalLoop Jobs<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Evaluation, annotation and AI training work.</small></span></a>
+        </div></div></div>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Company<svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dd-panel dd-company" role="menu"><div class="dd-label">Company</div><div class="dd-list dd-grid">
+          <a class="dd-item" href="/about.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span class="dd-tx"><b>About</b><small>Who we are and how we work.</small></span></a>
+          <a class="dd-item" href="/careers.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span><span class="dd-tx"><b>Careers</b><small>Join the team building reliable AI.</small></span></a>
+          <a class="dd-item" href="/innovation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="dd-tx"><b>Innovation Program</b><small>Our program for new ideas and builders.</small></span></a>
+          <a class="dd-item" href="/documentation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg></span><span class="dd-tx"><b>Documentation</b><small>Guides and technical references.</small></span></a>
+        </div></div></div>
+      <a href="#pricing">Pricing</a>
     </nav>
     <div class="nav-actions">
       <a class="btn line contact-link" href="/contact.html">Contact</a>
@@ -988,7 +1025,12 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
   </div>
 </header>
 <div class="mobile-panel" aria-hidden="true">
-  <a href="#capabilities">Capabilities</a><a href="#our-products">Products</a><a href="#approach">Process</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+  <a href="#capabilities">Capabilities</a><a href="#approach">Process</a>
+  <div class="mp-group">Products</div>
+  <a class="mp-sub" href="https://studio.alphexai.com/" target="_blank" rel="noopener">Alphex Studio</a><a class="mp-sub" href="https://evalloop.alphexai.com/" target="_blank" rel="noopener">EvalLoop AI</a><a class="mp-sub" href="https://evalloopjobs.alphexai.com" target="_blank" rel="noopener">EvalLoop Jobs</a>
+  <div class="mp-group">Company</div>
+  <a class="mp-sub" href="/about.html">About</a><a class="mp-sub" href="/careers.html">Careers</a><a class="mp-sub" href="/innovation.html">Innovation Program</a><a class="mp-sub" href="/documentation.html">Documentation</a>
+  <a href="#pricing">Pricing</a>
   <a class="mobile-auth-link logged-out" id="mobileLoginLink" href="login.html">Sign in</a>
   <a class="mobile-auth-link logged-in" id="mobileProfileLink" href="#">Profile</a>
   <a href="/contact.html">Contact us</a>
@@ -1612,6 +1654,23 @@ window.addEventListener('DOMContentLoaded', function () {
          INITIAL AUTH CHECK
          ========================================================= */
       updateAuthenticationUI();
+
+/* Nav dropdowns */
+(() => {
+  const dds = document.querySelectorAll('.dd'); if (!dds.length) return;
+  const set = (d, on) => { d.classList.toggle('open', on); d.querySelector('.dd-btn').setAttribute('aria-expanded', String(on)); };
+  const closeAll = except => dds.forEach(d => { if (d !== except) set(d, false); });
+  dds.forEach(d => {
+    const b = d.querySelector('.dd-btn');
+    b.addEventListener('click', e => { e.stopPropagation(); const on = !d.classList.contains('open'); closeAll(d); set(d, on); });
+    d.addEventListener('mouseenter', () => { if (window.matchMedia('(hover:hover)').matches) { closeAll(d); set(d, true); } });
+    d.addEventListener('mouseleave', () => { if (window.matchMedia('(hover:hover)').matches) set(d, false); });
+    d.addEventListener('focusout', e => { if (!d.contains(e.relatedTarget)) set(d, false); });
+    d.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(d, false)));
+  });
+  document.addEventListener('click', () => closeAll());
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+})();
 /* Mobile menu */
 (() => {
   const btn = document.querySelector('.mobile-menu'), panel = document.querySelector('.mobile-panel');
