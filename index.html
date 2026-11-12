@@ -665,6 +665,46 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
   .brand,.price,.cx-card{transition:none}
 }
 
+
+/* ===== Products showcase: true mobile fix ===== */
+@media(max-width:1000px){
+  .pf-stage{grid-template-columns:minmax(0,1fr)}
+  /* screens stack in one grid cell: container takes the tallest height, nothing is clipped, no layout jump */
+  .pf .pf-screens{display:grid;min-height:0;flex:none}
+  .pf .pf-screen,.pf .pf-screen[data-i="0"]{position:relative!important;inset:auto;grid-area:1/1;display:flex!important;visibility:hidden;opacity:0;pointer-events:none;animation:none;align-items:center;justify-content:center;min-width:0}
+  .pf .pf-screen.on{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .35s}
+  .pf-view{overflow:hidden}
+}
+@media(max-width:760px){
+  .pf .pf-list{grid-template-columns:1fr 1fr;gap:8px}
+  .pf .pf-tab{grid-template-columns:40px 1fr;align-items:center;gap:10px;padding:12px}
+  .pf .pf-tab .pf-meta{min-width:0}
+  .pf .pf-tab .pf-meta b{font-size:14.5px;line-height:1.2}
+  .pf .pf-tab .pf-meta small{display:none}
+  .pf .pf-screen{padding:16px 12px}
+  .pf-foot{flex-direction:column;align-items:stretch}
+  .pf-foot p{min-height:6.6em;font-size:14.5px;line-height:1.5}
+  .pf-foot .btn,.pf-foot .btn.hide{display:inline-flex;width:100%}
+  .pf-foot .btn.hide{visibility:hidden}
+
+  /* studio mock */
+  .stu{width:100%;padding-top:8px}
+  .lp-base{margin:0 -6px}
+  .lp-screen,.lp-screen{--vh:290px;height:290px}
+  .stu .mk-score{position:static;margin:14px auto 0;width:fit-content;right:auto;top:auto}
+  .lp-chat{max-width:150px;font-size:11px}
+  /* evalloop */
+  .ev{width:100%}
+  .ev-cols{grid-template-columns:1fr}
+  .ev-r p{min-height:0}
+  /* jobs */
+  .jb{width:100%}
+  .jb-row b{font-size:14.5px}
+  .jb-row small{font-size:12.5px}
+  /* next */
+  .nx{width:min(340px,90%)}
+}
+
 </style>
 </head>
 <body>
