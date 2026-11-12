@@ -912,6 +912,56 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
   .fl-rule{margin-top:26px}
 }
 @media(max-width:480px){.fl{padding:24px 16px 18px}.fl-res{padding:14px;gap:12px}.fl-rule,.fl-test{gap:10px;font-size:12px}.fl-rule span,.fl-test span{white-space:nowrap}.fl-rule:before,.fl-rule:after,.fl-test:before,.fl-test:after{min-width:8px}}
+
+/* ===== Industries: clean tabs + single card ===== */
+.iz-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+.iz-tab{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:11px 20px;font-size:15.5px;font-weight:500;min-height:44px;transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.iz-tab:hover{border-color:#cfc6ff;color:var(--ink)}
+.iz-tab.on{background:var(--p);border-color:var(--p);color:#fff;font-weight:600;box-shadow:0 8px 20px rgba(104,79,244,.28)}
+.iz-panel{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:48px;box-shadow:0 18px 50px rgba(60,40,160,.07)}
+.iz-panel.swap>*{animation:fadeup .4s both}
+.iz-tag{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pd);margin-bottom:16px}
+.iz-main h3{font-size:clamp(30px,3.6vw,44px);margin-bottom:16px}
+.iz-main p{color:var(--muted);font-size:19px;line-height:1.55;max-width:30em}
+.iz-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:32px}
+.iz-cta span{color:var(--muted);font-size:14.5px}
+.iz-side{border-left:1px solid var(--line);padding-left:56px;align-self:center}
+.iz-label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a8c9a;margin-bottom:8px}
+.iz-list{list-style:none;padding:0;margin:0;counter-reset:iz}
+.iz-list li{counter-increment:iz;display:flex;gap:16px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line);font-size:17px;font-weight:500;line-height:1.4}
+.iz-list li:last-child{border-bottom:0}
+.iz-list li:before{content:"0" counter(iz);flex:none;width:22px;font-size:13px;font-weight:700;color:var(--p);letter-spacing:.02em}
+@media(max-width:900px){
+  .iz-panel{grid-template-columns:1fr;gap:28px;padding:32px 24px;border-radius:18px}
+  .iz-side{border-left:0;border-top:1px solid var(--line);padding:24px 0 0}
+  .iz-main p{font-size:17px}
+}
+@media(max-width:640px){
+  .iz-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+  .iz-tab{padding:10px 8px;font-size:14.5px;border-radius:12px;text-align:center}
+  .iz-panel{padding:26px 18px;gap:22px}
+  .iz-cta{flex-direction:column;align-items:stretch;gap:12px;margin-top:24px}.iz-cta .btn{width:100%}
+  .iz-list li{padding:14px 0;font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.iz-panel.swap>*{animation:none}}
+
+/* ===== Approach: clean 3-step timeline ===== */
+.ap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));list-style:none;padding:0;margin:0}
+.ap li{position:relative;padding-right:56px}
+.ap li:not(:last-child):before{content:"";position:absolute;left:60px;right:16px;top:23px;height:2px;border-radius:2px;background:#ddd7fa}
+.ap-dot{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--lav);border:1px solid #d9d2ff;color:var(--pd);font-weight:700;font-size:16px}
+.ap-dot.end{background:var(--p);border-color:var(--p);color:#fff}
+.ap h3{margin-top:26px;font-size:26px;letter-spacing:-.025em;line-height:1.15}
+.ap p{margin-top:12px;color:var(--muted);font-size:17px;line-height:1.55;max-width:22em}
+@media(max-width:900px){
+  .ap{grid-template-columns:1fr}
+  .ap li{display:grid;grid-template-columns:46px 1fr;column-gap:20px;padding:0 0 32px}
+  .ap li:last-child{padding-bottom:0}
+  .ap li:not(:last-child):before{left:22px;right:auto;top:54px;bottom:8px;width:2px;height:auto}
+  .ap-dot{grid-row:1/3}
+  .ap h3{margin-top:8px;font-size:22px}
+  .ap p{margin-top:6px;font-size:16px}
+}
 </style>
 </head>
 <body>
@@ -1044,26 +1094,28 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
 
 <section class="sec soft" id="industries"><div class="wrap">
   <div class="head"><h2>Useful AI, shaped around your industry.</h2><p class="lead">We apply practical AI to the knowledge and service workflows that matter in different operating contexts, keeping people and professional judgment in the loop.</p></div>
-  <div class="ix">
-    <div class="ix-list" role="tablist" aria-label="Industries"><button class="ix-tab on" role="tab" aria-selected="true" tabindex="0" data-d="Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents." data-t="Knowledge &amp; service workflows" data-u="Product and policy questions answered from approved documents|Service procedures found without searching across files|Sensitive or complex cases routed to a specialist"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></span><span class="ix-name">Financial services</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters." data-t="Administrative support" data-u="Appointment, billing and visit-preparation information for patients|Staff guidance drawn from approved administrative documents|Clinical questions kept out of scope and passed to staff"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg></span><span class="ix-name">Healthcare</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Connect product documentation and support knowledge so customers and employees can get useful, consistent answers." data-t="Product &amp; customer experience" data-u="Product documentation turned into clear, linked answers|Support knowledge shared between customers and employees|Consistent replies, with difficult tickets escalated"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span><span class="ix-name">SaaS &amp; technology</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop." data-t="Expertise &amp; repeatable delivery" data-u="Past work and internal know-how easier to find and reuse|Repeatable research and drafting steps supported|Professional judgment stays with your people"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2M3 13h18"/></svg></span><span class="ix-name">Professional services</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Support shoppers and service teams with product knowledge and routine order-related information across the customer journey." data-t="Commerce &amp; customer operations" data-u="Product questions answered from your catalogue|Routine order information available to shoppers|Returns and exceptions handed to your team"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 016 0"/></svg></span><span class="ix-name">E-commerce</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows." data-t="Cross-team operations" data-u="Shared knowledge available to the whole team|Manual, repeated steps reduced|Starts small and grows as the business does"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l5-5 4 4 7-8M15 9h5v5"/></svg></span><span class="ix-name">Growing businesses</span></button></div>
-    <div class="ix-panel" aria-live="polite">
-      <div class="ix-ptop"><span class="ix-big" id="ixIcon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></span><span class="ix-pill" id="indTag">Knowledge &amp; service workflows</span></div>
+  <div class="iz-tabs" role="tablist" aria-label="Industries"><button class="iz-tab on" type="button" role="tab" aria-selected="true" tabindex="0" data-d="Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents." data-t="Knowledge &amp; service workflows" data-u="Product and policy questions answered from approved documents|Service procedures found without searching across files|Sensitive or complex cases routed to a specialist">Financial services</button><button class="iz-tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-d="Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters." data-t="Administrative support" data-u="Appointment, billing and visit-preparation information for patients|Staff guidance drawn from approved administrative documents|Clinical questions kept out of scope and passed to staff">Healthcare</button><button class="iz-tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-d="Connect product documentation and support knowledge so customers and employees can get useful, consistent answers." data-t="Product &amp; customer experience" data-u="Product documentation turned into clear, linked answers|Support knowledge shared between customers and employees|Consistent replies, with difficult tickets escalated">SaaS &amp; technology</button><button class="iz-tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-d="Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop." data-t="Expertise &amp; repeatable delivery" data-u="Past work and internal know-how easier to find and reuse|Repeatable research and drafting steps supported|Professional judgment stays with your people">Professional services</button><button class="iz-tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-d="Support shoppers and service teams with product knowledge and routine order-related information across the customer journey." data-t="Commerce &amp; customer operations" data-u="Product questions answered from your catalogue|Routine order information available to shoppers|Returns and exceptions handed to your team">E-commerce</button><button class="iz-tab" type="button" role="tab" aria-selected="false" tabindex="-1" data-d="Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows." data-t="Cross-team operations" data-u="Shared knowledge available to the whole team|Manual, repeated steps reduced|Starts small and grows as the business does">Growing businesses</button></div>
+  <div class="iz-panel" id="izPanel" role="tabpanel" aria-live="polite">
+    <div class="iz-main">
+      <span class="iz-tag" id="indTag">Knowledge &amp; service workflows</span>
       <h3 id="indTitle">Financial services</h3>
-      <p class="ix-desc" id="indDesc">Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p>
-      <div class="ix-label">Typical workflows</div>
-      <ul class="ix-use" id="ixUse"><li>Product and policy questions answered from approved documents</li><li>Service procedures found without searching across files</li><li>Sensitive or complex cases routed to a specialist</li></ul>
-      <div class="ix-foot"><a class="btn pri" href="/contact.html">Discuss your use case</a><span>Scoped to your documents, tools and team.</span></div>
+      <p id="indDesc">Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p>
+      <div class="iz-cta"><a class="btn pri" href="/contact.html">Discuss your use case</a><span>Scoped to your documents, tools and team.</span></div>
+    </div>
+    <div class="iz-side">
+      <div class="iz-label">Typical workflows</div>
+      <ol class="iz-list" id="ixUse"><li>Product and policy questions answered from approved documents</li><li>Service procedures found without searching across files</li><li>Sensitive or complex cases routed to a specialist</li></ol>
     </div>
   </div>
 </div></section>
 
 <section class="sec" id="approach"><div class="wrap">
   <div class="head"><h2>Small steps. Clear outcomes.</h2><p class="lead">Good AI projects are built through shared understanding, deliberate testing, and iteration.</p></div>
-  <div class="grid3">
-    <article class="card"><h3>Understand</h3><p>Map the workflow, define the problem, and agree what a useful outcome looks like.</p></article>
-    <article class="card"><h3>Build and test</h3><p>Connect the right context and tools, then test real questions and edge cases.</p></article>
-    <article class="card"><h3>Launch and improve</h3><p>Integrate the system, review how it behaves, and refine it as your needs evolve.</p></article>
-  </div>
+  <ol class="ap">
+    <li><span class="ap-dot">1</span><h3>Understand</h3><p>Map the workflow, define the problem, and agree what a useful outcome looks like.</p></li>
+    <li><span class="ap-dot">2</span><h3>Build and test</h3><p>Connect the right context and tools, then test real questions and edge cases.</p></li>
+    <li><span class="ap-dot end">3</span><h3>Launch and improve</h3><p>Integrate the system, review how it behaves, and refine it as your needs evolve.</p></li>
+  </ol>
 </div></section>
 
 <section class="sec soft" id="implementation-flow"><div class="wrap">
@@ -1589,23 +1641,22 @@ window.addEventListener('DOMContentLoaded', function () {
 })();
 /* Industry tabs */
 (() => {
-  const tabs = [...document.querySelectorAll('.ix-tab')];
-  const t = document.getElementById('indTitle'), d = document.getElementById('indDesc'), g = document.getElementById('indTag'), ic = document.getElementById('ixIcon'), ul = document.getElementById('ixUse');
+  const tabs = [...document.querySelectorAll('.iz-tab')];
+  const t = document.getElementById('indTitle'), d = document.getElementById('indDesc'), g = document.getElementById('indTag'), ul = document.getElementById('ixUse'), panel = document.getElementById('izPanel');
   if (!tabs.length) return;
   function pick(tab, focus) {
     tabs.forEach(x => { const on = x === tab; x.classList.toggle('on', on); x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; });
-    t.innerHTML = tab.querySelector('.ix-name').innerHTML; d.textContent = tab.dataset.d; g.innerHTML = tab.dataset.t;
-    ic.innerHTML = tab.querySelector('svg').outerHTML;
+    t.innerHTML = tab.innerHTML; d.textContent = tab.dataset.d; g.innerHTML = tab.dataset.t;
     ul.innerHTML = ''; tab.dataset.u.split('|').forEach(x => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); });
-    const panel = document.querySelector('.ix-panel'); panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+    panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
     if (focus) tab.focus();
   }
   tabs.forEach((tab, i) => {
     tab.addEventListener('click', () => pick(tab));
     tab.addEventListener('keydown', e => {
-      const k = e.key; let n = null;
-      if (k === 'ArrowDown' || k === 'ArrowRight') n = (i + 1) % tabs.length;
-      if (k === 'ArrowUp' || k === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      let n = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % tabs.length;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + tabs.length) % tabs.length;
       if (n !== null) { e.preventDefault(); pick(tabs[n], true); }
     });
   });
