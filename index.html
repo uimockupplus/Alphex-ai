@@ -730,6 +730,188 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
 #industries .ind,#implementation-flow .wfcard,.pf .pf-view,.pf .pf-tab{background:#fff}
 .pf .pf-view{box-shadow:0 20px 56px rgba(60,40,160,.10)}
 .pf .pf-screens{background:radial-gradient(#e6e3f6 1px,transparent 1px) 0 0/20px 20px,#fbfaff}
+
+/* ===== Industries: clean tabs + detail panel ===== */
+.ix{display:grid;grid-template-columns:320px minmax(0,1fr);gap:28px;align-items:stretch}
+.ix-list{display:flex;flex-direction:column;gap:8px}
+.ix-tab{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:12px 16px 12px 12px;border-radius:14px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:17px;font-weight:500;transition:background .2s,border-color .2s,color .2s,box-shadow .2s}
+.ix-ic{flex:none;width:42px;height:42px;border-radius:12px;background:#fff;border:1px solid var(--line);color:var(--pd);display:grid;place-items:center;transition:background .2s,color .2s,border-color .2s}
+.ix-tab:hover{background:rgba(255,255,255,.7);color:var(--ink)}
+.ix-tab.on{background:#fff;border-color:#d9d2ff;color:var(--ink);font-weight:600;box-shadow:0 10px 28px rgba(60,40,160,.09)}
+.ix-tab.on .ix-ic{background:var(--p);border-color:var(--p);color:#fff}
+.ix-panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:44px;display:flex;flex-direction:column;box-shadow:0 18px 50px rgba(60,40,160,.07)}
+.ix-panel.swap>*{animation:fadeup .4s both}
+.ix-ptop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+.ix-big{width:56px;height:56px;border-radius:16px;background:var(--lav);color:var(--pd);display:grid;place-items:center}
+.ix-big svg{width:28px;height:28px}
+.ix-pill{font-size:14px;font-weight:600;color:var(--pd);background:var(--lav);padding:6px 14px;border-radius:999px}
+.ix-panel h3{font-size:clamp(28px,3.4vw,40px);margin-bottom:14px}
+.ix-desc{color:var(--muted);font-size:19px;line-height:1.55;max-width:34em}
+.ix-label{margin:30px 0 12px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a8c9a}
+.ix-use{list-style:none;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.ix-use li{position:relative;padding:14px 0 14px 28px;border-bottom:1px solid var(--line);font-size:16.5px;font-weight:500}
+.ix-use li:before{content:"";position:absolute;left:4px;top:23px;width:8px;height:8px;background:var(--p);transform:rotate(45deg)}
+.ix-foot{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:auto;padding-top:30px}
+.ix-foot span{color:var(--muted);font-size:14.5px}
+
+/* ===== Trust: control explorer ===== */
+#trust .tr-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:start}
+.tr-list{display:grid;gap:12px}
+.tr-item{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;width:100%;text-align:left;padding:20px 22px;border-radius:16px;border:1px solid var(--line);background:#fff;color:var(--ink);transition:border-color .25s,box-shadow .25s,background .25s}
+.tr-item .n{width:44px;height:44px;border-radius:12px;background:var(--lav);color:var(--pd);display:grid;place-items:center;font-weight:700;font-size:15px;transition:background .25s,color .25s}
+.tr-item .tt{display:block;font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.tr-item .dd{display:block;color:var(--muted);font-size:15.5px;line-height:1.5}
+.tr-item:hover{border-color:#cfc6ff}
+.tr-item.on{border-color:var(--p);box-shadow:0 14px 36px rgba(104,79,244,.14)}
+.tr-item.on .n{background:var(--p);color:#fff}
+.tr-vis{background:linear-gradient(180deg,#f8f7ff,#f3f1ff);border:1px solid var(--line);border-radius:22px;padding:22px;position:sticky;top:108px}
+.tr-vh{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:15px}
+.tr-vh i{width:8px;height:8px;border-radius:50%;background:#29b780;box-shadow:0 0 0 4px rgba(41,183,128,.14);animation:status-pulse 2s ease-in-out infinite}
+.tr-vh span{margin-left:auto;color:#8a8c9a;font-size:12.5px}
+.tr-pipe{border:1.5px dashed transparent;border-radius:16px;padding:10px;transition:border-color .3s,background .3s}
+.tr-pipe.test{border-color:var(--p);background:rgba(104,79,244,.045)}
+.tr-st{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;transition:border-color .25s,box-shadow .25s}
+.tr-st .ic{flex:none;width:30px;height:30px;border-radius:9px;background:var(--lav);color:var(--pd);display:grid;place-items:center;font-size:13px;font-weight:700;transition:background .25s,color .25s}
+.tr-st b{display:block;font-size:14.5px;line-height:1.3}
+.tr-st small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35}
+.tr-st .tg{margin-left:auto;flex:none;font-size:11px;font-weight:700;color:var(--muted);background:#f1f0f7;border-radius:999px;padding:3px 9px;white-space:nowrap;transition:background .25s,color .25s}
+.tr-st.on{border-color:var(--p);box-shadow:0 8px 22px rgba(104,79,244,.16)}
+.tr-st.on .ic{background:var(--p);color:#fff}.tr-st.on .tg{background:var(--lav);color:var(--pd)}
+.tr-ln{height:14px;width:2px;margin-left:29px;background:repeating-linear-gradient(#cfc8ee 0 4px,transparent 4px 8px)}
+.tr-out{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.tr-oc{background:#fff;border:1px solid var(--line);border-top:3px solid #29b780;border-radius:12px;padding:11px 14px;transition:background .25s,border-color .25s,box-shadow .25s}
+.tr-oc.amber{border-top-color:#d5a138}
+.tr-oc b{display:block;font-size:14px}.tr-oc small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35}
+.tr-oc.on{background:#f0faf5;border-color:#29b780;box-shadow:0 8px 22px rgba(41,183,128,.16)}
+.tr-oc.amber.on{background:#fff9ec;border-color:#d5a138;box-shadow:0 8px 22px rgba(213,161,56,.18)}
+.tr-test{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:13px;transition:border-color .25s,box-shadow .25s}
+.tr-test b{font-size:13.5px;margin-right:4px}
+.tr-test span{background:var(--lav);color:var(--pd);font-weight:600;border-radius:999px;padding:3px 10px}
+.tr-test.on{border-color:var(--p);box-shadow:0 8px 22px rgba(104,79,244,.16)}
+#trust .note{margin-top:36px;max-width:46em}
+
+@media(max-width:900px){
+  .ix{grid-template-columns:1fr;gap:16px}
+  .ix-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ix-tab{padding:10px;font-size:14.5px;gap:10px;background:#fff;border:1px solid var(--line);align-items:center}
+  .ix-ic{width:34px;height:34px;border-radius:10px}.ix-ic svg{width:18px;height:18px}
+  .ix-panel{padding:28px 22px;border-radius:18px}
+  .ix-desc{font-size:17px}
+  #trust .tr-grid{grid-template-columns:1fr;gap:20px}
+  .tr-vis{position:static}
+}
+@media(max-width:480px){
+  .ix-tab{flex-direction:column;align-items:flex-start;gap:8px;padding:12px}
+  .ix-use li{font-size:15.5px}
+  .ix-foot{flex-direction:column;align-items:stretch;gap:12px}.ix-foot .btn{width:100%}
+  .tr-item{padding:16px;gap:12px;grid-template-columns:38px minmax(0,1fr)}
+  .tr-item .n{width:38px;height:38px;font-size:13.5px}
+  .tr-item .tt{font-size:18px}
+  .tr-vis{padding:14px;border-radius:18px}
+  .tr-pipe{padding:6px}
+  .tr-st{padding:10px 12px;gap:10px}
+  .tr-st .tg{display:none}
+  .tr-out{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.ix-panel.swap>*,.tr-vh i{animation:none}}
+
+/* ===== Trust diagram: clean animated illustration ===== */
+.tr-vis{padding:22px 22px 18px;background:linear-gradient(180deg,#fbfaff,#f3f1ff)}
+.tr-vh{flex-wrap:wrap;gap:6px 10px}
+.tr-vh span{font-weight:600;color:var(--pd);background:var(--lav);padding:4px 11px;border-radius:999px;font-size:12.5px;margin-left:auto}
+.tr-svg{display:block;width:100%;height:auto;max-width:520px;margin:0 auto;overflow:visible}
+.tr-svg text{font-family:var(--f);fill:#20232d}
+.tr-svg .t{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.tr-svg .s{font-size:12px;fill:#727785}
+.tr-svg .box{fill:#fff;stroke:#e2e4ea;stroke-width:1.4;transition:stroke .3s,fill .3s;filter:drop-shadow(0 4px 10px rgba(40,30,100,.05))}
+.tr-svg .num-c{fill:#f0edff;transition:fill .3s}
+.tr-svg .num-t{font-size:13px;font-weight:700;fill:#4f3bd0;text-anchor:middle;transition:fill .3s}
+.tr-svg g.on .box{stroke:#684ff4;stroke-width:2;filter:drop-shadow(0 8px 16px rgba(104,79,244,.22))}
+.tr-svg g.on .num-c{fill:#684ff4}.tr-svg g.on .num-t{fill:#fff}
+.tr-svg .gap{fill:none;stroke:#cfc8ee;stroke-width:2;stroke-dasharray:4 5;stroke-linecap:round;animation:trdash 1.4s linear infinite}
+@keyframes trdash{to{stroke-dashoffset:-18}}
+.tr-svg .odot{fill:#29b780}.tr-svg .out.amber .odot{fill:#d5a138}
+.tr-svg .out.green .box{stroke:#bfe6d3}.tr-svg .out.amber .box{stroke:#f0d9a4}
+.tr-svg .out.green.on .box{fill:#f0faf5;stroke:#29b780;filter:drop-shadow(0 8px 16px rgba(41,183,128,.22))}
+.tr-svg .out.amber.on .box{fill:#fff9ec;stroke:#d5a138;filter:drop-shadow(0 8px 16px rgba(213,161,56,.24))}
+.tr-svg .dot{fill:#684ff4;stroke:#fff;stroke-width:2.2;filter:drop-shadow(0 1px 4px rgba(70,48,180,.4))}
+.tr-svg .dot.green{fill:#29b780}.tr-svg .dot.amber{fill:#d5a138}
+.tr-svg .frame{fill:none;stroke:#d3cdef;stroke-width:1.6;stroke-dasharray:7 7;transition:stroke .3s,fill .3s}
+.tr-svg .lab-bg{fill:#fff;stroke:#d9d2ff;stroke-width:1.2;transition:fill .3s,stroke .3s}
+.tr-svg .lab{font-size:11.5px;font-weight:700;text-anchor:middle;fill:#5d4fc4;transition:fill .3s}
+.tr-svg g.on .frame{stroke:#684ff4;fill:rgba(104,79,244,.045);animation:trdash 1.6s linear infinite}
+.tr-svg g.on .lab-bg{fill:#684ff4;stroke:#684ff4}.tr-svg g.on .lab{fill:#fff}
+@media(max-width:480px){.tr-vis{padding:14px 10px 10px}.tr-vh span{margin-left:0}}
+@media(prefers-reduced-motion:reduce){.tr-svg .dot{display:none}.tr-svg .gap,.tr-svg g.on .frame{animation:none}}
+@media(max-width:560px){.tr-svg .t{font-size:16.5px}.tr-svg .s{font-size:13px}.tr-svg .num-t{font-size:14px}.tr-svg .lab{font-size:12.5px}}
+
+/* ===== Trust: simple static diagram ===== */
+.tf{background:linear-gradient(180deg,#fbfaff,#f4f2ff);border:1px solid var(--line);border-radius:20px;padding:30px 24px 20px}
+.tf-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.2fr);gap:26px;align-items:stretch}
+.tf-st{position:relative;display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px 14px}
+.tf-st:after{content:"";position:absolute;right:-18px;top:50%;width:9px;height:9px;border-top:2px solid #b3a9ee;border-right:2px solid #b3a9ee;transform:translateY(-50%) rotate(45deg)}
+.tf-n{width:26px;height:26px;border-radius:50%;background:var(--lav);color:var(--pd);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+.tf-tx b{display:block;font-size:15px;line-height:1.25;letter-spacing:-.01em}
+.tf-tx small{display:block;margin-top:3px;color:var(--muted);font-size:12.5px;line-height:1.35}
+.tf-tag{position:absolute;top:-10px;left:12px;font-size:10.5px;font-weight:700;letter-spacing:.02em;color:#fff;background:var(--p);padding:3px 9px;border-radius:999px}
+.tf-out{display:grid;gap:10px}
+.tf-oc{display:flex;flex-direction:column;justify-content:center;background:#fff;border:1px solid var(--line);border-left:4px solid #29b780;border-radius:12px;padding:10px 14px}
+.tf-oc.no{border-left-color:#d5a138}
+.tf-oc b{font-size:14.5px}.tf-oc small{color:var(--muted);font-size:12.5px;line-height:1.35}
+.tf-test{display:flex;align-items:center;gap:14px;margin-top:22px;font-size:13px;font-weight:700;color:var(--pd)}
+.tf-test:before,.tf-test:after{content:"";flex:1;border-top:1.5px dashed #c9c1f0}
+.tf-ctl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:28px}
+.tf-ctl>div{padding-top:16px;border-top:2px solid var(--line)}
+.tf-ctl b{display:block;font-size:17px;letter-spacing:-.02em;margin-bottom:6px}
+.tf-ctl p{color:var(--muted);font-size:15px;line-height:1.5}
+#trust .note{margin-top:28px}
+@media(max-width:1000px){
+  .tf-row{grid-template-columns:1fr;gap:20px}
+  .tf-st{flex-direction:row;align-items:center;gap:12px;padding:12px 14px}
+  .tf-st:after{right:auto;left:22px;top:auto;bottom:-14px;transform:rotate(135deg)}
+  .tf-tag{left:auto;right:12px;top:-9px}
+  .tf-out{grid-template-columns:1fr 1fr}
+  .tf-ctl{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .tf{padding:24px 14px 16px;border-radius:16px}
+  .tf-out{grid-template-columns:1fr}
+  .tf-ctl{grid-template-columns:1fr;gap:14px;margin-top:22px}
+  .tf-ctl>div{padding-top:12px}
+}
+
+/* ===== Trust diagram: clean stepper ===== */
+.fl{background:#fff;border:1px solid var(--line);border-radius:22px;padding:40px 36px 26px;box-shadow:0 18px 50px rgba(60,40,160,.06)}
+.fl-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));list-style:none;padding:0;margin:0}
+.fl-steps li{position:relative;padding-right:20px}
+.fl-steps li:not(:last-child):before{content:"";position:absolute;left:54px;right:14px;top:21px;height:2px;border-radius:2px;background:#ddd7fa}
+.fl-dot{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--lav);border:1px solid #d9d2ff;color:var(--pd);font-weight:700;font-size:15px;position:relative}
+.fl-dot.end{background:var(--p);border-color:var(--p);color:#fff}
+.fl-steps b{display:block;margin-top:18px;font-size:16.5px;font-weight:600;letter-spacing:-.015em;line-height:1.25}
+.fl-steps small{display:block;margin-top:5px;color:var(--muted);font-size:14px;line-height:1.45}
+.fl-rule,.fl-test{display:flex;align-items:center;gap:16px;font-size:13px;font-weight:600;color:#7a7d8d}
+.fl-rule{margin-top:34px}.fl-test{margin-top:26px;color:var(--pd);font-weight:700}
+.fl-rule:before,.fl-rule:after,.fl-test:before,.fl-test:after{content:"";flex:1;border-top:1.5px dashed #d6d0f2}
+.fl-fork{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.fl-res{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:16px;border:1px solid}
+.fl-res.ok{background:#f0faf5;border-color:#cdeedd}.fl-res.no{background:#fff9ec;border-color:#f3e2b6}
+.fl-ic{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#fff}
+.fl-res.ok .fl-ic{color:#1a8f64;box-shadow:0 0 0 1px #bfe6d3}.fl-res.no .fl-ic{color:#b07d12;box-shadow:0 0 0 1px #efd9a0}
+.fl-res em{display:block;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7a7d8d;margin-bottom:3px}
+.fl-res b{font-size:16.5px;letter-spacing:-.015em;font-weight:600}
+@media(max-width:900px){
+  .fl{padding:28px 22px 20px;border-radius:18px}
+  .fl-steps{grid-template-columns:1fr}
+  .fl-steps li{display:grid;grid-template-columns:42px 1fr;column-gap:16px;padding:0 0 24px}
+  .fl-steps li:last-child{padding-bottom:0}
+  .fl-steps li:not(:last-child):before{left:20px;right:auto;top:46px;bottom:2px;width:2px;height:auto}
+  .fl-dot{grid-row:1/3}
+  .fl-steps b{margin-top:2px;font-size:16px}
+  .fl-steps small{margin-top:2px;font-size:14px}
+  .fl-fork{grid-template-columns:1fr}
+  .fl-rule{margin-top:26px}
+}
+@media(max-width:480px){.fl{padding:24px 16px 18px}.fl-res{padding:14px;gap:12px}.fl-rule,.fl-test{gap:10px;font-size:12px}.fl-rule span,.fl-test span{white-space:nowrap}.fl-rule:before,.fl-rule:after,.fl-test:before,.fl-test:after{min-width:8px}}
 </style>
 </head>
 <body>
@@ -862,18 +1044,15 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
 
 <section class="sec soft" id="industries"><div class="wrap">
   <div class="head"><h2>Useful AI, shaped around your industry.</h2><p class="lead">We apply practical AI to the knowledge and service workflows that matter in different operating contexts, keeping people and professional judgment in the loop.</p></div>
-  <div class="ind">
-    <div class="ind-list" role="tablist" aria-label="Industries">
-      <button class="ind-tab on" role="tab" aria-selected="true" data-d="Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents." data-t="Knowledge &amp; service workflows">Financial services</button>
-      <button class="ind-tab" role="tab" aria-selected="false" data-d="Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters." data-t="Administrative support">Healthcare</button>
-      <button class="ind-tab" role="tab" aria-selected="false" data-d="Connect product documentation and support knowledge so customers and employees can get useful, consistent answers." data-t="Product &amp; customer experience">SaaS &amp; technology</button>
-      <button class="ind-tab" role="tab" aria-selected="false" data-d="Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop." data-t="Expertise &amp; repeatable delivery">Professional services</button>
-      <button class="ind-tab" role="tab" aria-selected="false" data-d="Support shoppers and service teams with product knowledge and routine order-related information across the customer journey." data-t="Commerce &amp; customer operations">E-commerce</button>
-      <button class="ind-tab" role="tab" aria-selected="false" data-d="Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows." data-t="Cross-team operations">Growing businesses</button>
-    </div>
-    <div class="ind-panel" aria-live="polite">
-      <div><h3 id="indTitle">Financial services</h3><p id="indDesc">Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p></div>
-      <div class="ind-foot"><span id="indTag">Knowledge &amp; service workflows</span><a class="btn pri" href="/contact.html">Discuss your use case</a></div>
+  <div class="ix">
+    <div class="ix-list" role="tablist" aria-label="Industries"><button class="ix-tab on" role="tab" aria-selected="true" tabindex="0" data-d="Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents." data-t="Knowledge &amp; service workflows" data-u="Product and policy questions answered from approved documents|Service procedures found without searching across files|Sensitive or complex cases routed to a specialist"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></span><span class="ix-name">Financial services</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Make approved administrative information easier for staff and patients to navigate, with clear boundaries around clinical matters." data-t="Administrative support" data-u="Appointment, billing and visit-preparation information for patients|Staff guidance drawn from approved administrative documents|Clinical questions kept out of scope and passed to staff"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg></span><span class="ix-name">Healthcare</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Connect product documentation and support knowledge so customers and employees can get useful, consistent answers." data-t="Product &amp; customer experience" data-u="Product documentation turned into clear, linked answers|Support knowledge shared between customers and employees|Consistent replies, with difficult tickets escalated"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span><span class="ix-name">SaaS &amp; technology</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Help teams reuse internal expertise and handle repeatable research and delivery steps while keeping professional judgment in the loop." data-t="Expertise &amp; repeatable delivery" data-u="Past work and internal know-how easier to find and reuse|Repeatable research and drafting steps supported|Professional judgment stays with your people"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2M3 13h18"/></svg></span><span class="ix-name">Professional services</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Support shoppers and service teams with product knowledge and routine order-related information across the customer journey." data-t="Commerce &amp; customer operations" data-u="Product questions answered from your catalogue|Routine order information available to shoppers|Returns and exceptions handed to your team"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 016 0"/></svg></span><span class="ix-name">E-commerce</span></button><button class="ix-tab" role="tab" aria-selected="false" tabindex="-1" data-d="Give lean teams a practical way to make shared knowledge available and reduce manual steps as the business grows." data-t="Cross-team operations" data-u="Shared knowledge available to the whole team|Manual, repeated steps reduced|Starts small and grows as the business does"><span class="ix-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l5-5 4 4 7-8M15 9h5v5"/></svg></span><span class="ix-name">Growing businesses</span></button></div>
+    <div class="ix-panel" aria-live="polite">
+      <div class="ix-ptop"><span class="ix-big" id="ixIcon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></span><span class="ix-pill" id="indTag">Knowledge &amp; service workflows</span></div>
+      <h3 id="indTitle">Financial services</h3>
+      <p class="ix-desc" id="indDesc">Help teams find current product information, policy guidance, and approved service procedures without searching across disconnected documents.</p>
+      <div class="ix-label">Typical workflows</div>
+      <ul class="ix-use" id="ixUse"><li>Product and policy questions answered from approved documents</li><li>Service procedures found without searching across files</li><li>Sensitive or complex cases routed to a specialist</li></ul>
+      <div class="ix-foot"><a class="btn pri" href="/contact.html">Discuss your use case</a><span>Scoped to your documents, tools and team.</span></div>
     </div>
   </div>
 </div></section>
@@ -921,15 +1100,30 @@ h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
 </svg></div></div><p class="flow-note">A person reviews every draft before anything is sent to a customer.</p>
 </div></section>
 
-<section class="sec" id="trust"><div class="wrap split">
-  <div><h2>Capability matters. Control matters more.</h2><p class="lead">Responsible AI starts with clear boundaries. Grounding, testing, and human oversight are part of the design, not an afterthought.</p></div>
-  <div>
-    <div class="item"><span class="dot"></span><div><h3>Grounded answers</h3><p>Use approved sources and make the basis for a response easy to inspect.</p></div></div>
-    <div class="item"><span class="dot"></span><div><h3>Human handoff</h3><p>Define when the system asks for confirmation or brings in a person.</p></div></div>
-    <div class="item"><span class="dot"></span><div><h3>Testing and monitoring</h3><p>Review expected behavior, edge cases, and real-world outcomes.</p></div></div>
-    <div class="item"><span class="dot"></span><div><h3>Defined boundaries</h3><p>Scope access, data handling, and actions to each project’s requirements.</p></div></div>
-    <p class="note">Security controls, hosting, retention, and access are confirmed per implementation. No universal guarantees or certifications are implied.</p>
+<section class="sec" id="trust"><div class="wrap">
+  <div class="head"><h2>Capability matters. Control matters more.</h2><p class="lead">Responsible AI starts with clear boundaries. Grounding, testing, and human oversight are part of the design, not an afterthought.</p></div>
+  <div class="fl" role="group" aria-label="How one question is handled">
+    <ol class="fl-steps">
+      <li><span class="fl-dot">1</span><b>Question arrives</b><small>From a customer or employee</small></li>
+      <li><span class="fl-dot">2</span><b>Boundaries applied</b><small>Only allowed data and actions</small></li>
+      <li><span class="fl-dot">3</span><b>Sources searched</b><small>Your approved documents</small></li>
+      <li><span class="fl-dot">4</span><b>Answer with sources</b><small>Each claim links back</small></li>
+      <li><span class="fl-dot end">5</span><b>Confidence check</b><small>Clear, in scope and safe?</small></li>
+    </ol>
+    <div class="fl-rule"><span>The check decides what happens next</span></div>
+    <div class="fl-fork">
+      <div class="fl-res ok"><span class="fl-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><em>If confident</em><b>Answer sent with sources</b></div></div>
+      <div class="fl-res no"><span class="fl-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg></span><div><em>If unsure or sensitive</em><b>Handed to a person, with context</b></div></div>
+    </div>
+    <div class="fl-test"><span>Testing and monitoring across every step</span></div>
   </div>
+  <div class="tf-ctl">
+    <div><b>Grounded answers</b><p>Use approved sources and make the basis for a response easy to inspect.</p></div>
+    <div><b>Human handoff</b><p>Define when the system asks for confirmation or brings in a person.</p></div>
+    <div><b>Testing and monitoring</b><p>Review expected behavior, edge cases, and real-world outcomes.</p></div>
+    <div><b>Defined boundaries</b><p>Scope access, data handling, and actions to each project&rsquo;s requirements.</p></div>
+  </div>
+  <p class="note">Security controls, hosting, retention, and access are confirmed per implementation. No universal guarantees or certifications are implied.</p>
 </div></section>
 
 <section class="sec pf" id="our-products"><div class="wrap">
@@ -1395,12 +1589,26 @@ window.addEventListener('DOMContentLoaded', function () {
 })();
 /* Industry tabs */
 (() => {
-  const tabs = [...document.querySelectorAll('.ind-tab')];
-  const t = document.getElementById('indTitle'), d = document.getElementById('indDesc'), g = document.getElementById('indTag');
-  tabs.forEach(tab => tab.addEventListener('click', () => {
-    tabs.forEach(x => { x.classList.toggle('on', x === tab); x.setAttribute('aria-selected', String(x === tab)); });
-    t.textContent = tab.textContent; d.textContent = tab.dataset.d; g.innerHTML = tab.dataset.t;
-  }));
+  const tabs = [...document.querySelectorAll('.ix-tab')];
+  const t = document.getElementById('indTitle'), d = document.getElementById('indDesc'), g = document.getElementById('indTag'), ic = document.getElementById('ixIcon'), ul = document.getElementById('ixUse');
+  if (!tabs.length) return;
+  function pick(tab, focus) {
+    tabs.forEach(x => { const on = x === tab; x.classList.toggle('on', on); x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; });
+    t.innerHTML = tab.querySelector('.ix-name').innerHTML; d.textContent = tab.dataset.d; g.innerHTML = tab.dataset.t;
+    ic.innerHTML = tab.querySelector('svg').outerHTML;
+    ul.innerHTML = ''; tab.dataset.u.split('|').forEach(x => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); });
+    const panel = document.querySelector('.ix-panel'); panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+    if (focus) tab.focus();
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => pick(tab));
+    tab.addEventListener('keydown', e => {
+      const k = e.key; let n = null;
+      if (k === 'ArrowDown' || k === 'ArrowRight') n = (i + 1) % tabs.length;
+      if (k === 'ArrowUp' || k === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      if (n !== null) { e.preventDefault(); pick(tabs[n], true); }
+    });
+  });
 })();
 /* ===== Optional chatbot loader: inlined from chatbot-loader(1).js ===== */
       (() => {
