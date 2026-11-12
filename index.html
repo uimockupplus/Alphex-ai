@@ -483,6 +483,19 @@ body{font-family:var(--f);letter-spacing:-.012em}
 .kd b{white-space:normal;line-height:1.2}
 @media(max-width:700px){.kg2-docs{grid-template-rows:none;grid-auto-rows:minmax(58px,auto)}.kd{padding:8px 12px}}
 
+/* ===== Layout-stable demos: motion unchanged, no page shift ===== */
+.chat{flex:none;height:372px}
+.chat-body{flex:none;height:252px;overflow:hidden;justify-content:flex-start}
+.picks{flex:none}
+.qa-note{min-height:44px}
+.kg2-ans{min-height:190px}
+.pf-foot p{min-height:3.3em}
+.pf-foot .btn.hide{display:inline-flex;visibility:hidden}
+@media(max-width:700px){
+  .chat{height:452px}.chat-body{height:330px}
+  .pf-foot p{min-height:8em}
+}
+
 </style>
 </head>
 <body>
