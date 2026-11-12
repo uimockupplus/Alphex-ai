@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Alphex AI designs useful AI assistants, knowledge systems, and intelligent workflows for real business needs.">
 <meta name="theme-color" content="#08090d">
 <title>Alphex AI | AI solutions designed around your business</title>
@@ -494,6 +494,175 @@ body{font-family:var(--f);letter-spacing:-.012em}
 @media(max-width:700px){
   .chat{height:452px}.chat-body{height:330px}
   .pf-foot p{min-height:8em}
+}
+
+
+/* ===== Mobile-first responsive layer (final overrides) ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+img,svg,video{max-width:100%}
+.grid2>*,.grid3>*,.split>*,.cx-grid>*,.ft>*,.family>*,.pf-stage>*,.ev-cols>*{min-width:0}
+h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}
+
+/* Touch devices: no sticky hover, bigger targets */
+@media(hover:none){
+  .brand:hover,.price:hover,.pf-tab:hover,.pf-tab.on,.teasers div:hover,.kd:hover,.jb-row:hover,.ev-r:hover,.mk-cards div:hover,#approach .card:hover:before{transform:none!important}
+  .cx-card:before{display:none}
+  .cx-card:hover .tags span{background:var(--lav);color:var(--pd)}
+}
+
+/* Tablet + phone */
+@media(max-width:1000px){
+  .wrap{padding-left:24px;padding-right:24px}
+  .mobile-panel{padding:8px 24px calc(28px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .mobile-panel a{min-height:56px;align-items:center;font-size:19px}
+  .mobile-menu{width:46px;height:46px;border-radius:2px}
+  .hero-in{max-width:none}
+  .cx-card{padding:28px}
+  .split{gap:32px}
+  .pf-foot{gap:16px}
+  .ft{gap:40px}
+}
+
+/* Phone */
+@media(max-width:760px){
+  body{font-size:16px;line-height:1.55}
+  .wrap{padding-left:20px;padding-right:20px}
+  .btn{min-height:48px;padding:14px 22px}
+  .nav-actions .btn{min-height:44px}
+  .nav{gap:12px}
+
+  /* announcement */
+  .ann{padding:10px 16px;line-height:1.4}
+
+  /* hero: stack copy, preview card, teasers */
+  .hero{display:flex;flex-direction:column}
+  .hero .art{display:none!important}
+  .hero>.wrap:nth-child(3){order:1}
+  .hero>.card-float{order:2}
+  .hero>.wrap:nth-child(4){order:3}
+  .hero>.wrap{width:100%}
+  .hero .card-float{display:block;position:relative;right:auto;top:auto;transform:none!important;animation:none!important;width:auto;margin:0 20px 8px;padding:18px;box-shadow:0 16px 40px rgba(60,40,160,.16)}
+  .hero .card-float .q{max-width:100%}
+  .hero-in{padding:44px 0 32px}
+  .hero h1{max-width:none;font-size:clamp(38px,11.5vw,54px);line-height:1.04;margin-bottom:20px}
+  .hero p.sub{font-size:17px;margin-bottom:28px}
+  .acts{gap:10px}
+  .acts .btn{width:100%}
+  .teasers{padding:24px 0 30px;gap:18px}
+
+  /* sections */
+  .sec{padding:64px 0}
+  .head{margin-bottom:32px}
+  .head h2,.split h2{font-size:clamp(30px,8.6vw,42px)}
+  .lead{font-size:16.5px;margin-top:14px}
+  .card{padding:26px}
+  .card h3{font-size:22px}
+  #approach .card:before{font-size:48px;margin-bottom:14px}
+  .item{padding:22px 0;gap:16px}
+  .item h3{font-size:19px}
+
+  /* capability demos */
+  .cx-grid{gap:16px}
+  .cx-card{border-radius:18px;padding:22px 18px}
+  .cx-card h3{font-size:22px}
+  .cx-card .cx-top p{font-size:15.5px}
+  .cx-top{margin-bottom:18px}
+  .chat{height:auto;min-height:0}
+  .chat-body{height:300px;padding:14px}
+  .bub{max-width:92%;font-size:14.5px}
+  .picks{padding:10px 12px;gap:6px}
+  .picks button{flex:1 1 auto;min-height:40px;padding:8px 12px}
+  .ho{font-size:13px}
+  .kg2{padding:12px}
+  .kd{min-height:56px}
+  .kg2-ans p{min-height:0}
+  .wfx{padding:12px}
+  .st,.out{padding:10px 12px;gap:12px}
+  .seg{width:100%}.seg button{flex:1;min-height:40px}
+  .qa{padding:14px}
+  .qa-head{flex-wrap:wrap}
+  .qa-head b{font-size:32px}
+  .qa-head button{min-height:44px;width:100%}
+  .qa-grid{grid-template-columns:repeat(12,1fr);gap:5px}
+  .qa-note{min-height:56px;font-size:13.5px}
+
+  /* industries */
+  .ind-panel{padding:24px 20px}
+  .ind-panel h3{font-size:28px}
+  .ind-panel p{font-size:17px}
+  .ind .ind-tab{min-height:48px;font-size:14.5px}
+  .ind-foot{flex-direction:column;align-items:stretch;gap:14px}
+  .ind-foot .btn{width:100%}
+
+  /* workflow diagram card */
+  .wfcard{border-radius:14px}
+  .wfhead{padding:14px 16px}
+  .wfhead span{margin-left:0;flex-basis:100%}
+  .wf-legend{margin:10px 16px 0!important}
+  .wfbody{padding:4px 4px 12px!important}
+  .wf-m{max-width:100%!important}
+
+  /* products showcase */
+  .pf-stage{gap:16px}
+  .pf .pf-list{gap:8px}
+  .pf .pf-tab{padding:12px;border-radius:14px;gap:8px;align-content:start}
+  .pf .pf-tab .mono{width:40px;height:40px;border-radius:12px;font-size:15px}
+  .pf-meta b{font-size:15px}
+  .pf .pf-view{border-radius:18px}
+  .pf-screen{padding:14px}
+  .pf .pf-screens{min-height:440px}
+  .bar{padding:10px 12px}
+  .url{font-size:12.5px;padding:3px 12px}
+  .ev-q{font-size:13.5px}
+  .jb-chips{gap:6px}.jb-chips button{min-height:40px;padding:8px 14px}
+  .jb-row{padding:12px}
+  .pf-foot{padding:16px}
+  .pf-foot p{min-height:0;font-size:14.5px}
+  .pf-foot .btn.hide{display:none}
+
+  /* pricing */
+  .amt{font-size:38px}
+  .price ul{margin:18px 0 26px}
+  .foot{font-size:14px}
+
+  /* faq */
+  details{padding:20px 0}
+  summary{font-size:17.5px;gap:14px}
+  details p{font-size:15.5px}
+
+  /* cta + footer */
+  .cta{padding:64px 0}
+  .cta h2{font-size:clamp(32px,9.5vw,44px)}
+  .cta p{font-size:17px;margin:20px 0 32px}
+  .cta .btn{width:100%}
+  footer{padding:56px 0 calc(28px + env(safe-area-inset-bottom))}
+  .ft{gap:36px}
+  .ft p{max-width:none}
+  .cols{grid-template-columns:1fr 1fr;gap:28px 20px}
+  .cols a{padding:9px 0}
+  .fb{margin-top:40px;flex-direction:column;gap:8px}
+}
+
+/* Small phones */
+@media(max-width:400px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .hero .card-float{margin:0 16px 8px}
+  .hero h1{font-size:clamp(34px,11vw,42px)}
+  .card{padding:22px 18px}
+  .cx-card{padding:18px 14px}
+  .qa-grid{grid-template-columns:repeat(8,1fr)}
+  .ind .ind-list{grid-template-columns:1fr 1fr;padding:10px}
+  .nav-actions .btn{padding:9px 14px}
+  .wordmark{font-size:21px}
+  .pf .pf-screens{min-height:460px}
+  .cols{grid-template-columns:1fr 1fr}
+}
+
+/* Reduce heavy motion on phones for smoothness */
+@media(max-width:760px){
+  .pf:before{animation:none}
+  .brand,.price,.cx-card{transition:none}
 }
 
 </style>
@@ -1140,8 +1309,13 @@ window.addEventListener('DOMContentLoaded', function () {
     const open = !panel.classList.contains('open');
     panel.classList.toggle('open', open); btn.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', String(open)); panel.setAttribute('aria-hidden', String(!open));
+    if (open) { const h = document.querySelector('header'); panel.style.top = Math.max(0, h.getBoundingClientRect().bottom) + 'px'; }
+    document.body.style.overflow = open ? 'hidden' : '';
   });
-  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (a.id !== 'mobileProfileLink') closeMenu(); }));
+  const shut = () => { if (panel.classList.contains('open')) { closeMenu(); document.body.style.overflow = ''; } };
+  window.addEventListener('resize', () => { if (window.innerWidth > 1000) shut(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') shut(); });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (a.id !== 'mobileProfileLink') closeMenu(); document.body.style.overflow = ''; }));
 })();
 /* Product family: subtle entrance motion, with content visible if motion APIs are unavailable. */
 (() => {
