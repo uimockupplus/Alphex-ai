@@ -1,679 +1,557 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-  <meta
-    name="description"
-    content="Create your Alphex AI account."
-  >
-  <title>Create Account — Alphex AI</title>
-  <link
-    rel="stylesheet"
-    href="site.css"
-  >
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    /* =====================================================
-       ALPHEX AI — SIGNUP PAGE
-       Page-specific styles only
-       ===================================================== */
-    .auth-page{
-      min-height:calc(100vh - 76px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:90px 0 110px;
-    }
-    .auth-shell{
-      width:min(100% - 32px,460px);
-      margin:auto;
-    }
-    .auth-header{
-      text-align:center;
-      margin-bottom:34px;
-    }
-    .auth-kicker{
-      font:10px var(--mono);
-      color:var(--accent);
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      margin-bottom:18px;
-    }
-    .auth-title{
-      margin:0;
-      font-size:clamp(42px,6vw,58px);
-      line-height:.98;
-      letter-spacing:-.075em;
-      font-weight:300;
-    }
-    .auth-copy{
-      max-width:380px;
-      margin:18px auto 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-    }
-    .auth-card{
-      width:100%;
-      background:var(--white);
-      border:1px solid var(--border);
-      border-radius:22px;
-      padding:30px;
-      box-shadow:
-        0 18px 50px rgba(16,16,16,.06);
-    }
-    .auth-form{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      min-width:0;
-    }
-    .field-label{
-      font:10px var(--mono);
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-    .field-input{
-      width:100%;
-      max-width:100%;
-      height:50px;
-      border:1px solid var(--border);
-      border-radius:11px;
-      padding:0 15px;
-      background:var(--paper);
-      color:var(--ink);
-      outline:none;
-      font-size:14px;
-      transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-    }
-    .field-input::placeholder{
-      color:#999994;
-    }
-    .field-input:focus{
-      border-color:var(--accent);
-      background:var(--white);
-      box-shadow:0 0 0 3px rgba(112,87,255,.12);
-    }
-    .password-wrap{
-      position:relative;
-      width:100%;
-      min-width:0;
-    }
-    .password-wrap .field-input{
-      padding-right:72px;
-    }
-    .password-toggle{
-      position:absolute;
-      right:10px;
-      top:50%;
-      transform:translateY(-50%);
-      border:0;
-      background:transparent;
-      color:var(--muted);
-      font:10px var(--mono);
-      text-transform:uppercase;
-      letter-spacing:.04em;
-      cursor:pointer;
-      padding:7px;
-      white-space:nowrap;
-    }
-    .password-toggle:hover{
-      color:var(--accent-dark);
-    }
-    .password-strength{
-      height:3px;
-      width:100%;
-      margin-top:2px;
-      background:var(--soft);
-      border-radius:999px;
-      overflow:hidden;
-    }
-    .password-strength-bar{
-      display:block;
-      width:0;
-      height:100%;
-      background:var(--accent);
-      border-radius:999px;
-      transition:
-        width .25s ease,
-        background .25s ease;
-    }
-    .password-hint{
-      color:var(--muted);
-      font-size:10px;
-      line-height:1.5;
-    }
-    .auth-submit{
-      width:100%;
-      min-height:50px;
-      margin-top:3px;
-      border:1px solid var(--accent-dark);
-      border-radius:999px;
-      background:linear-gradient(
-        110deg,
-        var(--accent-dark),
-        var(--accent)
-      );
-      color:#fff;
-      font-size:13px;
-      font-weight:500;
-      cursor:pointer;
-      transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        opacity .2s ease;
-    }
-    .auth-submit:hover{
-      transform:translateY(-2px);
-      box-shadow:0 10px 24px rgba(85,64,216,.18);
-    }
-    .auth-submit:active{
-      transform:translateY(0);
-    }
-    .auth-submit:disabled{
-      cursor:not-allowed;
-      opacity:.65;
-      transform:none;
-      box-shadow:none;
-    }
-    .auth-status{
-      display:none;
-      padding:11px 13px;
-      border-radius:10px;
-      font-size:12px;
-      line-height:1.5;
-      overflow-wrap:anywhere;
-    }
-    .auth-status.show{
-      display:block;
-    }
-    .auth-status.error{
-      background:#fff0f0;
-      border:1px solid #f0cccc;
-      color:#a52c2c;
-    }
-    .auth-status.success{
-      background:var(--mint);
-      border:1px solid #b8e7dc;
-      color:#17685e;
-    }
-    .auth-divider{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin:25px 0;
-    }
-    .auth-divider::before,
-    .auth-divider::after{
-      content:'';
-      flex:1;
-      height:1px;
-      background:var(--border);
-    }
-    .auth-divider span{
-      color:var(--muted);
-      font:9px var(--mono);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-    .google-button{
-      width:100%;
-      min-height:48px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background:transparent;
-      color:var(--ink);
-      font-size:12px;
-      font-weight:500;
-      cursor:pointer;
-      transition:
-        border-color .2s ease,
-        background .2s ease,
-        transform .2s ease;
-    }
-    .google-button:hover{
-      border-color:var(--accent);
-      background:var(--lavender);
-      transform:translateY(-1px);
-    }
-    .google-button:disabled{
-      cursor:not-allowed;
-      opacity:.65;
-      transform:none;
-    }
-    .google-icon{
-      width:19px;
-      height:19px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex:0 0 19px;
-      border:1px solid var(--border);
-      border-radius:50%;
-      font-size:11px;
-      font-weight:500;
-    }
-    .terms{
-      margin:21px 0 0;
-      color:var(--muted);
-      text-align:center;
-      font-size:10px;
-      line-height:1.6;
-    }
-    .terms a{
-      color:var(--accent-dark);
-      text-decoration:none;
-    }
-    .terms a:hover{
-      text-decoration:underline;
-      text-underline-offset:3px;
-    }
-    .auth-footer{
-      margin-top:27px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-    }
-    .auth-footer a{
-      color:var(--accent-dark);
-      text-decoration:none;
-      font-weight:500;
-    }
-    .auth-footer a:hover{
-      text-decoration:underline;
-      text-underline-offset:3px;
-    }
-    .auth-note{
-      margin:22px auto 0;
-      max-width:390px;
-      color:var(--muted);
-      text-align:center;
-      font:9px var(--mono);
-      line-height:1.6;
-      letter-spacing:.02em;
-    }
-    /* =====================================================
-       DARK MODE
-       ===================================================== */
-    body.dark-theme .auth-card{
-      box-shadow:0 18px 50px rgba(0,0,0,.22);
-    }
-    body.dark-theme .field-input{
-      background:#151823;
-      border-color:var(--border);
-    }
-    body.dark-theme .field-input:focus{
-      background:#171a28;
-    }
-    body.dark-theme .password-strength{
-      background:#292d3d;
-    }
-    body.dark-theme .auth-status.error{
-      background:#321d23;
-      border-color:#5b3039;
-      color:#f0aab5;
-    }
-    body.dark-theme .auth-status.success{
-      background:#16322e;
-      border-color:#285b53;
-      color:#a8e1d7;
-    }
-    /* =====================================================
-       TABLET
-       ===================================================== */
-    @media(max-width:800px){
-      .auth-page{
-        min-height:calc(100vh - 68px);
-        padding:72px 0 82px;
-      }
-      .auth-shell{
-        width:min(calc(100% - 36px),460px);
-      }
-      .auth-card{
-        padding:25px;
-      }
-    }
-    /* =====================================================
-       MOBILE
-       ===================================================== */
-    @media(max-width:480px){
-      .auth-page{
-        min-height:auto;
-        padding:48px 0 58px;
-      }
-      .auth-shell{
-        width:calc(100% - 28px);
-      }
-      .auth-header{
-        margin-bottom:25px;
-      }
-      .auth-kicker{
-        font-size:9px;
-        margin-bottom:14px;
-      }
-      .auth-title{
-        font-size:42px;
-        line-height:1;
-      }
-      .auth-copy{
-        max-width:330px;
-        margin-top:15px;
-        font-size:13px;
-        line-height:1.55;
-      }
-      .auth-card{
-        padding:20px 17px;
-        border-radius:18px;
-      }
-      .auth-form{
-        gap:16px;
-      }
-      .field{
-        gap:7px;
-      }
-      .field-input{
-        height:48px;
-        padding:0 13px;
-        font-size:14px;
-      }
-      .password-wrap .field-input{
-        padding-right:66px;
-      }
-      .password-toggle{
-        right:7px;
-        padding:7px 5px;
-        font-size:9px;
-      }
-      .password-hint{
-        font-size:9px;
-      }
-      .auth-submit{
-        min-height:48px;
-      }
-      .auth-divider{
-        margin:21px 0;
-      }
-      .google-button{
-        min-height:47px;
-      }
-      .terms{
-        font-size:9px;
-        line-height:1.65;
-      }
-      .auth-footer{
-        margin-top:23px;
-        font-size:11px;
-      }
-      .auth-note{
-        max-width:300px;
-        margin-top:19px;
-        font-size:8px;
-      }
-    }
-    /* =====================================================
-       VERY SMALL PHONES
-       ===================================================== */
-    @media(max-width:360px){
-      .auth-shell{
-        width:calc(100% - 20px);
-      }
-      .auth-card{
-        padding:18px 14px;
-      }
-      .auth-title{
-        font-size:38px;
-      }
-      .auth-copy{
-        font-size:12px;
-      }
-      .field-input{
-        font-size:13px;
-      }
-      .password-wrap .field-input{
-        padding-right:62px;
-      }
-      .password-toggle{
-        right:5px;
-        font-size:8px;
-      }
-    }
-    /* =====================================================
-       ACCESSIBILITY / MOTION
-       ===================================================== */
-    @media(prefers-reduced-motion:reduce){
-      .auth-submit,
-      .google-button,
-      .field-input,
-      .password-strength-bar{
-        transition:none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Create your Alphex AI account.">
+<meta name="theme-color" content="#08090d">
+<title>Create Account | Alphex AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--ink:#0a0a0f;--soft:#f5f4fa;--line:#e3e1ec;--muted:#5b5d6b;--p:#7057ff;--pd:#5540d8;--lav:#eeeaff;--f:"DM Sans","Inter","Helvetica Neue",Arial,sans-serif}*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:90px}body{font:400 17px/1.6 var(--f);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"cv11","ss03"}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}:focus-visible{outline:2px solid var(--p);outline-offset:3px}.wrap{max-width:1280px;margin:0 auto;padding:0 40px}h1,h2,h3{font-weight:600;letter-spacing:-.032em;line-height:1.08}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 28px;border-radius:2px;font-weight:500;letter-spacing:-.005em;font-size:16px;border:1px solid transparent;transition:background .15s,color .15s,border-color .15s}.btn.pri{background:var(--p);color:#fff}.btn.pri:hover{background:var(--pd)}.btn.dark{background:var(--ink);color:#fff}.btn.dark:hover{background:#2a2a35}.btn.line{border-color:var(--p);color:var(--p);background:#fff}.btn.line:hover{background:var(--lav)}.btn.white{background:#fff;color:var(--ink)}.btn.white:hover{background:var(--lav)}.ann{background:var(--p);color:#fff;text-align:center;font-size:15px;font-weight:500;padding:11px 20px}.ann a{text-decoration:underline;text-underline-offset:3px;font-weight:700;margin-left:8px}header{background:#fff;position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line)}.nav{display:flex;align-items:center;gap:48px;height:84px}.wordmark{font-weight:700;font-size:25px;letter-spacing:-.045em;color:var(--ink)}.wordmark i{font-style:normal;color:var(--p)}.nav-links{display:flex;gap:36px;font-size:15.5px;font-weight:500}.nav-links a:hover{color:var(--p)}.nav-actions{display:flex;align-items:center;gap:12px;margin-left:auto}.nav-actions .btn{padding:12px 22px;font-size:15px}@media(min-width:1001px){header .nav{display:grid;grid-template-columns:1fr auto 1fr;gap:32px}header .nav .wordmark{justify-self:start}header .nav .nav-links{justify-self:center}header .nav .nav-actions{justify-self:end;margin-left:0}}.nav-links{align-items:stretch;align-self:stretch}.nav-links>a{display:flex;align-items:center}.dd{display:flex;align-items:center}.dd-btn{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--ink);height:100%}.dd-btn:hover,.dd.open .dd-btn{color:var(--p)}.dd-chev{width:15px;height:15px;transition:transform .2s}.dd.open .dd-chev{transform:rotate(180deg)}.dd-panel::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}.dd-panel{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);border-radius:0 0 28px 28px;box-shadow:0 30px 70px rgba(10,10,15,.16);z-index:60}.dd.open .dd-panel{display:block;animation:ddIn .18s ease-out}@keyframes ddIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}.mega{display:grid;gap:0;align-items:stretch;padding-top:0;padding-bottom:0}.mega{grid-template-columns:300px minmax(0,1fr) 340px}.mg-lead{padding:44px 36px 44px 0;border-right:1px solid var(--line)}.mg-badge{display:grid;place-items:center;width:64px;height:64px;border-radius:14px;background:var(--ink);color:#fff;margin-bottom:22px}.mg-badge svg{width:30px;height:30px}.mg-lead h3{font-size:34px;letter-spacing:-.035em;margin-bottom:12px}.mg-lead p{font-size:18px;color:var(--muted);line-height:1.5;margin-bottom:24px}.nav-links .mg-btn{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:#fff;padding:10px 12px 10px 20px;border-radius:6px;font-size:16px;font-weight:500;margin-bottom:26px}.nav-links .mg-btn:hover{background:#2a2a35;color:#fff}.mg-btn i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;color:var(--ink)}.mg-btn svg{width:15px;height:15px}.nav-links .mg-link{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:15.5px;padding:7px 0}.nav-links .mg-link:hover{color:var(--p)}.mg-link svg{width:18px;height:18px}.mg-main{padding:44px 40px}.dd-label{display:inline-block;font-size:14px;font-weight:500;color:var(--ink);background:var(--soft);padding:9px 20px;border-radius:999px;margin-bottom:20px}.dd-list{display:grid;gap:14px}.dd-grid{grid-template-columns:1fr 1fr}.dd-grid .dd-item:last-child:nth-child(odd){grid-column:1/-1}.nav-links .dd-item{display:flex;align-items:flex-start;gap:14px;padding:20px 22px;background:var(--soft);border-radius:14px;color:var(--ink);transition:background .15s,box-shadow .15s}.nav-links .dd-item:hover{background:var(--lav);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(112,87,255,.28)}.dd-ic{flex:none;width:24px;height:24px;color:var(--p);margin-top:2px}.dd-ic svg{width:24px;height:24px}.dd-tx{display:block;min-width:0}.dd-tx b{display:flex;align-items:center;gap:6px;font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.3}.dd-tx small{display:block;font-size:15px;font-weight:400;color:var(--muted);line-height:1.5;margin-top:4px}.dd-arrow{width:13px;height:13px;color:var(--muted);flex:none}.mg-promo{margin:0;padding:44px 0 44px 36px;border-left:1px solid var(--line)}.promo{display:block;border-radius:16px;padding:22px;background:var(--soft)}.promo-vis{height:150px;border-radius:12px;margin-bottom:20px;background:radial-gradient(120% 140% at 15% 0%,rgba(112,87,255,.32) 0,transparent 60%),radial-gradient(110% 120% at 100% 100%,rgba(112,87,255,.18) 0,transparent 60%),var(--lav);display:grid;place-items:center}.promo-vis span{background:var(--ink);color:#fff;font-weight:700;letter-spacing:-.03em;font-size:20px;padding:14px 22px;border-radius:8px}.promo b{display:block;font-size:20px;font-weight:500;letter-spacing:-.02em;line-height:1.35;margin-bottom:16px}.promo:hover em{color:var(--p)}.promo em{font-style:normal;font-size:17px;font-weight:500;display:inline-flex;align-items:center;gap:8px}.promo em svg{width:16px;height:16px}.mp-group{padding:22px 0 6px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}.mobile-panel a.mp-sub{font-size:17px;font-weight:500;padding-left:16px;min-height:48px}.auth-profile{position:relative;display:none}.profile-button{width:42px;height:42px;border-radius:50%;border:0;background:var(--p);color:#fff;font-weight:700}.profile-menu{position:absolute;right:0;top:54px;min-width:240px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:8px;display:none;box-shadow:0 18px 50px rgba(10,10,15,.14)}.profile-menu.open{display:block}.profile-user{padding:10px 12px;border-bottom:1px solid var(--line);margin-bottom:6px}.profile-name{font-weight:700;font-size:15px}.profile-email{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}.profile-account,.profile-signout{display:block;width:100%;text-align:left;padding:10px 12px;border:0;background:none;color:var(--ink);font-size:15px;border-radius:2px}.profile-account:hover,.profile-signout:hover{background:var(--soft)}.mobile-menu{display:none;width:44px;height:44px;border:1px solid var(--line);background:#fff;flex-direction:column;justify-content:center;align-items:center;gap:6px}.mobile-menu span{width:18px;height:2px;background:var(--ink);transition:transform .2s}.mobile-menu.open span:first-child{transform:translateY(4px) rotate(45deg)}.mobile-menu.open span:last-child{transform:translateY(-4px) rotate(-45deg)}.mobile-panel{display:none;position:fixed;inset:84px 0 0;background:#fff;z-index:49;padding:8px 28px;overflow:auto}.mobile-panel.open{display:block}.mobile-panel a{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:20px;font-weight:600}.mobile-auth-link.logged-in{display:none}.acts{display:flex;gap:14px;flex-wrap:wrap}.sec{padding:120px 0}.sec.soft{background:var(--soft)}.head{max-width:900px;margin-bottom:64px}.head h2,.split h2{font-size:clamp(38px,5.2vw,68px)}.lead{color:var(--muted);font-size:20px;line-height:1.55;max-width:34em;margin-top:24px}.cta{background:var(--p);color:#fff;padding:128px 0}.cta h2{font-size:clamp(40px,6vw,84px);max-width:13em}.cta p{font-size:21px;max-width:30em;margin:28px 0 44px;color:#ece8ff}footer{background:var(--ink);color:#bfc0cc;padding:88px 0 36px}.ft{display:grid;grid-template-columns:1.2fr 2.8fr;gap:64px}.ft .wordmark{color:#fff;display:block;margin-bottom:16px}.ft p{max-width:28ch;margin-bottom:24px;font-size:16px}.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}.cols h4{color:#fff;font-size:16px;margin-bottom:16px}.cols a{display:block;font-size:15.5px;padding:6px 0;color:#9d9eac}.cols a:hover{color:#fff}.fb{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:72px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);font-size:14.5px;color:#8b8c9a}@media(max-width:1000px){.nav-links{display:none}.mobile-menu{display:flex}.split,.ft{grid-template-columns:1fr;gap:40px}.cols{grid-template-columns:repeat(2,1fr)}.contact-link{display:none}.nav{gap:16px}}@media(max-width:700px){.wrap{padding:0 22px}.sec{padding:76px 0}.cta{padding:84px 0}}@media(max-width:760px){.ann{font-size:13.5px;padding:10px 16px}.ann a{display:block;margin:4px 0 0}.nav{height:68px}.mobile-panel{inset:68px 0 0}.wordmark{font-size:23px}.nav-actions .btn{padding:10px 16px;font-size:14px}.acts .btn{width:100%}.head{margin-bottom:40px}.lead{font-size:18px}.price .btn,.cta .btn{width:100%}.cta h2{font-size:36px}}body{overflow-x:clip}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}:root{--line:#e7e6ed;--muted:#606372;--p:#684ff4;--pd:#4f3bd0;--lav:#f0edff}body{font-family:var(--f);letter-spacing:-.012em}@keyframes status-pulse{50%{box-shadow:0 0 0 7px rgba(41,183,128,0);opacity:.72}}@media(max-width:1000px){.wrap{padding-left:28px;padding-right:28px}.sec{padding:92px 0}}@media(max-width:760px){html{scroll-padding-top:76px}.wrap{padding-left:20px;padding-right:20px}.sec{padding:68px 0}.head h2,.split h2{font-size:clamp(34px,9vw,48px);line-height:1.08}.lead{font-size:17px;margin-top:18px}.ft{gap:42px}.fb{margin-top:46px}.cta{padding:72px 0}.cta h2{font-size:clamp(36px,10vw,52px)}}@media(max-width:390px){.wrap{padding-left:16px;padding-right:16px}.nav-actions{gap:8px}.nav-actions .btn{padding:9px 12px}.wordmark{font-size:21px}}.sec.soft{background:radial-gradient(#dcd8ee 1px,transparent 1px) 0 0/24px 24px,var(--soft)}@keyframes blink{50%{opacity:0}}@keyframes pop{from{opacity:0;transform:scale(.7)}}@keyframes fadeup{from{opacity:0;transform:translateY(6px)}}html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{-webkit-tap-highlight-color:transparent;overflow-x:hidden}img,svg,video{max-width:100%}.grid3>*,.split>*,.cx-grid>*,.ft>*,.family>*,.pf-stage>*,.ev-cols>*{min-width:0}h1,h2,h3,summary,.lead,p{overflow-wrap:break-word}@media(max-width:1000px){.wrap{padding-left:24px;padding-right:24px}.mobile-panel{padding:8px 24px calc(28px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.mobile-panel a{min-height:56px;align-items:center;font-size:19px}.mobile-menu{width:46px;height:46px;border-radius:2px}.ft{gap:40px}}@media(max-width:760px){body{font-size:16px;line-height:1.55}.wrap{padding-left:20px;padding-right:20px}.btn{min-height:48px;padding:14px 22px}.nav-actions .btn{min-height:44px}.nav{gap:12px}.ann{padding:10px 16px;line-height:1.4}.acts{gap:10px}.acts .btn{width:100%}.sec{padding:64px 0}.head{margin-bottom:32px}.head h2,.split h2{font-size:clamp(30px,8.6vw,42px)}.lead{font-size:16.5px;margin-top:14px}.cta{padding:64px 0}.cta h2{font-size:clamp(32px,9.5vw,44px)}.cta p{font-size:17px;margin:20px 0 32px}.cta .btn{width:100%}footer{padding:56px 0 calc(28px + env(safe-area-inset-bottom))}.ft{gap:36px}.ft p{max-width:none}.cols{grid-template-columns:1fr 1fr;gap:28px 20px}.cols a{padding:9px 0}.fb{margin-top:40px;flex-direction:column;gap:8px}}@media(max-width:400px){.wrap{padding-left:16px;padding-right:16px}.nav-actions .btn{padding:9px 14px}.wordmark{font-size:21px}.cols{grid-template-columns:1fr 1fr}}:root{--tint-lav:#f4f2ff;--tint-lav-dot:#e4e0fa;--tint-sky:#eff5fe;--tint-sky-dot:#dbe6f7}:root{--r:20px;--sh:0 1px 2px rgba(10,10,15,.04),0 12px 32px rgba(40,30,110,.06)}header{background:rgba(255,255,255,.92);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px)}.btn{border-radius:10px;transition:background .2s,color .2s,border-color .2s,transform .2s,box-shadow .2s}.btn.pri:hover,.btn.dark:hover,.btn.white:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(60,40,160,.2)}.sec{padding:112px 0}.sec.soft{background:linear-gradient(180deg,#f8f7fc,#f4f2fb)}.head{max-width:860px;margin:0 auto 56px;text-align:center}.head .lead{margin-left:auto;margin-right:auto}.eyebrow{display:inline-flex;align-items:center;font-size:16px;font-weight:500;color:var(--ink);background:var(--soft);border-radius:999px;padding:8px 22px;margin-bottom:24px}.sec.soft .eyebrow{background:#fff}.sec.dark{background:var(--ink);color:#fff}.sec.dark h2{color:#fff}.sec.dark .lead{color:#b9bacb}.sec.dark .eyebrow{background:transparent;color:#fff;border:1px solid rgba(201,189,255,.55)}.cta{background:var(--soft);color:var(--ink);text-align:center;padding:120px 0;position:relative;overflow:hidden}.cta:before,.cta:after{content:"";position:absolute;top:-30%;width:42%;aspect-ratio:1;border-radius:50%;pointer-events:none;background:repeating-radial-gradient(circle,transparent 0 22px,rgba(112,87,255,.16) 22px 23px)}.cta:before{left:-18%}.cta:after{right:-18%}.cta .wrap{position:relative;z-index:1;padding:0 40px}.cta h2{margin:0 auto;max-width:14em}.cta p{color:var(--muted);margin:24px auto 36px}.cta-acts{display:flex;justify-content:center;align-items:center;gap:32px;flex-wrap:wrap}.cta-link{font-weight:500;text-decoration:underline;text-underline-offset:5px}.cta-link:hover{color:var(--p)}.cta-checks{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;margin-top:56px;color:var(--muted);font-size:16px}.cta-checks span{display:inline-flex;align-items:center;gap:10px}.cta-checks svg{width:18px;height:18px;color:var(--p)}@media(max-width:1000px){.sec{padding:88px 0}.cta{padding:96px 0}}@media(max-width:760px){.sec{padding:68px 0}.head{margin-bottom:36px}.eyebrow{font-size:15px;padding:7px 18px;margin-bottom:18px}.cta{padding:72px 0}.cta .wrap{padding:0 20px}.cta-acts{flex-direction:column;gap:20px}.cta .btn{width:100%;max-width:360px}.cta-checks{gap:14px;flex-direction:column;align-items:center;margin-top:36px}}::selection{background:#d9d2ff;color:var(--ink)}body{overflow-x:clip}img,svg{height:auto}@media(min-width:1001px) and (max-width:1180px){.nav-links{gap:24px}.nav{gap:20px}.nav-actions .btn{padding:11px 18px}}.head h2,.split h2,.cta h2,.ap h3,.cx-card h3{text-wrap:balance}.lead,.ap p{text-wrap:pretty}.sec.dark :focus-visible,.cta :focus-visible{outline-color:#c9bdff}.cols a{line-height:1.4}.fb{align-items:center}a.hp-item:hover{color:var(--p)}
+
+:root{--accent:var(--p);--accent-dark:var(--pd)}
+/* ===== Auth pages ===== */
+.au{position:relative;overflow:hidden;isolation:isolate;min-height:calc(100vh - 160px);display:flex;align-items:center;padding:80px 0 104px;background:linear-gradient(180deg,#fff 0%,#f8f7ff 100%)}
+.au:before{content:"";position:absolute;z-index:-1;right:0;top:0;bottom:0;width:min(60%,820px);pointer-events:none;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='112' viewBox='0 0 64 112'%3E%3Cpath d='M32 0 58 28 32 56 6 28zM32 56 58 84 32 112 6 84z' fill='%23684ff4' fill-opacity='.68'/%3E%3C/svg%3E");background-size:64px 112px;-webkit-mask-image:linear-gradient(100deg,transparent 0%,#000 80%);mask-image:linear-gradient(100deg,transparent 0%,#000 80%)}
+.au>.wrap{width:100%}
+.au-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:96px;align-items:center}
+.au-grid>*{min-width:0}
+.au-copy .eyebrow{margin-bottom:24px}
+.au-copy h1{margin-bottom:24px;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.04em}
+.au-copy .sub{max-width:24em;margin:0 0 36px;font-size:21px;line-height:1.5}
+.au-note{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:15px}
+.au-note svg{flex:none;width:18px;height:18px;color:var(--p)}
+.auth-card{position:relative;width:100%;padding:40px;background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 1px 2px rgba(10,10,15,.04),0 30px 80px rgba(60,40,160,.16)}
+.auth-card h2{margin:0 0 6px;font-size:28px;letter-spacing:-.03em}
+.auth-card>p.ct{margin:0 0 26px;color:var(--muted);font-size:16px}
+.auth-form{display:flex;flex-direction:column;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field-row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0}
+.field-label{font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.field-link{color:var(--pd);font-size:14px;font-weight:600;white-space:nowrap}
+.field-link:hover{color:var(--p);text-decoration:underline;text-underline-offset:3px}
+.field-input{width:100%;max-width:100%;height:52px;padding:0 16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:400 16px/1.5 var(--f);outline:none;transition:border-color .2s,box-shadow .2s}
+.field-input::placeholder{color:#9a9cab}
+.field-input:hover{border-color:#cfc6ff}
+.field-input:focus{border-color:var(--p);box-shadow:0 0 0 4px rgba(104,79,244,.14)}
+.password-wrap{position:relative;width:100%;min-width:0}
+.password-wrap .field-input{padding-right:78px}
+.password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);padding:8px 10px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:600 14px/1 var(--f);cursor:pointer;transition:color .2s,background .2s}
+.password-toggle:hover{color:var(--p);background:var(--lav)}
+.password-strength{height:4px;width:100%;margin-top:2px;background:var(--soft);border-radius:999px;overflow:hidden}
+.password-strength-bar{display:block;width:0;height:100%;background:var(--p);border-radius:999px;transition:width .25s,background .25s}
+.password-hint{color:var(--muted);font-size:14px}
+.auth-submit{width:100%;justify-content:center;margin-top:4px}
+.auth-submit:disabled{opacity:.65;cursor:not-allowed;transform:none}
+.auth-status{display:none;padding:13px 15px;border-radius:12px;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.auth-status.show{display:block}
+.auth-status.error{background:#fff5f5;border:1px solid #e3b1b1;color:#8a2b2b}
+.auth-status.success{background:#f2fbf6;border:1px solid #b4dcc6;color:#1f6a45}
+.auth-divider{display:flex;align-items:center;gap:14px;margin:26px 0}
+.auth-divider:before,.auth-divider:after{content:"";flex:1;height:1px;background:var(--line)}
+.auth-divider span{color:#8a8c9a;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.google-button{width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;gap:12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font:600 15.5px/1 var(--f);cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.google-button:hover{border-color:#cfc6ff;background:var(--lav)}
+.google-button:disabled{cursor:not-allowed;opacity:.65}
+.google-icon{flex:none;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:var(--lav);color:var(--p);font-size:14px;font-weight:700}
+.terms{margin:22px 0 0;color:var(--muted);text-align:center;font-size:14px;line-height:1.6}
+.terms a{color:var(--pd);font-weight:600}
+.terms a:hover{text-decoration:underline;text-underline-offset:3px}
+.auth-footer{margin-top:26px;text-align:center;color:var(--muted);font-size:15.5px}
+.auth-footer a{color:var(--pd);font-weight:600}
+.auth-footer a:hover{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1000px){
+.au{min-height:0;padding:64px 0 80px}
+.au:before{width:80%;opacity:.25}
+.au-grid{grid-template-columns:1fr;gap:40px}
+.au-copy .sub{font-size:19px;margin-bottom:24px}
+.auth-card{max-width:520px}
+}
+@media(max-width:760px){
+.au{padding:44px 0 56px}
+.au-copy h1{font-size:clamp(38px,11vw,52px);margin-bottom:18px}
+.au-copy .sub{font-size:17px}
+.au-note{display:none}
+.auth-card{padding:26px 20px;border-radius:22px}
+.auth-card h2{font-size:25px}
+.field-row{gap:10px}
+}
+@media(prefers-reduced-motion:reduce){.field-input,.auth-submit,.google-button,.password-strength-bar{transition:none!important}}
+
+</style>
 </head>
 <body>
-  <!-- =====================================================
-       SHARED NAVIGATION
-       ===================================================== -->
-  <div id="site-nav"></div>
-  <!-- =====================================================
-       SIGN UP
-       ===================================================== -->
-  <main class="auth-page">
-    <div class="auth-shell">
-      <header class="auth-header">
-        <div class="auth-kicker">
-          Alphex AI / Account
+<div class="ann">Need a website too? Alphex Studio builds fast, modern sites for growing brands.<a href="https://studio.alphexai.com/">Explore Alphex Studio</a></div>
+<header>
+  <div class="wrap nav">
+    <a class="wordmark" href="/#top">alphex<i> </i>ai</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/#capabilities">Capabilities</a>
+      <a href="/#approach">Process</a>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Products<svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dd-panel dd-products"><div class="wrap mega">
+          <div class="mg-lead"><span class="mg-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg></span><h3>Our products</h3><p>Build, test and ship reliable AI.</p>
+            <a class="mg-btn" href="/#our-products">Learn more <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+            <a class="mg-link" href="/#pricing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12 12 20 3 11V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>Pricing</a><a class="mg-link" href="/#faq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>FAQ</a></div>
+          <div class="mg-main"><span class="dd-label">Products</span><div class="dd-list dd-grid">
+            <a class="dd-item" href="https://studio.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></span><span class="dd-tx"><b>Alphex Studio<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Fast, modern websites for growing brands.</small></span></a>
+            <a class="dd-item" href="https://evalloop.alphexai.com/" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/><path d="m9 12 2 2 4-4"/></svg></span><span class="dd-tx"><b>EvalLoop AI<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Test and improve AI systems with real cases.</small></span></a>
+            <a class="dd-item" href="https://evalloopjobs.alphexai.com" target="_blank" rel="noopener"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span><span class="dd-tx"><b>EvalLoop Jobs<svg class="dd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></b><small>Evaluation, annotation and AI training work.</small></span></a>
+          </div></div>
+          <aside class="mg-promo"><a class="promo" href="https://studio.alphexai.com/" target="_blank" rel="noopener"><div class="promo-vis"><span>Alphex Studio</span></div><b>Need a website too? Alphex Studio builds fast, modern sites for growing brands.</b><em>Explore Studio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></a></aside>
+        </div></div></div>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true">Company<svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dd-panel dd-company"><div class="wrap mega">
+          <div class="mg-lead"><span class="mg-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5l8-2v18M12 8l8 2v11M3 21h18M8 8h1M8 12h1M8 16h1M16 14h1M16 18h1"/></svg></span><h3>Company</h3><p>Reliable AI, built with care.</p>
+            <a class="mg-btn" href="/about.html">Learn more <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+            <a class="mg-link" href="/contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Contact</a><a class="mg-link" href="/#pricing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12 12 20 3 11V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>Pricing</a></div>
+          <div class="mg-main"><span class="dd-label">Company</span><div class="dd-list dd-grid">
+            <a class="dd-item" href="/about.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><span class="dd-tx"><b>About</b><small>Who we are and how we build reliable AI.</small></span></a>
+            <a class="dd-item" href="/careers.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span><span class="dd-tx"><b>Careers</b><small>Join the team behind Alphex AI.</small></span></a>
+            <a class="dd-item" href="/innovation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="dd-tx"><b>Innovation Program</b><small>Our program for new ideas and builders.</small></span></a>
+            <a class="dd-item" href="/documentation.html"><span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg></span><span class="dd-tx"><b>Documentation</b><small>Guides and technical references.</small></span></a>
+          </div></div>
+          <aside class="mg-promo"><a class="promo" href="/innovation.html"><div class="promo-vis"><span>Innovation Program</span></div><b>Have a big idea? Build it with the Alphex Innovation Program.</b><em>Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></a></aside>
+        </div></div></div>
+      <a href="/#pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn line contact-link" href="/contact.html">Contact</a>
+      <a class="btn dark" id="loginNavButton" href="login.html">Sign in</a>
+      <div class="auth-profile" id="authProfile">
+        <button class="profile-button" id="profileButton" type="button" aria-label="Open account menu" aria-expanded="false"><span id="profileInitial">A</span></button>
+        <div class="profile-menu" id="profileMenu">
+          <div class="profile-user"><div class="profile-name" id="profileName">Alphex AI</div><div class="profile-email" id="profileEmail">account</div></div>
+          <a href="account.html" class="profile-account">Account</a>
+          <button class="profile-signout" id="profileSignout" type="button">Sign out</button>
         </div>
-        <h1 class="auth-title">
-          Create your account.
-        </h1>
-        <p class="auth-copy">
-          Create an Alphex AI account to stay connected
-          with our services, products, and future capabilities.
-        </p>
-      </header>
-      <section class="auth-card">
-        <form
-          class="auth-form"
-          id="signup-form"
-          novalidate
-        >
-          <!-- NAME -->
-          <div class="field">
-            <label
-              class="field-label"
-              for="signup-name"
-            >
-              Full name
-            </label>
-            <input
-              class="field-input"
-              id="signup-name"
-              name="name"
-              type="text"
-              autocomplete="name"
-              placeholder="Your name"
-              required
-            >
-          </div>
-          <!-- EMAIL -->
-          <div class="field">
-            <label
-              class="field-label"
-              for="signup-email"
-            >
-              Email
-            </label>
-            <input
-              class="field-input"
-              id="signup-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              placeholder="you@example.com"
-              required
-            >
-          </div>
-          <!-- PASSWORD -->
-          <div class="field">
-            <label
-              class="field-label"
-              for="signup-password"
-            >
-              Password
-            </label>
-            <div class="password-wrap">
-              <input
-                class="field-input"
-                id="signup-password"
-                name="password"
-                type="password"
-                autocomplete="new-password"
-                placeholder="Create a password"
-                minlength="8"
-                required
-              >
-              <button
-                class="password-toggle"
-                type="button"
-                id="password-toggle"
-                aria-label="Show password"
-              >
-                Show
-              </button>
-            </div>
-            <div
-              class="password-strength"
-              aria-hidden="true"
-            >
-              <span
-                class="password-strength-bar"
-                id="password-strength-bar"
-              ></span>
-            </div>
-            <div class="password-hint">
-              Use at least 8 characters.
-            </div>
-          </div>
-          <!-- CONFIRM PASSWORD -->
-          <div class="field">
-            <label
-              class="field-label"
-              for="signup-confirm-password"
-            >
-              Confirm password
-            </label>
-            <div class="password-wrap">
-              <input
-                class="field-input"
-                id="signup-confirm-password"
-                name="confirmPassword"
-                type="password"
-                autocomplete="new-password"
-                placeholder="Enter your password again"
-                minlength="8"
-                required
-              >
-              <button
-                class="password-toggle"
-                type="button"
-                id="confirm-password-toggle"
-                aria-label="Show password"
-              >
-                Show
-              </button>
-            </div>
-          </div>
-          <!-- STATUS -->
-          <div
-            class="auth-status"
-            id="signup-status"
-            role="status"
-            aria-live="polite"
-          ></div>
-          <!-- SUBMIT -->
-          <button
-            class="auth-submit"
-            id="signup-submit"
-            type="submit"
-          >
-            Create account
-          </button>
-        </form>
-        <!-- TERMS -->
-        <p class="terms">
-          By creating an account, you agree to the
-          <a href="#">
-            Terms of Service
-          </a>
-          and
-          <a href="#">
-            Privacy Policy
-          </a>.
-        </p>
-        <!-- DIVIDER -->
-        <div class="auth-divider">
-          <span>
-            or
-          </span>
-        </div>
-        <!-- GOOGLE -->
-        <button
-          class="google-button"
-          id="google-signup"
-          type="button"
-        >
-          <span
-            class="google-icon"
-            aria-hidden="true"
-          >
-            G
-          </span>
-          Continue with Google
-        </button>
-        <!-- LOGIN -->
-        <div class="auth-footer">
-          Already have an account?
-          <a href="login.html">
-            Sign in
-          </a>
-        </div>
-      </section>
-      <p class="auth-note">
-        Secure authentication powered by Alphex AI.
-      </p>
+      </div>
+      <button class="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
     </div>
-  </main>
-  <!-- =====================================================
-       SHARED FOOTER
-       ===================================================== -->
-  <div id="site-footer"></div>
-  <!-- =====================================================
-       SHARED JAVASCRIPT
-       ===================================================== -->
-  <script src="site.js"></script>
-  <!-- =====================================================
-       SUPABASE AUTHENTICATION
-       ===================================================== -->
-  <script>
+  </div>
+</header>
+<div class="mobile-panel" aria-hidden="true">
+  <a href="/#capabilities">Capabilities</a><a href="/#approach">Process</a>
+  <div class="mp-group">Products</div>
+  <a class="mp-sub" href="https://studio.alphexai.com/" target="_blank" rel="noopener">Alphex Studio</a><a class="mp-sub" href="https://evalloop.alphexai.com/" target="_blank" rel="noopener">EvalLoop AI</a><a class="mp-sub" href="https://evalloopjobs.alphexai.com" target="_blank" rel="noopener">EvalLoop Jobs</a>
+  <div class="mp-group">Company</div>
+  <a class="mp-sub" href="/about.html">About</a><a class="mp-sub" href="/careers.html">Careers</a><a class="mp-sub" href="/innovation.html">Innovation Program</a><a class="mp-sub" href="/documentation.html">Documentation</a>
+  <a href="/#pricing">Pricing</a>
+  <a class="mobile-auth-link logged-out" id="mobileLoginLink" href="login.html">Sign in</a>
+  <a class="mobile-auth-link logged-in" id="mobileProfileLink" href="#">Profile</a>
+  <a href="/contact.html">Contact us</a>
+</div>
+
+<main id="main"><section class="au"><div class="wrap"><div class="au-grid">
+  <div class="au-copy">
+    <span class="eyebrow">Alphex AI / Account</span>
+    <h1>Create your account.</h1>
+    <p class="sub">Create an Alphex AI account to stay connected with our services, products, and future capabilities.</p>
+    <p class="au-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Secure authentication powered by Alphex AI.</p>
+  </div>
+  <section class="auth-card">
+    <form class="auth-form" id="signup-form" novalidate>
+      <div class="field"><label class="field-label" for="signup-name">Full name</label><input class="field-input" id="signup-name" name="name" type="text" autocomplete="name" placeholder="Your name" required></div>
+      <div class="field"><label class="field-label" for="signup-email">Email</label><input class="field-input" id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+      <div class="field"><label class="field-label" for="signup-password">Password</label>
+        <div class="password-wrap"><input class="field-input" id="signup-password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" minlength="8" required><button class="password-toggle" type="button" id="password-toggle" aria-label="Show password">Show</button></div>
+        <div class="password-strength" aria-hidden="true"><span class="password-strength-bar" id="password-strength-bar"></span></div>
+        <div class="password-hint">Use at least 8 characters.</div></div>
+      <div class="field"><label class="field-label" for="signup-confirm-password">Confirm password</label>
+        <div class="password-wrap"><input class="field-input" id="signup-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Enter your password again" minlength="8" required><button class="password-toggle" type="button" id="confirm-password-toggle" aria-label="Show password">Show</button></div></div>
+      <div class="auth-status" id="signup-status" role="status" aria-live="polite"></div>
+      <button class="btn pri auth-submit" id="signup-submit" type="submit">Create account</button>
+    </form>
+    <p class="terms">By creating an account, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+    <div class="auth-divider"><span>or</span></div>
+    <button class="google-button" id="google-signup" type="button"><span class="google-icon" aria-hidden="true">G</span>Continue with Google</button>
+    <div class="auth-footer">Already have an account? <a href="login.html">Sign in</a></div>
+  </section>
+</div></div></section></main>
+<footer><div class="wrap">
+  <div class="ft">
+    <div><a class="wordmark" href="/#top">alphex<i> </i>ai</a><p>Reliable AI systems for the questions, workflows, and customers that matter.</p><a class="btn pri" href="mailto:team@alphexai.com">Book a demo</a></div>
+    <div class="cols">
+      <div><h4>Overview</h4><a href="/#top">Home</a><a href="/#capabilities">Capabilities</a><a href="/#our-products">Products</a><a href="/#approach">Process</a><a href="/#pricing">Pricing</a></div>
+      <div><h4>Products</h4><a href="https://studio.alphexai.com/">Alphex Studio</a><a href="https://evalloop.alphexai.com/">EvalLoop AI</a><a href="https://evalloopjobs.alphexai.com">EvalLoop Jobs</a></div>
+      <div><h4>Company</h4><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/careers.html">Careers</a><a href="/innovation.html">Innovation Program</a><a href="/documentation.html">Documentation</a></div>
+      <div><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/disclaimer.html">Disclaimer</a></div>
+    </div>
+  </div>
+  <div class="fb"><span>AI systems with a quality bar.</span><span>© 2026 Alphex AI, Hyderabad, India</span></div>
+</div></footer>
+
+<div id="alphex-chatbot-root"></div>
+<link rel="stylesheet" href="chatbot/chatbot.css">
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+/* ===== Supabase authentication: inlined from supabase.js ===== */
+      /* Alphex AI Supabase authentication. Existing auth behavior and selectors are preserved. */
+      /* =========================================================
+         ALPHEX AI — SUPABASE AUTHENTICATION
+         ========================================================= */
+      const SUPABASE_URL =
+        'https://nxqxhakjbtdzreimpkdz.supabase.co';
+      const SUPABASE_PUBLISHABLE_KEY =
+        'sb_publishable_kzCF-pWoVk27YRqvWPIUzg_36ynJbGR';
+      const supabaseClient =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+      /* =========================================================
+         AUTH NAVIGATION
+         ========================================================= */
+      const loginNavButton =
+        document.getElementById('loginNavButton');
+      const authProfile =
+        document.getElementById('authProfile');
+      const profileButton =
+        document.getElementById('profileButton');
+      const profileMenu =
+        document.getElementById('profileMenu');
+      const profileInitial =
+        document.getElementById('profileInitial');
+      const profileName =
+        document.getElementById('profileName');
+      const profileEmail =
+        document.getElementById('profileEmail');
+      const profileSignout =
+        document.getElementById('profileSignout');
+      const mobileLoginLink =
+        document.getElementById('mobileLoginLink');
+      const mobileProfileLink =
+        document.getElementById('mobileProfileLink');
+      /* =========================================================
+         GET USER DISPLAY NAME
+         ========================================================= */
+      function getUserDisplayName(user){
+        if(!user){
+          return 'Alphex AI';
+        }
+        const metadata =
+          user.user_metadata || {};
+        const fullName =
+          metadata.full_name ||
+          metadata.name ||
+          '';
+        if(fullName.trim()){
+          return fullName.trim();
+        }
+        if(user.email){
+          return user.email.split('@')[0];
+        }
+        return 'Alphex AI';
+      }
+      /* =========================================================
+         GET PROFILE INITIAL
+         ========================================================= */
+      function getProfileInitial(name){
+        if(!name){
+          return 'A';
+        }
+        return name
+          .trim()
+          .charAt(0)
+          .toUpperCase() || 'A';
+      }
+      /* =========================================================
+         SHOW LOGGED-OUT NAVIGATION
+         ========================================================= */
+      function showLoggedOutNavigation(){
+        document.body.classList.remove('authenticated');
+        if(loginNavButton){
+          loginNavButton.style.display = 'inline-flex';
+        }
+        if(authProfile){
+          authProfile.style.display = 'none';
+        }
+        if(mobileLoginLink){
+          mobileLoginLink.style.display = 'flex';
+        }
+        if(mobileProfileLink){
+          mobileProfileLink.style.display = 'none';
+        }
+        if(profileMenu){
+          profileMenu.classList.remove('open');
+        }
+        if(profileButton){
+          profileButton.setAttribute(
+            'aria-expanded',
+            'false'
+          );
+        }
+      }
+      /* =========================================================
+         SHOW LOGGED-IN NAVIGATION
+         ========================================================= */
+      function showLoggedInNavigation(user){
+        document.body.classList.add('authenticated');
+        const name =
+          getUserDisplayName(user);
+        const initial =
+          getProfileInitial(name);
+        if(loginNavButton){
+          loginNavButton.style.display = 'none';
+        }
+        if(authProfile){
+          authProfile.style.display = 'inline-flex';
+        }
+        if(profileInitial){
+          profileInitial.textContent = initial;
+        }
+        if(profileName){
+          profileName.textContent = name;
+        }
+        if(profileEmail){
+          profileEmail.textContent =
+            user.email || 'Signed in';
+        }
+        if(mobileLoginLink){
+          mobileLoginLink.style.display = 'none';
+        }
+        if(mobileProfileLink){
+          mobileProfileLink.style.display = 'flex';
+        }
+      }
+      /* =========================================================
+         CHECK CURRENT SESSION
+         ========================================================= */
+      async function updateAuthenticationUI(){
+        try{
+          const {
+            data,
+            error
+          } = await supabaseClient.auth.getSession();
+          if(error){
+            console.error(
+              'Alphex AI auth session error:',
+              error
+            );
+            showLoggedOutNavigation();
+            return;
+          }
+          const session =
+            data ? data.session : null;
+          if(session && session.user){
+            showLoggedInNavigation(
+              session.user
+            );
+          }else{
+            showLoggedOutNavigation();
+          }
+        }catch(error){
+          console.error(
+            'Alphex AI authentication error:',
+            error
+          );
+          showLoggedOutNavigation();
+        }
+      }
+      /* =========================================================
+         AUTH STATE LISTENER
+         ========================================================= */
+      supabaseClient.auth.onAuthStateChange(
+        (event, session) => {
+          console.log(
+            'Alphex AI auth event:',
+            event
+          );
+          if(session && session.user){
+            showLoggedInNavigation(
+              session.user
+            );
+          }else{
+            showLoggedOutNavigation();
+          }
+        }
+      );
+      /* =========================================================
+         PROFILE MENU
+         ========================================================= */
+      if(profileButton){
+        profileButton.addEventListener(
+          'click',
+          event => {
+            event.stopPropagation();
+            const isOpen =
+              profileMenu.classList.contains('open');
+            profileMenu.classList.toggle(
+              'open',
+              !isOpen
+            );
+            profileButton.setAttribute(
+              'aria-expanded',
+              String(!isOpen)
+            );
+          }
+        );
+      }
+      /* =========================================================
+         CLOSE PROFILE MENU WHEN CLICKING OUTSIDE
+         ========================================================= */
+      document.addEventListener(
+        'click',
+        event => {
+          if(
+            authProfile &&
+            profileMenu &&
+            !authProfile.contains(event.target)
+          ){
+            profileMenu.classList.remove(
+              'open'
+            );
+            if(profileButton){
+              profileButton.setAttribute(
+                'aria-expanded',
+                'false'
+              );
+            }
+          }
+        }
+      );
+      /* =========================================================
+         SIGN OUT
+         ========================================================= */
+      if(profileSignout){
+        profileSignout.addEventListener(
+          'click',
+          async () => {
+            profileSignout.disabled = true;
+            profileSignout.textContent =
+              'Signing out...';
+            try{
+              const {
+                error
+              } =
+                await supabaseClient.auth.signOut();
+              if(error){
+                console.error(
+                  'Alphex AI sign out error:',
+                  error
+                );
+                profileSignout.disabled = false;
+                profileSignout.textContent =
+                  'Sign out';
+                return;
+              }
+              profileMenu.classList.remove(
+                'open'
+              );
+              showLoggedOutNavigation();
+              window.location.replace(
+                'index.html'
+              );
+            }catch(error){
+              console.error(
+                'Alphex AI sign out error:',
+                error
+              );
+              profileSignout.disabled = false;
+              profileSignout.textContent =
+                'Sign out';
+            }
+          }
+        );
+      }
+      /* Mobile navigation close helper used by the profile link. */
+      function closeMenu(){
+        const menuButton = document.querySelector('.mobile-menu');
+        const mobilePanel = document.querySelector('.mobile-panel');
+        if(menuButton){
+          menuButton.classList.remove('open');
+          menuButton.setAttribute('aria-expanded','false');
+          menuButton.setAttribute('aria-label','Open navigation');
+        }
+        if(mobilePanel){
+          mobilePanel.classList.remove('open');
+          mobilePanel.setAttribute('aria-hidden','true');
+        }
+      }
+      /* =========================================================
+         MOBILE PROFILE LINK
+         ========================================================= */
+      if(mobileProfileLink){
+        mobileProfileLink.addEventListener(
+          'click',
+          event => {
+            event.preventDefault();
+            if(authProfile){
+              profileMenu.classList.toggle(
+                'open'
+              );
+            }
+            closeMenu();
+          }
+        );
+      }
+      /* =========================================================
+         INITIAL AUTH CHECK
+         ========================================================= */
+      updateAuthenticationUI();
+
+/* Nav dropdowns */
+(() => {
+  const dds = document.querySelectorAll('.dd'); if (!dds.length) return;
+  const set = (d, on) => { d.classList.toggle('open', on); d.querySelector('.dd-btn').setAttribute('aria-expanded', String(on)); };
+  const closeAll = except => dds.forEach(d => { if (d !== except) set(d, false); });
+  dds.forEach(d => {
+    const b = d.querySelector('.dd-btn');
+    b.addEventListener('click', e => { e.stopPropagation(); const on = !d.classList.contains('open'); closeAll(d); set(d, on); });
+    let t;
+    const hov = () => window.matchMedia('(hover:hover)').matches;
+    d.addEventListener('mouseenter', () => { if (!hov()) return; clearTimeout(t); closeAll(d); set(d, true); });
+    d.addEventListener('mouseleave', () => { if (!hov()) return; clearTimeout(t); t = setTimeout(() => set(d, false), 220); });
+    d.addEventListener('focusout', e => { if (!d.contains(e.relatedTarget)) set(d, false); });
+    d.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(d, false)));
+  });
+  document.addEventListener('click', () => closeAll());
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+})();
+
+
+/* Mobile menu */
+(() => {
+  const btn = document.querySelector('.mobile-menu'), panel = document.querySelector('.mobile-panel');
+  if (!btn || !panel) return;
+  btn.addEventListener('click', () => {
+    const open = !panel.classList.contains('open');
+    panel.classList.toggle('open', open); btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open)); panel.setAttribute('aria-hidden', String(!open));
+    if (open) { const h = document.querySelector('header'); panel.style.top = Math.max(0, h.getBoundingClientRect().bottom) + 'px'; }
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  const shut = () => { if (panel.classList.contains('open')) { closeMenu(); document.body.style.overflow = ''; } };
+  window.addEventListener('resize', () => { if (window.innerWidth > 1000) shut(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') shut(); });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (a.id !== 'mobileProfileLink') closeMenu(); document.body.style.overflow = ''; }));
+})();
+
+/* ===== Optional chatbot loader: inlined from chatbot-loader(1).js ===== */
+      (() => {
+        const root = document.getElementById('alphex-chatbot-root');
+        if (!root) return;
+        fetch('chatbot/chatbot.html')
+          .then(response => response.ok ? response.text() : Promise.reject(new Error('Chatbot markup unavailable')))
+          .then(html => {
+            root.innerHTML = html;
+            const script = document.createElement('script');
+            script.src = 'chatbot/chatbot.js';
+            script.defer = true;
+            document.body.appendChild(script);
+          })
+          .catch(error => console.info('Optional Alphex chatbot was not loaded:', error.message));
+      })();
+
+});
+</script>
+<script>
+
     (() => {
       /* ---------------------------------------------------
          SUPABASE CONFIGURATION
@@ -1173,6 +1051,7 @@
         );
       }
     })();
-  </script>
+  
+</script>
 </body>
 </html>
